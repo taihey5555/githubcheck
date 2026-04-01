@@ -80,6 +80,7 @@ Windowsならタスクスケジューラで `python bot.py once` を時刻指定
 
 この bot には大きな自律制御は入れておらず、軽い agent 層として `pick_reason` だけを追加しています。
 `pick_reason` は「なぜこの repo を拾ったか」を短く示す補助情報で、Telegram 通知と履歴ページで使います。
+これは大規模な multi-agent 化ではなく、既存の通知フローに薄く理由付けを足しただけの最小拡張です。
 
 ## Skill
 

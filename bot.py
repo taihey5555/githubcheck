@@ -346,6 +346,13 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       line-height: 1.6;
       font-size: 14px;
     }}
+    .pick-reason {{
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 12px;
+      opacity: 0.82;
+    }}
     .badge-row {{
       display: flex;
       gap: 8px;
@@ -804,7 +811,7 @@ def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, st
             "#GitHub"
         )
 
-    return telegram_text, x_text, pick_reason[:40]
+    return telegram_text, x_text, pick_reason[:28]
 
 
 def build_telegram_message(repos: list[dict[str, Any]]) -> str:
@@ -990,7 +997,7 @@ def render_history_site() -> None:
                     <span>stars {item["stars"]}</span>
                     <span>{language}</span>
                   </div>
-                  {f'<p class="description">選定理由: {pick_reason}</p>' if pick_reason else ''}
+                  {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
                   {f'<p class="description">{description}</p>' if description else ''}
                   <pre>{x_post}</pre>
                   {f'<div class="badge-row"><span class="badge">{language}</span>{topics}</div>' if topics or language else ''}
@@ -1122,7 +1129,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
                 <span>stars {item["stars"]}</span>
                 <span>{escape(item["language"])}</span>
               </div>
-              {f'<p class="description">選定理由: {pick_reason}</p>' if pick_reason else ''}
+              {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
               {f'<p class="description">{description}</p>' if description else ''}
               <pre>{linkify_text(item["latest_x_post"])}</pre>
               {f'<div class="badge-row"><span class="badge">{escape(item["language"])}</span>{topics}</div>' if topics or item.get("language") else ''}
