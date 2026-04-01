@@ -288,6 +288,110 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       font-size: 13px;
       margin-bottom: 10px;
     }}
+    .card-header {{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }}
+    .avatar {{
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.9);
+      flex: 0 0 auto;
+    }}
+    .card-title-wrap {{
+      min-width: 0;
+      flex: 1 1 auto;
+    }}
+    .owner-line {{
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }}
+    .owner-line a {{
+      color: var(--muted);
+    }}
+    .description {{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }}
+    .badge-row {{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 10px 0 0;
+    }}
+    .badge {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1;
+    }}
+    .badge.topic {{
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      border-color: rgba(15, 118, 110, 0.16);
+    }}
+    .date-label {{
+      font-variant-numeric: tabular-nums;
+    }}
+    .rank-card {{
+      position: relative;
+      overflow: hidden;
+    }}
+    .rank-card::after {{
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,118,110,0.14) 0, rgba(15,118,110,0) 70%);
+      pointer-events: none;
+    }}
+    .rank-number {{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }}
+    .rank-card.top1 {{
+      border-width: 2px;
+      border-color: rgba(180, 83, 9, 0.32);
+      background: linear-gradient(135deg, rgba(255,250,240,0.96), rgba(254,243,199,0.92));
+    }}
+    .rank-card.top1 .rank-number {{
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #b45309, #f59e0b);
+      font-size: 22px;
+    }}
+    .rank-card.top2 .rank-number,
+    .rank-card.top3 .rank-number {{
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
+    }}
     h2 {{
       margin: 0 0 10px;
       font-size: clamp(20px, 3vw, 24px);
@@ -715,6 +819,11 @@ def append_history(repos: list[dict[str, Any]]) -> None:
                 "stars": repo["stargazers_count"],
                 "forks": repo["forks_count"],
                 "language": repo.get("language") or "N/A",
+                "description": repo.get("description") or "",
+                "topics": repo.get("topics") or [],
+                "owner_login": (repo.get("owner") or {}).get("login", ""),
+                "owner_avatar_url": (repo.get("owner") or {}).get("avatar_url", ""),
+                "owner_html_url": (repo.get("owner") or {}).get("html_url", ""),
             }
         )
     save_history(history[-300:])
@@ -747,17 +856,35 @@ def render_history_site() -> None:
             html_url = escape(item["html_url"])
             x_post = linkify_text(item["x_post"])
             language = escape(item["language"])
+            description = escape(item.get("description") or "")
+            owner_login = escape(item.get("owner_login") or "")
+            owner_html_url = escape(item.get("owner_html_url") or item["html_url"])
+            owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
+            topics = "".join(
+                f'<span class="badge topic">#{escape(topic)}</span>'
+                for topic in (item.get("topics") or [])[:6]
+            )
             cards.append(
                 f"""
                 <article class="card">
+                  <div class="card-header">
+                    <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
+                      </div>
+                      <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>{sent_at}</span>
+                    <span class="date-label">通知 {sent_at}</span>
                     <span>score {item["score"]}</span>
                     <span>stars {item["stars"]}</span>
                     <span>{language}</span>
                   </div>
-                  <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
+                  {f'<p class="description">{description}</p>' if description else ''}
                   <pre>{x_post}</pre>
+                  {f'<div class="badge-row"><span class="badge">{language}</span>{topics}</div>' if topics or language else ''}
                 </article>
                 """
             )
@@ -808,6 +935,11 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
                 "latest_x_post": item["x_post"],
                 "latest_sent_at": sent_at_dt,
                 "stars": item["stars"],
+                "description": item.get("description") or "",
+                "topics": item.get("topics") or [],
+                "owner_login": item.get("owner_login") or "",
+                "owner_avatar_url": item.get("owner_avatar_url") or "",
+                "owner_html_url": item.get("owner_html_url") or "",
             },
         )
         entry["count"] += 1
@@ -837,17 +969,43 @@ def render_weekly_site(now: datetime | None = None) -> None:
     ranking, label = build_weekly_ranking(history, now)
     cards = []
     for index, item in enumerate(ranking, start=1):
+        rank_class = "rank-card"
+        if index == 1:
+            rank_class += " top1"
+        elif index == 2:
+            rank_class += " top2"
+        elif index == 3:
+            rank_class += " top3"
+        owner_login = escape(item.get("owner_login") or "")
+        owner_html_url = escape(item.get("owner_html_url") or item["html_url"])
+        owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
+        description = escape(item.get("description") or "")
+        topics = "".join(
+            f'<span class="badge topic">#{escape(topic)}</span>'
+            for topic in (item.get("topics") or [])[:6]
+        )
         cards.append(
             f"""
-            <article class="card">
+            <article class="card {rank_class}">
+              <div class="card-header">
+                <span class="rank-number">{index}</span>
+                <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
+                <div class="card-title-wrap">
+                  <div class="owner-line">
+                    <a href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
+                  </div>
+                  <h2><a href="{escape(item["html_url"])}" target="_blank" rel="noreferrer">{escape(item["full_name"])}</a></h2>
+                </div>
+              </div>
               <div class="meta">
-                <span>#{index}</span>
                 <span>score {item["best_score"]}</span>
                 <span>picked {item["count"]} times</span>
+                <span>stars {item["stars"]}</span>
                 <span>{escape(item["language"])}</span>
               </div>
-              <h2><a href="{escape(item["html_url"])}" target="_blank" rel="noreferrer">{escape(item["full_name"])}</a></h2>
+              {f'<p class="description">{description}</p>' if description else ''}
               <pre>{linkify_text(item["latest_x_post"])}</pre>
+              {f'<div class="badge-row"><span class="badge">{escape(item["language"])}</span>{topics}</div>' if topics or item.get("language") else ''}
             </article>
             """
         )
