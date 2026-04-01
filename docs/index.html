@@ -74,18 +74,20 @@
       cursor: pointer;
       padding: 0;
     }
-    .menu-toggle span,
-    .menu-toggle::before,
-    .menu-toggle::after {
-      content: "";
+    .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-icon span {
       display: block;
       width: 18px;
       height: 2px;
       background: var(--ink);
       border-radius: 999px;
-      transition: transform 120ms ease, opacity 120ms ease;
     }
-    .menu-toggle span { margin: 4px 0; }
     .site-nav {
       display: flex;
       gap: 10px;
@@ -132,6 +134,12 @@
       flex-wrap: wrap;
       margin: 0 0 22px;
     }
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }
     .tab-button {
       border: 1px solid var(--line);
       background: rgba(255, 250, 240, 0.72);
@@ -153,6 +161,7 @@
     }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+    .card.hidden-by-filter { display: none; }
     .card {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -169,6 +178,117 @@
       color: var(--muted);
       font-size: 13px;
       margin-bottom: 10px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.9);
+      flex: 0 0 auto;
+    }
+    .card-title-wrap {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .owner-line {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    .owner-line a {
+      color: var(--muted);
+    }
+    .description {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .pick-reason {
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 12px;
+      opacity: 0.82;
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 10px 0 0;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .badge.topic {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      border-color: rgba(15, 118, 110, 0.16);
+    }
+    .date-label {
+      font-variant-numeric: tabular-nums;
+    }
+    .rank-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .rank-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,118,110,0.14) 0, rgba(15,118,110,0) 70%);
+      pointer-events: none;
+    }
+    .rank-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+    .rank-card.top1 {
+      border-width: 2px;
+      border-color: rgba(180, 83, 9, 0.32);
+      background: linear-gradient(135deg, rgba(255,250,240,0.96), rgba(254,243,199,0.92));
+    }
+    .rank-card.top1 .rank-number {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #b45309, #f59e0b);
+      font-size: 22px;
+    }
+    .rank-card.top2 .rank-number,
+    .rank-card.top3 .rank-number {
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
     }
     h2 {
       margin: 0 0 10px;
@@ -224,7 +344,11 @@
         <span>repo digest and weekly ranking</span>
       </a>
       <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
-        <span></span>
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
       <nav id="site-nav" class="site-nav">
         <a href="./index.html" aria-current="page">履歴</a>
@@ -237,17 +361,118 @@
       <h1>Repo History</h1>
       <p>Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。</p>
     </section>
-    <div class='tabs'><button class="tab-button active" data-tab="tab-0">4/1</button></div>
+    <div class='filter-bar'><button class='tab-button active' data-bucket-filter='all'>全部</button><button class='tab-button' data-bucket-filter='morning'>朝の新顔枠</button><button class='tab-button' data-bucket-filter='evening'>夜の尖り枠</button></div><div class='tabs'><button class="tab-button active" data-tab="tab-0">4/1</button></div>
             <section id="tab-0" class="tab-panel active">
               
-                <article class="card">
+                <article class="card" data-bucket="evening">
+                  <div class="card-header">
+                    <img class="avatar" src="https://avatars.githubusercontent.com/u/256783335?v=4" alt="tanweai">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/tanweai" target="_blank" rel="noreferrer">@tanweai</a>
+                      </div>
+                      <h2><a href="https://github.com/tanweai/pua" target="_blank" rel="noreferrer">tanweai/pua</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>2026-04-01 16:05</span>
+                    <span class="date-label">通知 2026-04-01 20:57</span>
+                    <span>夜の尖り枠</span>
+                    <span>score 74.05</span>
+                    <span>stars 14385</span>
+                    <span>TypeScript</span>
+                  </div>
+                  <p class="pick-reason">選定理由: AIエージェントの生産性を倍増させる尖った手法</p>
+                  <p class="description">你是一个曾经被寄予厚望的 P8 级工程师。Anthropic 当初给你定级的时候，对你的期望是很高的。  一个agent使用的高能动性的skill。  Your AI has been placed on a PIP. 30 days to show improvement.</p>
+                  <pre>AIコーディングで「諦めが早い」と感じたことは？
+
+puaは、PUA/PIPという企業手法でAIエージェントの生産性を引き上げるスキルです。失敗時に自動で別アプローチを試行し、諦めずに解決策を探し続けます。
+
+Claude CodeやCursorなど主要AIコーディングツールに対応。デバッグや実装でAIがすぐ諦める問題に悩む開発者に。
+
+<a href="https://github.com/tanweai/pua" target="_blank" rel="noreferrer">https://github.com/tanweai/pua</a>
+#AIコーディング #開発効率化</pre>
+                  <div class="badge-row"><span class="badge">TypeScript</span><span class="badge topic">#agency</span><span class="badge topic">#agent</span><span class="badge topic">#pip</span><span class="badge topic">#pua</span></div>
+                </article>
+                
+                <article class="card" data-bucket="evening">
+                  <div class="card-header">
+                    <img class="avatar" src="https://avatars.githubusercontent.com/u/182581310?v=4" alt="JCodesMore">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/JCodesMore" target="_blank" rel="noreferrer">@JCodesMore</a>
+                      </div>
+                      <h2><a href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">JCodesMore/ai-website-cloner-template</a></h2>
+                    </div>
+                  </div>
+                  <div class="meta">
+                    <span class="date-label">通知 2026-04-01 20:57</span>
+                    <span>夜の尖り枠</span>
+                    <span>score 74.35</span>
+                    <span>stars 6761</span>
+                    <span>TypeScript</span>
+                  </div>
+                  <p class="pick-reason">選定理由: AIエージェントによるWebサイトの自動クローン構築</p>
+                  <p class="description">Clone any website with one command using AI coding agents</p>
+                  <pre>AIでWebサイトをNext.jsにクローンするテンプレート。
+
+URLを指定するだけで、AIエージェントがサイトを解析し、デザイントークンやコンポーネントを抽出。並行ビルドでモダンなコードベースを自動生成します。
+
+プラットフォーム移行や学習用途に。Claude CodeやCursorなど様々なAIエージェントに対応。
+
+<a href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">https://github.com/JCodesMore/ai-website-cloner-template</a>
+#AI #Nextjs</pre>
+                  <div class="badge-row"><span class="badge">TypeScript</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
+                </article>
+                
+                <article class="card" data-bucket="evening">
+                  <div class="card-header">
+                    <img class="avatar" src="https://avatars.githubusercontent.com/u/241138?v=4" alt="karpathy">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/karpathy" target="_blank" rel="noreferrer">@karpathy</a>
+                      </div>
+                      <h2><a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noreferrer">karpathy/autoresearch</a></h2>
+                    </div>
+                  </div>
+                  <div class="meta">
+                    <span class="date-label">通知 2026-04-01 20:57</span>
+                    <span>夜の尖り枠</span>
+                    <span>score 83.62</span>
+                    <span>stars 63126</span>
+                    <span>Python</span>
+                  </div>
+                  <p class="pick-reason">選定理由: AIエージェントによる自律的な研究実験の尖り</p>
+                  <p class="description">AI agents running research on single-GPU nanochat training automatically</p>
+                  <pre>AIエージェントが自らコードを書き換え、LLMの訓練実験を自律的に進めるリポジトリです。
+
+karpathy/autoresearch は、5分間の訓練結果を評価し、改善案をコードに反映するサイクルを自動で繰り返します。人間が介入せずに研究が進むのが面白いポイント。
+
+ML研究の自動化や、小規模実験の効率化に関心がある方に。シンプルな単一GPU環境で動きます。
+
+<a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noreferrer">https://github.com/karpathy/autoresearch</a>
+#AI #機械学習</pre>
+                  <div class="badge-row"><span class="badge">Python</span></div>
+                </article>
+                
+                <article class="card" data-bucket="morning">
+                  <div class="card-header">
+                    <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/jackwener/opencli" target="_blank" rel="noreferrer">@</a>
+                      </div>
+                      <h2><a href="https://github.com/jackwener/opencli" target="_blank" rel="noreferrer">jackwener/opencli</a></h2>
+                    </div>
+                  </div>
+                  <div class="meta">
+                    <span class="date-label">通知 2026-04-01 16:05</span>
+                    <span>朝の新顔枠</span>
                     <span>score 68.32</span>
                     <span>stars 9916</span>
                     <span>TypeScript</span>
                   </div>
-                  <h2><a href="https://github.com/jackwener/opencli" target="_blank" rel="noreferrer">jackwener/opencli</a></h2>
+                  
+                  
                   <pre>WebサイトやElectronアプリをCLIから操作できるツール。
 
 opencliは、BilibiliやTwitterなどのWebサイト、ローカルCLIツールを統一的なコマンドラインインターフェースに変換します。既存のChromeログインを再利用するので安全です。
@@ -256,16 +481,28 @@ opencliは、BilibiliやTwitterなどのWebサイト、ローカルCLIツール�
 
 <a href="https://github.com/jackwener/opencli" target="_blank" rel="noreferrer">https://github.com/jackwener/opencli</a>
 #CLI #自動化</pre>
+                  <div class="badge-row"><span class="badge">TypeScript</span></div>
                 </article>
                 
-                <article class="card">
+                <article class="card" data-bucket="morning">
+                  <div class="card-header">
+                    <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noreferrer">@</a>
+                      </div>
+                      <h2><a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noreferrer">Yeachan-Heo/oh-my-claudecode</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>2026-04-01 16:05</span>
+                    <span class="date-label">通知 2026-04-01 16:05</span>
+                    <span>朝の新顔枠</span>
                     <span>score 84.48</span>
                     <span>stars 19758</span>
                     <span>TypeScript</span>
                   </div>
-                  <h2><a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noreferrer">Yeachan-Heo/oh-my-claudecode</a></h2>
+                  
+                  
                   <pre>Claude Codeのマルチエージェント編成ツール「oh-my-claudecode」です。
 
 自然言語で指示するだけで、複数のAIエージェントがチームとして作業を自動分散します。チームベースの段階的パイプラインで実行されるため、複雑なタスクも効率的に進められます。
@@ -274,16 +511,28 @@ AIを使った開発効率化や、コードレビュー、リファクタリン
 
 <a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noreferrer">https://github.com/Yeachan-Heo/oh-my-claudecode</a>
 #AI開発 #ClaudeCode</pre>
+                  <div class="badge-row"><span class="badge">TypeScript</span></div>
                 </article>
                 
-                <article class="card">
+                <article class="card" data-bucket="morning">
+                  <div class="card-header">
+                    <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">@</a>
+                      </div>
+                      <h2><a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">affaan-m/everything-claude-code</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>2026-04-01 16:05</span>
+                    <span class="date-label">通知 2026-04-01 16:05</span>
+                    <span>朝の新顔枠</span>
                     <span>score 132.78</span>
                     <span>stars 128528</span>
                     <span>JavaScript</span>
                   </div>
-                  <h2><a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">affaan-m/everything-claude-code</a></h2>
+                  
+                  
                   <pre>Claude CodeなどのAIエージェントの性能を最適化するシステムです。
 
 everything-claude-codeは、スキル、メモリ管理、セキュリティなどを統合し、開発効率を高めます。10ヶ月以上の実運用から進化した実用的なツールです。
@@ -292,16 +541,28 @@ AIを活用した開発の生産性向上を目指す開発者やチームに役
 
 <a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">https://github.com/affaan-m/everything-claude-code</a>
 #AI開発 #開発効率化</pre>
+                  <div class="badge-row"><span class="badge">JavaScript</span></div>
                 </article>
                 
-                <article class="card">
+                <article class="card" data-bucket="morning">
+                  <div class="card-header">
+                    <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">@</a>
+                      </div>
+                      <h2><a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">larksuite/cli</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>2026-04-01 15:20</span>
+                    <span class="date-label">通知 2026-04-01 15:20</span>
+                    <span>朝の新顔枠</span>
                     <span>score 62.67</span>
                     <span>stars 5619</span>
                     <span>Go</span>
                   </div>
-                  <h2><a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">larksuite/cli</a></h2>
+                  
+                  
                   <pre>Lark/Feishuの公式CLIツール「larksuite/cli」が公開されています。
 
 メッセンジャー、カレンダー、ドキュメントなど11の業務領域を、200以上のコマンドでCLIから操作できます。
@@ -310,16 +571,28 @@ AIエージェントが直接利用できる19のスキルも備えており、�
 
 <a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">https://github.com/larksuite/cli</a>
 #Lark #CLI</pre>
+                  <div class="badge-row"><span class="badge">Go</span></div>
                 </article>
                 
-                <article class="card">
+                <article class="card" data-bucket="morning">
+                  <div class="card-header">
+                    <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">@</a>
+                      </div>
+                      <h2><a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">wanshuiyin/Auto-claude-code-research-in-sleep</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>2026-04-01 15:20</span>
+                    <span class="date-label">通知 2026-04-01 15:20</span>
+                    <span>朝の新顔枠</span>
                     <span>score 63.33</span>
                     <span>stars 5060</span>
                     <span>Python</span>
                   </div>
-                  <h2><a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">wanshuiyin/Auto-claude-code-research-in-sleep</a></h2>
+                  
+                  
                   <pre>ARISは自律的な機械学習研究を支援するツールです。
 
 Claude CodeなどのLLMエージェントを使って、論文レビューや実験自動化を実行できます。マークダウンのみで構成され、依存関係がありません。
@@ -328,16 +601,28 @@ ML研究者がアイデア発見から実験、論文執筆までを効率化し
 
 <a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep</a>
 #AI研究 #自律エージェント</pre>
+                  <div class="badge-row"><span class="badge">Python</span></div>
                 </article>
                 
-                <article class="card">
+                <article class="card" data-bucket="morning">
+                  <div class="card-header">
+                    <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="">
+                    <div class="card-title-wrap">
+                      <div class="owner-line">
+                        <a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">@</a>
+                      </div>
+                      <h2><a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">Leonxlnx/claude-code-system-prompts</a></h2>
+                    </div>
+                  </div>
                   <div class="meta">
-                    <span>2026-04-01 15:20</span>
+                    <span class="date-label">通知 2026-04-01 15:20</span>
+                    <span>朝の新顔枠</span>
                     <span>score 64.0</span>
                     <span>stars 1365</span>
                     <span>N/A</span>
                   </div>
-                  <h2><a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">Leonxlnx/claude-code-system-prompts</a></h2>
+                  
+                  
                   <pre>AIコーディングアシスタントの仕組みに興味はありますか？
 
 claude-code-system-promptsは、Claude CodeのようなAIコーディングツールの内部プロンプト設計を分析した研究リポジトリです。動的プロンプト生成やセキュリティ分類など、実用的なパターンを再構築しています。
@@ -346,6 +631,7 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
 
 <a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">https://github.com/Leonxlnx/claude-code-system-prompts</a>
 #AI #プロンプトエンジニアリング</pre>
+                  <div class="badge-row"><span class="badge">N/A</span></div>
                 </article>
                 
             </section>
@@ -376,6 +662,19 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
         for (const panel of panels) panel.classList.remove('active');
         button.classList.add('active');
         document.getElementById(target)?.classList.add('active');
+      });
+    }
+    const filterButtons = document.querySelectorAll('[data-bucket-filter]');
+    const cards = document.querySelectorAll('[data-bucket]');
+    for (const button of filterButtons) {
+      button.addEventListener('click', () => {
+        const target = button.dataset.bucketFilter;
+        for (const item of filterButtons) item.classList.remove('active');
+        button.classList.add('active');
+        for (const card of cards) {
+          const matches = target === 'all' || card.dataset.bucket === target;
+          card.classList.toggle('hidden-by-filter', !matches);
+        }
       });
     }
   </script>
