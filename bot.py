@@ -47,6 +47,19 @@ class Config:
     cooldown_days: int
 
 
+def get_run_bucket(config: Config, now: datetime | None = None) -> str:
+    if now is None:
+        now = datetime.now(UTC)
+    local_now = now.astimezone(ZoneInfo(config.timezone))
+    slots = []
+    for index, clock in enumerate(config.notify_times):
+        hour, minute = map(int, clock.split(":"))
+        scheduled = local_now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        slots.append((abs((local_now - scheduled).total_seconds()), index))
+    slot_index = min(slots, key=lambda item: item[0])[1] if slots else 0
+    return "morning" if slot_index == 0 else "evening"
+
+
 def load_config() -> Config:
     load_dotenv()
     return Config(
@@ -252,6 +265,12 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       flex-wrap: wrap;
       margin: 0 0 22px;
     }}
+    .filter-bar {{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }}
     .tab-button {{
       border: 1px solid var(--line);
       background: rgba(255, 250, 240, 0.72);
@@ -273,6 +292,7 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
     }}
     .tab-panel {{ display: none; }}
     .tab-panel.active {{ display: block; }}
+    .card.hidden-by-filter {{ display: none; }}
     .card {{
       background: var(--panel);
       border: 1px solid var(--line);
@@ -494,6 +514,19 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
         document.getElementById(target)?.classList.add('active');
       }});
     }}
+    const filterButtons = document.querySelectorAll('[data-bucket-filter]');
+    const cards = document.querySelectorAll('[data-bucket]');
+    for (const button of filterButtons) {{
+      button.addEventListener('click', () => {{
+        const target = button.dataset.bucketFilter;
+        for (const item of filterButtons) item.classList.remove('active');
+        button.classList.add('active');
+        for (const card of cards) {{
+          const matches = target === 'all' || card.dataset.bucket === target;
+          card.classList.toggle('hidden-by-filter', !matches);
+        }}
+      }});
+    }}
   </script>
 </body>
 </html>
@@ -575,7 +608,12 @@ def days_since(iso_value: str) -> int:
     return max(0, (datetime.now(UTC) - dt).days)
 
 
-def score_repo(repo: dict[str, Any], state: dict[str, Any], config: Config) -> float:
+def score_repo(
+    repo: dict[str, Any],
+    state: dict[str, Any],
+    config: Config,
+    bucket: str = "morning",
+) -> float:
     repo_state = state["repos"].get(repo["full_name"], {})
     current_stars = repo["stargazers_count"]
     previous_stars = repo_state.get("last_stars", current_stars)
@@ -593,15 +631,41 @@ def score_repo(repo: dict[str, Any], state: dict[str, Any], config: Config) -> f
             if keyword in text:
                 niche_bonus += 1
 
+    weird_bonus = 0
+    weird_keywords = [
+        "retro",
+        "emulator",
+        "reverse",
+        "decompiler",
+        "engine",
+        "compiler",
+        "game",
+        "simulation",
+        "sandbox",
+        "self-hosted",
+        "offline",
+        "local-first",
+    ]
+    for keyword in weird_keywords:
+        if keyword in text:
+            weird_bonus += 1
+
     readme_bonus = 3 if repo.get("_readme_text") else 0
     freshness = max(0, 90 - created_days) / 90
     activity = max(0, 14 - pushed_days) / 14
 
     score = 0.0
-    score += star_growth * 0.45
-    score += freshness * 20
-    score += activity * 20
-    score += niche_bonus * 2
+    if bucket == "evening":
+        score += star_growth * 0.25
+        score += freshness * 10
+        score += activity * 16
+        score += niche_bonus * 3
+        score += weird_bonus * 5
+    else:
+        score += star_growth * 0.45
+        score += freshness * 20
+        score += activity * 20
+        score += niche_bonus * 2
     score += readme_bonus
     score += min(repo["stargazers_count"], 500) * 0.03
     return round(score, 2)
@@ -741,8 +805,8 @@ def build_telegram_message(repos: list[dict[str, Any]]) -> str:
     return "\n\n".join(parts)
 
 
-def build_telegram_messages(repos: list[dict[str, Any]]) -> list[str]:
-    messages = ["今日のGitHub面白そう枠"]
+def build_telegram_messages(repos: list[dict[str, Any]], bucket: str) -> list[str]:
+    messages = ["朝の新顔枠" if bucket == "morning" else "夜の尖り枠"]
     for repo in repos:
         x_post = repo["_x_post"]
         messages.append(x_post[:600])
@@ -765,8 +829,8 @@ def send_telegram_text(config: Config, text: str) -> None:
         )
 
 
-def post_to_telegram(config: Config, repos: list[dict[str, Any]]) -> None:
-    messages = build_telegram_messages(repos)
+def post_to_telegram(config: Config, repos: list[dict[str, Any]], bucket: str) -> None:
+    messages = build_telegram_messages(repos, bucket)
     if config.public_history_url:
         messages.append(f"過去ログを見る: {config.public_history_url}")
 
@@ -785,14 +849,19 @@ def send_telegram_test(config: Config) -> None:
     print("Telegram test sent.")
 
 
-def enrich_repositories(config: Config, repos: list[dict[str, Any]], state: dict[str, Any]) -> list[dict[str, Any]]:
+def enrich_repositories(
+    config: Config,
+    repos: list[dict[str, Any]],
+    state: dict[str, Any],
+    bucket: str,
+) -> list[dict[str, Any]]:
     enriched = []
     for repo in repos:
         if should_skip(repo, state, config):
             continue
         owner, name = repo["full_name"].split("/", 1)
         repo["_readme_text"] = fetch_readme(config, owner, name)
-        repo["_score"] = score_repo(repo, state, config)
+        repo["_score"] = score_repo(repo, state, config, bucket)
         enriched.append(repo)
     enriched.sort(key=lambda item: item["_score"], reverse=True)
     return enriched[: config.top_n]
@@ -810,7 +879,7 @@ def update_state(state: dict[str, Any], repos: list[dict[str, Any]]) -> None:
         }
 
 
-def append_history(repos: list[dict[str, Any]]) -> None:
+def append_history(repos: list[dict[str, Any]], bucket: str) -> None:
     history = load_history()
     sent_at = datetime.now(UTC).isoformat()
     for repo in repos:
@@ -830,6 +899,7 @@ def append_history(repos: list[dict[str, Any]]) -> None:
                 "owner_login": (repo.get("owner") or {}).get("login", ""),
                 "owner_avatar_url": (repo.get("owner") or {}).get("avatar_url", ""),
                 "owner_html_url": (repo.get("owner") or {}).get("html_url", ""),
+                "bucket": bucket,
             }
         )
     save_history(history[-300:])
@@ -866,13 +936,15 @@ def render_history_site() -> None:
             owner_login = escape(item.get("owner_login") or "")
             owner_html_url = escape(item.get("owner_html_url") or item["html_url"])
             owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
+            bucket = item.get("bucket") or "morning"
+            bucket_label = "朝の新顔枠" if bucket == "morning" else "夜の尖り枠"
             topics = "".join(
                 f'<span class="badge topic">#{escape(topic)}</span>'
                 for topic in (item.get("topics") or [])[:6]
             )
             cards.append(
                 f"""
-                <article class="card">
+                <article class="card" data-bucket="{escape(bucket)}">
                   <div class="card-header">
                     <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
                     <div class="card-title-wrap">
@@ -884,6 +956,7 @@ def render_history_site() -> None:
                   </div>
                   <div class="meta">
                     <span class="date-label">通知 {sent_at}</span>
+                    <span>{bucket_label}</span>
                     <span>score {item["score"]}</span>
                     <span>stars {item["stars"]}</span>
                     <span>{language}</span>
@@ -904,7 +977,14 @@ def render_history_site() -> None:
         )
 
     body_html = (
-        ("<div class='tabs'>" + "".join(tab_buttons) + "</div>" if tab_buttons else "")
+        (
+            "<div class='filter-bar'>"
+            "<button class='tab-button active' data-bucket-filter='all'>全部</button>"
+            "<button class='tab-button' data-bucket-filter='morning'>朝の新顔枠</button>"
+            "<button class='tab-button' data-bucket-filter='evening'>夜の尖り枠</button>"
+            "</div>"
+        )
+        + ("<div class='tabs'>" + "".join(tab_buttons) + "</div>" if tab_buttons else "")
         + (''.join(tab_panels) if tab_panels else '<p>まだ履歴はありません。</p>')
     )
     html = site_shell(
@@ -946,6 +1026,7 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
                 "owner_login": item.get("owner_login") or "",
                 "owner_avatar_url": item.get("owner_avatar_url") or "",
                 "owner_html_url": item.get("owner_html_url") or "",
+                "bucket": item.get("bucket") or "morning",
             },
         )
         entry["count"] += 1
@@ -1055,12 +1136,13 @@ def refresh_star_snapshots(state: dict[str, Any], repos: list[dict[str, Any]]) -
 
 def run_once(config: Config) -> None:
     now = datetime.now(UTC)
+    bucket = get_run_bucket(config, now)
     print("Searching repositories...")
     state = load_state()
     repos = search_repositories(config)
     print(f"Found {len(repos)} repositories.")
-    candidates = enrich_repositories(config, repos, state)
-    print(f"Selected {len(candidates)} candidates.")
+    candidates = enrich_repositories(config, repos, state, bucket)
+    print(f"Selected {len(candidates)} candidates for {bucket}.")
     if not candidates:
         refresh_star_snapshots(state, repos)
         save_state(state)
@@ -1085,11 +1167,11 @@ def run_once(config: Config) -> None:
             )
 
     print("Sending Telegram messages...")
-    post_to_telegram(config, candidates)
+    post_to_telegram(config, candidates, bucket)
     refresh_star_snapshots(state, repos)
     update_state(state, candidates)
     save_state(state)
-    append_history(candidates)
+    append_history(candidates, bucket)
     render_history_site()
     render_weekly_site(now)
     if now.astimezone(ZoneInfo(config.timezone)).weekday() == 0:
