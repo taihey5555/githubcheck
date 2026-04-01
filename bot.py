@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import sys
 import time
 from html import escape
@@ -97,6 +98,12 @@ def save_history(history: list[dict[str, Any]]) -> None:
         json.dumps(history, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+
+
+def linkify_text(text: str) -> str:
+    escaped = escape(text)
+    pattern = re.compile(r"(https?://[^\s<]+)")
+    return pattern.sub(r'<a href="\1" target="_blank" rel="noreferrer">\1</a>', escaped)
 
 
 def github_headers(config: Config) -> dict[str, str]:
@@ -452,7 +459,7 @@ def render_history_site() -> None:
             sent_at = escape(item["_display_time"])
             full_name = escape(item["full_name"])
             html_url = escape(item["html_url"])
-            x_post = escape(item["x_post"])
+            x_post = linkify_text(item["x_post"])
             language = escape(item["language"])
             cards.append(
                 f"""
