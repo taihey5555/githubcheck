@@ -40,6 +40,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PUBLIC_HISTORY_URL: ${{ vars.PUBLIC_HISTORY_URL || 'https://taihey5555.github.io/githubcheck/' }}
+          PUBLIC_WEEKLY_URL: ${{ vars.PUBLIC_WEEKLY_URL || 'https://taihey5555.github.io/githubcheck/weekly.html' }}
           TOP_N: ${{ vars.TOP_N || '3' }}
           NOTIFY_TIMES: ${{ vars.NOTIFY_TIMES || '09:00,20:00' }}
           TIMEZONE: ${{ vars.TIMEZONE || 'Asia/Tokyo' }}

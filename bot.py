@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import re
 import sys
 import time
 from html import escape
@@ -37,6 +38,7 @@ class Config:
     telegram_bot_token: str
     telegram_chat_id: str
     public_history_url: str
+    public_weekly_url: str
     top_n: int
     notify_times: list[str]
     timezone: str
@@ -53,6 +55,7 @@ def load_config() -> Config:
         telegram_bot_token=require_env("TELEGRAM_BOT_TOKEN"),
         telegram_chat_id=require_env("TELEGRAM_CHAT_ID"),
         public_history_url=os.getenv("PUBLIC_HISTORY_URL", "").strip(),
+        public_weekly_url=os.getenv("PUBLIC_WEEKLY_URL", "").strip(),
         top_n=int(os.getenv("TOP_N", "3")),
         notify_times=parse_csv(os.getenv("NOTIFY_TIMES", "09:00")),
         timezone=os.getenv("TIMEZONE", "Asia/Tokyo"),
@@ -98,6 +101,16 @@ def save_history(history: list[dict[str, Any]]) -> None:
         json.dumps(history, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+
+
+def parse_sent_at(sent_at: str) -> datetime:
+    return datetime.fromisoformat(sent_at).astimezone(ZoneInfo("Asia/Tokyo"))
+
+
+def linkify_text(text: str) -> str:
+    escaped = escape(text)
+    pattern = re.compile(r"(https?://[^\s<]+)")
+    return pattern.sub(r'<a href="\1" target="_blank" rel="noreferrer">\1</a>', escaped)
 
 
 def linkify_text(text: str) -> str:
@@ -349,43 +362,39 @@ def build_telegram_messages(repos: list[dict[str, Any]]) -> list[str]:
     return messages
 
 
+def send_telegram_text(config: Config, text: str) -> None:
+    response = requests.post(
+        f"https://api.telegram.org/bot{config.telegram_bot_token}/sendMessage",
+        json={
+            "chat_id": config.telegram_chat_id,
+            "text": text,
+            "disable_web_page_preview": False,
+        },
+        timeout=30,
+    )
+    if not response.ok:
+        raise RuntimeError(
+            f"status={response.status_code}, body={response.text}"
+        )
+
+
 def post_to_telegram(config: Config, repos: list[dict[str, Any]]) -> None:
     messages = build_telegram_messages(repos)
     if config.public_history_url:
         messages.append(f"過去ログを見る: {config.public_history_url}")
 
     for index, chunk in enumerate(messages, start=1):
-        response = requests.post(
-            f"https://api.telegram.org/bot{config.telegram_bot_token}/sendMessage",
-            json={
-                "chat_id": config.telegram_chat_id,
-                "text": chunk,
-                "disable_web_page_preview": False,
-            },
-            timeout=30,
-        )
-        if not response.ok:
+        try:
+            send_telegram_text(config, chunk)
+        except RuntimeError as exc:
             raise RuntimeError(
                 "Telegram send failed: "
-                f"message_index={index}, status={response.status_code}, "
-                f"body={response.text}, preview={chunk[:300]!r}"
+                f"message_index={index}, detail={exc}, preview={chunk[:300]!r}"
             )
 
 
 def send_telegram_test(config: Config) -> None:
-    response = requests.post(
-        f"https://api.telegram.org/bot{config.telegram_bot_token}/sendMessage",
-        json={
-            "chat_id": config.telegram_chat_id,
-            "text": "telegram test from github notifier",
-            "disable_web_page_preview": True,
-        },
-        timeout=30,
-    )
-    if not response.ok:
-        raise RuntimeError(
-            f"Telegram test failed: status={response.status_code}, body={response.text}"
-        )
+    send_telegram_text(config, "telegram test from github notifier")
     print("Telegram test sent.")
 
 
@@ -615,6 +624,147 @@ def render_history_site() -> None:
     (DOCS_DIR / "index.html").write_text(html, encoding="utf-8")
 
 
+def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[list[dict[str, Any]], str]:
+    tokyo_now = now.astimezone(ZoneInfo("Asia/Tokyo"))
+    week_start = (tokyo_now - timedelta(days=tokyo_now.weekday())).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+    previous_week_start = week_start - timedelta(days=7)
+    previous_week_end = week_start
+
+    aggregated: dict[str, dict[str, Any]] = {}
+    for item in history:
+        sent_at_dt = parse_sent_at(item["sent_at"])
+        if not (previous_week_start <= sent_at_dt < previous_week_end):
+            continue
+        entry = aggregated.setdefault(
+            item["full_name"],
+            {
+                "full_name": item["full_name"],
+                "html_url": item["html_url"],
+                "language": item["language"],
+                "count": 0,
+                "best_score": 0.0,
+                "latest_x_post": item["x_post"],
+                "latest_sent_at": sent_at_dt,
+                "stars": item["stars"],
+            },
+        )
+        entry["count"] += 1
+        if item["score"] >= entry["best_score"]:
+            entry["best_score"] = item["score"]
+            entry["latest_x_post"] = item["x_post"]
+            entry["stars"] = item["stars"]
+        if sent_at_dt > entry["latest_sent_at"]:
+            entry["latest_sent_at"] = sent_at_dt
+
+    ranking = sorted(
+        aggregated.values(),
+        key=lambda item: (item["count"], item["best_score"], item["stars"]),
+        reverse=True,
+    )[:10]
+    label = (
+        f"{previous_week_start.month}/{previous_week_start.day}"
+        f" - {(previous_week_end - timedelta(days=1)).month}/{(previous_week_end - timedelta(days=1)).day}"
+    )
+    return ranking, label
+
+
+def render_weekly_site(now: datetime | None = None) -> None:
+    history = load_history()
+    if now is None:
+        now = datetime.now(UTC)
+    ranking, label = build_weekly_ranking(history, now)
+    cards = []
+    for index, item in enumerate(ranking, start=1):
+        cards.append(
+            f"""
+            <article class="card">
+              <div class="meta">
+                <span>#{index}</span>
+                <span>score {item["best_score"]}</span>
+                <span>picked {item["count"]} times</span>
+                <span>{escape(item["language"])}</span>
+              </div>
+              <h2><a href="{escape(item["html_url"])}" target="_blank" rel="noreferrer">{escape(item["full_name"])}</a></h2>
+              <pre>{linkify_text(item["latest_x_post"])}</pre>
+            </article>
+            """
+        )
+
+    html = f"""<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weekly Top 10</title>
+  <style>
+    :root {{
+      --bg: #eef6ff;
+      --panel: rgba(255,255,255,0.82);
+      --ink: #14213d;
+      --muted: #5c6b80;
+      --line: #cbd5e1;
+      --accent: #0f766e;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, #bfdbfe 0, transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef6ff 100%);
+    }}
+    main {{ max-width: 920px; margin: 0 auto; padding: 40px 20px 64px; }}
+    h1 {{ margin: 0 0 8px; font-size: clamp(32px, 6vw, 56px); line-height: 1; letter-spacing: -0.04em; }}
+    p {{ margin: 0 0 24px; color: var(--muted); }}
+    .card {{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      margin: 0 0 16px;
+      box-shadow: 0 14px 30px rgba(20, 33, 61, 0.08);
+      backdrop-filter: blur(10px);
+    }}
+    .meta {{ display: flex; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; margin-bottom: 10px; }}
+    h2 {{ margin: 0 0 10px; font-size: 20px; }}
+    a {{ color: var(--accent); text-decoration: none; }}
+    pre {{ white-space: pre-wrap; word-break: break-word; margin: 0; font: inherit; line-height: 1.7; }}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Weekly Top 10</h1>
+    <p>{escape(label)} の通知履歴から作ったランキングです。毎週月曜日に更新されます。</p>
+    {''.join(cards) if cards else '<p>まだ週間ランキングはありません。</p>'}
+  </main>
+</body>
+</html>
+"""
+    DOCS_DIR.mkdir(exist_ok=True)
+    (DOCS_DIR / "weekly.html").write_text(html, encoding="utf-8")
+
+
+def build_weekly_telegram_message(config: Config, now: datetime | None = None) -> str:
+    if now is None:
+        now = datetime.now(UTC)
+    ranking, label = build_weekly_ranking(load_history(), now)
+    if not ranking:
+        return ""
+
+    lines = [f"週間トップ10 {label}"]
+    for index, item in enumerate(ranking, start=1):
+        lines.append(
+            f"{index}. {item['full_name']} | score={item['best_score']} | picked={item['count']}"
+        )
+    if config.public_weekly_url:
+        lines.append("")
+        lines.append(f"ページで見る: {config.public_weekly_url}")
+    return "\n".join(lines)
+
+
 def refresh_star_snapshots(state: dict[str, Any], repos: list[dict[str, Any]]) -> None:
     now_iso = datetime.now(UTC).isoformat()
     for repo in repos:
@@ -625,6 +775,7 @@ def refresh_star_snapshots(state: dict[str, Any], repos: list[dict[str, Any]]) -
 
 
 def run_once(config: Config) -> None:
+    now = datetime.now(UTC)
     print("Searching repositories...")
     state = load_state()
     repos = search_repositories(config)
@@ -661,6 +812,11 @@ def run_once(config: Config) -> None:
     save_state(state)
     append_history(candidates)
     render_history_site()
+    render_weekly_site(now)
+    if now.astimezone(ZoneInfo(config.timezone)).weekday() == 0:
+        weekly_message = build_weekly_telegram_message(config, now)
+        if weekly_message:
+            send_telegram_text(config, weekly_message)
     print(f"Posted {len(candidates)} repositories.")
 
 
