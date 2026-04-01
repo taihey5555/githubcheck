@@ -696,6 +696,13 @@ def build_deepseek_summary(config: Config, repo: dict[str, Any]) -> str:
                 "content": (
                     "以下のGitHubリポジトリを日本語で要約してください。\n"
                     "出力は必ず次の形式にしてください。\n\n"
+                    "[pick_reason]\n"
+                    "1行で短く、この repo を拾った理由を書く\n"
+                    "条件:\n"
+                    "- 28文字以内を目安にする\n"
+                    "- 箇条書きにしない\n"
+                    "- score や数値をそのまま並べない\n"
+                    "- 新しさ、伸び、尖り、用途のどれかを短く示す\n\n"
                     "[telegram]\n"
                     "1行目: 何が面白いかを20文字前後で\n"
                     "2行目: どんな用途かを1文\n"
@@ -754,9 +761,17 @@ def build_deepseek_summary(config: Config, repo: dict[str, Any]) -> str:
     return data["choices"][0]["message"]["content"].strip()
 
 
-def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, str]:
+def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, str, str]:
+    pick_reason = ""
     telegram_text = ""
     x_text = ""
+
+    if "[pick_reason]" in content:
+        _, content = content.split("[pick_reason]", 1)
+        if "[telegram]" in content:
+            pick_part, content = content.split("[telegram]", 1)
+            pick_reason = pick_part.strip()
+            content = "[telegram]" + content
 
     if "[telegram]" in content and "[x]" in content:
         telegram_part, x_part = content.split("[x]", 1)
@@ -764,6 +779,14 @@ def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, st
         x_text = x_part.strip()
     else:
         telegram_text = content.strip()
+
+    if not pick_reason:
+        if repo.get("_score", 0) >= 40:
+            pick_reason = "直近で伸びが強い"
+        elif repo.get("description"):
+            pick_reason = "用途が分かりやすい"
+        else:
+            pick_reason = "今の注目候補"
 
     if not telegram_text:
         telegram_text = (
@@ -781,7 +804,7 @@ def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, st
             "#GitHub"
         )
 
-    return telegram_text, x_text
+    return telegram_text, x_text, pick_reason[:40]
 
 
 def build_telegram_message(repos: list[dict[str, Any]]) -> str:
@@ -809,7 +832,11 @@ def build_telegram_messages(repos: list[dict[str, Any]], bucket: str) -> list[st
     messages = ["朝の新顔枠" if bucket == "morning" else "夜の尖り枠"]
     for repo in repos:
         x_post = repo["_x_post"]
-        messages.append(x_post[:600])
+        pick_reason = (repo.get("_pick_reason") or "").strip()
+        if pick_reason:
+            messages.append(f"選定理由: {pick_reason}\n{x_post[:600]}")
+        else:
+            messages.append(x_post[:600])
     return messages
 
 
@@ -900,6 +927,7 @@ def append_history(repos: list[dict[str, Any]], bucket: str) -> None:
                 "owner_avatar_url": (repo.get("owner") or {}).get("avatar_url", ""),
                 "owner_html_url": (repo.get("owner") or {}).get("html_url", ""),
                 "bucket": bucket,
+                "pick_reason": repo.get("_pick_reason") or "",
             }
         )
     save_history(history[-300:])
@@ -938,6 +966,7 @@ def render_history_site() -> None:
             owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
             bucket = item.get("bucket") or "morning"
             bucket_label = "朝の新顔枠" if bucket == "morning" else "夜の尖り枠"
+            pick_reason = escape(item.get("pick_reason") or "")
             topics = "".join(
                 f'<span class="badge topic">#{escape(topic)}</span>'
                 for topic in (item.get("topics") or [])[:6]
@@ -961,6 +990,7 @@ def render_history_site() -> None:
                     <span>stars {item["stars"]}</span>
                     <span>{language}</span>
                   </div>
+                  {f'<p class="description">選定理由: {pick_reason}</p>' if pick_reason else ''}
                   {f'<p class="description">{description}</p>' if description else ''}
                   <pre>{x_post}</pre>
                   {f'<div class="badge-row"><span class="badge">{language}</span>{topics}</div>' if topics or language else ''}
@@ -1027,6 +1057,7 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
                 "owner_avatar_url": item.get("owner_avatar_url") or "",
                 "owner_html_url": item.get("owner_html_url") or "",
                 "bucket": item.get("bucket") or "morning",
+                "pick_reason": item.get("pick_reason") or "",
             },
         )
         entry["count"] += 1
@@ -1067,6 +1098,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         owner_html_url = escape(item.get("owner_html_url") or item["html_url"])
         owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
         description = escape(item.get("description") or "")
+        pick_reason = escape(item.get("pick_reason") or "")
         topics = "".join(
             f'<span class="badge topic">#{escape(topic)}</span>'
             for topic in (item.get("topics") or [])[:6]
@@ -1090,6 +1122,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
                 <span>stars {item["stars"]}</span>
                 <span>{escape(item["language"])}</span>
               </div>
+              {f'<p class="description">選定理由: {pick_reason}</p>' if pick_reason else ''}
               {f'<p class="description">{description}</p>' if description else ''}
               <pre>{linkify_text(item["latest_x_post"])}</pre>
               {f'<div class="badge-row"><span class="badge">{escape(item["language"])}</span>{topics}</div>' if topics or item.get("language") else ''}
@@ -1153,7 +1186,7 @@ def run_once(config: Config) -> None:
         print(f"Summarizing {repo['full_name']}...")
         try:
             generated = build_deepseek_summary(config, repo)
-            repo["_summary"], repo["_x_post"] = split_generated_content(generated, repo)
+            repo["_summary"], repo["_x_post"], repo["_pick_reason"] = split_generated_content(generated, repo)
         except Exception:
             repo["_summary"] = (
                 f"{repo.get('description') or '説明なし'}\n"
@@ -1165,6 +1198,7 @@ def run_once(config: Config) -> None:
                 f"{repo['full_name']} は {repo.get('description') or '説明なし'}。"
                 f" {repo['html_url']} #GitHub"
             )
+            repo["_pick_reason"] = "今の注目候補"
 
     print("Sending Telegram messages...")
     post_to_telegram(config, candidates, bucket)

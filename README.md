@@ -75,3 +75,13 @@ Windowsならタスクスケジューラで `python bot.py once` を時刻指定
 - star 数
 
 その週に継続して強かった repo が上に来る仕組みです。
+
+## 軽い Agent 性
+
+この bot には大きな自律制御は入れておらず、軽い agent 層として `pick_reason` だけを追加しています。
+`pick_reason` は「なぜこの repo を拾ったか」を短く示す補助情報で、Telegram 通知と履歴ページで使います。
+
+## Skill
+
+repo ローカルの skill は `skills/repo-digest/SKILL.md` だけです。
+通知文、`pick_reason`、履歴メタの拡張を最小変更で扱う時の方針だけを持たせています。
