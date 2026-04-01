@@ -429,25 +429,51 @@ def append_history(repos: list[dict[str, Any]]) -> None:
 
 def render_history_site() -> None:
     history = list(reversed(load_history()))
-    cards = []
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    tokyo = ZoneInfo("Asia/Tokyo")
     for item in history:
-        sent_at = escape(item["sent_at"].replace("T", " ")[:16])
-        full_name = escape(item["full_name"])
-        html_url = escape(item["html_url"])
-        x_post = escape(item["x_post"])
-        language = escape(item["language"])
-        cards.append(
+        sent_at_dt = datetime.fromisoformat(item["sent_at"]).astimezone(tokyo)
+        day_key = f"{sent_at_dt.month}/{sent_at_dt.day}"
+        item["_display_time"] = sent_at_dt.strftime("%Y-%m-%d %H:%M")
+        grouped.setdefault(day_key, []).append(item)
+
+    tab_buttons = []
+    tab_panels = []
+    for index, (day_key, items) in enumerate(grouped.items()):
+        button_class = "tab-button active" if index == 0 else "tab-button"
+        panel_class = "tab-panel active" if index == 0 else "tab-panel"
+        tab_id = f"tab-{index}"
+        tab_buttons.append(
+            f'<button class="{button_class}" data-tab="{tab_id}">{escape(day_key)}</button>'
+        )
+
+        cards = []
+        for item in items:
+            sent_at = escape(item["_display_time"])
+            full_name = escape(item["full_name"])
+            html_url = escape(item["html_url"])
+            x_post = escape(item["x_post"])
+            language = escape(item["language"])
+            cards.append(
+                f"""
+                <article class="card">
+                  <div class="meta">
+                    <span>{sent_at}</span>
+                    <span>score {item["score"]}</span>
+                    <span>stars {item["stars"]}</span>
+                    <span>{language}</span>
+                  </div>
+                  <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
+                  <pre>{x_post}</pre>
+                </article>
+                """
+            )
+
+        tab_panels.append(
             f"""
-            <article class="card">
-              <div class="meta">
-                <span>{sent_at} UTC</span>
-                <span>score {item["score"]}</span>
-                <span>stars {item["stars"]}</span>
-                <span>{language}</span>
-              </div>
-              <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
-              <pre>{x_post}</pre>
-            </article>
+            <section id="{tab_id}" class="{panel_class}">
+              {''.join(cards)}
+            </section>
             """
         )
 
@@ -490,6 +516,37 @@ def render_history_site() -> None:
       margin: 0 0 24px;
       color: var(--muted);
     }}
+    .tabs {{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 22px;
+    }}
+    .tab-button {{
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.72);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 120ms ease, background 120ms ease;
+    }}
+    .tab-button:hover {{
+      transform: translateY(-1px);
+      background: #fff;
+    }}
+    .tab-button.active {{
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }}
+    .tab-panel {{
+      display: none;
+    }}
+    .tab-panel.active {{
+      display: block;
+    }}
     .card {{
       background: rgba(255, 250, 240, 0.88);
       border: 1px solid var(--line);
@@ -527,9 +584,23 @@ def render_history_site() -> None:
 <body>
   <main>
     <h1>Repo History</h1>
-    <p>Telegram に送った X 投稿文の履歴です。新しい順に並びます。</p>
-    {''.join(cards) if cards else '<p>まだ履歴はありません。</p>'}
+    <p>Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。</p>
+    {"<div class='tabs'>" + ''.join(tab_buttons) + "</div>" if tab_buttons else ""}
+    {''.join(tab_panels) if tab_panels else '<p>まだ履歴はありません。</p>'}
   </main>
+  <script>
+    const buttons = document.querySelectorAll('.tab-button');
+    const panels = document.querySelectorAll('.tab-panel');
+    for (const button of buttons) {{
+      button.addEventListener('click', () => {{
+        const target = button.dataset.tab;
+        for (const item of buttons) item.classList.remove('active');
+        for (const panel of panels) panel.classList.remove('active');
+        button.classList.add('active');
+        document.getElementById(target)?.classList.add('active');
+      }});
+    }}
+  </script>
 </body>
 </html>
 """
