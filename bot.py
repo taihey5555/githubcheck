@@ -35,6 +35,7 @@ class Config:
     deepseek_api_key: str
     telegram_bot_token: str
     telegram_chat_id: str
+    public_history_url: str
     top_n: int
     notify_times: list[str]
     timezone: str
@@ -50,6 +51,7 @@ def load_config() -> Config:
         deepseek_api_key=require_env("DEEPSEEK_API_KEY"),
         telegram_bot_token=require_env("TELEGRAM_BOT_TOKEN"),
         telegram_chat_id=require_env("TELEGRAM_CHAT_ID"),
+        public_history_url=os.getenv("PUBLIC_HISTORY_URL", "").strip(),
         top_n=int(os.getenv("TOP_N", "3")),
         notify_times=parse_csv(os.getenv("NOTIFY_TIMES", "09:00")),
         timezone=os.getenv("TIMEZONE", "Asia/Tokyo"),
@@ -341,7 +343,11 @@ def build_telegram_messages(repos: list[dict[str, Any]]) -> list[str]:
 
 
 def post_to_telegram(config: Config, repos: list[dict[str, Any]]) -> None:
-    for index, chunk in enumerate(build_telegram_messages(repos), start=1):
+    messages = build_telegram_messages(repos)
+    if config.public_history_url:
+        messages.append(f"過去ログを見る: {config.public_history_url}")
+
+    for index, chunk in enumerate(messages, start=1):
         response = requests.post(
             f"https://api.telegram.org/bot{config.telegram_bot_token}/sendMessage",
             json={
