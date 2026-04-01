@@ -192,18 +192,20 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       cursor: pointer;
       padding: 0;
     }}
-    .menu-toggle span,
-    .menu-toggle::before,
-    .menu-toggle::after {{
-      content: "";
+    .menu-icon {{
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }}
+    .menu-icon span {{
       display: block;
       width: 18px;
       height: 2px;
       background: var(--ink);
       border-radius: 999px;
-      transition: transform 120ms ease, opacity 120ms ease;
     }}
-    .menu-toggle span {{ margin: 4px 0; }}
     .site-nav {{
       display: flex;
       gap: 10px;
@@ -446,7 +448,11 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
         <span>repo digest and weekly ranking</span>
       </a>
       <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
-        <span></span>
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
       <nav id="site-nav" class="site-nav">
         <a href="./index.html" {history_active}>履歴</a>
