@@ -45,3 +45,28 @@ python bot.py daemon
 ```
 
 Windowsならタスクスケジューラで `python bot.py once` を時刻指定で回す方が安定します。
+
+## ランキング基準
+
+### 通常通知
+
+通知候補の repo は以下をもとに点数化しています。
+
+- 前回観測時からの star 増加
+- repo の新しさ
+- 最近 push されているか
+- `ai`, `cli`, `automation`, `security`, `developer-tools` への一致
+- README があるか
+- 現在の star 数
+
+要するに、最近伸びていて、新しく、ちゃんと動いている repo を優先します。
+
+### 週間トップ10
+
+週間トップ10は、直前1週間に通知した履歴から集計します。
+
+- その週に何回ピックされたか
+- その repo の最高 score
+- star 数
+
+その週に継続して強かった repo が上に来る仕組みです。
