@@ -113,6 +113,283 @@ def linkify_text(text: str) -> str:
     return pattern.sub(r'<a href="\1" target="_blank" rel="noreferrer">\1</a>', escaped)
 
 
+def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> str:
+    history_active = 'aria-current="page"' if current_page == "history" else ""
+    weekly_active = 'aria-current="page"' if current_page == "weekly" else ""
+    return f"""<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{escape(title)}</title>
+  <style>
+    :root {{
+      --bg: #f5efe4;
+      --bg-alt: #eaf3ff;
+      --panel: rgba(255, 252, 245, 0.88);
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: rgba(148, 163, 184, 0.35);
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fde68a 0, transparent 24%),
+        radial-gradient(circle at top right, #bfdbfe 0, transparent 26%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }}
+    a {{
+      color: var(--accent);
+      text-decoration: none;
+    }}
+    .site-header {{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 250, 240, 0.82);
+      border-bottom: 1px solid var(--line);
+    }}
+    .header-inner {{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }}
+    .brand {{
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+      color: var(--ink);
+    }}
+    .brand strong {{
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }}
+    .brand span {{
+      font-size: 13px;
+      color: var(--muted);
+    }}
+    .menu-toggle {{
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }}
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {{
+      content: "";
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 999px;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }}
+    .menu-toggle span {{ margin: 4px 0; }}
+    .site-nav {{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }}
+    .site-nav a {{
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }}
+    .site-nav a[aria-current="page"] {{
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }}
+    .site-nav a:hover {{
+      background: rgba(255,255,255,0.72);
+      border-color: var(--line);
+    }}
+    main {{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 20px 64px;
+    }}
+    .hero {{
+      margin-bottom: 24px;
+    }}
+    .hero h1 {{
+      margin: 0 0 10px;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }}
+    .hero p {{
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 720px;
+    }}
+    .tabs {{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 22px;
+    }}
+    .tab-button {{
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.72);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 120ms ease, background 120ms ease;
+    }}
+    .tab-button:hover {{
+      transform: translateY(-1px);
+      background: #fff;
+    }}
+    .tab-button.active {{
+      background: var(--accent-2);
+      color: white;
+      border-color: var(--accent-2);
+    }}
+    .tab-panel {{ display: none; }}
+    .tab-panel.active {{ display: block; }}
+    .card {{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      margin: 0 0 16px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }}
+    .meta {{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }}
+    h2 {{
+      margin: 0 0 10px;
+      font-size: clamp(20px, 3vw, 24px);
+      line-height: 1.15;
+    }}
+    pre {{
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      font: inherit;
+      line-height: 1.7;
+    }}
+    @media (max-width: 720px) {{
+      .menu-toggle {{
+        display: inline-flex;
+      }}
+      .site-nav {{
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 20px;
+        left: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 250, 240, 0.96);
+        box-shadow: var(--shadow);
+      }}
+      .site-nav.open {{
+        display: flex;
+      }}
+      .site-nav a {{
+        width: 100%;
+        text-align: center;
+      }}
+      main {{
+        padding-top: 28px;
+      }}
+      .card {{
+        padding: 16px;
+      }}
+    }}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./index.html">
+        <strong>GitHub Check</strong>
+        <span>repo digest and weekly ranking</span>
+      </a>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="./index.html" {history_active}>履歴</a>
+        <a href="./weekly.html" {weekly_active}>週間トップ10</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>{escape(title)}</h1>
+      <p>{escape(subtitle)}</p>
+    </section>
+    {body_html}
+  </main>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('site-nav');
+    if (toggle && nav) {{
+      toggle.addEventListener('click', () => {{
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        nav.classList.toggle('open');
+      }});
+      nav.querySelectorAll('a').forEach((link) => {{
+        link.addEventListener('click', () => {{
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }});
+      }});
+    }}
+    const buttons = document.querySelectorAll('.tab-button');
+    const panels = document.querySelectorAll('.tab-panel');
+    for (const button of buttons) {{
+      button.addEventListener('click', () => {{
+        const target = button.dataset.tab;
+        for (const item of buttons) item.classList.remove('active');
+        for (const panel of panels) panel.classList.remove('active');
+        button.classList.add('active');
+        document.getElementById(target)?.classList.add('active');
+      }});
+    }}
+  </script>
+</body>
+</html>
+"""
+
+
 def linkify_text(text: str) -> str:
     escaped = escape(text)
     pattern = re.compile(r"(https?://[^\s<]+)")
@@ -493,133 +770,16 @@ def render_history_site() -> None:
             """
         )
 
-    html = f"""<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GitHub Repo Notifier History</title>
-  <style>
-    :root {{
-      --bg: #f3efe6;
-      --panel: #fffaf0;
-      --ink: #1f2937;
-      --muted: #6b7280;
-      --line: #d6d3d1;
-      --accent: #b45309;
-    }}
-    * {{ box-sizing: border-box; }}
-    body {{
-      margin: 0;
-      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, #fde68a 0, transparent 30%),
-        linear-gradient(180deg, #fffaf0 0%, #f3efe6 100%);
-    }}
-    main {{
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 40px 20px 64px;
-    }}
-    h1 {{
-      margin: 0 0 8px;
-      font-size: clamp(32px, 6vw, 56px);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }}
-    p {{
-      margin: 0 0 24px;
-      color: var(--muted);
-    }}
-    .tabs {{
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 0 0 22px;
-    }}
-    .tab-button {{
-      border: 1px solid var(--line);
-      background: rgba(255, 250, 240, 0.72);
-      color: var(--ink);
-      padding: 10px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      font: inherit;
-      transition: transform 120ms ease, background 120ms ease;
-    }}
-    .tab-button:hover {{
-      transform: translateY(-1px);
-      background: #fff;
-    }}
-    .tab-button.active {{
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }}
-    .tab-panel {{
-      display: none;
-    }}
-    .tab-panel.active {{
-      display: block;
-    }}
-    .card {{
-      background: rgba(255, 250, 240, 0.88);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 18px;
-      margin: 0 0 16px;
-      box-shadow: 0 14px 30px rgba(31, 41, 55, 0.08);
-      backdrop-filter: blur(10px);
-    }}
-    .meta {{
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }}
-    h2 {{
-      margin: 0 0 10px;
-      font-size: 20px;
-    }}
-    a {{
-      color: var(--accent);
-      text-decoration: none;
-    }}
-    pre {{
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin: 0;
-      font: inherit;
-      line-height: 1.7;
-    }}
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Repo History</h1>
-    <p>Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。</p>
-    {"<div class='tabs'>" + ''.join(tab_buttons) + "</div>" if tab_buttons else ""}
-    {''.join(tab_panels) if tab_panels else '<p>まだ履歴はありません。</p>'}
-  </main>
-  <script>
-    const buttons = document.querySelectorAll('.tab-button');
-    const panels = document.querySelectorAll('.tab-panel');
-    for (const button of buttons) {{
-      button.addEventListener('click', () => {{
-        const target = button.dataset.tab;
-        for (const item of buttons) item.classList.remove('active');
-        for (const panel of panels) panel.classList.remove('active');
-        button.classList.add('active');
-        document.getElementById(target)?.classList.add('active');
-      }});
-    }}
-  </script>
-</body>
-</html>
-"""
+    body_html = (
+        ("<div class='tabs'>" + "".join(tab_buttons) + "</div>" if tab_buttons else "")
+        + (''.join(tab_panels) if tab_panels else '<p>まだ履歴はありません。</p>')
+    )
+    html = site_shell(
+        "Repo History",
+        "Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。",
+        body_html,
+        "history",
+    )
     DOCS_DIR.mkdir(exist_ok=True)
     (DOCS_DIR / "index.html").write_text(html, encoding="utf-8")
 
@@ -692,57 +852,12 @@ def render_weekly_site(now: datetime | None = None) -> None:
             """
         )
 
-    html = f"""<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Weekly Top 10</title>
-  <style>
-    :root {{
-      --bg: #eef6ff;
-      --panel: rgba(255,255,255,0.82);
-      --ink: #14213d;
-      --muted: #5c6b80;
-      --line: #cbd5e1;
-      --accent: #0f766e;
-    }}
-    * {{ box-sizing: border-box; }}
-    body {{
-      margin: 0;
-      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top right, #bfdbfe 0, transparent 30%),
-        linear-gradient(180deg, #f8fbff 0%, #eef6ff 100%);
-    }}
-    main {{ max-width: 920px; margin: 0 auto; padding: 40px 20px 64px; }}
-    h1 {{ margin: 0 0 8px; font-size: clamp(32px, 6vw, 56px); line-height: 1; letter-spacing: -0.04em; }}
-    p {{ margin: 0 0 24px; color: var(--muted); }}
-    .card {{
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 18px;
-      margin: 0 0 16px;
-      box-shadow: 0 14px 30px rgba(20, 33, 61, 0.08);
-      backdrop-filter: blur(10px);
-    }}
-    .meta {{ display: flex; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; margin-bottom: 10px; }}
-    h2 {{ margin: 0 0 10px; font-size: 20px; }}
-    a {{ color: var(--accent); text-decoration: none; }}
-    pre {{ white-space: pre-wrap; word-break: break-word; margin: 0; font: inherit; line-height: 1.7; }}
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Weekly Top 10</h1>
-    <p>{escape(label)} の通知履歴から作ったランキングです。毎週月曜日に更新されます。</p>
-    {''.join(cards) if cards else '<p>まだ週間ランキングはありません。</p>'}
-  </main>
-</body>
-</html>
-"""
+    html = site_shell(
+        "Weekly Top 10",
+        f"{label} の通知履歴から作ったランキングです。毎週月曜日に更新されます。",
+        ''.join(cards) if cards else '<p>まだ週間ランキングはありません。</p>',
+        "weekly",
+    )
     DOCS_DIR.mkdir(exist_ok=True)
     (DOCS_DIR / "weekly.html").write_text(html, encoding="utf-8")
 
