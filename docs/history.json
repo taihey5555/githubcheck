@@ -31,5 +31,38 @@
     "stars": 5619,
     "forks": 280,
     "language": "Go"
+  },
+  {
+    "sent_at": "2026-04-01T07:05:41.378820+00:00",
+    "full_name": "affaan-m/everything-claude-code",
+    "html_url": "https://github.com/affaan-m/everything-claude-code",
+    "x_post": "Claude CodeなどのAIエージェントの性能を最適化するシステムです。\n\neverything-claude-codeは、スキル、メモリ管理、セキュリティなどを統合し、開発効率を高めます。10ヶ月以上の実運用から進化した実用的なツールです。\n\nAIを活用した開発の生産性向上を目指す開発者やチームに役立ちます。\n\nhttps://github.com/affaan-m/everything-claude-code\n#AI開発 #開発効率化",
+    "summary": "Claude Codeの性能を最大化するシステム\nAIエージェントの効率とセキュリティを向上させる\nスキル、メモリ最適化、継続学習を統合\nAI駆動開発の生産性を高めたい開発者向け",
+    "score": 132.78,
+    "stars": 128528,
+    "forks": 17976,
+    "language": "JavaScript"
+  },
+  {
+    "sent_at": "2026-04-01T07:05:41.378820+00:00",
+    "full_name": "Yeachan-Heo/oh-my-claudecode",
+    "html_url": "https://github.com/Yeachan-Heo/oh-my-claudecode",
+    "x_post": "Claude Codeのマルチエージェント編成ツール「oh-my-claudecode」です。\n\n自然言語で指示するだけで、複数のAIエージェントがチームとして作業を自動分散します。チームベースの段階的パイプラインで実行されるため、複雑なタスクも効率的に進められます。\n\nAIを使った開発効率化や、コードレビュー、リファクタリングなどの作業を自動化したい開発者に適しています。\n\nhttps://github.com/Yeachan-Heo/oh-my-claudecode\n#AI開発 #ClaudeCode",
+    "summary": "Claude Codeのチーム型マルチエージェント編成\n自然言語で複数エージェントに作業を自動分散\nチームベースの段階的パイプライン実行が特徴\nAI支援開発で効率を上げたい開発者向け",
+    "score": 84.48,
+    "stars": 19758,
+    "forks": 1548,
+    "language": "TypeScript"
+  },
+  {
+    "sent_at": "2026-04-01T07:05:41.378820+00:00",
+    "full_name": "jackwener/opencli",
+    "html_url": "https://github.com/jackwener/opencli",
+    "x_post": "WebサイトやElectronアプリをCLIから操作できるツール。\n\nopencliは、BilibiliやTwitterなどのWebサイト、ローカルCLIツールを統一的なコマンドラインインターフェースに変換します。既存のChromeログインを再利用するので安全です。\n\n自動化スクリプトの作成や、AIエージェントにツールを統合したい開発者に適しています。\n\nhttps://github.com/jackwener/opencli\n#CLI #自動化",
+    "summary": "WebやElectronアプリをCLI化\n既存サイトやアプリをコマンドラインで操作\nAIエージェントがツールを発見・実行可能\n自動化やAI連携を考える開発者向け",
+    "score": 68.32,
+    "stars": 9916,
+    "forks": 833,
+    "language": "TypeScript"
   }
 ]

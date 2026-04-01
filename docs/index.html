@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GitHub Repo Notifier History</title>
+  <title>Repo History</title>
   <style>
     :root {
-      --bg: #f3efe6;
-      --panel: #fffaf0;
+      --bg: #f5efe4;
+      --bg-alt: #eaf3ff;
+      --panel: rgba(255, 252, 245, 0.88);
       --ink: #1f2937;
       --muted: #6b7280;
-      --line: #d6d3d1;
-      --accent: #b45309;
+      --line: rgba(148, 163, 184, 0.35);
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
     }
     * { box-sizing: border-box; }
     body {
@@ -19,31 +22,144 @@
       font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, #fde68a 0, transparent 30%),
-        linear-gradient(180deg, #fffaf0 0%, #f3efe6 100%);
+        radial-gradient(circle at top left, #fde68a 0, transparent 24%),
+        radial-gradient(circle at top right, #bfdbfe 0, transparent 26%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
     }
-    main {
-      max-width: 920px;
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 250, 240, 0.82);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 20px 64px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(32px, 6vw, 56px);
-      line-height: 1;
-      letter-spacing: -0.04em;
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+      color: var(--ink);
     }
-    p {
-      margin: 0 0 24px;
+    .brand strong {
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .brand span {
+      font-size: 13px;
       color: var(--muted);
     }
-    .card {
-      background: rgba(255, 250, 240, 0.88);
+    .menu-toggle {
+      display: none;
       border: 1px solid var(--line);
-      border-radius: 20px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 999px;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+    .menu-toggle span { margin: 4px 0; }
+    .site-nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .site-nav a {
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .site-nav a[aria-current="page"] {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .site-nav a:hover {
+      background: rgba(255,255,255,0.72);
+      border-color: var(--line);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 20px 64px;
+    }
+    .hero {
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 720px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 22px;
+    }
+    .tab-button {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.72);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 120ms ease, background 120ms ease;
+    }
+    .tab-button:hover {
+      transform: translateY(-1px);
+      background: #fff;
+    }
+    .tab-button.active {
+      background: var(--accent-2);
+      color: white;
+      border-color: var(--accent-2);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
       padding: 18px;
       margin: 0 0 16px;
-      box-shadow: 0 14px 30px rgba(31, 41, 55, 0.08);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
     .meta {
@@ -56,11 +172,8 @@
     }
     h2 {
       margin: 0 0 10px;
-      font-size: 20px;
-    }
-    a {
-      color: var(--accent);
-      text-decoration: none;
+      font-size: clamp(20px, 3vw, 24px);
+      line-height: 1.15;
     }
     pre {
       white-space: pre-wrap;
@@ -69,67 +182,202 @@
       font: inherit;
       line-height: 1.7;
     }
+    @media (max-width: 720px) {
+      .menu-toggle {
+        display: inline-flex;
+      }
+      .site-nav {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 20px;
+        left: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 250, 240, 0.96);
+        box-shadow: var(--shadow);
+      }
+      .site-nav.open {
+        display: flex;
+      }
+      .site-nav a {
+        width: 100%;
+        text-align: center;
+      }
+      main {
+        padding-top: 28px;
+      }
+      .card {
+        padding: 16px;
+      }
+    }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./index.html">
+        <strong>GitHub Check</strong>
+        <span>repo digest and weekly ranking</span>
+      </a>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="./index.html" aria-current="page">履歴</a>
+        <a href="./weekly.html" >週間トップ10</a>
+      </nav>
+    </div>
+  </header>
   <main>
-    <h1>Repo History</h1>
-    <p>Telegram に送った X 投稿文の履歴です。新しい順に並びます。</p>
-    
-            <article class="card">
-              <div class="meta">
-                <span>2026-04-01 06:20 UTC</span>
-                <span>score 62.67</span>
-                <span>stars 5619</span>
-                <span>Go</span>
-              </div>
-              <h2><a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">larksuite/cli</a></h2>
-              <pre>Lark/Feishuの公式CLIツール「larksuite/cli」が公開されています。
+    <section class="hero">
+      <h1>Repo History</h1>
+      <p>Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。</p>
+    </section>
+    <div class='tabs'><button class="tab-button active" data-tab="tab-0">4/1</button></div>
+            <section id="tab-0" class="tab-panel active">
+              
+                <article class="card">
+                  <div class="meta">
+                    <span>2026-04-01 16:05</span>
+                    <span>score 68.32</span>
+                    <span>stars 9916</span>
+                    <span>TypeScript</span>
+                  </div>
+                  <h2><a href="https://github.com/jackwener/opencli" target="_blank" rel="noreferrer">jackwener/opencli</a></h2>
+                  <pre>WebサイトやElectronアプリをCLIから操作できるツール。
+
+opencliは、BilibiliやTwitterなどのWebサイト、ローカルCLIツールを統一的なコマンドラインインターフェースに変換します。既存のChromeログインを再利用するので安全です。
+
+自動化スクリプトの作成や、AIエージェントにツールを統合したい開発者に適しています。
+
+<a href="https://github.com/jackwener/opencli" target="_blank" rel="noreferrer">https://github.com/jackwener/opencli</a>
+#CLI #自動化</pre>
+                </article>
+                
+                <article class="card">
+                  <div class="meta">
+                    <span>2026-04-01 16:05</span>
+                    <span>score 84.48</span>
+                    <span>stars 19758</span>
+                    <span>TypeScript</span>
+                  </div>
+                  <h2><a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noreferrer">Yeachan-Heo/oh-my-claudecode</a></h2>
+                  <pre>Claude Codeのマルチエージェント編成ツール「oh-my-claudecode」です。
+
+自然言語で指示するだけで、複数のAIエージェントがチームとして作業を自動分散します。チームベースの段階的パイプラインで実行されるため、複雑なタスクも効率的に進められます。
+
+AIを使った開発効率化や、コードレビュー、リファクタリングなどの作業を自動化したい開発者に適しています。
+
+<a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noreferrer">https://github.com/Yeachan-Heo/oh-my-claudecode</a>
+#AI開発 #ClaudeCode</pre>
+                </article>
+                
+                <article class="card">
+                  <div class="meta">
+                    <span>2026-04-01 16:05</span>
+                    <span>score 132.78</span>
+                    <span>stars 128528</span>
+                    <span>JavaScript</span>
+                  </div>
+                  <h2><a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">affaan-m/everything-claude-code</a></h2>
+                  <pre>Claude CodeなどのAIエージェントの性能を最適化するシステムです。
+
+everything-claude-codeは、スキル、メモリ管理、セキュリティなどを統合し、開発効率を高めます。10ヶ月以上の実運用から進化した実用的なツールです。
+
+AIを活用した開発の生産性向上を目指す開発者やチームに役立ちます。
+
+<a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">https://github.com/affaan-m/everything-claude-code</a>
+#AI開発 #開発効率化</pre>
+                </article>
+                
+                <article class="card">
+                  <div class="meta">
+                    <span>2026-04-01 15:20</span>
+                    <span>score 62.67</span>
+                    <span>stars 5619</span>
+                    <span>Go</span>
+                  </div>
+                  <h2><a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">larksuite/cli</a></h2>
+                  <pre>Lark/Feishuの公式CLIツール「larksuite/cli」が公開されています。
 
 メッセンジャー、カレンダー、ドキュメントなど11の業務領域を、200以上のコマンドでCLIから操作できます。
 
 AIエージェントが直接利用できる19のスキルも備えており、業務の自動化やAI連携に適しています。
 
-https://github.com/larksuite/cli
+<a href="https://github.com/larksuite/cli" target="_blank" rel="noreferrer">https://github.com/larksuite/cli</a>
 #Lark #CLI</pre>
-            </article>
-            
-            <article class="card">
-              <div class="meta">
-                <span>2026-04-01 06:20 UTC</span>
-                <span>score 63.33</span>
-                <span>stars 5060</span>
-                <span>Python</span>
-              </div>
-              <h2><a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">wanshuiyin/Auto-claude-code-research-in-sleep</a></h2>
-              <pre>ARISは自律的な機械学習研究を支援するツールです。
+                </article>
+                
+                <article class="card">
+                  <div class="meta">
+                    <span>2026-04-01 15:20</span>
+                    <span>score 63.33</span>
+                    <span>stars 5060</span>
+                    <span>Python</span>
+                  </div>
+                  <h2><a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">wanshuiyin/Auto-claude-code-research-in-sleep</a></h2>
+                  <pre>ARISは自律的な機械学習研究を支援するツールです。
 
 Claude CodeなどのLLMエージェントを使って、論文レビューや実験自動化を実行できます。マークダウンのみで構成され、依存関係がありません。
 
 ML研究者がアイデア発見から実験、論文執筆までを効率化したい場合に適しています。
 
-https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep
+<a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep</a>
 #AI研究 #自律エージェント</pre>
-            </article>
-            
-            <article class="card">
-              <div class="meta">
-                <span>2026-04-01 06:20 UTC</span>
-                <span>score 64.0</span>
-                <span>stars 1365</span>
-                <span>N/A</span>
-              </div>
-              <h2><a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">Leonxlnx/claude-code-system-prompts</a></h2>
-              <pre>AIコーディングアシスタントの仕組みに興味はありますか？
+                </article>
+                
+                <article class="card">
+                  <div class="meta">
+                    <span>2026-04-01 15:20</span>
+                    <span>score 64.0</span>
+                    <span>stars 1365</span>
+                    <span>N/A</span>
+                  </div>
+                  <h2><a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">Leonxlnx/claude-code-system-prompts</a></h2>
+                  <pre>AIコーディングアシスタントの仕組みに興味はありますか？
 
 claude-code-system-promptsは、Claude CodeのようなAIコーディングツールの内部プロンプト設計を分析した研究リポジトリです。動的プロンプト生成やセキュリティ分類など、実用的なパターンを再構築しています。
 
 AIエンジニアやプロンプト設計を学びたい方に、実際のシステム設計の参考になります。
 
-https://github.com/Leonxlnx/claude-code-system-prompts
+<a href="https://github.com/Leonxlnx/claude-code-system-prompts" target="_blank" rel="noreferrer">https://github.com/Leonxlnx/claude-code-system-prompts</a>
 #AI #プロンプトエンジニアリング</pre>
-            </article>
+                </article>
+                
+            </section>
             
   </main>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        nav.classList.toggle('open');
+      });
+      nav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+    const buttons = document.querySelectorAll('.tab-button');
+    const panels = document.querySelectorAll('.tab-panel');
+    for (const button of buttons) {
+      button.addEventListener('click', () => {
+        const target = button.dataset.tab;
+        for (const item of buttons) item.classList.remove('active');
+        for (const panel of panels) panel.classList.remove('active');
+        button.classList.add('active');
+        document.getElementById(target)?.classList.add('active');
+      });
+    }
+  </script>
 </body>
 </html>
