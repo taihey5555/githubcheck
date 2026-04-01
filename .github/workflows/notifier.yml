@@ -1,0 +1,50 @@
+name: GitHub Repo Notifier
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+    - cron: "0 11 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run notifier
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_PAT }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TOP_N: ${{ vars.TOP_N || '3' }}
+          NOTIFY_TIMES: ${{ vars.NOTIFY_TIMES || '09:00,20:00' }}
+          TIMEZONE: ${{ vars.TIMEZONE || 'Asia/Tokyo' }}
+          TOPICS: ${{ vars.TOPICS || 'ai,cli,automation,security,developer-tools' }}
+          MIN_STARS: ${{ vars.MIN_STARS || '30' }}
+          COOLDOWN_DAYS: ${{ vars.COOLDOWN_DAYS || '14' }}
+        run: python bot.py once
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json docs
+          git diff --cached --quiet && exit 0
+          git commit -m "Update notifier state"
+          git push
