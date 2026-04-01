@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "sent_at": "2026-04-01T06:20:47.289110+00:00",
+    "full_name": "Leonxlnx/claude-code-system-prompts",
+    "html_url": "https://github.com/Leonxlnx/claude-code-system-prompts",
+    "x_post": "AIコーディングアシスタントの仕組みに興味はありますか？\n\nclaude-code-system-promptsは、Claude CodeのようなAIコーディングツールの内部プロンプト設計を分析した研究リポジトリです。動的プロンプト生成やセキュリティ分類など、実用的なパターンを再構築しています。\n\nAIエンジニアやプロンプト設計を学びたい方に、実際のシステム設計の参考になります。\n\nhttps://github.com/Leonxlnx/claude-code-system-prompts\n#AI #プロンプトエンジニアリング",
+    "summary": "Claude Codeのプロンプト設計を解明\nAIコーディングアシスタントの内部構造を研究\n動的プロンプト生成やマルチエージェント連携を分析\nAIエンジニアやプロンプト研究者に有用",
+    "score": 64.0,
+    "stars": 1365,
+    "forks": 654,
+    "language": "N/A"
+  },
+  {
+    "sent_at": "2026-04-01T06:20:47.289110+00:00",
+    "full_name": "wanshuiyin/Auto-claude-code-research-in-sleep",
+    "html_url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep",
+    "x_post": "ARISは自律的な機械学習研究を支援するツールです。\n\nClaude CodeなどのLLMエージェントを使って、論文レビューや実験自動化を実行できます。マークダウンのみで構成され、依存関係がありません。\n\nML研究者がアイデア発見から実験、論文執筆までを効率化したい場合に適しています。\n\nhttps://github.com/wanshuiyin/Auto-claude-code-research-in-sleep\n#AI研究 #自律エージェント",
+    "summary": "自律的な機械学習研究を寝ている間に実行\nClaude CodeなどのLLMエージェントで研究ワークフローを自動化\n依存ゼロのマークダオンリー設計でフレームワークロックインなし\nML研究者や論文執筆を効率化したい人に",
+    "score": 63.33,
+    "stars": 5060,
+    "forks": 419,
+    "language": "Python"
+  },
+  {
+    "sent_at": "2026-04-01T06:20:47.289110+00:00",
+    "full_name": "larksuite/cli",
+    "html_url": "https://github.com/larksuite/cli",
+    "x_post": "Lark/Feishuの公式CLIツール「larksuite/cli」が公開されています。\n\nメッセンジャー、カレンダー、ドキュメントなど11の業務領域を、200以上のコマンドでCLIから操作できます。\n\nAIエージェントが直接利用できる19のスキルも備えており、業務の自動化やAI連携に適しています。\n\nhttps://github.com/larksuite/cli\n#Lark #CLI",
+    "summary": "Lark/Feishuの全機能をCLIで操作\nメッセンジャーやカレンダーなど11領域を200以上のコマンドで管理\nAIエージェントが直接操作できる19のスキルを提供\n業務自動化やAI連携をCLIで実現したい開発者向け",
+    "score": 62.67,
+    "stars": 5619,
+    "forks": 280,
+    "language": "Go"
+  }
+]
