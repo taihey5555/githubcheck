@@ -1147,6 +1147,11 @@ def render_weekly_site(now: datetime | None = None) -> None:
     (DOCS_DIR / "weekly.html").write_text(html, encoding="utf-8")
 
 
+def render_static_sites(now: datetime | None = None) -> None:
+    render_history_site()
+    render_weekly_site(now)
+
+
 def build_weekly_telegram_message(config: Config, now: datetime | None = None) -> str:
     if now is None:
         now = datetime.now(UTC)
@@ -1186,6 +1191,7 @@ def run_once(config: Config) -> None:
     if not candidates:
         refresh_star_snapshots(state, repos)
         save_state(state)
+        render_static_sites(now)
         print("No candidates to notify.")
         return
 
@@ -1213,8 +1219,7 @@ def run_once(config: Config) -> None:
     update_state(state, candidates)
     save_state(state)
     append_history(candidates, bucket)
-    render_history_site()
-    render_weekly_site(now)
+    render_static_sites(now)
     if now.astimezone(ZoneInfo(config.timezone)).weekday() == 0:
         weekly_message = build_weekly_telegram_message(config, now)
         if weekly_message:
@@ -1249,12 +1254,17 @@ def run_daemon(config: Config) -> None:
 
 
 def main() -> None:
-    if len(sys.argv) < 2 or sys.argv[1] not in {"once", "daemon", "test-telegram"}:
-        print("Usage: python bot.py [once|daemon|test-telegram]")
+    if len(sys.argv) < 2 or sys.argv[1] not in {"once", "daemon", "test-telegram", "render"}:
+        print("Usage: python bot.py [once|daemon|test-telegram|render]")
         raise SystemExit(1)
 
-    config = load_config()
     mode = sys.argv[1]
+    if mode == "render":
+        render_static_sites()
+        print("Rendered docs pages.")
+        return
+
+    config = load_config()
     if mode == "test-telegram":
         send_telegram_test(config)
         return
