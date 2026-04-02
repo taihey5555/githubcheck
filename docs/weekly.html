@@ -128,11 +128,17 @@
       font-size: clamp(15px, 2.4vw, 18px);
       max-width: 720px;
     }
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .date-selector {
       margin: 0 0 22px;
+    }
+    .date-select {
+      width: min(280px, 100%);
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font: inherit;
     }
     .filter-bar {
       display: flex;
@@ -140,7 +146,8 @@
       flex-wrap: wrap;
       margin: 0 0 18px;
     }
-    .tab-button {
+    .tab-button,
+    .filter-button {
       border: 1px solid var(--line);
       background: rgba(255, 250, 240, 0.72);
       color: var(--ink);
@@ -150,11 +157,13 @@
       font: inherit;
       transition: transform 120ms ease, background 120ms ease;
     }
-    .tab-button:hover {
+    .tab-button:hover,
+    .filter-button:hover {
       transform: translateY(-1px);
       background: #fff;
     }
-    .tab-button.active {
+    .tab-button.active,
+    .filter-button.active {
       background: var(--accent-2);
       color: white;
       border-color: var(--accent-2);
@@ -379,14 +388,12 @@
         });
       });
     }
-    const buttons = document.querySelectorAll('.tab-button');
+    const daySelect = document.querySelector('[data-day-select]');
     const panels = document.querySelectorAll('.tab-panel');
-    for (const button of buttons) {
-      button.addEventListener('click', () => {
-        const target = button.dataset.tab;
-        for (const item of buttons) item.classList.remove('active');
+    if (daySelect) {
+      daySelect.addEventListener('change', () => {
+        const target = daySelect.value;
         for (const panel of panels) panel.classList.remove('active');
-        button.classList.add('active');
         document.getElementById(target)?.classList.add('active');
       });
     }

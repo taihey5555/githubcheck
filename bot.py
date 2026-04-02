@@ -19,6 +19,8 @@ ROOT = Path(__file__).resolve().parent
 STATE_PATH = ROOT / "state.json"
 DOCS_DIR = ROOT / "docs"
 HISTORY_PATH = DOCS_DIR / "history.json"
+LOGS_DIR = ROOT / "logs"
+SEND_LOG_PATH = LOGS_DIR / "send.log"
 GITHUB_API = "https://api.github.com"
 DEEPSEEK_API = "https://api.deepseek.com/chat/completions"
 
@@ -118,6 +120,17 @@ def save_history(history: list[dict[str, Any]]) -> None:
 
 def parse_sent_at(sent_at: str) -> datetime:
     return datetime.fromisoformat(sent_at).astimezone(ZoneInfo("Asia/Tokyo"))
+
+
+def append_send_log(event: str, **fields: Any) -> None:
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "event": event,
+        "logged_at": datetime.now(UTC).isoformat(),
+        **fields,
+    }
+    with SEND_LOG_PATH.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(payload, ensure_ascii=False) + "\n")
 
 
 def fallback_owner_fields(item: dict[str, Any]) -> tuple[str, str, str]:
@@ -281,11 +294,17 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       font-size: clamp(15px, 2.4vw, 18px);
       max-width: 720px;
     }}
-    .tabs {{
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .date-selector {{
       margin: 0 0 22px;
+    }}
+    .date-select {{
+      width: min(280px, 100%);
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font: inherit;
     }}
     .filter-bar {{
       display: flex;
@@ -293,7 +312,8 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       flex-wrap: wrap;
       margin: 0 0 18px;
     }}
-    .tab-button {{
+    .tab-button,
+    .filter-button {{
       border: 1px solid var(--line);
       background: rgba(255, 250, 240, 0.72);
       color: var(--ink);
@@ -303,11 +323,13 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       font: inherit;
       transition: transform 120ms ease, background 120ms ease;
     }}
-    .tab-button:hover {{
+    .tab-button:hover,
+    .filter-button:hover {{
       transform: translateY(-1px);
       background: #fff;
     }}
-    .tab-button.active {{
+    .tab-button.active,
+    .filter-button.active {{
       background: var(--accent-2);
       color: white;
       border-color: var(--accent-2);
@@ -532,14 +554,12 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
         }});
       }});
     }}
-    const buttons = document.querySelectorAll('.tab-button');
+    const daySelect = document.querySelector('[data-day-select]');
     const panels = document.querySelectorAll('.tab-panel');
-    for (const button of buttons) {{
-      button.addEventListener('click', () => {{
-        const target = button.dataset.tab;
-        for (const item of buttons) item.classList.remove('active');
+    if (daySelect) {{
+      daySelect.addEventListener('change', () => {{
+        const target = daySelect.value;
         for (const panel of panels) panel.classList.remove('active');
-        button.classList.add('active');
         document.getElementById(target)?.classList.add('active');
       }});
     }}
@@ -972,14 +992,14 @@ def render_history_site() -> None:
         item["_display_time"] = sent_at_dt.strftime("%Y-%m-%d %H:%M")
         grouped.setdefault(day_key, []).append(item)
 
-    tab_buttons = []
+    tab_options = []
     tab_panels = []
     for index, (day_key, items) in enumerate(grouped.items()):
-        button_class = "tab-button active" if index == 0 else "tab-button"
         panel_class = "tab-panel active" if index == 0 else "tab-panel"
         tab_id = f"tab-{index}"
-        tab_buttons.append(
-            f'<button class="{button_class}" data-tab="{tab_id}">{escape(day_key)}</button>'
+        selected = " selected" if index == 0 else ""
+        tab_options.append(
+            f'<option value="{tab_id}"{selected}>{escape(day_key)}</option>'
         )
 
         cards = []
@@ -1039,12 +1059,18 @@ def render_history_site() -> None:
     body_html = (
         (
             "<div class='filter-bar'>"
-            "<button class='tab-button active' data-bucket-filter='all'>全部</button>"
-            "<button class='tab-button' data-bucket-filter='morning'>朝の新顔枠</button>"
-            "<button class='tab-button' data-bucket-filter='evening'>夜の尖り枠</button>"
+            "<button class='filter-button active' data-bucket-filter='all'>全部</button>"
+            "<button class='filter-button' data-bucket-filter='morning'>朝の新顔枠</button>"
+            "<button class='filter-button' data-bucket-filter='evening'>夜の尖り枠</button>"
             "</div>"
         )
-        + ("<div class='tabs'>" + "".join(tab_buttons) + "</div>" if tab_buttons else "")
+        + (
+            "<div class='date-selector'><select class='date-select' data-day-select>"
+            + "".join(tab_options)
+            + "</select></div>"
+            if tab_options
+            else ""
+        )
         + (''.join(tab_panels) if tab_panels else '<p>まだ履歴はありません。</p>')
     )
     html = site_shell(
@@ -1204,7 +1230,7 @@ def refresh_star_snapshots(state: dict[str, Any], repos: list[dict[str, Any]]) -
         }
 
 
-def run_once(config: Config) -> None:
+def run_once(config: Config, trigger: str = "manual") -> None:
     now = datetime.now(UTC)
     bucket = get_run_bucket(config, now)
     print("Searching repositories...")
@@ -1214,6 +1240,12 @@ def run_once(config: Config) -> None:
     candidates = enrich_repositories(config, repos, state, bucket)
     print(f"Selected {len(candidates)} candidates for {bucket}.")
     if not candidates:
+        append_send_log(
+            "skip_no_candidates",
+            trigger=trigger,
+            bucket=bucket,
+            searched=len(repos),
+        )
         refresh_star_snapshots(state, repos)
         save_state(state)
         render_static_sites(now)
@@ -1239,7 +1271,21 @@ def run_once(config: Config) -> None:
             repo["_pick_reason"] = "今の注目候補"
 
     print("Sending Telegram messages...")
+    append_send_log(
+        "send_start",
+        trigger=trigger,
+        bucket=bucket,
+        count=len(candidates),
+        repos=[repo["full_name"] for repo in candidates],
+    )
     post_to_telegram(config, candidates, bucket)
+    append_send_log(
+        "send_success",
+        trigger=trigger,
+        bucket=bucket,
+        count=len(candidates),
+        repos=[repo["full_name"] for repo in candidates],
+    )
     refresh_star_snapshots(state, repos)
     update_state(state, candidates)
     save_state(state)
@@ -1272,7 +1318,7 @@ def run_daemon(config: Config) -> None:
         print(f"Next run at {scheduled.isoformat()}")
         time.sleep(wait_seconds)
         try:
-            run_once(config)
+            run_once(config, trigger="daemon")
         except Exception as exc:
             print(f"Run failed: {exc}", file=sys.stderr)
             time.sleep(30)
@@ -1280,7 +1326,7 @@ def run_daemon(config: Config) -> None:
 
 def main() -> None:
     if len(sys.argv) < 2 or sys.argv[1] not in {"once", "daemon", "test-telegram", "render"}:
-        print("Usage: python bot.py [once|daemon|test-telegram|render]")
+        print("Usage: python bot.py [once --force|daemon|test-telegram|render]")
         raise SystemExit(1)
 
     mode = sys.argv[1]
@@ -1294,7 +1340,10 @@ def main() -> None:
         send_telegram_test(config)
         return
     if mode == "once":
-        run_once(config)
+        if "--force" not in sys.argv[2:]:
+            print("Refusing immediate send. Use: python bot.py once --force")
+            raise SystemExit(2)
+        run_once(config, trigger="once_force")
         return
     run_daemon(config)
 

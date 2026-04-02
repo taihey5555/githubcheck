@@ -128,11 +128,17 @@
       font-size: clamp(15px, 2.4vw, 18px);
       max-width: 720px;
     }
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .date-selector {
       margin: 0 0 22px;
+    }
+    .date-select {
+      width: min(280px, 100%);
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.92);
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font: inherit;
     }
     .filter-bar {
       display: flex;
@@ -140,7 +146,8 @@
       flex-wrap: wrap;
       margin: 0 0 18px;
     }
-    .tab-button {
+    .tab-button,
+    .filter-button {
       border: 1px solid var(--line);
       background: rgba(255, 250, 240, 0.72);
       color: var(--ink);
@@ -150,11 +157,13 @@
       font: inherit;
       transition: transform 120ms ease, background 120ms ease;
     }
-    .tab-button:hover {
+    .tab-button:hover,
+    .filter-button:hover {
       transform: translateY(-1px);
       background: #fff;
     }
-    .tab-button.active {
+    .tab-button.active,
+    .filter-button.active {
       background: var(--accent-2);
       color: white;
       border-color: var(--accent-2);
@@ -361,7 +370,7 @@
       <h1>Repo History</h1>
       <p>Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。</p>
     </section>
-    <div class='filter-bar'><button class='tab-button active' data-bucket-filter='all'>全部</button><button class='tab-button' data-bucket-filter='morning'>朝の新顔枠</button><button class='tab-button' data-bucket-filter='evening'>夜の尖り枠</button></div><div class='tabs'><button class="tab-button active" data-tab="tab-0">4/2</button><button class="tab-button" data-tab="tab-1">4/1</button></div>
+    <div class='filter-bar'><button class='filter-button active' data-bucket-filter='all'>全部</button><button class='filter-button' data-bucket-filter='morning'>朝の新顔枠</button><button class='filter-button' data-bucket-filter='evening'>夜の尖り枠</button></div><div class='date-selector'><select class='date-select' data-day-select><option value="tab-0" selected>4/2</option><option value="tab-1">4/1</option></select></div>
             <section id="tab-0" class="tab-panel active">
               
                 <article class="card" data-bucket="morning">
@@ -747,14 +756,12 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
         });
       });
     }
-    const buttons = document.querySelectorAll('.tab-button');
+    const daySelect = document.querySelector('[data-day-select]');
     const panels = document.querySelectorAll('.tab-panel');
-    for (const button of buttons) {
-      button.addEventListener('click', () => {
-        const target = button.dataset.tab;
-        for (const item of buttons) item.classList.remove('active');
+    if (daySelect) {
+      daySelect.addEventListener('change', () => {
+        const target = daySelect.value;
         for (const panel of panels) panel.classList.remove('active');
-        button.classList.add('active');
         document.getElementById(target)?.classList.add('active');
       });
     }
