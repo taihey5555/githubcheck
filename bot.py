@@ -120,6 +120,28 @@ def parse_sent_at(sent_at: str) -> datetime:
     return datetime.fromisoformat(sent_at).astimezone(ZoneInfo("Asia/Tokyo"))
 
 
+def fallback_owner_fields(item: dict[str, Any]) -> tuple[str, str, str]:
+    full_name = (item.get("full_name") or "").strip()
+    owner_from_name = full_name.split("/", 1)[0] if "/" in full_name else full_name
+    owner_login = (item.get("owner_login") or owner_from_name).strip()
+    owner_html_url = (item.get("owner_html_url") or "").strip()
+    if not owner_html_url and owner_login:
+        owner_html_url = f"https://github.com/{owner_login}"
+    owner_avatar_url = (item.get("owner_avatar_url") or "").strip()
+    if not owner_avatar_url:
+        owner_avatar_url = "https://github.githubassets.com/favicons/favicon.png"
+    return owner_login, owner_html_url or item["html_url"], owner_avatar_url
+
+
+def normalize_card_description(item: dict[str, Any], limit: int = 140) -> str:
+    description = " ".join(str(item.get("description") or "").split())
+    if not description:
+        return ""
+    if len(description) <= limit:
+        return description
+    return description[: limit - 3].rstrip() + "..."
+
+
 def linkify_text(text: str) -> str:
     escaped = escape(text)
     pattern = re.compile(r"(https?://[^\s<]+)")
@@ -967,10 +989,11 @@ def render_history_site() -> None:
             html_url = escape(item["html_url"])
             x_post = linkify_text(item["x_post"])
             language = escape(item["language"])
-            description = escape(item.get("description") or "")
-            owner_login = escape(item.get("owner_login") or "")
-            owner_html_url = escape(item.get("owner_html_url") or item["html_url"])
-            owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
+            description = escape(normalize_card_description(item))
+            owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
+            owner_login = escape(owner_login_raw)
+            owner_html_url = escape(owner_html_url_raw)
+            owner_avatar_url = escape(owner_avatar_url_raw)
             bucket = item.get("bucket") or "morning"
             bucket_label = "朝の新顔枠" if bucket == "morning" else "夜の尖り枠"
             pick_reason = escape(item.get("pick_reason") or "")
@@ -1047,6 +1070,7 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
         sent_at_dt = parse_sent_at(item["sent_at"])
         if not (previous_week_start <= sent_at_dt < previous_week_end):
             continue
+        owner_login, owner_html_url, owner_avatar_url = fallback_owner_fields(item)
         entry = aggregated.setdefault(
             item["full_name"],
             {
@@ -1058,11 +1082,11 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
                 "latest_x_post": item["x_post"],
                 "latest_sent_at": sent_at_dt,
                 "stars": item["stars"],
-                "description": item.get("description") or "",
+                "description": normalize_card_description(item),
                 "topics": item.get("topics") or [],
-                "owner_login": item.get("owner_login") or "",
-                "owner_avatar_url": item.get("owner_avatar_url") or "",
-                "owner_html_url": item.get("owner_html_url") or "",
+                "owner_login": owner_login,
+                "owner_avatar_url": owner_avatar_url,
+                "owner_html_url": owner_html_url,
                 "bucket": item.get("bucket") or "morning",
                 "pick_reason": item.get("pick_reason") or "",
             },
@@ -1101,10 +1125,11 @@ def render_weekly_site(now: datetime | None = None) -> None:
             rank_class += " top2"
         elif index == 3:
             rank_class += " top3"
-        owner_login = escape(item.get("owner_login") or "")
-        owner_html_url = escape(item.get("owner_html_url") or item["html_url"])
-        owner_avatar_url = escape(item.get("owner_avatar_url") or "https://github.githubassets.com/favicons/favicon.png")
-        description = escape(item.get("description") or "")
+        owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
+        owner_login = escape(owner_login_raw)
+        owner_html_url = escape(owner_html_url_raw)
+        owner_avatar_url = escape(owner_avatar_url_raw)
+        description = escape(normalize_card_description(item))
         pick_reason = escape(item.get("pick_reason") or "")
         topics = "".join(
             f'<span class="badge topic">#{escape(topic)}</span>'
