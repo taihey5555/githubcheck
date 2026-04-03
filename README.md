@@ -35,7 +35,7 @@ copy .env.example .env
 1回だけ実行:
 
 ```bash
-python bot.py once
+python bot.py once --force
 ```
 
 常駐して定時通知:
@@ -44,7 +44,7 @@ python bot.py once
 python bot.py daemon
 ```
 
-Windowsならタスクスケジューラで `python bot.py once` を時刻指定で回す方が安定します。
+Windowsならタスクスケジューラで `python bot.py once --force` を時刻指定で回す方が安定します。
 
 ## ランキング基準
 

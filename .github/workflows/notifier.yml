@@ -47,7 +47,7 @@ jobs:
           TOPICS: ${{ vars.TOPICS || 'ai,cli,automation,security,developer-tools' }}
           MIN_STARS: ${{ vars.MIN_STARS || '30' }}
           COOLDOWN_DAYS: ${{ vars.COOLDOWN_DAYS || '14' }}
-        run: python bot.py once
+        run: python bot.py once --force
 
       - name: Commit updated state
         run: |
