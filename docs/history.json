@@ -331,5 +331,63 @@
     "owner_html_url": "https://github.com/sickn33",
     "bucket": "evening",
     "pick_reason": "AIエージェント向けの大規模スキルライブラリ"
+  },
+  {
+    "sent_at": "2026-04-04T02:52:47.682447+00:00",
+    "full_name": "Gitlawb/openclaude",
+    "html_url": "https://github.com/Gitlawb/openclaude",
+    "x_post": "OpenClaudeは、200以上のAIモデルを統一的に操作できるオープンソースのコーディング支援CLIです。\n\nOpenAI、Gemini、DeepSeekからOllamaなどのローカルモデルまで、同じCLIインターフェースで利用できます。エージェントごとに使用モデルを切り分ける機能も便利。\n\nターミナル作業が中心の開発者や、複数のAIサービスを用途に応じて使い分けたい方に。\n\nhttps://github.com/Gitlawb/openclaude\n#AI開発 #CLI",
+    "summary": "200以上のAIモデルを単一CLIで操作\nターミナルでのコーディング支援ワークフロー\nプロバイダー間でエージェントを動的にルーティング\nローカルとクラウドモデルを使い分ける開発者",
+    "score": 1357.96,
+    "stars": 11985,
+    "forks": 4243,
+    "language": "TypeScript",
+    "description": "Open Claude Is Open-source coding-agent CLI for OpenAI, Gemini, DeepSeek, Ollama, Codex, GitHub Models, and 200+ models via OpenAI-compatible APIs.",
+    "topics": [],
+    "owner_login": "Gitlawb",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/268502891?v=4",
+    "owner_html_url": "https://github.com/Gitlawb",
+    "bucket": "morning",
+    "pick_reason": "多様なAIモデルを統一的に扱うCLIの実用性"
+  },
+  {
+    "sent_at": "2026-04-04T02:52:47.682447+00:00",
+    "full_name": "vercel-labs/agent-browser",
+    "html_url": "https://github.com/vercel-labs/agent-browser",
+    "x_post": "vercel-labs/agent-browser は Browser automation CLI for AI agents。\n\n刺さる人: OSSを追う開発者。\n\nhttps://github.com/vercel-labs/agent-browser\n#GitHub",
+    "summary": "[telegram]\nRust製の高速なブラウザ自動化CLI\nAIエージェントがブラウザ操作するためのツール\nアクセシビリティツリーを参照できる設計\nAIエージェント開発者や自動化ツール作成者向け\n\n[X]\nAIエージェントがブラウザを操作するためのCLIツール\n\nagent-browserは、Rust製の高速なブラウザ自動化ツールです。アクセシビリティツリーを参照して要素を操作できるので、AIエージェントとの相性が良いです。\n\nWebスクレイピングや自動テスト、AIエージェントのブラウザ操作機能を実装したい開発者に。\n\nhttps://github.com/vercel-labs/agent-browser\n#ブラウザ自動化 #AIエージェント",
+    "score": 184.05,
+    "stars": 26701,
+    "forks": 1616,
+    "language": "Rust",
+    "description": "Browser automation CLI for AI agents",
+    "topics": [],
+    "owner_login": "vercel-labs",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/108547162?v=4",
+    "owner_html_url": "https://github.com/vercel-labs",
+    "bucket": "morning",
+    "pick_reason": "AIエージェント向けの高速ブラウザ自動化CLI"
+  },
+  {
+    "sent_at": "2026-04-04T02:52:47.682447+00:00",
+    "full_name": "coreyhaines31/marketingskills",
+    "html_url": "https://github.com/coreyhaines31/marketingskills",
+    "x_post": "AIコーディングエージェントにマーケティングの専門知識を持たせたい方へ。\n\nmarketingskillsは、CROやSEO、コピーライティングなど実践的なマーケティングスキルをAIエージェントが使える形で体系化しています。\n\n技術者とマーケターが協業するプロジェクトや、AIにマーケティング業務を支援させたい場合に参考になります。\n\nhttps://github.com/coreyhaines31/marketingskills\n#AI #マーケティング",
+    "summary": "AIエージェントにマーケティング知見を付与\nCROやSEOなど実務スキルをAIが活用可能に\nスキル間の依存関係を構造化して設計\n技術者とマーケターの協業に役立つ",
+    "score": 91.47,
+    "stars": 18671,
+    "forks": 2869,
+    "language": "JavaScript",
+    "description": "Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.",
+    "topics": [
+      "claude",
+      "codex",
+      "marketing"
+    ],
+    "owner_login": "coreyhaines31",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/34802794?v=4",
+    "owner_html_url": "https://github.com/coreyhaines31",
+    "bucket": "morning",
+    "pick_reason": "AIエージェント向けマーケティングスキルの体系化"
   }
 ]
