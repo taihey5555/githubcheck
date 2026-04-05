@@ -1,8 +1,10 @@
 import os
 import unittest
+from datetime import UTC, datetime, timedelta
 from unittest.mock import patch
 
 import bot
+import requests
 
 
 class SmokeTests(unittest.TestCase):
@@ -190,6 +192,41 @@ class SmokeTests(unittest.TestCase):
         base_score = bot.score_repo(repo, {"repos": {}}, base_config, bucket="morning")
         boosted_score = bot.score_repo(repo, {"repos": {}}, boosted_config, bucket="morning")
         self.assertGreater(boosted_score, base_score)
+
+    def test_classify_deepseek_error_handles_billing_and_rate_limit(self) -> None:
+        billing_response = requests.Response()
+        billing_response.status_code = 402
+        billing_response._content = b'{"error":"insufficient balance"}'
+        billing_error = requests.exceptions.HTTPError(response=billing_response)
+        self.assertEqual(
+            bot.classify_deepseek_error(billing_error),
+            ("quota/auth/billing", "status=402"),
+        )
+
+        rate_response = requests.Response()
+        rate_response.status_code = 429
+        rate_response._content = b'{"error":"rate limit exceeded"}'
+        rate_error = requests.exceptions.HTTPError(response=rate_response)
+        self.assertEqual(
+            bot.classify_deepseek_error(rate_error),
+            ("rate_limit", "status=429"),
+        )
+
+    def test_should_send_deepseek_warning_throttles_same_kind(self) -> None:
+        state = {
+            "alerts": {
+                "deepseek": {
+                    "rate_limit": {
+                        "last_sent": (datetime.now(UTC) - timedelta(hours=6)).isoformat()
+                    }
+                }
+            }
+        }
+        self.assertFalse(bot.should_send_deepseek_warning(state, "rate_limit"))
+        state["alerts"]["deepseek"]["rate_limit"]["last_sent"] = (
+            datetime.now(UTC) - timedelta(hours=13)
+        ).isoformat()
+        self.assertTrue(bot.should_send_deepseek_warning(state, "rate_limit"))
 
 
 if __name__ == "__main__":

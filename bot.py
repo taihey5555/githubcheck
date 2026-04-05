@@ -47,6 +47,8 @@ REVIEW_STATES = [
     "production_candidate",
 ]
 
+DEEPSEEK_WARNING_COOLDOWN_HOURS = 12
+
 LOW_STAR_HIGH_SCORE = {
     "max_stars": 1000,
     "min_score": 70.0,
@@ -114,11 +116,12 @@ def parse_csv(value: str) -> list[str]:
 
 def load_state() -> dict[str, Any]:
     if not STATE_PATH.exists():
-        return {"repos": {}, "notifications": {}, "review_states": {}}
+        return {"repos": {}, "notifications": {}, "review_states": {}, "alerts": {}}
     state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
     state.setdefault("repos", {})
     state.setdefault("notifications", {})
     state.setdefault("review_states", {})
+    state.setdefault("alerts", {})
     return state
 
 
@@ -2007,6 +2010,77 @@ def send_telegram_text(config: Config, text: str) -> None:
         )
 
 
+def classify_deepseek_error(exc: Exception) -> tuple[str, str]:
+    if isinstance(exc, requests.exceptions.HTTPError) and exc.response is not None:
+        status_code = exc.response.status_code
+        body = (exc.response.text or "").lower()
+        detail = f"status={status_code}"
+        if any(token in body for token in ["quota", "billing", "balance", "credit", "insufficient", "auth", "unauthorized", "api key"]):
+            return "quota/auth/billing", detail
+        if status_code in {401, 402, 403}:
+            return "quota/auth/billing", detail
+        if status_code == 429 or "rate limit" in body or "too many requests" in body:
+            return "rate_limit", detail
+        if status_code >= 500:
+            return "server/network", detail
+        return "unknown", detail
+    if isinstance(exc, (requests.exceptions.Timeout, requests.exceptions.ConnectionError)):
+        return "server/network", exc.__class__.__name__
+    if isinstance(exc, requests.exceptions.RequestException):
+        return "server/network", exc.__class__.__name__
+    return "unknown", exc.__class__.__name__
+
+
+def should_send_deepseek_warning(state: dict[str, Any], warning_kind: str) -> bool:
+    alert_state = state.setdefault("alerts", {}).setdefault("deepseek", {})
+    last_sent = alert_state.get(warning_kind, {}).get("last_sent")
+    if not last_sent:
+        return True
+    return datetime.now(UTC) - datetime.fromisoformat(last_sent) >= timedelta(hours=DEEPSEEK_WARNING_COOLDOWN_HOURS)
+
+
+def maybe_send_deepseek_warning(
+    config: Config,
+    state: dict[str, Any],
+    repo: dict[str, Any],
+    exc: Exception,
+) -> None:
+    warning_kind, detail = classify_deepseek_error(exc)
+    if not should_send_deepseek_warning(state, warning_kind):
+        return
+    text = "\n".join(
+        [
+            f"DeepSeek warning: {warning_kind}",
+            "fallback summary used",
+            f"detail: {detail}",
+            f"repo: {repo.get('full_name') or 'unknown'}",
+        ]
+    )
+    try:
+        send_telegram_text(config, text)
+    except Exception as warning_exc:
+        append_send_log(
+            "deepseek_warning_failed",
+            warning_kind=warning_kind,
+            detail=detail,
+            repo=repo.get("full_name"),
+            error=str(warning_exc),
+        )
+        return
+    state.setdefault("alerts", {}).setdefault("deepseek", {})[warning_kind] = {
+        "last_sent": datetime.now(UTC).isoformat(),
+        "last_repo": repo.get("full_name") or "",
+        "detail": detail,
+    }
+    save_state(state)
+    append_send_log(
+        "deepseek_warning_sent",
+        warning_kind=warning_kind,
+        detail=detail,
+        repo=repo.get("full_name"),
+    )
+
+
 def post_to_telegram(config: Config, repos: list[dict[str, Any]], bucket: str) -> None:
     messages = build_telegram_messages(repos, bucket)
     if config.public_history_url:
@@ -2607,7 +2681,8 @@ def run_once(config: Config, trigger: str = "manual") -> None:
         try:
             generated = build_deepseek_summary(config, repo)
             repo["_summary"], repo["_x_post"], repo["_pick_reason"] = split_generated_content(generated, repo)
-        except Exception:
+        except Exception as exc:
+            maybe_send_deepseek_warning(config, state, repo, exc)
             repo["_summary"] = (
                 f"{repo.get('description') or '説明なし'}\n"
                 f"Language: {repo.get('language') or 'N/A'}\n"
