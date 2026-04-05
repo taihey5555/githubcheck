@@ -1793,6 +1793,25 @@ def render_weekly_site(now: datetime | None = None) -> None:
             continue
         fresh_repo_map[full_name] = item
     fresh_picks = list(fresh_repo_map.values())[: int(settings["limit"])]
+    weekly_repo_items = ranking[:]
+    review_state_counts: dict[str, int] = {}
+    for item in weekly_repo_items:
+        review_state = normalize_review_state(review_states.get(item.get("full_name")))
+        item["_review_state"] = review_state
+        review_state_counts[review_state] = review_state_counts.get(review_state, 0) + 1
+    review_state_summary = ", ".join(
+        f"{state_name} {review_state_counts[state_name]}"
+        for state_name in REVIEW_STATES
+        if review_state_counts.get(state_name)
+    ) or "なし"
+    review_priority_items = [
+        item
+        for item in weekly_repo_items
+        if item.get("_review_state") in {"good", "production_candidate"}
+    ][: int(settings["limit"])]
+    unseen_items = [
+        item for item in weekly_repo_items if item.get("_review_state") == "unseen"
+    ][: int(settings["limit"])]
     avg_score = (
         sum(float(item.get("score") or 0) for item in this_week_items) / len(this_week_items)
         if this_week_items
@@ -1805,6 +1824,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
       <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>
       <article class="stat-card"><strong>{avg_score:.1f}</strong><span>平均 score</span></article>
       <article class="stat-card"><strong>{escape(summarize_languages(this_week_items, 4))}</strong><span>言語分布</span></article>
+      <article class="stat-card"><strong>{escape(review_state_summary)}</strong><span>review state 分布</span></article>
     </section>
     """
 
@@ -1836,8 +1856,18 @@ def render_weekly_site(now: datetime | None = None) -> None:
         f"{label} の通知履歴から、再利用しやすい週次ビューを作っています。",
         stats_html
         + render_week_section(
+            "今週の good / production_candidate",
+            "見返す優先度が高い repo を review state ベースでまとめています。",
+            review_priority_items,
+        )
+        + render_week_section(
+            "今週の未確認 repo",
+            "review state が unseen のものです。未確認が多い週かどうかもここで分かります。",
+            unseen_items,
+        )
+        + render_week_section(
             "今週の総合トップ",
-            "pick 回数、最高 score、stars をまとめて見た総合ランキングです。",
+            "pick 回数、最高 score、stars をまとめて見た総合ランキングです。review state も併せて見返せます。",
             ranking,
         )
         + render_week_section(
@@ -1847,7 +1877,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         )
         + render_week_section(
             "今週の新着で面白かったもの",
-            "今週通知したものを新着寄りで並べています。",
+            "今週通知したものを新着寄りで並べています。未確認の掘り起こしにも使えます。",
             fresh_picks,
         ),
         "weekly",
