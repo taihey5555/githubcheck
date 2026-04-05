@@ -156,7 +156,7 @@ class SmokeTests(unittest.TestCase):
         }
         similar = bot.find_similar_repos(aggregated["owner/repo"], aggregated, limit=4)
         self.assertEqual(similar[0]["full_name"], "other/repo")
-        self.assertIn("same language", similar[0]["similarity_reason"])
+        self.assertIn("同じ言語", similar[0]["similarity_reason"])
 
     def test_score_repo_applies_new_topic_keyword_bonuses(self) -> None:
         repo = {
