@@ -1416,6 +1416,7 @@ def site_shell(
       const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
       const allowedSorts = new Set(['newest', 'score', 'stars']);
       const searchParams = new URLSearchParams(window.location.search);
+      const initialSearch = String(searchParams.get('search') || '').trim();
       const initialReviewState = normalizeText(searchParams.get('review_state'));
       const initialLanguage = normalizeText(searchParams.get('language'));
       const initialTag = normalizeText(searchParams.get('tag'));
@@ -1437,6 +1438,7 @@ def site_shell(
       }};
       const buildArchiveShareUrl = () => {{
         const params = new URLSearchParams();
+        const search = String(searchInput?.value || '').trim();
         const reviewState = normalizeText(reviewStateInput?.value);
         const language = normalizeText(languageInput?.value);
         const tag = normalizeText(tagInput?.value);
@@ -1445,6 +1447,7 @@ def site_shell(
         const minScore = parseNumber(minScoreInput?.value);
         const maxScore = parseNumber(maxScoreInput?.value);
         const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (search) params.set('search', search);
         if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
         if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {{
           params.set('language', language);
@@ -1549,6 +1552,9 @@ def site_shell(
       }}
       if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {{
         reviewStateInput.value = initialReviewState;
+      }}
+      if (searchInput && initialSearch) {{
+        searchInput.value = initialSearch;
       }}
       if (languageInput && initialLanguage && Array.from(languageInput.options).some((option) => option.value === initialLanguage)) {{
         languageInput.value = initialLanguage;
