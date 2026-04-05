@@ -395,6 +395,10 @@ def repo_detail_href(full_name: str, path_prefix: str = ".") -> str:
     return f"{path_prefix}/repos/{repo_slug(full_name)}.html"
 
 
+def history_review_state_href(review_state: str, path_prefix: str = ".") -> str:
+    return f"{path_prefix}/index.html?review_state={escape(review_state, quote=True)}"
+
+
 def aggregate_repo_history(
     history: list[dict[str, Any]],
     review_states: dict[str, Any],
@@ -990,6 +994,12 @@ def site_shell(
       gap: 10px;
       margin: 12px 0 0;
     }}
+    .inline-links {{
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }}
     .history-list {{
       display: grid;
       gap: 12px;
@@ -1129,6 +1139,9 @@ def site_shell(
       const activePanelId = () => daySelect ? daySelect.value : '';
       const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
       const normalizeText = (value) => String(value || '').toLowerCase();
+      const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
+      const searchParams = new URLSearchParams(window.location.search);
+      const initialReviewState = normalizeText(searchParams.get('review_state'));
       const parseNumber = (value) => {{
         if (value === '' || value == null) return null;
         const parsed = Number(value);
@@ -1212,6 +1225,9 @@ def site_shell(
       }});
       if (daySelect) {{
         daySelect.addEventListener('change', applyArchiveFilters);
+      }}
+      if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {{
+        reviewStateInput.value = initialReviewState;
       }}
       for (const button of filterButtons) {{
         button.addEventListener('click', applyArchiveFilters);
@@ -1987,8 +2003,8 @@ def render_weekly_site(now: datetime | None = None) -> None:
         review_state = normalize_review_state(review_states.get(item.get("full_name")))
         item["_review_state"] = review_state
         review_state_counts[review_state] = review_state_counts.get(review_state, 0) + 1
-    review_state_summary = ", ".join(
-        f"{state_name} {review_state_counts[state_name]}"
+    review_state_summary = " ".join(
+        f'<a class="badge" href="{history_review_state_href(state_name)}">{escape(state_name)} {review_state_counts[state_name]}</a>'
         for state_name in REVIEW_STATES
         if review_state_counts.get(state_name)
     ) or "なし"
@@ -2012,11 +2028,16 @@ def render_weekly_site(now: datetime | None = None) -> None:
       <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>
       <article class="stat-card"><strong>{avg_score:.1f}</strong><span>平均 score</span></article>
       <article class="stat-card"><strong>{escape(summarize_languages(this_week_items, 4))}</strong><span>言語分布</span></article>
-      <article class="stat-card"><strong>{escape(review_state_summary)}</strong><span>review state 分布</span></article>
+      <article class="stat-card"><strong class="inline-links">{review_state_summary}</strong><span>review state 分布</span></article>
     </section>
     """
 
-    def render_week_section(title: str, description: str, items: list[dict[str, Any]]) -> str:
+    def render_week_section(
+        title: str,
+        description: str,
+        items: list[dict[str, Any]],
+        links_html: str = "",
+    ) -> str:
         cards = "".join(
             render_repo_card(
                 item,
@@ -2029,7 +2050,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
             "<section class='section-block'>"
             "<div class='section-header'>"
             f"<h2>{escape(title)}</h2>"
-            f"<p>{escape(description)}</p>"
+            f"<p>{escape(description)}{links_html}</p>"
             "</div>"
             + (
                 f"<div class='section-grid'>{cards}</div>"
@@ -2047,11 +2068,18 @@ def render_weekly_site(now: datetime | None = None) -> None:
             "今週の good / production_candidate",
             "見返す優先度が高い repo を review state ベースでまとめています。",
             review_priority_items,
+            links_html=(
+                f' <span class="inline-links"><a class="badge" href="{history_review_state_href("good")}">See all good</a>'
+                f'<a class="badge" href="{history_review_state_href("production_candidate")}">See all production_candidate</a></span>'
+            ),
         )
         + render_week_section(
             "今週の未確認 repo",
             "review state が unseen のものです。未確認が多い週かどうかもここで分かります。",
             unseen_items,
+            links_html=(
+                f' <span class="inline-links"><a class="badge" href="{history_review_state_href("unseen")}">See all unseen</a></span>'
+            ),
         )
         + render_week_section(
             "今週の総合トップ",
