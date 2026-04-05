@@ -74,6 +74,7 @@ class SmokeTests(unittest.TestCase):
             '<section class="archive-controls" data-archive-root></section>',
             "history",
         )
+        self.assertIn('href="./operations.html"', html)
         for snippet in [
             "searchParams.get('search')",
             "searchParams.get('review_state')",
@@ -96,6 +97,13 @@ class SmokeTests(unittest.TestCase):
         self.assertIn("[review-state] owner/repo -> good", query["title"][0])
         self.assertIn("repo: owner/repo", query["body"][0])
         self.assertIn("state: good", query["body"][0])
+
+    def test_build_operations_summary_html_contains_cards(self) -> None:
+        html = bot.build_operations_summary_html(".")
+        self.assertIn("運用サマリー", html)
+        self.assertIn("実行状況", html)
+        self.assertIn("DeepSeek 警告", html)
+        self.assertIn('href="./operations.html"', html)
 
     def test_aggregate_repo_history_builds_comparison_fields(self) -> None:
         history = [

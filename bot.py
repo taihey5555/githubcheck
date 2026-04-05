@@ -1041,6 +1041,7 @@ def site_shell(
 ) -> str:
     history_active = 'aria-current="page"' if current_page == "history" else ""
     weekly_active = 'aria-current="page"' if current_page == "weekly" else ""
+    operations_active = 'aria-current="page"' if current_page == "operations" else ""
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -1617,7 +1618,8 @@ def site_shell(
       </button>
       <nav id="site-nav" class="site-nav">
         <a href="{path_prefix}/index.html" {history_active}>履歴</a>
-        <a href="{path_prefix}/weekly.html" {weekly_active}>週間トップ10</a>
+        <a href="{path_prefix}/weekly.html" {weekly_active}>週次</a>
+        <a href="{path_prefix}/operations.html" {operations_active}>運用サマリー</a>
       </nav>
     </div>
   </header>
@@ -2540,11 +2542,8 @@ def render_repo_card(
     """
 
 
-def render_history_site() -> None:
-    settings = low_star_high_score_settings()
-    history = list(reversed(load_history()))
+def build_operations_summary_html(path_prefix: str = ".") -> str:
     state = load_state()
-    review_states = state.get("review_states", {})
     run_status = str(state.get("last_run_status") or "unknown").strip() or "unknown"
     started_at = format_state_timestamp(state.get("last_run_started_at"))
     finished_at = format_state_timestamp(state.get("last_run_finished_at"))
@@ -2564,7 +2563,8 @@ def render_history_site() -> None:
     latest_warning_sent = format_state_timestamp(latest_warning_payload.get("last_sent"))
     latest_warning_repo = str(latest_warning_payload.get("last_repo") or "-").strip() or "-"
     latest_warning_detail = " ".join(str(latest_warning_payload.get("detail") or "").split()) or "-"
-    operations_summary_html = f"""
+    operations_link = f'{path_prefix}/operations.html'
+    return f"""
     <section class="section-block">
       <div class="section-header">
         <h2>運用サマリー</h2>
@@ -2590,8 +2590,18 @@ def render_history_site() -> None:
           <p class="pick-reason">詳細: {escape(latest_warning_detail)}</p>
         </article>
       </div>
+      <div class="detail-links secondary-links">
+        <a class="badge" href="{operations_link}">運用サマリーページを開く</a>
+      </div>
     </section>
     """
+
+
+def render_history_site() -> None:
+    settings = low_star_high_score_settings()
+    history = list(reversed(load_history()))
+    state = load_state()
+    review_states = state.get("review_states", {})
     grouped: dict[str, list[dict[str, Any]]] = {}
     tokyo = ZoneInfo("Asia/Tokyo")
     for item in history:
@@ -2634,7 +2644,13 @@ def render_history_site() -> None:
         for item in low_star_items
     )
     body_html = (
-        operations_summary_html
+        (
+            '<section class="section-block"><div class="section-header">'
+            '<h2>運用状況</h2>'
+            '<p>定時実行や DeepSeek 警告の状況は、運用サマリーページで確認できます。'
+            ' <span class="inline-links"><a class="badge" href="./operations.html">運用サマリーを開く</a></span></p>'
+            '</div></section>'
+        )
         + render_section_block(
             "低スター高スコア",
             "stars がまだ少なくても、score が高いリポジトリを見つけるための発掘枠です。",
@@ -2671,6 +2687,18 @@ def render_history_site() -> None:
     )
     DOCS_DIR.mkdir(exist_ok=True)
     (DOCS_DIR / "index.html").write_text(html, encoding="utf-8")
+
+
+def render_operations_site() -> None:
+    body_html = build_operations_summary_html(".")
+    html = site_shell(
+        "運用サマリー",
+        "定時実行の状態や DeepSeek の警告など、運用上の確認項目をまとめたページです。",
+        body_html,
+        "operations",
+    )
+    DOCS_DIR.mkdir(exist_ok=True)
+    (DOCS_DIR / "operations.html").write_text(html, encoding="utf-8")
 
 
 def build_week_window(
@@ -2896,6 +2924,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
 def render_static_sites(now: datetime | None = None) -> None:
     render_history_site()
     render_weekly_site(now)
+    render_operations_site()
     render_repo_detail_sites()
 
 
