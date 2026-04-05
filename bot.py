@@ -422,10 +422,6 @@ def repo_detail_href(full_name: str, path_prefix: str = ".") -> str:
     return f"{path_prefix}/repos/{repo_slug(full_name)}.html"
 
 
-def history_review_state_href(review_state: str, path_prefix: str = ".") -> str:
-    return f"{path_prefix}/index.html?review_state={escape(review_state, quote=True)}"
-
-
 def history_archive_href(
     path_prefix: str = ".",
     **params: Any,
@@ -456,6 +452,51 @@ def history_archive_href(
         query["sort"] = sort
     query_string = urlencode(query)
     return f"{path_prefix}/index.html" + (f"?{query_string}" if query_string else "")
+
+
+def normalized_language_query(value: Any) -> str:
+    language_value = str(value or "N/A").strip()
+    if not language_value or language_value == "N/A":
+        return ""
+    return language_value.lower()
+
+
+def render_empty_state(message: str) -> str:
+    return f"<p class='empty-state'>{escape(message)}</p>"
+
+
+def render_section_block(
+    title: str,
+    description: str,
+    content_html: str,
+    empty_message: str,
+    layout_class: str = "section-grid",
+    links_html: str = "",
+) -> str:
+    return (
+        "<section class='section-block'>"
+        "<div class='section-header'>"
+        f"<h2>{escape(title)}</h2>"
+        f"<p>{escape(description)}{links_html}</p>"
+        "</div>"
+        + (
+            f"<div class='{layout_class}'>{content_html}</div>"
+            if content_html
+            else render_empty_state(empty_message)
+        )
+        + "</section>"
+    )
+
+
+def render_review_state_shortcuts(path_prefix: str, current_review_state: str) -> str:
+    return "".join(
+        (
+            f'<a class="badge{" review-state" if state_name == current_review_state else ""}" '
+            f'href="{history_archive_href(path_prefix=path_prefix, review_state=state_name)}">'
+            f'See {escape(state_name)}</a>'
+        )
+        for state_name in ["good", "production_candidate", "unseen", "interested", "tested"]
+    )
 
 
 def aggregate_repo_history(
@@ -618,7 +659,7 @@ def render_repo_detail_sites() -> None:
         current_review_state = normalize_review_state(repo_data.get("review_state"))
         current_state_href = history_archive_href(path_prefix="..", review_state=current_review_state)
         language_value = str(repo_data.get("language") or "N/A").strip()
-        language_query = language_value.lower() if language_value and language_value != "N/A" else ""
+        language_query = normalized_language_query(repo_data.get("language"))
         language_href = history_archive_href(path_prefix="..", language=language_query) if language_query else ""
         score_focus_href = history_archive_href(
             path_prefix="..",
@@ -631,14 +672,7 @@ def render_repo_detail_sites() -> None:
             score_min=low_star_settings["min_score"],
             sort="score",
         )
-        shortcut_links = "".join(
-            (
-                f'<a class="badge{" review-state" if state_name == current_review_state else ""}" '
-                f'href="{history_archive_href(path_prefix="..", review_state=state_name)}">'
-                f'See {escape(state_name)}</a>'
-            )
-            for state_name in ["good", "production_candidate", "unseen", "interested", "tested"]
-        )
+        shortcut_links = render_review_state_shortcuts("..", current_review_state)
         topics_html = "".join(
             f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
             for topic in repo_data.get("topics") or []
@@ -768,20 +802,20 @@ def render_repo_detail_sites() -> None:
           <article class="stat-card"><strong>{int(repo_data["appearances"])}</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>{escape(current_review_state)}</strong><span>review state</span></article>
         </section>
-        <section class="section-block">
-          <div class="section-header">
-            <h2>Similar Repos</h2>
-            <p>同じ language や共通 tag を手がかりに、近い repo を見返しやすく並べています。</p>
-          </div>
-          {f'<div class="history-list">{"".join(similar_repo_cards)}</div>' if similar_repo_cards else '<p class="empty-state">この repo に近い候補は、まだ十分に集まっていません。</p>'}
-        </section>
-        <section class="section-block">
-          <div class="section-header">
-            <h2>Related History</h2>
-            <p>同じ repo の通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p>
-          </div>
-          {f'<div class="history-list">{"".join(history_items)}</div>' if history_items else '<p class="empty-state">この repo の比較できる履歴は、まだありません。</p>'}
-        </section>
+        {render_section_block(
+            "Similar Repos",
+            "同じ language や共通 tag を手がかりに、近い repo を見返しやすく並べています。",
+            "".join(similar_repo_cards),
+            "この repo に近い候補は、まだ十分に集まっていません。",
+            layout_class="history-list",
+        )}
+        {render_section_block(
+            "Related History",
+            "同じ repo の通知履歴を新しい順に並べています。score や stars の変化もここで追えます。",
+            "".join(history_items),
+            "この repo の比較できる履歴は、まだありません。",
+            layout_class="history-list",
+        )}
         """
         html = site_shell(
             repo_data["full_name"],
@@ -2244,18 +2278,11 @@ def render_history_site() -> None:
         for item in low_star_items
     )
     body_html = (
-        (
-            "<section class='section-block'>"
-            "<div class='section-header'>"
-            "<h2>Low Stars / High Score</h2>"
-            f"<p>stars がまだ少なくても、score が高い repo を見つけるための発掘枠です。</p>"
-            "</div>"
-            + (
-                f"<div class='section-grid'>{low_star_cards}</div>"
-                if low_star_cards
-                else "<p class='empty-state'>今の条件に合う発掘候補は、まだありません。</p>"
-            )
-            + "</section>"
+        render_section_block(
+            "Low Stars / High Score",
+            "stars がまだ少なくても、score が高い repo を見つけるための発掘枠です。",
+            low_star_cards,
+            "今の条件に合う発掘候補は、まだありません。",
         )
         + build_archive_controls(history)
         +
@@ -2276,7 +2303,7 @@ def render_history_site() -> None:
         + (
             "".join(tab_panels)
             if tab_panels
-            else "<p class='empty-state'>まだ通知履歴がありません。次回の render 後にここへ表示されます。</p>"
+            else render_empty_state("まだ通知履歴がありません。次回の render 後にここへ表示されます。")
         )
     )
     html = site_shell(
@@ -2456,18 +2483,12 @@ def render_weekly_site(now: datetime | None = None) -> None:
             )
             for index, item in enumerate(items, start=1)
         )
-        return (
-            "<section class='section-block'>"
-            "<div class='section-header'>"
-            f"<h2>{escape(title)}</h2>"
-            f"<p>{escape(description)}{links_html}</p>"
-            "</div>"
-            + (
-                f"<div class='section-grid'>{cards}</div>"
-                if cards
-                else "<p class='empty-state'>この条件に合う repo は、今週まだありません。</p>"
-            )
-            + "</section>"
+        return render_section_block(
+            title,
+            description,
+            cards,
+            "この条件に合う repo は、今週まだありません。",
+            links_html=links_html,
         )
 
     html = site_shell(
