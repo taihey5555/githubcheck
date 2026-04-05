@@ -493,6 +493,62 @@ def aggregate_repo_history(
     return aggregated
 
 
+def find_similar_repos(
+    target_repo: dict[str, Any],
+    aggregated: dict[str, dict[str, Any]],
+    limit: int = 4,
+) -> list[dict[str, Any]]:
+    target_name = str(target_repo.get("full_name") or "")
+    target_language = str(target_repo.get("language") or "").strip().lower()
+    target_topics = set(extract_tags(target_repo))
+    target_state = normalize_review_state(target_repo.get("review_state"))
+    target_score = float(target_repo.get("latest_score") or 0)
+    candidates: list[tuple[tuple[float, float, float], dict[str, Any]]] = []
+    for repo_data in aggregated.values():
+        if str(repo_data.get("full_name") or "") == target_name:
+            continue
+        repo_language = str(repo_data.get("language") or "").strip().lower()
+        repo_topics = set(extract_tags(repo_data))
+        shared_topics = sorted(target_topics & repo_topics)
+        same_language = bool(
+            target_language and repo_language and target_language != "n/a" and target_language == repo_language
+        )
+        same_state = normalize_review_state(repo_data.get("review_state")) == target_state
+        similarity_score = (
+            len(shared_topics) * 4
+            + (2 if same_language else 0)
+            + (1 if same_state and target_state != "unseen" else 0)
+        )
+        if similarity_score <= 0:
+            continue
+        reason_parts = []
+        if same_language:
+            reason_parts.append(f"same language: {repo_data.get('language') or 'N/A'}")
+        if shared_topics:
+            reason_parts.append(
+                "shared tags: "
+                + ", ".join(f"#{topic}" for topic in shared_topics[:3])
+            )
+        if same_state and target_state != "unseen":
+            reason_parts.append(f"same state: {target_state}")
+        candidate = dict(repo_data)
+        candidate["similarity_reason"] = " / ".join(reason_parts)
+        candidate["shared_topics"] = shared_topics
+        score_gap = abs(float(repo_data.get("latest_score") or 0) - target_score)
+        candidates.append(
+            (
+                (
+                    float(similarity_score),
+                    -score_gap,
+                    float(repo_data.get("latest_score") or 0),
+                ),
+                candidate,
+            )
+        )
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    return [candidate for _, candidate in candidates[:limit]]
+
+
 def render_repo_detail_sites() -> None:
     history = load_history()
     state = load_state()
@@ -542,6 +598,33 @@ def render_repo_detail_sites() -> None:
             if language_href
             else ""
         )
+        similar_repos = find_similar_repos(repo_data, aggregated)
+        similar_repo_cards = []
+        for similar_repo in similar_repos:
+            shared_topics = "".join(
+                f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
+                for topic in similar_repo.get("shared_topics") or []
+            )
+            similar_repo_cards.append(
+                f"""
+                <article class="history-item">
+                  <div class="meta">
+                    <span>{escape(str(similar_repo.get("language") or "N/A"))}</span>
+                    <span>score {float(similar_repo.get("latest_score") or 0):.2f}</span>
+                    <span>stars {int(similar_repo.get("latest_stars") or 0)}</span>
+                    <span>state {escape(normalize_review_state(similar_repo.get("review_state")))}</span>
+                  </div>
+                  <h3><a href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}" target="_self">{escape(str(similar_repo.get("full_name") or ""))}</a></h3>
+                  {f'<p class="pick-reason">{escape(str(similar_repo.get("similarity_reason") or ""))}</p>' if similar_repo.get("similarity_reason") else ''}
+                  {f'<p class="description">{escape(str(similar_repo.get("description") or ""))}</p>' if similar_repo.get("description") else ''}
+                  {f'<div class="badge-row">{shared_topics}</div>' if shared_topics else ''}
+                  <div class="detail-links">
+                    <a class="badge" href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}">Details</a>
+                    <a class="badge" href="{escape(str(similar_repo.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                """
+            )
         history_items = []
         for item in repo_data["history_entries"]:
             bucket = "朝の新顔枠" if item["bucket"] == "morning" else "夜の尖り枠"
@@ -604,6 +687,13 @@ def render_repo_detail_sites() -> None:
           <article class="stat-card"><strong>{escape(repo_data["latest_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>{int(repo_data["appearances"])}</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>{escape(current_review_state)}</strong><span>review state</span></article>
+        </section>
+        <section class="section-block">
+          <div class="section-header">
+            <h2>Similar Repos</h2>
+            <p>language と共通 tag を優先して、近い repo を軽く並べています。</p>
+          </div>
+          {f'<div class="history-list">{"".join(similar_repo_cards)}</div>' if similar_repo_cards else '<p class="empty-state">似た repo はまだ見つかっていません。</p>'}
         </section>
         <section class="section-block">
           <div class="section-header">
