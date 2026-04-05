@@ -171,6 +171,17 @@ def parse_sent_at(sent_at: str) -> datetime:
     return datetime.fromisoformat(sent_at).astimezone(ZoneInfo("Asia/Tokyo"))
 
 
+def format_state_timestamp(value: Any) -> str:
+    raw = str(value or "").strip()
+    if not raw:
+        return "-"
+    try:
+        dt = datetime.fromisoformat(raw)
+    except ValueError:
+        return raw
+    return dt.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")
+
+
 def normalize_review_state(value: Any) -> str:
     state = str(value or "").strip().lower()
     return state if state in REVIEW_STATES else "unseen"
@@ -2345,6 +2356,53 @@ def render_history_site() -> None:
     history = list(reversed(load_history()))
     state = load_state()
     review_states = state.get("review_states", {})
+    run_status = str(state.get("last_run_status") or "unknown").strip() or "unknown"
+    started_at = format_state_timestamp(state.get("last_run_started_at"))
+    finished_at = format_state_timestamp(state.get("last_run_finished_at"))
+    run_error = " ".join(str(state.get("last_run_error") or "").split())
+    deepseek_alerts = state.get("alerts", {}).get("deepseek", {})
+    latest_warning_kind = ""
+    latest_warning_payload: dict[str, Any] = {}
+    latest_warning_at = ""
+    for warning_kind, payload in deepseek_alerts.items():
+        if not isinstance(payload, dict):
+            continue
+        last_sent_raw = str(payload.get("last_sent") or "")
+        if last_sent_raw > latest_warning_at:
+            latest_warning_at = last_sent_raw
+            latest_warning_kind = warning_kind
+            latest_warning_payload = payload
+    latest_warning_sent = format_state_timestamp(latest_warning_payload.get("last_sent"))
+    latest_warning_repo = str(latest_warning_payload.get("last_repo") or "-").strip() or "-"
+    latest_warning_detail = " ".join(str(latest_warning_payload.get("detail") or "").split()) or "-"
+    operations_summary_html = f"""
+    <section class="section-block">
+      <div class="section-header">
+        <h2>Operations Summary</h2>
+        <p>定時実行の状態と DeepSeek の直近 warning を、Pages 上ですぐ確認するための小さい運用サマリーです。</p>
+      </div>
+      <div class="section-grid">
+        <article class="card">
+          <h3>Run Status</h3>
+          <div class="meta">
+            <span>status {escape(run_status)}</span>
+            <span>started {escape(started_at)}</span>
+            <span>finished {escape(finished_at)}</span>
+          </div>
+          {f'<p class="pick-reason">error: {escape(run_error)}</p>' if run_error else '<p class="pick-reason">error: -</p>'}
+        </article>
+        <article class="card">
+          <h3>DeepSeek Alerts</h3>
+          <div class="meta">
+            <span>latest {escape(latest_warning_kind or "none")}</span>
+            <span>sent {escape(latest_warning_sent)}</span>
+            <span>repo {escape(latest_warning_repo)}</span>
+          </div>
+          <p class="pick-reason">detail: {escape(latest_warning_detail)}</p>
+        </article>
+      </div>
+    </section>
+    """
     grouped: dict[str, list[dict[str, Any]]] = {}
     tokyo = ZoneInfo("Asia/Tokyo")
     for item in history:
@@ -2387,7 +2445,8 @@ def render_history_site() -> None:
         for item in low_star_items
     )
     body_html = (
-        render_section_block(
+        operations_summary_html
+        + render_section_block(
             "Low Stars / High Score",
             "stars がまだ少なくても、score が高い repo を見つけるための発掘枠です。",
             low_star_cards,

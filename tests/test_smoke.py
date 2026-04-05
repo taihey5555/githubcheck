@@ -14,6 +14,13 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual(bot.normalize_review_state("INVALID"), "unseen")
         self.assertEqual(bot.normalize_review_state("good"), "good")
 
+    def test_format_state_timestamp_handles_empty_and_iso(self) -> None:
+        self.assertEqual(bot.format_state_timestamp(""), "-")
+        self.assertEqual(
+            bot.format_state_timestamp("2026-04-05T00:10:00+00:00"),
+            "2026-04-05 09:10",
+        )
+
     def test_low_star_high_score_settings_use_defaults(self) -> None:
         with patch.dict(
             os.environ,
