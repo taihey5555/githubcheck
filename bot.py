@@ -146,6 +146,53 @@ def normalize_review_state(value: Any) -> str:
     return state if state in REVIEW_STATES else "unseen"
 
 
+def parse_int_env(name: str, default: int, minimum: int | None = None) -> int:
+    raw = os.getenv(name, "").strip()
+    if not raw:
+        return default
+    try:
+        value = int(raw)
+    except ValueError:
+        return default
+    if minimum is not None and value < minimum:
+        return default
+    return value
+
+
+def parse_float_env(name: str, default: float, minimum: float | None = None) -> float:
+    raw = os.getenv(name, "").strip()
+    if not raw:
+        return default
+    try:
+        value = float(raw)
+    except ValueError:
+        return default
+    if minimum is not None and value < minimum:
+        return default
+    return value
+
+
+def low_star_high_score_settings() -> dict[str, int | float]:
+    load_dotenv()
+    return {
+        "max_stars": parse_int_env(
+            "LOW_STAR_HIGH_SCORE_MAX_STARS",
+            int(LOW_STAR_HIGH_SCORE["max_stars"]),
+            minimum=0,
+        ),
+        "min_score": parse_float_env(
+            "LOW_STAR_HIGH_SCORE_MIN_SCORE",
+            float(LOW_STAR_HIGH_SCORE["min_score"]),
+            minimum=0.0,
+        ),
+        "limit": parse_int_env(
+            "LOW_STAR_HIGH_SCORE_LIMIT",
+            int(LOW_STAR_HIGH_SCORE["limit"]),
+            minimum=1,
+        ),
+    }
+
+
 def extract_tags(item: dict[str, Any]) -> list[str]:
     tags = []
     seen = set()
@@ -186,9 +233,10 @@ def render_data_attrs(values: dict[str, str]) -> str:
 
 
 def is_low_star_high_score(item: dict[str, Any]) -> bool:
+    settings = low_star_high_score_settings()
     return (
-        int(item.get("stars") or 0) <= LOW_STAR_HIGH_SCORE["max_stars"]
-        and float(item.get("score") or 0) >= LOW_STAR_HIGH_SCORE["min_score"]
+        int(item.get("stars") or 0) <= int(settings["max_stars"])
+        and float(item.get("score") or 0) >= float(settings["min_score"])
     )
 
 
@@ -1266,6 +1314,7 @@ def append_history(repos: list[dict[str, Any]], bucket: str) -> None:
 
 
 def build_archive_controls(history: list[dict[str, Any]]) -> str:
+    settings = low_star_high_score_settings()
     languages = sorted(
         {str(item.get("language") or "N/A") for item in history},
         key=lambda value: value.lower(),
@@ -1315,7 +1364,7 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
       </div>
       <div class="control-group">
         <label for="filter-stars-max">Stars 最大</label>
-        <input id="filter-stars-max" type="number" min="0" placeholder="{LOW_STAR_HIGH_SCORE["max_stars"]}" data-filter-stars-max>
+        <input id="filter-stars-max" type="number" min="0" placeholder="{int(settings["max_stars"])}" data-filter-stars-max>
       </div>
       <div class="control-group">
         <label for="filter-score-min">Score 最小</label>
@@ -1411,6 +1460,7 @@ def render_repo_card(
 
 
 def render_history_site() -> None:
+    settings = low_star_high_score_settings()
     history = list(reversed(load_history()))
     state = load_state()
     review_states = state.get("review_states", {})
@@ -1447,7 +1497,7 @@ def render_history_site() -> None:
 
     low_star_items = [
         item for item in history if is_low_star_high_score(item)
-    ][: LOW_STAR_HIGH_SCORE["limit"]]
+    ][: int(settings["limit"])]
     low_star_cards = "".join(
         render_repo_card(
             item,
@@ -1460,7 +1510,7 @@ def render_history_site() -> None:
             "<section class='section-block'>"
             "<div class='section-header'>"
             "<h2>Low Stars / High Score</h2>"
-            f"<p>stars <= {LOW_STAR_HIGH_SCORE['max_stars']} かつ score >= {LOW_STAR_HIGH_SCORE['min_score']} の発掘枠です。</p>"
+            f"<p>stars <= {int(settings['max_stars'])} かつ score >= {float(settings['min_score']):g} の発掘枠です。</p>"
             "</div>"
             + (
                 f"<div class='section-grid'>{low_star_cards}</div>"
@@ -1579,6 +1629,7 @@ def build_weekly_ranking(
 
 
 def render_weekly_site(now: datetime | None = None) -> None:
+    settings = low_star_high_score_settings()
     history = load_history()
     state = load_state()
     review_states = state.get("review_states", {})
@@ -1597,7 +1648,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
             enriched_item["_parsed_sent_at"] = sent_at_dt
             this_week_items.append(enriched_item)
     low_star_ranking = [item for item in ranking if is_low_star_high_score(item)][
-        : LOW_STAR_HIGH_SCORE["limit"]
+        : int(settings["limit"])
     ]
     fresh_repo_map: dict[str, dict[str, Any]] = {}
     for item in sorted(
@@ -1612,7 +1663,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         if not full_name or full_name in fresh_repo_map:
             continue
         fresh_repo_map[full_name] = item
-    fresh_picks = list(fresh_repo_map.values())[: LOW_STAR_HIGH_SCORE["limit"]]
+    fresh_picks = list(fresh_repo_map.values())[: int(settings["limit"])]
     avg_score = (
         sum(float(item.get("score") or 0) for item in this_week_items) / len(this_week_items)
         if this_week_items
@@ -1662,7 +1713,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         )
         + render_week_section(
             "今週の低スター枠トップ",
-            f"stars <= {LOW_STAR_HIGH_SCORE['max_stars']} かつ score >= {LOW_STAR_HIGH_SCORE['min_score']} の発掘枠です。",
+            f"stars <= {int(settings['max_stars'])} かつ score >= {float(settings['min_score']):g} の発掘枠です。",
             low_star_ranking,
         )
         + render_week_section(
