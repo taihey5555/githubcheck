@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlencode
 from zoneinfo import ZoneInfo
 
 import requests
@@ -399,6 +400,38 @@ def history_review_state_href(review_state: str, path_prefix: str = ".") -> str:
     return f"{path_prefix}/index.html?review_state={escape(review_state, quote=True)}"
 
 
+def history_archive_href(
+    path_prefix: str = ".",
+    **params: Any,
+) -> str:
+    query: dict[str, str] = {}
+    review_state = normalize_review_state(params.get("review_state"))
+    if params.get("review_state") is not None:
+        query["review_state"] = review_state
+    language = str(params.get("language") or "").strip().lower()
+    if language:
+        query["language"] = language
+    tag = str(params.get("tag") or "").strip().lower()
+    if tag:
+        query["tag"] = tag
+    for key in ("stars_min", "stars_max", "score_min", "score_max"):
+        value = params.get(key)
+        if value in (None, ""):
+            continue
+        try:
+            number = float(value)
+        except (TypeError, ValueError):
+            continue
+        if number < 0:
+            continue
+        query[key] = f"{number:g}"
+    sort = str(params.get("sort") or "").strip().lower()
+    if sort in {"newest", "score", "stars"}:
+        query["sort"] = sort
+    query_string = urlencode(query)
+    return f"{path_prefix}/index.html" + (f"?{query_string}" if query_string else "")
+
+
 def aggregate_repo_history(
     history: list[dict[str, Any]],
     review_states: dict[str, Any],
@@ -470,19 +503,44 @@ def render_repo_detail_sites() -> None:
             continue
         repo.unlink()
     for repo_data in aggregated.values():
+        low_star_settings = low_star_high_score_settings()
         current_review_state = normalize_review_state(repo_data.get("review_state"))
-        current_state_href = history_review_state_href(current_review_state, path_prefix="..")
+        current_state_href = history_archive_href(path_prefix="..", review_state=current_review_state)
+        language_value = str(repo_data.get("language") or "N/A").strip()
+        language_query = language_value.lower() if language_value and language_value != "N/A" else ""
+        language_href = history_archive_href(path_prefix="..", language=language_query) if language_query else ""
+        score_focus_href = history_archive_href(
+            path_prefix="..",
+            score_min=repo_data.get("latest_score") or 0,
+            sort="score",
+        )
+        low_star_focus_href = history_archive_href(
+            path_prefix="..",
+            stars_max=low_star_settings["max_stars"],
+            score_min=low_star_settings["min_score"],
+            sort="score",
+        )
         shortcut_links = "".join(
             (
                 f'<a class="badge{" review-state" if state_name == current_review_state else ""}" '
-                f'href="{history_review_state_href(state_name, path_prefix="..")}">'
+                f'href="{history_archive_href(path_prefix="..", review_state=state_name)}">'
                 f'See {escape(state_name)}</a>'
             )
             for state_name in ["good", "production_candidate", "unseen", "interested", "tested"]
         )
         topics_html = "".join(
-            f'<span class="badge topic">#{escape(topic)}</span>'
+            f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
             for topic in repo_data.get("topics") or []
+        )
+        language_badge_html = (
+            f'<a class="badge" href="{language_href}">{escape(language_value)}</a>'
+            if language_href
+            else f'<span class="badge">{escape(language_value or "N/A")}</span>'
+        )
+        language_link_html = (
+            f'<a class="badge" href="{language_href}">View all {escape(language_value)} repos</a>'
+            if language_href
+            else ""
         )
         history_items = []
         for item in repo_data["history_entries"]:
@@ -522,7 +580,7 @@ def render_repo_detail_sites() -> None:
             {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
             <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
-            {f'<div class="badge-row"><span class="badge">{escape(str(repo_data["language"] or "N/A"))}</span><span class="badge review-state">state {escape(current_review_state)}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
+            {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">state {escape(current_review_state)}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
             <div class="detail-links">
               <a class="badge" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
               <a class="badge" href="../index.html">History</a>
@@ -530,6 +588,11 @@ def render_repo_detail_sites() -> None:
             </div>
             <div class="detail-links">
               <a class="badge review-state" href="{current_state_href}">View all {escape(current_review_state)} repos</a>
+            </div>
+            <div class="detail-links">
+              {language_link_html}
+              <a class="badge" href="{score_focus_href}">View high-score repos</a>
+              <a class="badge" href="{low_star_focus_href}">See low-stars/high-score</a>
             </div>
             <div class="detail-links">
               {shortcut_links}
@@ -2047,10 +2110,15 @@ def render_weekly_site(now: datetime | None = None) -> None:
         item["_review_state"] = review_state
         review_state_counts[review_state] = review_state_counts.get(review_state, 0) + 1
     review_state_summary = " ".join(
-        f'<a class="badge" href="{history_review_state_href(state_name)}">{escape(state_name)} {review_state_counts[state_name]}</a>'
+        f'<a class="badge" href="{history_archive_href(review_state=state_name)}">{escape(state_name)} {review_state_counts[state_name]}</a>'
         for state_name in REVIEW_STATES
         if review_state_counts.get(state_name)
     ) or "なし"
+    low_star_history_href = history_archive_href(
+        stars_max=settings["max_stars"],
+        score_min=settings["min_score"],
+        sort="score",
+    )
     review_priority_items = [
         item
         for item in weekly_repo_items
@@ -2112,8 +2180,8 @@ def render_weekly_site(now: datetime | None = None) -> None:
             "見返す優先度が高い repo を review state ベースでまとめています。",
             review_priority_items,
             links_html=(
-                f' <span class="inline-links"><a class="badge" href="{history_review_state_href("good")}">See all good</a>'
-                f'<a class="badge" href="{history_review_state_href("production_candidate")}">See all production_candidate</a></span>'
+                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="good", sort="score")}">See all good</a>'
+                f'<a class="badge" href="{history_archive_href(review_state="production_candidate", sort="score")}">See all production_candidate</a></span>'
             ),
         )
         + render_week_section(
@@ -2121,7 +2189,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
             "review state が unseen のものです。未確認が多い週かどうかもここで分かります。",
             unseen_items,
             links_html=(
-                f' <span class="inline-links"><a class="badge" href="{history_review_state_href("unseen")}">See all unseen</a></span>'
+                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="unseen", sort="newest")}">See all unseen</a></span>'
             ),
         )
         + render_week_section(
@@ -2133,6 +2201,9 @@ def render_weekly_site(now: datetime | None = None) -> None:
             "今週の低スター枠トップ",
             f"stars <= {int(settings['max_stars'])} かつ score >= {float(settings['min_score']):g} の発掘枠です。",
             low_star_ranking,
+            links_html=(
+                f' <span class="inline-links"><a class="badge" href="{low_star_history_href}">See all low-stars/high-score</a></span>'
+            ),
         )
         + render_week_section(
             "今週の新着で面白かったもの",
