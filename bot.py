@@ -758,6 +758,7 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       const searchInput = archiveRoot.querySelector('[data-filter-search]');
       const languageInput = archiveRoot.querySelector('[data-filter-language]');
       const tagInput = archiveRoot.querySelector('[data-filter-tag]');
+      const reviewStateInput = archiveRoot.querySelector('[data-filter-review-state]');
       const minStarsInput = archiveRoot.querySelector('[data-filter-stars-min]');
       const maxStarsInput = archiveRoot.querySelector('[data-filter-stars-max]');
       const minScoreInput = archiveRoot.querySelector('[data-filter-score-min]');
@@ -779,6 +780,7 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
         const search = normalizeText(searchInput?.value);
         const language = normalizeText(languageInput?.value);
         const tag = normalizeText(tagInput?.value);
+        const reviewState = normalizeText(reviewStateInput?.value);
         const minStars = parseNumber(minStarsInput?.value);
         const maxStars = parseNumber(maxStarsInput?.value);
         const minScore = parseNumber(minScoreInput?.value);
@@ -793,11 +795,13 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
           const name = normalizeText(card.dataset.name);
           const cardLanguage = normalizeText(card.dataset.language);
           const tags = normalizeText(card.dataset.tags);
+          const cardReviewState = normalizeText(card.dataset.reviewState);
           const stars = parseNumber(card.dataset.stars) ?? 0;
           const score = parseNumber(card.dataset.score) ?? 0;
           const matchesSearch = !search || name.includes(search);
           const matchesLanguage = !language || cardLanguage === language;
           const matchesTag = !tag || tags.includes(tag);
+          const matchesReviewState = !reviewState || cardReviewState === reviewState;
           const matchesMinStars = minStars == null || stars >= minStars;
           const matchesMaxStars = maxStars == null || stars <= maxStars;
           const matchesMinScore = minScore == null || score >= minScore;
@@ -808,6 +812,7 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
             matchesSearch &&
             matchesLanguage &&
             matchesTag &&
+            matchesReviewState &&
             matchesMinStars &&
             matchesMaxStars &&
             matchesMinScore &&
@@ -836,6 +841,7 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
         searchInput,
         languageInput,
         tagInput,
+        reviewStateInput,
         minStarsInput,
         maxStarsInput,
         minScoreInput,
@@ -1265,6 +1271,10 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
         key=lambda value: value.lower(),
     )
     tags = sorted({tag for item in history for tag in extract_tags(item)})
+    review_state_options = "".join(
+        f'<option value="{escape(state)}">{escape(state)}</option>'
+        for state in REVIEW_STATES
+    )
     language_options = "".join(
         f'<option value="{escape(language.lower())}">{escape(language)}</option>'
         for language in languages
@@ -1290,6 +1300,13 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
         <select id="filter-tag" data-filter-tag>
           <option value="">すべて</option>
           {tag_options}
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="filter-review-state">Review State</label>
+        <select id="filter-review-state" data-filter-review-state>
+          <option value="">すべて</option>
+          {review_state_options}
         </select>
       </div>
       <div class="control-group">
