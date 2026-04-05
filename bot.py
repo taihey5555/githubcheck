@@ -470,6 +470,16 @@ def render_repo_detail_sites() -> None:
             continue
         repo.unlink()
     for repo_data in aggregated.values():
+        current_review_state = normalize_review_state(repo_data.get("review_state"))
+        current_state_href = history_review_state_href(current_review_state, path_prefix="..")
+        shortcut_links = "".join(
+            (
+                f'<a class="badge{" review-state" if state_name == current_review_state else ""}" '
+                f'href="{history_review_state_href(state_name, path_prefix="..")}">'
+                f'See {escape(state_name)}</a>'
+            )
+            for state_name in ["good", "production_candidate", "unseen", "interested", "tested"]
+        )
         topics_html = "".join(
             f'<span class="badge topic">#{escape(topic)}</span>'
             for topic in repo_data.get("topics") or []
@@ -506,17 +516,23 @@ def render_repo_detail_sites() -> None:
               <span>stars {int(repo_data['latest_stars'])}</span>
               <span>score {repo_data['latest_score']}</span>
               <span>{escape(str(repo_data['language'] or 'N/A'))}</span>
-              <span>state {escape(repo_data['review_state'])}</span>
+              <span>state {escape(current_review_state)}</span>
               <span>appearances {int(repo_data['appearances'])}</span>
             </div>
             {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
             <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
-            {f'<div class="badge-row"><span class="badge">{escape(str(repo_data["language"] or "N/A"))}</span><span class="badge review-state">state {escape(repo_data["review_state"])}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
+            {f'<div class="badge-row"><span class="badge">{escape(str(repo_data["language"] or "N/A"))}</span><span class="badge review-state">state {escape(current_review_state)}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
             <div class="detail-links">
               <a class="badge" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
               <a class="badge" href="../index.html">History</a>
               <a class="badge" href="../weekly.html">Weekly</a>
+            </div>
+            <div class="detail-links">
+              <a class="badge review-state" href="{current_state_href}">View all {escape(current_review_state)} repos</a>
+            </div>
+            <div class="detail-links">
+              {shortcut_links}
             </div>
           </article>
         </section>
@@ -524,7 +540,7 @@ def render_repo_detail_sites() -> None:
           <article class="stat-card"><strong>{escape(repo_data["first_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>初回出現日時</span></article>
           <article class="stat-card"><strong>{escape(repo_data["latest_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>{int(repo_data["appearances"])}</strong><span>出現回数</span></article>
-          <article class="stat-card"><strong>{escape(repo_data["review_state"])}</strong><span>review state</span></article>
+          <article class="stat-card"><strong>{escape(current_review_state)}</strong><span>review state</span></article>
         </section>
         <section class="section-block">
           <div class="section-header">
