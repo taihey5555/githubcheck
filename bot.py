@@ -944,6 +944,27 @@ def site_shell(
       color: var(--muted);
       font-size: 13px;
     }}
+    .archive-share {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 18px;
+    }}
+    .archive-share input {{
+      flex: 1 1 320px;
+      min-width: 220px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }}
+    .archive-share-status {{
+      color: var(--muted);
+      font-size: 12px;
+    }}
     .section-block {{
       margin: 0 0 28px;
     }}
@@ -1303,6 +1324,10 @@ def site_shell(
       const maxScoreInput = archiveRoot.querySelector('[data-filter-score-max]');
       const sortInput = archiveRoot.querySelector('[data-filter-sort]');
       const countOutput = document.querySelector('[data-filter-count]');
+      const copyLinkButton = archiveRoot.querySelector('[data-copy-filter-link]');
+      const openLink = archiveRoot.querySelector('[data-open-filter-link]');
+      const linkOutput = archiveRoot.querySelector('[data-filter-link-output]');
+      const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
       const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
 
       const activePanelId = () => daySelect ? daySelect.value : '';
@@ -1329,6 +1354,38 @@ def site_shell(
         const parsed = parseNumber(rawValue);
         if (parsed == null || parsed < 0) return;
         input.value = String(parsed);
+      }};
+      const buildArchiveShareUrl = () => {{
+        const params = new URLSearchParams();
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
+        if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {{
+          params.set('language', language);
+        }}
+        if (tag && Array.from(tagInput?.options || []).some((option) => option.value === tag)) {{
+          params.set('tag', tag);
+        }}
+        if (minStars != null && minStars >= 0) params.set('stars_min', String(minStars));
+        if (maxStars != null && maxStars >= 0) params.set('stars_max', String(maxStars));
+        if (minScore != null && minScore >= 0) params.set('score_min', String(minScore));
+        if (maxScore != null && maxScore >= 0) params.set('score_max', String(maxScore));
+        if (allowedSorts.has(sortKey) && sortKey !== 'newest') params.set('sort', sortKey);
+        const shareUrl = new URL(window.location.pathname, window.location.href);
+        shareUrl.search = params.toString();
+        return shareUrl.toString();
+      }};
+      const updateArchiveShareUi = (statusText = '') => {{
+        const shareUrl = buildArchiveShareUrl();
+        if (openLink) openLink.href = shareUrl;
+        if (linkOutput) linkOutput.value = shareUrl;
+        if (shareStatus) shareStatus.textContent = statusText || '';
       }};
 
       const applyArchiveFilters = () => {{
@@ -1390,6 +1447,7 @@ def site_shell(
         if (countOutput) {{
           countOutput.textContent = `${{sortableCards.length}} 件表示`;
         }}
+        updateArchiveShareUi();
       }};
 
       [
@@ -1427,6 +1485,25 @@ def site_shell(
       }}
       for (const button of filterButtons) {{
         button.addEventListener('click', applyArchiveFilters);
+      }}
+      if (copyLinkButton) {{
+        copyLinkButton.addEventListener('click', async () => {{
+          const shareUrl = buildArchiveShareUrl();
+          try {{
+            if (navigator.clipboard?.writeText) {{
+              await navigator.clipboard.writeText(shareUrl);
+            }} else {{
+              throw new Error('clipboard-unavailable');
+            }}
+            updateArchiveShareUi('Copied');
+          }} catch (_error) {{
+            if (linkOutput) {{
+              linkOutput.focus();
+              linkOutput.select();
+            }}
+            updateArchiveShareUi('Select the URL and copy manually');
+          }}
+        }});
       }}
       applyArchiveFilters();
     }}
@@ -1906,6 +1983,12 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
         </select>
       </div>
     </section>
+    <div class="archive-share">
+      <button class="filter-button" type="button" data-copy-filter-link>Copy filtered link</button>
+      <a class="badge" href="./index.html" data-open-filter-link>Open filtered link</a>
+      <input type="text" readonly value="./index.html" data-filter-link-output aria-label="Shareable filtered link">
+      <span class="archive-share-status" data-filter-link-status></span>
+    </div>
     <p class="archive-summary" data-filter-count>{len(history)} 件表示</p>
     """
 
