@@ -149,6 +149,48 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual(similar[0]["full_name"], "other/repo")
         self.assertIn("same language", similar[0]["similarity_reason"])
 
+    def test_score_repo_applies_new_topic_keyword_bonuses(self) -> None:
+        repo = {
+            "full_name": "owner/repo",
+            "stargazers_count": 120,
+            "created_at": "2026-04-01T00:00:00+00:00",
+            "pushed_at": "2026-04-04T00:00:00+00:00",
+            "description": "Agentic scraper with monitoring alerts",
+            "topics": ["agents", "scraping", "monitoring"],
+            "_readme_text": "",
+        }
+        base_config = bot.Config(
+            github_token="",
+            deepseek_api_key="",
+            telegram_bot_token="",
+            telegram_chat_id="",
+            public_history_url="",
+            public_weekly_url="",
+            top_n=3,
+            notify_times=["09:00", "20:00"],
+            timezone="Asia/Tokyo",
+            topics=[],
+            min_stars=30,
+            cooldown_days=14,
+        )
+        boosted_config = bot.Config(
+            github_token="",
+            deepseek_api_key="",
+            telegram_bot_token="",
+            telegram_chat_id="",
+            public_history_url="",
+            public_weekly_url="",
+            top_n=3,
+            notify_times=["09:00", "20:00"],
+            timezone="Asia/Tokyo",
+            topics=["agents", "scraping", "monitoring"],
+            min_stars=30,
+            cooldown_days=14,
+        )
+        base_score = bot.score_repo(repo, {"repos": {}}, base_config, bucket="morning")
+        boosted_score = bot.score_repo(repo, {"repos": {}}, boosted_config, bucket="morning")
+        self.assertGreater(boosted_score, base_score)
+
 
 if __name__ == "__main__":
     unittest.main()

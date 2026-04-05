@@ -29,8 +29,11 @@ DEEPSEEK_API = "https://api.deepseek.com/chat/completions"
 
 TOPIC_KEYWORDS = {
     "ai": ["ai", "llm", "agent", "rag", "inference", "model"],
+    "agents": ["agent", "agents", "agentic"],
     "cli": ["cli", "terminal", "shell", "tui"],
     "automation": ["automation", "workflow", "bot", "scheduler"],
+    "scraping": ["scraping", "scraper", "crawler", "crawl"],
+    "monitoring": ["monitoring", "monitor", "alert", "observability"],
     "security": ["security", "pentest", "auth", "sandbox", "crypto"],
     "developer-tools": ["developer", "devtools", "tooling", "debug", "build"],
 }
