@@ -70,9 +70,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ "${{ steps.commit.outputs.changed }}" = "true" ]; then
-            gh issue comment "${{ github.event.issue.number }}" --body "review state を `${{ steps.parse.outputs.review_state }}` に更新し、Pages を再生成しました。"
+            gh issue comment "${{ github.event.issue.number }}" --body "review state を ${{ steps.parse.outputs.review_state }} に更新し、Pages を再生成しました。"
           else
-            gh issue comment "${{ github.event.issue.number }}" --body "review state は `${{ steps.parse.outputs.review_state }}` のままで、追加の変更はありませんでした。"
+            gh issue comment "${{ github.event.issue.number }}" --body "review state は ${{ steps.parse.outputs.review_state }} のままで、追加の変更はありませんでした。"
           fi
           gh issue close "${{ github.event.issue.number }}"
 
