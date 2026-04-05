@@ -132,6 +132,27 @@ def save_state(state: dict[str, Any]) -> None:
     )
 
 
+def record_run_status(
+    state: dict[str, Any],
+    *,
+    started_at: str | None = None,
+    finished_at: str | None = None,
+    status: str | None = None,
+    error: str | None = None,
+) -> None:
+    if started_at is not None:
+        state["last_run_started_at"] = started_at
+    if finished_at is not None:
+        state["last_run_finished_at"] = finished_at
+    if status is not None:
+        state["last_run_status"] = status
+    if error:
+        state["last_run_error"] = error
+    elif error is None:
+        state.pop("last_run_error", None)
+    save_state(state)
+
+
 def load_history() -> list[dict[str, Any]]:
     if not HISTORY_PATH.exists():
         return []
@@ -2657,70 +2678,123 @@ def refresh_star_snapshots(state: dict[str, Any], repos: list[dict[str, Any]]) -
 def run_once(config: Config, trigger: str = "manual") -> None:
     now = datetime.now(UTC)
     bucket = get_run_bucket(config, now)
-    print("Searching repositories...")
     state = load_state()
-    repos = search_repositories(config)
-    print(f"Found {len(repos)} repositories.")
-    candidates = enrich_repositories(config, repos, state, bucket)
-    print(f"Selected {len(candidates)} candidates for {bucket}.")
-    if not candidates:
+    started_at = now.isoformat()
+    record_run_status(
+        state,
+        started_at=started_at,
+        finished_at=None,
+        status="running",
+        error=None,
+    )
+    append_send_log(
+        "run_start",
+        trigger=trigger,
+        bucket=bucket,
+        started_at=started_at,
+    )
+    try:
+        print("Searching repositories...")
+        repos = search_repositories(config)
+        print(f"Found {len(repos)} repositories.")
+        candidates = enrich_repositories(config, repos, state, bucket)
+        print(f"Selected {len(candidates)} candidates for {bucket}.")
+        if not candidates:
+            append_send_log(
+                "skip_no_candidates",
+                trigger=trigger,
+                bucket=bucket,
+                searched=len(repos),
+            )
+            refresh_star_snapshots(state, repos)
+            record_run_status(
+                state,
+                finished_at=datetime.now(UTC).isoformat(),
+                status="success",
+                error=None,
+            )
+            render_static_sites(now)
+            append_send_log(
+                "run_end",
+                trigger=trigger,
+                bucket=bucket,
+                status="success",
+                count=0,
+            )
+            print("No candidates to notify.")
+            return
+
+        for repo in candidates:
+            print(f"Summarizing {repo['full_name']}...")
+            try:
+                generated = build_deepseek_summary(config, repo)
+                repo["_summary"], repo["_x_post"], repo["_pick_reason"] = split_generated_content(generated, repo)
+            except Exception as exc:
+                maybe_send_deepseek_warning(config, state, repo, exc)
+                repo["_summary"] = (
+                    f"{repo.get('description') or '説明なし'}\n"
+                    f"Language: {repo.get('language') or 'N/A'}\n"
+                    f"Stars: {repo['stargazers_count']}\n"
+                    f"URL: {repo['html_url']}"
+                )
+                repo["_x_post"] = (
+                    f"{repo['full_name']} は {repo.get('description') or '説明なし'}。"
+                    f" {repo['html_url']} #GitHub"
+                )
+                repo["_pick_reason"] = "今の注目候補"
+
+        print("Sending Telegram messages...")
         append_send_log(
-            "skip_no_candidates",
+            "send_start",
             trigger=trigger,
             bucket=bucket,
-            searched=len(repos),
+            count=len(candidates),
+            repos=[repo["full_name"] for repo in candidates],
+        )
+        post_to_telegram(config, candidates, bucket)
+        append_send_log(
+            "send_success",
+            trigger=trigger,
+            bucket=bucket,
+            count=len(candidates),
+            repos=[repo["full_name"] for repo in candidates],
         )
         refresh_star_snapshots(state, repos)
-        save_state(state)
+        update_state(state, candidates)
+        record_run_status(
+            state,
+            finished_at=datetime.now(UTC).isoformat(),
+            status="success",
+            error=None,
+        )
+        append_history(candidates, bucket)
         render_static_sites(now)
-        print("No candidates to notify.")
-        return
-
-    for repo in candidates:
-        print(f"Summarizing {repo['full_name']}...")
-        try:
-            generated = build_deepseek_summary(config, repo)
-            repo["_summary"], repo["_x_post"], repo["_pick_reason"] = split_generated_content(generated, repo)
-        except Exception as exc:
-            maybe_send_deepseek_warning(config, state, repo, exc)
-            repo["_summary"] = (
-                f"{repo.get('description') or '説明なし'}\n"
-                f"Language: {repo.get('language') or 'N/A'}\n"
-                f"Stars: {repo['stargazers_count']}\n"
-                f"URL: {repo['html_url']}"
-            )
-            repo["_x_post"] = (
-                f"{repo['full_name']} は {repo.get('description') or '説明なし'}。"
-                f" {repo['html_url']} #GitHub"
-            )
-            repo["_pick_reason"] = "今の注目候補"
-
-    print("Sending Telegram messages...")
-    append_send_log(
-        "send_start",
-        trigger=trigger,
-        bucket=bucket,
-        count=len(candidates),
-        repos=[repo["full_name"] for repo in candidates],
-    )
-    post_to_telegram(config, candidates, bucket)
-    append_send_log(
-        "send_success",
-        trigger=trigger,
-        bucket=bucket,
-        count=len(candidates),
-        repos=[repo["full_name"] for repo in candidates],
-    )
-    refresh_star_snapshots(state, repos)
-    update_state(state, candidates)
-    save_state(state)
-    append_history(candidates, bucket)
-    render_static_sites(now)
-    if now.astimezone(ZoneInfo(config.timezone)).weekday() == 0:
-        weekly_message = build_weekly_telegram_message(config, now)
-        if weekly_message:
-            send_telegram_text(config, weekly_message)
-    print(f"Posted {len(candidates)} repositories.")
+        if now.astimezone(ZoneInfo(config.timezone)).weekday() == 0:
+            weekly_message = build_weekly_telegram_message(config, now)
+            if weekly_message:
+                send_telegram_text(config, weekly_message)
+        append_send_log(
+            "run_end",
+            trigger=trigger,
+            bucket=bucket,
+            status="success",
+            count=len(candidates),
+        )
+        print(f"Posted {len(candidates)} repositories.")
+    except Exception as exc:
+        record_run_status(
+            state,
+            finished_at=datetime.now(UTC).isoformat(),
+            status="failed",
+            error=f"{exc.__class__.__name__}: {exc}",
+        )
+        append_send_log(
+            "run_fail",
+            trigger=trigger,
+            bucket=bucket,
+            error=f"{exc.__class__.__name__}: {exc}",
+        )
+        raise
 
 
 def next_run_time(config: Config) -> datetime:

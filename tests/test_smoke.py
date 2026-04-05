@@ -228,6 +228,41 @@ class SmokeTests(unittest.TestCase):
         ).isoformat()
         self.assertTrue(bot.should_send_deepseek_warning(state, "rate_limit"))
 
+    def test_record_run_status_updates_state_fields(self) -> None:
+        state = {"repos": {}, "notifications": {}, "review_states": {}, "alerts": {}}
+        with patch("bot.save_state") as save_state_mock:
+            bot.record_run_status(
+                state,
+                started_at="2026-04-05T00:00:00+00:00",
+                status="running",
+                error=None,
+            )
+            self.assertEqual(state["last_run_started_at"], "2026-04-05T00:00:00+00:00")
+            self.assertEqual(state["last_run_status"], "running")
+            self.assertNotIn("last_run_error", state)
+            save_state_mock.assert_called_once()
+
+    def test_record_run_status_sets_and_clears_last_run_error(self) -> None:
+        state = {"repos": {}, "notifications": {}, "review_states": {}, "alerts": {}}
+        with patch("bot.save_state"):
+            bot.record_run_status(
+                state,
+                finished_at="2026-04-05T00:10:00+00:00",
+                status="failed",
+                error="RuntimeError: boom",
+            )
+            self.assertEqual(state["last_run_finished_at"], "2026-04-05T00:10:00+00:00")
+            self.assertEqual(state["last_run_status"], "failed")
+            self.assertEqual(state["last_run_error"], "RuntimeError: boom")
+            bot.record_run_status(
+                state,
+                finished_at="2026-04-05T00:11:00+00:00",
+                status="success",
+                error=None,
+            )
+            self.assertEqual(state["last_run_status"], "success")
+            self.assertNotIn("last_run_error", state)
+
 
 if __name__ == "__main__":
     unittest.main()
