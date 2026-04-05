@@ -383,6 +383,32 @@ def summarize_languages(items: list[dict[str, Any]], limit: int = 5) -> str:
     return ", ".join(f"{language} {count}" for language, count in ranking)
 
 
+def safe_float(value: Any) -> float | None:
+    try:
+        if value in (None, ""):
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def safe_int(value: Any) -> int | None:
+    try:
+        if value in (None, ""):
+            return None
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def format_delta(value: float | int | None, digits: int = 0) -> str:
+    if value is None:
+        return ""
+    if digits:
+        return f"{value:+.{digits}f}"
+    return f"{int(value):+d}"
+
+
 def repo_slug(full_name: str) -> str:
     normalized = str(full_name or "").strip().lower()
     if not normalized:
@@ -483,13 +509,42 @@ def aggregate_repo_history(
         entry["history_entries"].append(
             {
                 "sent_at": sent_at_dt,
-                "score": float(item.get("score") or 0),
+                "score": safe_float(item.get("score")),
+                "stars": safe_int(item.get("stars")),
                 "bucket": item.get("bucket") or "morning",
+                "language": item.get("language") or "",
                 "pick_reason": item.get("pick_reason") or "",
+                "topics": extract_tags(item),
+                "review_state": normalize_review_state(review_states.get(full_name)),
             }
         )
     for entry in aggregated.values():
         entry["history_entries"].sort(key=lambda item: item["sent_at"], reverse=True)
+        for index, history_entry in enumerate(entry["history_entries"]):
+            previous_entry = entry["history_entries"][index + 1] if index + 1 < len(entry["history_entries"]) else None
+            history_entry["score_delta"] = None
+            history_entry["stars_delta"] = None
+            history_entry["pick_reason_changed"] = False
+            history_entry["topics_added"] = []
+            history_entry["topics_removed"] = []
+            if previous_entry is None:
+                continue
+            current_score = history_entry.get("score")
+            previous_score = previous_entry.get("score")
+            if current_score is not None and previous_score is not None:
+                history_entry["score_delta"] = current_score - previous_score
+            current_stars = history_entry.get("stars")
+            previous_stars = previous_entry.get("stars")
+            if current_stars is not None and previous_stars is not None:
+                history_entry["stars_delta"] = current_stars - previous_stars
+            history_entry["pick_reason_changed"] = (
+                str(history_entry.get("pick_reason") or "").strip()
+                != str(previous_entry.get("pick_reason") or "").strip()
+            )
+            current_topics = set(history_entry.get("topics") or [])
+            previous_topics = set(previous_entry.get("topics") or [])
+            history_entry["topics_added"] = sorted(current_topics - previous_topics)
+            history_entry["topics_removed"] = sorted(previous_topics - current_topics)
     return aggregated
 
 
@@ -629,15 +684,40 @@ def render_repo_detail_sites() -> None:
         for item in repo_data["history_entries"]:
             bucket = "朝の新顔枠" if item["bucket"] == "morning" else "夜の尖り枠"
             pick_reason = escape(item["pick_reason"] or "")
+            score_delta = format_delta(item.get("score_delta"), digits=2)
+            stars_delta = format_delta(item.get("stars_delta"))
+            language = escape(str(item.get("language") or "N/A"))
+            review_state = escape(normalize_review_state(item.get("review_state")))
+            topics_html = "".join(
+                f'<span class="badge topic">#{escape(topic)}</span>'
+                for topic in item.get("topics") or []
+            )
+            topic_changes = []
+            if item.get("topics_added"):
+                topic_changes.append(
+                    "added " + ", ".join(f"#{topic}" for topic in item["topics_added"][:4])
+                )
+            if item.get("topics_removed"):
+                topic_changes.append(
+                    "removed " + ", ".join(f"#{topic}" for topic in item["topics_removed"][:4])
+                )
             history_items.append(
                 f"""
                 <article class="history-item">
                   <div class="meta">
                     <span class="date-label">{escape(item["sent_at"].strftime("%Y-%m-%d %H:%M"))}</span>
                     <span>{bucket}</span>
-                    <span>score {item["score"]}</span>
+                    <span>score {item["score"] if item["score"] is not None else "-"}</span>
+                    {f'<span>{score_delta} vs prev</span>' if score_delta else ''}
+                    <span>stars {item["stars"] if item["stars"] is not None else "-"}</span>
+                    {f'<span>{stars_delta} vs prev</span>' if stars_delta else ''}
+                    <span>{language}</span>
+                    <span>state {review_state}</span>
                   </div>
                   {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
+                  {f'<p class="pick-reason">pick_reason changed vs prev</p>' if item.get("pick_reason_changed") else ''}
+                  {f'<p class="pick-reason">topics: {" / ".join(topic_changes)}</p>' if topic_changes else ''}
+                  {f'<div class="badge-row">{topics_html}</div>' if topics_html else ''}
                 </article>
                 """
             )
@@ -698,7 +778,7 @@ def render_repo_detail_sites() -> None:
         <section class="section-block">
           <div class="section-header">
             <h2>Related History</h2>
-            <p>同じ repo の通知履歴を新しい順に並べています。</p>
+            <p>同じ repo の通知履歴を新しい順に並べ、score と stars の前回比も見られるようにしています。</p>
           </div>
           {f'<div class="history-list">{"".join(history_items)}</div>' if history_items else '<p class="empty-state">関連履歴はまだありません。</p>'}
         </section>
