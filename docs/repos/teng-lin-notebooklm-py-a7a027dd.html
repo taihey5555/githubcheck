@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>teng-lin/notebooklm-py</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #eef3f8;
+      --panel: rgba(255, 255, 255, 0.96);
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: rgba(148, 163, 184, 0.35);
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(191, 219, 254, 0.26) 0, transparent 24%),
+        radial-gradient(circle at top right, rgba(148, 163, 184, 0.18) 0, transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(245, 247, 251, 0.88);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+      color: var(--ink);
+    }
+    .brand strong {
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .brand span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-icon span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 999px;
+    }
+    .site-nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .site-nav a {
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .site-nav a[aria-current="page"] {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .site-nav a:hover {
+      background: rgba(255,255,255,0.72);
+      border-color: var(--line);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 20px 64px;
+    }
+    .hero {
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 720px;
+    }
+    .date-selector {
+      margin: 0 0 22px;
+    }
+    .date-select {
+      width: min(280px, 100%);
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.96);
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font: inherit;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }
+    .archive-controls {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      margin: 0 0 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: var(--shadow);
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .control-group label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .control-group input,
+    .control-group select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+    .archive-summary {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .archive-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: var(--shadow);
+    }
+    .archive-share input {
+      flex: 1 1 320px;
+      min-width: 220px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+    .archive-share-status {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .section-block {
+      margin: 0 0 36px;
+      background: rgba(238, 243, 248, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 24px;
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 16px;
+      align-items: start;
+    }
+    .section-header h2,
+    .section-header h3 {
+      margin: 0;
+    }
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+    .section-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .empty-state {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+      color: var(--muted);
+    }
+    .tab-button,
+    .filter-button {
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.9);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 120ms ease, background 120ms ease;
+    }
+    .tab-button:hover,
+    .filter-button:hover {
+      transform: translateY(-1px);
+      background: #fff;
+    }
+    .tab-button.active,
+    .filter-button.active {
+      background: var(--accent-2);
+      color: white;
+      border-color: var(--accent-2);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .card.hidden-by-filter { display: none; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      margin: 0 0 16px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .meta {
+      display: flex;
+      gap: 8px;
+      row-gap: 8px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(238, 243, 248, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.9);
+      flex: 0 0 auto;
+    }
+    .card-title-wrap {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .owner-line {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    .owner-line a {
+      color: var(--muted);
+    }
+    .description {
+      margin: 0 0 14px;
+      color: rgba(15, 23, 42, 0.78);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .pick-reason {
+      margin: 0 0 12px;
+      color: rgba(15, 23, 42, 0.72);
+      line-height: 1.5;
+      font-size: 12px;
+      opacity: 0.92;
+      padding-left: 10px;
+      border-left: 3px solid rgba(15, 118, 110, 0.22);
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 14px 0 0;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 500;
+    }
+    .badge.topic {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      border-color: rgba(15, 118, 110, 0.16);
+    }
+    .badge.review-state {
+      background: rgba(180, 83, 9, 0.14);
+      color: var(--accent-2);
+      border-color: rgba(180, 83, 9, 0.24);
+    }
+    .date-label {
+      font-variant-numeric: tabular-nums;
+    }
+    .rank-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .rank-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,118,110,0.14) 0, rgba(15,118,110,0) 70%);
+      pointer-events: none;
+    }
+    .rank-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+    .rank-card.top1 {
+      border-width: 2px;
+      border-color: rgba(180, 83, 9, 0.32);
+      background: linear-gradient(135deg, rgba(255,250,240,0.96), rgba(254,243,199,0.92));
+    }
+    .rank-card.top1 .rank-number {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #b45309, #f59e0b);
+      font-size: 22px;
+    }
+    .rank-card.top2 .rank-number,
+    .rank-card.top3 .rank-number {
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+    }
+    .stat-card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      box-shadow: var(--shadow);
+    }
+    .stat-card strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .detail-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      align-items: center;
+    }
+    .detail-links.primary-links .badge:first-child,
+    .detail-links.primary-links a:first-child {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .detail-links.secondary-links .badge,
+    .detail-links.secondary-links a {
+      background: rgba(238, 243, 248, 0.92);
+    }
+    .inline-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .history-list {
+      display: grid;
+      gap: 14px;
+    }
+    .history-item {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+    .history-item h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.3;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: clamp(20px, 3vw, 24px);
+      line-height: 1.15;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 16px 0 0;
+      font: inherit;
+      line-height: 1.7;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(238, 243, 248, 0.72);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    @media (max-width: 720px) {
+      .menu-toggle {
+        display: inline-flex;
+      }
+      .site-nav {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 20px;
+        left: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 250, 240, 0.96);
+        box-shadow: var(--shadow);
+      }
+      .site-nav.open {
+        display: flex;
+      }
+      .site-nav a {
+        width: 100%;
+        text-align: center;
+      }
+      main {
+        padding-top: 28px;
+      }
+      .card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html">
+        <strong>GitHub Check</strong>
+        <span>repo digest and weekly ranking</span>
+      </a>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="../index.html" >履歴</a>
+        <a href="../weekly.html" >週間トップ10</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>teng-lin/notebooklm-py</h1>
+      <p>repo ごとの通知履歴をまとめた静的詳細ページです。</p>
+    </section>
+    
+        <section class="section-block">
+          <article class="card">
+            <div class="card-header">
+              <img class="avatar" src="https://avatars.githubusercontent.com/u/737447?v=4" alt="teng-lin">
+              <div class="card-title-wrap">
+                <div class="owner-line">
+                  <a href="https://github.com/teng-lin" target="_blank" rel="noreferrer">@teng-lin</a>
+                </div>
+                <h2>teng-lin/notebooklm-py</h2>
+              </div>
+            </div>
+            <div class="meta">
+              <span>stars 9079</span>
+              <span>score 81.12</span>
+              <span>Python</span>
+              <span>state unseen</span>
+              <span>appearances 1</span>
+            </div>
+            <div class="meta">
+              <span>last sent 2026-04-05 09:29</span>
+              <span>cooldown active (14d left)</span>
+              <span>last seen 2026-04-05 10:10</span>
+              <span>last stars 9084</span>
+            </div>
+            <p class="pick-reason">選定理由: 公式未公開のNotebookLM APIをPythonで</p>
+            <p class="description">Unofficial Python API and agentic skill for Google NotebookLM. Full programmatic access to NotebookLM&#x27;s features—including capabilities the web UI doesn&#x27;t expose—via Python, CLI, and AI agents like Claude Code, Codex, and OpenClaw.</p>
+            <pre>GoogleのNotebookLMをPythonからプログラムで操作できる非公式ライブラリ。
+
+Web UIではできないバッチ処理や、音声・動画・クイズなど多彩な生成物の一括ダウンロードが可能。研究の自動化やコンテンツ生成パイプラインに使えます。
+
+AIエージェント連携やCLIでの自動化を求めている開発者、研究者に向いています。
+
+<a href="https://github.com/teng-lin/notebooklm-py" target="_blank" rel="noreferrer">https://github.com/teng-lin/notebooklm-py</a>
+#NotebookLM #Python</pre>
+            <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">state unseen</span><span class="badge topic">#agentic-skill</span><span class="badge topic">#api</span><span class="badge topic">#claude</span><span class="badge topic">#claude-skills</span><span class="badge topic">#google-notebooklm</span><span class="badge topic">#notebooklm</span><span class="badge topic">#notebooklm-api</span><span class="badge topic">#notebooklm-skill</span><span class="badge topic">#openclaw-skills</span><span class="badge topic">#podcast-generator</span><span class="badge topic">#python</span><span class="badge topic">#python-api</span><span class="badge topic">#sdk</span><span class="badge topic">#skills</span></div>
+            <div class="detail-links primary-links">
+              <a class="badge" href="https://github.com/teng-lin/notebooklm-py" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="badge" href="../index.html">History</a>
+              <a class="badge" href="../weekly.html">Weekly</a>
+            </div>
+            <div class="detail-links secondary-links">
+              <a class="badge review-state" href="../index.html?review_state=unseen">View all unseen repos</a>
+            </div>
+            <div class="detail-links secondary-links">
+              <a class="badge" href="../index.html?language=python">View all Python repos</a>
+              <a class="badge" href="../index.html?score_min=81.12&sort=score">View high-score repos</a>
+              <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">See low-stars/high-score</a>
+            </div>
+            <div class="detail-links secondary-links">
+              <a class="badge" href="../index.html?review_state=good">See good</a><a class="badge" href="../index.html?review_state=production_candidate">See production_candidate</a><a class="badge review-state" href="../index.html?review_state=unseen">See unseen</a><a class="badge" href="../index.html?review_state=interested">See interested</a><a class="badge" href="../index.html?review_state=tested">See tested</a>
+            </div>
+          </article>
+        </section>
+        <section class="stats-grid">
+          <article class="stat-card"><strong>2026-04-05 09:29</strong><span>初回出現日時</span></article>
+          <article class="stat-card"><strong>2026-04-05 09:29</strong><span>最新出現日時</span></article>
+          <article class="stat-card"><strong>1</strong><span>出現回数</span></article>
+          <article class="stat-card"><strong>unseen</strong><span>review state</span></article>
+        </section>
+        <section class='section-block'><div class='section-header'><h2>Similar Repos</h2><p>同じ language や共通 tag を手がかりに、近い repo を見返しやすく並べています。</p></div><div class='history-list'>
+                <article class="history-item">
+                  <div class="meta">
+                    <span>Python</span>
+                    <span>score 60.13</span>
+                    <span>stars 4040</span>
+                    <span>state unseen</span>
+                  </div>
+                  <h3><a href="../repos/mukul975-anthropic-cybersecurity-skills-25236f32.html" target="_self">mukul975/Anthropic-Cybersecurity-Skills</a></h3>
+                  <p class="pick-reason">same language: Python / shared tags: #claude</p>
+                  <p class="description">753+ structured cybersecurity skills for AI agents · MITRE ATT&amp;CK mapped · agentskills.io open standard · Works with Claude Code, GitHub Copilot, OpenAI Codex CLI, Cursor, Gemini CLI &amp; 20+ platforms · Penetration testing, DFIR, threat intel, cloud security &amp; more · Apache 2.0</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=claude">#claude</a></div>
+                  <div class="detail-links primary-links">
+                    <a class="badge" href="../repos/mukul975-anthropic-cybersecurity-skills-25236f32.html">Details</a>
+                    <a class="badge" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                
+                <article class="history-item">
+                  <div class="meta">
+                    <span>Python</span>
+                    <span>score 152.13</span>
+                    <span>stars 14819</span>
+                    <span>state unseen</span>
+                  </div>
+                  <h3><a href="../repos/panniantong-agent-reach-14b990a7.html" target="_self">Panniantong/Agent-Reach</a></h3>
+                  <p class="pick-reason">same language: Python / shared tags: #python</p>
+                  <p class="description">Give your AI agent eyes to see the entire internet. Read &amp; search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=python">#python</a></div>
+                  <div class="detail-links primary-links">
+                    <a class="badge" href="../repos/panniantong-agent-reach-14b990a7.html">Details</a>
+                    <a class="badge" href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                
+                <article class="history-item">
+                  <div class="meta">
+                    <span>Python</span>
+                    <span>score 154.73</span>
+                    <span>stars 17360</span>
+                    <span>state unseen</span>
+                  </div>
+                  <h3><a href="../repos/mvanhorn-last30days-skill-ce334b66.html" target="_self">mvanhorn/last30days-skill</a></h3>
+                  <p class="pick-reason">same language: Python / shared tags: #claude</p>
+                  <p class="description">AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=claude">#claude</a></div>
+                  <div class="detail-links primary-links">
+                    <a class="badge" href="../repos/mvanhorn-last30days-skill-ce334b66.html">Details</a>
+                    <a class="badge" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                
+                <article class="history-item">
+                  <div class="meta">
+                    <span>TypeScript</span>
+                    <span>score 74.35</span>
+                    <span>stars 6761</span>
+                    <span>state unseen</span>
+                  </div>
+                  <h3><a href="../repos/jcodesmore-ai-website-cloner-template-426ffb2c.html" target="_self">JCodesMore/ai-website-cloner-template</a></h3>
+                  <p class="pick-reason">shared tags: #claude</p>
+                  <p class="description">Clone any website with one command using AI coding agents</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=claude">#claude</a></div>
+                  <div class="detail-links primary-links">
+                    <a class="badge" href="../repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">Details</a>
+                    <a class="badge" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                </div></section>
+        <section class='section-block'><div class='section-header'><h2>Related History</h2><p>同じ repo の通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>
+                <article class="history-item">
+                  <div class="meta">
+                    <span class="date-label">2026-04-05 09:29</span>
+                    <span>朝の新顔枠</span>
+                    <span>score 81.12</span>
+                    
+                    <span>stars 9079</span>
+                    
+                    <span>Python</span>
+                    <span>state unseen</span>
+                  </div>
+                  <p class="pick-reason">選定理由: 公式未公開のNotebookLM APIをPythonで</p>
+                  
+                  
+                  <div class="badge-row"><span class="badge topic">#agentic-skill</span><span class="badge topic">#api</span><span class="badge topic">#claude</span><span class="badge topic">#claude-skills</span><span class="badge topic">#google-notebooklm</span><span class="badge topic">#notebooklm</span><span class="badge topic">#notebooklm-api</span><span class="badge topic">#notebooklm-skill</span><span class="badge topic">#openclaw-skills</span><span class="badge topic">#podcast-generator</span><span class="badge topic">#python</span><span class="badge topic">#python-api</span><span class="badge topic">#sdk</span><span class="badge topic">#skills</span></div>
+                </article>
+                </div></section>
+        
+  </main>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        nav.classList.toggle('open');
+      });
+      nav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+    const daySelect = document.querySelector('[data-day-select]');
+    const panels = document.querySelectorAll('.tab-panel');
+    if (daySelect) {
+      daySelect.addEventListener('change', () => {
+        const target = daySelect.value;
+        for (const panel of panels) panel.classList.remove('active');
+        document.getElementById(target)?.classList.add('active');
+      });
+    }
+    const filterButtons = document.querySelectorAll('[data-bucket-filter]');
+    const cards = document.querySelectorAll('[data-bucket]');
+    for (const button of filterButtons) {
+      button.addEventListener('click', () => {
+        const target = button.dataset.bucketFilter;
+        for (const item of filterButtons) item.classList.remove('active');
+        button.classList.add('active');
+        for (const card of cards) {
+          const matches = target === 'all' || card.dataset.bucket === target;
+          card.classList.toggle('hidden-by-filter', !matches);
+        }
+      });
+    }
+    const archiveRoot = document.querySelector('[data-archive-root]');
+    if (archiveRoot) {
+      const archiveCards = Array.from(document.querySelectorAll('[data-archive-card]'));
+      const searchInput = archiveRoot.querySelector('[data-filter-search]');
+      const languageInput = archiveRoot.querySelector('[data-filter-language]');
+      const tagInput = archiveRoot.querySelector('[data-filter-tag]');
+      const reviewStateInput = archiveRoot.querySelector('[data-filter-review-state]');
+      const minStarsInput = archiveRoot.querySelector('[data-filter-stars-min]');
+      const maxStarsInput = archiveRoot.querySelector('[data-filter-stars-max]');
+      const minScoreInput = archiveRoot.querySelector('[data-filter-score-min]');
+      const maxScoreInput = archiveRoot.querySelector('[data-filter-score-max]');
+      const sortInput = archiveRoot.querySelector('[data-filter-sort]');
+      const countOutput = document.querySelector('[data-filter-count]');
+      const copyLinkButton = archiveRoot.querySelector('[data-copy-filter-link]');
+      const openLink = archiveRoot.querySelector('[data-open-filter-link]');
+      const linkOutput = archiveRoot.querySelector('[data-filter-link-output]');
+      const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
+      const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
+
+      const activePanelId = () => daySelect ? daySelect.value : '';
+      const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
+      const normalizeText = (value) => String(value || '').toLowerCase();
+      const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
+      const allowedSorts = new Set(['newest', 'score', 'stars']);
+      const searchParams = new URLSearchParams(window.location.search);
+      const initialSearch = String(searchParams.get('search') || '').trim();
+      const initialReviewState = normalizeText(searchParams.get('review_state'));
+      const initialLanguage = normalizeText(searchParams.get('language'));
+      const initialTag = normalizeText(searchParams.get('tag'));
+      const initialStarsMin = searchParams.get('stars_min');
+      const initialStarsMax = searchParams.get('stars_max');
+      const initialScoreMin = searchParams.get('score_min');
+      const initialScoreMax = searchParams.get('score_max');
+      const initialSort = normalizeText(searchParams.get('sort'));
+      const parseNumber = (value) => {
+        if (value === '' || value == null) return null;
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : null;
+      };
+      const setNumericInputIfValid = (input, rawValue) => {
+        if (!input) return;
+        const parsed = parseNumber(rawValue);
+        if (parsed == null || parsed < 0) return;
+        input.value = String(parsed);
+      };
+      const buildArchiveShareUrl = () => {
+        const params = new URLSearchParams();
+        const search = String(searchInput?.value || '').trim();
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (search) params.set('search', search);
+        if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
+        if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {
+          params.set('language', language);
+        }
+        if (tag && Array.from(tagInput?.options || []).some((option) => option.value === tag)) {
+          params.set('tag', tag);
+        }
+        if (minStars != null && minStars >= 0) params.set('stars_min', String(minStars));
+        if (maxStars != null && maxStars >= 0) params.set('stars_max', String(maxStars));
+        if (minScore != null && minScore >= 0) params.set('score_min', String(minScore));
+        if (maxScore != null && maxScore >= 0) params.set('score_max', String(maxScore));
+        if (allowedSorts.has(sortKey) && sortKey !== 'newest') params.set('sort', sortKey);
+        const shareUrl = new URL(window.location.pathname, window.location.href);
+        shareUrl.search = params.toString();
+        return shareUrl.toString();
+      };
+      const updateArchiveShareUi = (statusText = '') => {
+        const shareUrl = buildArchiveShareUrl();
+        if (openLink) openLink.href = shareUrl;
+        if (linkOutput) linkOutput.value = shareUrl;
+        if (shareStatus) shareStatus.textContent = statusText || '';
+      };
+
+      const applyArchiveFilters = () => {
+        const search = normalizeText(searchInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = sortInput?.value || 'newest';
+        const panelId = activePanelId();
+        const bucket = activeBucket();
+
+        for (const card of archiveCards) {
+          const inActivePanel = !panelId || card.closest('.tab-panel')?.id === panelId;
+          const matchesBucket = bucket === 'all' || card.dataset.bucket === bucket;
+          const name = normalizeText(card.dataset.name);
+          const cardLanguage = normalizeText(card.dataset.language);
+          const tags = normalizeText(card.dataset.tags);
+          const cardReviewState = normalizeText(card.dataset.reviewState);
+          const stars = parseNumber(card.dataset.stars) ?? 0;
+          const score = parseNumber(card.dataset.score) ?? 0;
+          const matchesSearch = !search || name.includes(search);
+          const matchesLanguage = !language || cardLanguage === language;
+          const matchesTag = !tag || tags.includes(tag);
+          const matchesReviewState = !reviewState || cardReviewState === reviewState;
+          const matchesMinStars = minStars == null || stars >= minStars;
+          const matchesMaxStars = maxStars == null || stars <= maxStars;
+          const matchesMinScore = minScore == null || score >= minScore;
+          const matchesMaxScore = maxScore == null || score <= maxScore;
+          const visible =
+            inActivePanel &&
+            matchesBucket &&
+            matchesSearch &&
+            matchesLanguage &&
+            matchesTag &&
+            matchesReviewState &&
+            matchesMinStars &&
+            matchesMaxStars &&
+            matchesMinScore &&
+            matchesMaxScore;
+          card.classList.toggle('hidden-by-filter', !visible);
+        }
+
+        const activePanel = panelId ? panelsById.get(panelId) : null;
+        const sortableCards = archiveCards.filter((card) => !card.classList.contains('hidden-by-filter'));
+        sortableCards.sort((left, right) => {
+          if (sortKey === 'score') return Number(right.dataset.score || 0) - Number(left.dataset.score || 0);
+          if (sortKey === 'stars') return Number(right.dataset.stars || 0) - Number(left.dataset.stars || 0);
+          return String(right.dataset.sentAt || '').localeCompare(String(left.dataset.sentAt || ''));
+        });
+        if (activePanel) {
+          for (const card of sortableCards) {
+            activePanel.appendChild(card);
+          }
+        }
+        if (countOutput) {
+          countOutput.textContent = `${sortableCards.length} 件表示`;
+        }
+        updateArchiveShareUi();
+      };
+
+      [
+        searchInput,
+        languageInput,
+        tagInput,
+        reviewStateInput,
+        minStarsInput,
+        maxStarsInput,
+        minScoreInput,
+        maxScoreInput,
+        sortInput,
+      ].filter(Boolean).forEach((element) => {
+        element.addEventListener('input', applyArchiveFilters);
+        element.addEventListener('change', applyArchiveFilters);
+      });
+      if (daySelect) {
+        daySelect.addEventListener('change', applyArchiveFilters);
+      }
+      if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {
+        reviewStateInput.value = initialReviewState;
+      }
+      if (searchInput && initialSearch) {
+        searchInput.value = initialSearch;
+      }
+      if (languageInput && initialLanguage && Array.from(languageInput.options).some((option) => option.value === initialLanguage)) {
+        languageInput.value = initialLanguage;
+      }
+      if (tagInput && initialTag && Array.from(tagInput.options).some((option) => option.value === initialTag)) {
+        tagInput.value = initialTag;
+      }
+      setNumericInputIfValid(minStarsInput, initialStarsMin);
+      setNumericInputIfValid(maxStarsInput, initialStarsMax);
+      setNumericInputIfValid(minScoreInput, initialScoreMin);
+      setNumericInputIfValid(maxScoreInput, initialScoreMax);
+      if (sortInput && allowedSorts.has(initialSort)) {
+        sortInput.value = initialSort;
+      }
+      for (const button of filterButtons) {
+        button.addEventListener('click', applyArchiveFilters);
+      }
+      if (copyLinkButton) {
+        copyLinkButton.addEventListener('click', async () => {
+          const shareUrl = buildArchiveShareUrl();
+          try {
+            if (navigator.clipboard?.writeText) {
+              await navigator.clipboard.writeText(shareUrl);
+            } else {
+              throw new Error('clipboard-unavailable');
+            }
+            updateArchiveShareUi('現在の絞り込み URL をコピーしました');
+          } catch (_error) {
+            if (linkOutput) {
+              linkOutput.focus();
+              linkOutput.select();
+            }
+            updateArchiveShareUi('URL を選択したので、そのまま手動でコピーしてください');
+          }
+        });
+      }
+      applyArchiveFilters();
+    }
+  </script>
+</body>
+</html>

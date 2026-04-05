@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Weekly Top 10</title>
+  <title>Weekly Archive</title>
   <style>
     :root {
-      --bg: #f5efe4;
-      --bg-alt: #eaf3ff;
-      --panel: rgba(255, 252, 245, 0.88);
+      --bg: #f5f7fb;
+      --bg-alt: #eef3f8;
+      --panel: rgba(255, 255, 255, 0.96);
       --ink: #1f2937;
       --muted: #6b7280;
       --line: rgba(148, 163, 184, 0.35);
@@ -22,8 +22,8 @@
       font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, #fde68a 0, transparent 24%),
-        radial-gradient(circle at top right, #bfdbfe 0, transparent 26%),
+        radial-gradient(circle at top left, rgba(191, 219, 254, 0.26) 0, transparent 24%),
+        radial-gradient(circle at top right, rgba(148, 163, 184, 0.18) 0, transparent 28%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
     }
     a {
@@ -35,7 +35,7 @@
       top: 0;
       z-index: 20;
       backdrop-filter: blur(14px);
-      background: rgba(255, 250, 240, 0.82);
+      background: rgba(245, 247, 251, 0.88);
       border-bottom: 1px solid var(--line);
     }
     .header-inner {
@@ -134,7 +134,7 @@
     .date-select {
       width: min(280px, 100%);
       border: 1px solid var(--line);
-      background: rgba(255, 250, 240, 0.92);
+      background: rgba(238, 243, 248, 0.96);
       color: var(--ink);
       padding: 12px 14px;
       border-radius: 14px;
@@ -146,10 +146,107 @@
       flex-wrap: wrap;
       margin: 0 0 18px;
     }
+    .archive-controls {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      margin: 0 0 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: var(--shadow);
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .control-group label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .control-group input,
+    .control-group select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+    .archive-summary {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .archive-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: var(--shadow);
+    }
+    .archive-share input {
+      flex: 1 1 320px;
+      min-width: 220px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+    .archive-share-status {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .section-block {
+      margin: 0 0 36px;
+      background: rgba(238, 243, 248, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 24px;
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 16px;
+      align-items: start;
+    }
+    .section-header h2,
+    .section-header h3 {
+      margin: 0;
+    }
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+    .section-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .empty-state {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+      color: var(--muted);
+    }
     .tab-button,
     .filter-button {
       border: 1px solid var(--line);
-      background: rgba(255, 250, 240, 0.72);
+      background: rgba(238, 243, 248, 0.9);
       color: var(--ink);
       padding: 10px 16px;
       border-radius: 999px;
@@ -175,18 +272,28 @@
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 22px;
-      padding: 18px;
+      padding: 22px;
       margin: 0 0 16px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
     .meta {
       display: flex;
-      gap: 12px;
+      gap: 8px;
+      row-gap: 8px;
       flex-wrap: wrap;
       color: var(--muted);
       font-size: 13px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(238, 243, 248, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.06);
     }
     .card-header {
       display: flex;
@@ -220,39 +327,47 @@
     }
     .description {
       margin: 0 0 14px;
-      color: var(--muted);
+      color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
       font-size: 14px;
     }
     .pick-reason {
-      margin: 0 0 10px;
-      color: var(--muted);
+      margin: 0 0 12px;
+      color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
-      opacity: 0.82;
+      opacity: 0.92;
+      padding-left: 10px;
+      border-left: 3px solid rgba(15, 118, 110, 0.22);
     }
     .badge-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin: 10px 0 0;
+      margin: 14px 0 0;
     }
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 10px;
+      padding: 8px 11px;
       border-radius: 999px;
       background: rgba(255,255,255,0.74);
       border: 1px solid var(--line);
       color: var(--ink);
       font-size: 12px;
       line-height: 1;
+      font-weight: 500;
     }
     .badge.topic {
       background: rgba(15, 118, 110, 0.08);
       color: var(--accent);
       border-color: rgba(15, 118, 110, 0.16);
+    }
+    .badge.review-state {
+      background: rgba(180, 83, 9, 0.14);
+      color: var(--accent-2);
+      border-color: rgba(180, 83, 9, 0.24);
     }
     .date-label {
       font-variant-numeric: tabular-nums;
@@ -299,6 +414,68 @@
     .rank-card.top3 .rank-number {
       background: linear-gradient(135deg, #0f766e, #14b8a6);
     }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+    }
+    .stat-card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      box-shadow: var(--shadow);
+    }
+    .stat-card strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .detail-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      align-items: center;
+    }
+    .detail-links.primary-links .badge:first-child,
+    .detail-links.primary-links a:first-child {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .detail-links.secondary-links .badge,
+    .detail-links.secondary-links a {
+      background: rgba(238, 243, 248, 0.92);
+    }
+    .inline-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .history-list {
+      display: grid;
+      gap: 14px;
+    }
+    .history-item {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+    .history-item h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.3;
+    }
     h2 {
       margin: 0 0 10px;
       font-size: clamp(20px, 3vw, 24px);
@@ -307,9 +484,13 @@
     pre {
       white-space: pre-wrap;
       word-break: break-word;
-      margin: 0;
+      margin: 16px 0 0;
       font: inherit;
       line-height: 1.7;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(238, 243, 248, 0.72);
+      border: 1px solid rgba(15, 23, 42, 0.06);
     }
     @media (max-width: 720px) {
       .menu-toggle {
@@ -367,10 +548,804 @@
   </header>
   <main>
     <section class="hero">
-      <h1>Weekly Top 10</h1>
-      <p>3/23 - 3/29 の通知履歴から作ったランキングです。毎週月曜日に更新されます。</p>
+      <h1>Weekly Archive</h1>
+      <p>3/30 - 4/4 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
     </section>
-    <p>まだ週間ランキングはありません。</p>
+    
+    <section class="stats-grid">
+      <article class="stat-card"><strong>27</strong><span>今週の repo 数</span></article>
+      <article class="stat-card"><strong>27</strong><span>通知総数</span></article>
+      <article class="stat-card"><strong>151.0</strong><span>平均 score</span></article>
+      <article class="stat-card"><strong>Python 9, TypeScript 9, Rust 3, JavaScript 2</strong><span>言語分布</span></article>
+      <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">unseen 10</a></strong><span>review state 分布</span></article>
+    </section>
+    <section class='section-block'><div class='section-header'><h2>今週の good / production_candidate</h2><p>すでに手応えがある repo を、review state ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">See all good</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">See all production_candidate</a></span></p></div><p class='empty-state'>この条件に合う repo は、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認 repo</h2><p>まだ見ていない repo をまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">See all unseen</a></span></p></div><div class='section-grid'>
+    <article class="card rank-card top1" data-bucket="morning" data-name="gitlawb/openclaude" data-language="typescript" data-tags="" data-stars="11985" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/268502891?v=4" alt="Gitlawb">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Gitlawb" target="_blank" rel="noreferrer">@Gitlawb</a>
+          </div>
+          <h2><a href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">Gitlawb/openclaude</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 1357.96</span>
+        <span>picked 1 times</span>
+        <span>stars 11985</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: 多様なAIモデルを統一的に扱うCLIの実用性</p>
+      <p class="description">Open Claude Is Open-source coding-agent CLI for OpenAI, Gemini, DeepSeek, Ollama, Codex, GitHub Models, and 200+ models via OpenAI-compat...</p>
+      <pre>OpenClaudeは、200以上のAIモデルを統一的に操作できるオープンソースのコーディング支援CLIです。
+
+OpenAI、Gemini、DeepSeekからOllamaなどのローカルモデルまで、同じCLIインターフェースで利用できます。エージェントごとに使用モデルを切り分ける機能も便利。
+
+ターミナル作業が中心の開発者や、複数のAIサービスを用途に応じて使い分けたい方に。
+
+<a href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">https://github.com/Gitlawb/openclaude</a>
+#AI開発 #CLI</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/gitlawb-openclaude-b7fa03f7.html">Details</a>
+        <a class="badge" href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="hkuds/cli-anything" data-language="python" data-tags="" data-stars="26428" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HKUDS" target="_blank" rel="noreferrer">@HKUDS</a>
+          </div>
+          <h2><a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">HKUDS/CLI-Anything</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 327.12</span>
+        <span>picked 1 times</span>
+        <span>stars 26428</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントがソフトを操作するためのCLIを自動生成</p>
+      <p class="description">CLI-Anything: Making ALL Software Agent-Native</p>
+      <pre>CLI-Anythingは、あらゆるデスクトップソフトをAIエージェントが直接操作できるCLIに変換します。
+
+GIMPやBlender、LibreOfficeなどの機能を自動解析し、完全なコマンドラインインターフェースを生成。AIエージェントが人間のようにソフトを使えるようになります。
+
+AIエージェント開発者や業務自動化ツールを作る人に特に役立ちます。既に16種類以上のソフトに対応しています。
+
+<a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">https://github.com/HKUDS/CLI-Anything</a>
+#AIエージェント #自動化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hkuds-cli-anything-c427889b.html">Details</a>
+        <a class="badge" href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="vercel-labs/agent-browser" data-language="rust" data-tags="" data-stars="26701" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/108547162?v=4" alt="vercel-labs">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/vercel-labs" target="_blank" rel="noreferrer">@vercel-labs</a>
+          </div>
+          <h2><a href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noreferrer">vercel-labs/agent-browser</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 184.05</span>
+        <span>picked 1 times</span>
+        <span>stars 26701</span>
+        <span>Rust</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェント向けの高速ブラウザ自動化CLI</p>
+      <p class="description">Browser automation CLI for AI agents</p>
+      <pre>vercel-labs/agent-browser は Browser automation CLI for AI agents。
+
+刺さる人: OSSを追う開発者。
+
+<a href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noreferrer">https://github.com/vercel-labs/agent-browser</a>
+#GitHub</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/vercel-labs-agent-browser-dbaf6cfb.html">Details</a>
+        <a class="badge" href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="rtk-ai/rtk" data-language="rust" data-tags="agentic-coding ai-coding anthropic claude-code cli command-line-tool cost-reduction developer-tools llm open-source productivity rust token-optimization" data-stars="16973" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/258253854?v=4" alt="rtk-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/rtk-ai" target="_blank" rel="noreferrer">@rtk-ai</a>
+          </div>
+          <h2><a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">rtk-ai/rtk</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 168.47</span>
+        <span>picked 1 times</span>
+        <span>stars 16973</span>
+        <span>Rust</span>
+      </div>
+      <p class="pick-reason">選定理由: LLM開発コストを大幅削減する尖った用途</p>
+      <p class="description">CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies</p>
+      <pre>LLMを使った開発でコマンド出力のトークン消費が気になる方へ。
+
+rtkはコマンド出力をフィルタリング・圧縮し、LLMのトークン消費を60-90%削減します。lsやgit、テスト結果など100以上のコマンドに対応。
+
+Claude CodeやCursorを日常的に使う開発者、AI支援ツールのコストを抑えたいチームにぴったりです。
+
+<a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">https://github.com/rtk-ai/rtk</a>
+#LLM #開発効率化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/rtk-ai-rtk-9b02bf31.html">Details</a>
+        <a class="badge" href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">state unseen</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai-coding</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#command-line-tool</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="leonxlnx/agentic-ai-prompt-research" data-language="n/a" data-tags="agentic-ai ai-research claude prompt-engineering system-prompts" data-stars="1773" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/219127460?v=4" alt="Leonxlnx">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Leonxlnx" target="_blank" rel="noreferrer">@Leonxlnx</a>
+          </div>
+          <h2><a href="https://github.com/Leonxlnx/agentic-ai-prompt-research" target="_blank" rel="noreferrer">Leonxlnx/agentic-ai-prompt-research</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 157.75</span>
+        <span>picked 1 times</span>
+        <span>stars 1773</span>
+        <span>N/A</span>
+      </div>
+      <p class="pick-reason">選定理由: エージェントAIの実用的なプロンプト設計を深掘り</p>
+      <p class="description">Research into how agentic AI coding assistants work — reconstructed prompt patterns, agent coordination, and security classification</p>
+      <pre>Claude CodeのようなAIコーディングアシスタントが、内部でどう動いているのか気になりませんか？
+
+agentic-ai-prompt-research は、動的プロンプト組立やマルチエージェント協調など、実用的な設計パターンを再構築・分析しています。
+
+AIエンジニアやプロンプト設計者が、本格的なエージェントシステムを学ぶのに最適です。
+
+<a href="https://github.com/Leonxlnx/agentic-ai-prompt-research" target="_blank" rel="noreferrer">https://github.com/Leonxlnx/agentic-ai-prompt-research</a>
+#AI #プロンプトエンジニアリング</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/leonxlnx-agentic-ai-prompt-research-b2d5dbe2.html">Details</a>
+        <a class="badge" href="https://github.com/Leonxlnx/agentic-ai-prompt-research" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">state unseen</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-research</span><span class="badge topic">#claude</span><span class="badge topic">#prompt-engineering</span><span class="badge topic">#system-prompts</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="mvanhorn/last30days-skill" data-language="python" data-tags="ai-prompts ai-skill bluesky claude claude-code clawhub deep-research hackernews instagram openclaw polymarket recency reddit research social-media tiktok trends twitter web-search youtube" data-stars="17360" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
+          </div>
+          <h2><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">mvanhorn/last30days-skill</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 154.73</span>
+        <span>picked 1 times</span>
+        <span>stars 17360</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントが最新トレンドを多角的に調査</p>
+      <p class="description">AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary</p>
+      <pre>AIエージェントが最新トレンドを調査してまとめてくれます。
+
+Reddit、X、YouTube、Hacker Newsなど複数ソースから直近30日間の情報を収集し、重み付けされた要約を生成。Polymarketの予測市場データも含めて分析します。
+
+技術動向の調査やプロンプト研究、流行の把握に便利。設定を追加すればBlueskyやInstagramも対象に。
+
+<a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">https://github.com/mvanhorn/last30days-skill</a>
+#AI #リサーチ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/mvanhorn-last30days-skill-ce334b66.html">Details</a>
+        <a class="badge" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span><span class="badge topic">#ai-prompts</span><span class="badge topic">#ai-skill</span><span class="badge topic">#bluesky</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#clawhub</span></div>
+    </article>
+    </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
+    <article class="card rank-card top1" data-bucket="morning" data-name="gitlawb/openclaude" data-language="typescript" data-tags="" data-stars="11985" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/268502891?v=4" alt="Gitlawb">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Gitlawb" target="_blank" rel="noreferrer">@Gitlawb</a>
+          </div>
+          <h2><a href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">Gitlawb/openclaude</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 1357.96</span>
+        <span>picked 1 times</span>
+        <span>stars 11985</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: 多様なAIモデルを統一的に扱うCLIの実用性</p>
+      <p class="description">Open Claude Is Open-source coding-agent CLI for OpenAI, Gemini, DeepSeek, Ollama, Codex, GitHub Models, and 200+ models via OpenAI-compat...</p>
+      <pre>OpenClaudeは、200以上のAIモデルを統一的に操作できるオープンソースのコーディング支援CLIです。
+
+OpenAI、Gemini、DeepSeekからOllamaなどのローカルモデルまで、同じCLIインターフェースで利用できます。エージェントごとに使用モデルを切り分ける機能も便利。
+
+ターミナル作業が中心の開発者や、複数のAIサービスを用途に応じて使い分けたい方に。
+
+<a href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">https://github.com/Gitlawb/openclaude</a>
+#AI開発 #CLI</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/gitlawb-openclaude-b7fa03f7.html">Details</a>
+        <a class="badge" href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="hkuds/cli-anything" data-language="python" data-tags="" data-stars="26428" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HKUDS" target="_blank" rel="noreferrer">@HKUDS</a>
+          </div>
+          <h2><a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">HKUDS/CLI-Anything</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 327.12</span>
+        <span>picked 1 times</span>
+        <span>stars 26428</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントがソフトを操作するためのCLIを自動生成</p>
+      <p class="description">CLI-Anything: Making ALL Software Agent-Native</p>
+      <pre>CLI-Anythingは、あらゆるデスクトップソフトをAIエージェントが直接操作できるCLIに変換します。
+
+GIMPやBlender、LibreOfficeなどの機能を自動解析し、完全なコマンドラインインターフェースを生成。AIエージェントが人間のようにソフトを使えるようになります。
+
+AIエージェント開発者や業務自動化ツールを作る人に特に役立ちます。既に16種類以上のソフトに対応しています。
+
+<a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">https://github.com/HKUDS/CLI-Anything</a>
+#AIエージェント #自動化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hkuds-cli-anything-c427889b.html">Details</a>
+        <a class="badge" href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="vercel-labs/agent-browser" data-language="rust" data-tags="" data-stars="26701" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/108547162?v=4" alt="vercel-labs">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/vercel-labs" target="_blank" rel="noreferrer">@vercel-labs</a>
+          </div>
+          <h2><a href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noreferrer">vercel-labs/agent-browser</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 184.05</span>
+        <span>picked 1 times</span>
+        <span>stars 26701</span>
+        <span>Rust</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェント向けの高速ブラウザ自動化CLI</p>
+      <p class="description">Browser automation CLI for AI agents</p>
+      <pre>vercel-labs/agent-browser は Browser automation CLI for AI agents。
+
+刺さる人: OSSを追う開発者。
+
+<a href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noreferrer">https://github.com/vercel-labs/agent-browser</a>
+#GitHub</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/vercel-labs-agent-browser-dbaf6cfb.html">Details</a>
+        <a class="badge" href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="rtk-ai/rtk" data-language="rust" data-tags="agentic-coding ai-coding anthropic claude-code cli command-line-tool cost-reduction developer-tools llm open-source productivity rust token-optimization" data-stars="16973" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/258253854?v=4" alt="rtk-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/rtk-ai" target="_blank" rel="noreferrer">@rtk-ai</a>
+          </div>
+          <h2><a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">rtk-ai/rtk</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 168.47</span>
+        <span>picked 1 times</span>
+        <span>stars 16973</span>
+        <span>Rust</span>
+      </div>
+      <p class="pick-reason">選定理由: LLM開発コストを大幅削減する尖った用途</p>
+      <p class="description">CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies</p>
+      <pre>LLMを使った開発でコマンド出力のトークン消費が気になる方へ。
+
+rtkはコマンド出力をフィルタリング・圧縮し、LLMのトークン消費を60-90%削減します。lsやgit、テスト結果など100以上のコマンドに対応。
+
+Claude CodeやCursorを日常的に使う開発者、AI支援ツールのコストを抑えたいチームにぴったりです。
+
+<a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">https://github.com/rtk-ai/rtk</a>
+#LLM #開発効率化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/rtk-ai-rtk-9b02bf31.html">Details</a>
+        <a class="badge" href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">state unseen</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai-coding</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#command-line-tool</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="leonxlnx/agentic-ai-prompt-research" data-language="n/a" data-tags="agentic-ai ai-research claude prompt-engineering system-prompts" data-stars="1773" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/219127460?v=4" alt="Leonxlnx">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Leonxlnx" target="_blank" rel="noreferrer">@Leonxlnx</a>
+          </div>
+          <h2><a href="https://github.com/Leonxlnx/agentic-ai-prompt-research" target="_blank" rel="noreferrer">Leonxlnx/agentic-ai-prompt-research</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 157.75</span>
+        <span>picked 1 times</span>
+        <span>stars 1773</span>
+        <span>N/A</span>
+      </div>
+      <p class="pick-reason">選定理由: エージェントAIの実用的なプロンプト設計を深掘り</p>
+      <p class="description">Research into how agentic AI coding assistants work — reconstructed prompt patterns, agent coordination, and security classification</p>
+      <pre>Claude CodeのようなAIコーディングアシスタントが、内部でどう動いているのか気になりませんか？
+
+agentic-ai-prompt-research は、動的プロンプト組立やマルチエージェント協調など、実用的な設計パターンを再構築・分析しています。
+
+AIエンジニアやプロンプト設計者が、本格的なエージェントシステムを学ぶのに最適です。
+
+<a href="https://github.com/Leonxlnx/agentic-ai-prompt-research" target="_blank" rel="noreferrer">https://github.com/Leonxlnx/agentic-ai-prompt-research</a>
+#AI #プロンプトエンジニアリング</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/leonxlnx-agentic-ai-prompt-research-b2d5dbe2.html">Details</a>
+        <a class="badge" href="https://github.com/Leonxlnx/agentic-ai-prompt-research" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">state unseen</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-research</span><span class="badge topic">#claude</span><span class="badge topic">#prompt-engineering</span><span class="badge topic">#system-prompts</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="mvanhorn/last30days-skill" data-language="python" data-tags="ai-prompts ai-skill bluesky claude claude-code clawhub deep-research hackernews instagram openclaw polymarket recency reddit research social-media tiktok trends twitter web-search youtube" data-stars="17360" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
+          </div>
+          <h2><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">mvanhorn/last30days-skill</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 154.73</span>
+        <span>picked 1 times</span>
+        <span>stars 17360</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントが最新トレンドを多角的に調査</p>
+      <p class="description">AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary</p>
+      <pre>AIエージェントが最新トレンドを調査してまとめてくれます。
+
+Reddit、X、YouTube、Hacker Newsなど複数ソースから直近30日間の情報を収集し、重み付けされた要約を生成。Polymarketの予測市場データも含めて分析します。
+
+技術動向の調査やプロンプト研究、流行の把握に便利。設定を追加すればBlueskyやInstagramも対象に。
+
+<a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">https://github.com/mvanhorn/last30days-skill</a>
+#AI #リサーチ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/mvanhorn-last30days-skill-ce334b66.html">Details</a>
+        <a class="badge" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span><span class="badge topic">#ai-prompts</span><span class="badge topic">#ai-skill</span><span class="badge topic">#bluesky</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#clawhub</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="panniantong/agent-reach" data-language="python" data-tags="agent-infrastructure ai-agent ai-search automation bilibili claude-code cli cursor free-api llm-tools mcp python reddit-scraper twitter-scraper web-scraper xiaohongshu youtube-transcript" data-stars="14819" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">7</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/73925474?v=4" alt="Panniantong">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Panniantong" target="_blank" rel="noreferrer">@Panniantong</a>
+          </div>
+          <h2><a href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noreferrer">Panniantong/Agent-Reach</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 152.13</span>
+        <span>picked 1 times</span>
+        <span>stars 14819</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントに無料でインターネット閲覧能力を付与</p>
+      <p class="description">Give your AI agent eyes to see the entire internet. Read &amp; search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero...</p>
+      <pre>Panniantong/Agent-Reach は Give your AI agent eyes to see the entire internet. Read &amp; search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.。
+
+刺さる人: OSSを追う開発者。
+
+<a href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noreferrer">https://github.com/Panniantong/Agent-Reach</a>
+#GitHub</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/panniantong-agent-reach-14b990a7.html">Details</a>
+        <a class="badge" href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span><span class="badge topic">#agent-infrastructure</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-search</span><span class="badge topic">#automation</span><span class="badge topic">#bilibili</span><span class="badge topic">#claude-code</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="sickn33/antigravity-awesome-skills" data-language="python" data-tags="agent-skills agentic-skills ai-agent-skills ai-agents ai-coding ai-workflows antigravity antigravity-skills claude-code claude-code-skills codex-cli codex-skills cursor cursor-skills developer-tools gemini-cli gemini-skills kiro mcp skill-library" data-stars="30229" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">8</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/184072420?v=4" alt="sickn33">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/sickn33" target="_blank" rel="noreferrer">@sickn33</a>
+          </div>
+          <h2><a href="https://github.com/sickn33/antigravity-awesome-skills" target="_blank" rel="noreferrer">sickn33/antigravity-awesome-skills</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 144.58</span>
+        <span>picked 1 times</span>
+        <span>stars 30229</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェント向けの大規模スキルライブラリ</p>
+      <p class="description">Installable GitHub library of 1,340+ agentic skills for Claude Code, Cursor, Codex CLI, Gemini CLI, Antigravity, and more. Includes insta...</p>
+      <pre>AIコーディングアシスタントのスキル集
+
+Claude CodeやCursorなどで使える1340以上の再利用可能なスキルがまとまっています。インストールするだけで、計画立案からデバッグまで様々なタスクに対応できます。
+
+開発、テスト、セキュリティレビューなど、日常的な作業を効率化したい開発者に役立ちます。
+
+<a href="https://github.com/sickn33/antigravity-awesome-skills" target="_blank" rel="noreferrer">https://github.com/sickn33/antigravity-awesome-skills</a>
+#AI開発 #GitHub</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/sickn33-antigravity-awesome-skills-069fa601.html">Details</a>
+        <a class="badge" href="https://github.com/sickn33/antigravity-awesome-skills" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span><span class="badge topic">#agent-skills</span><span class="badge topic">#agentic-skills</span><span class="badge topic">#ai-agent-skills</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflows</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="affaan-m/everything-claude-code" data-language="javascript" data-tags="" data-stars="128528" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">9</span>
+        <img class="avatar" src="https://github.githubassets.com/favicons/favicon.png" alt="affaan-m">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/affaan-m" target="_blank" rel="noreferrer">@affaan-m</a>
+          </div>
+          <h2><a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">affaan-m/everything-claude-code</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 132.78</span>
+        <span>picked 1 times</span>
+        <span>stars 128528</span>
+        <span>JavaScript</span>
+      </div>
+      
+      
+      <pre>Claude CodeなどのAIエージェントの性能を最適化するシステムです。
+
+everything-claude-codeは、スキル、メモリ管理、セキュリティなどを統合し、開発効率を高めます。10ヶ月以上の実運用から進化した実用的なツールです。
+
+AIを活用した開発の生産性向上を目指す開発者やチームに役立ちます。
+
+<a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">https://github.com/affaan-m/everything-claude-code</a>
+#AI開発 #開発効率化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/affaan-m-everything-claude-code-52231fc0.html">Details</a>
+        <a class="badge" href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">state unseen</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="coreyhaines31/marketingskills" data-language="javascript" data-tags="claude codex marketing" data-stars="18671" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">10</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/34802794?v=4" alt="coreyhaines31">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/coreyhaines31" target="_blank" rel="noreferrer">@coreyhaines31</a>
+          </div>
+          <h2><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noreferrer">coreyhaines31/marketingskills</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 91.47</span>
+        <span>picked 1 times</span>
+        <span>stars 18671</span>
+        <span>JavaScript</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェント向けマーケティングスキルの体系化</p>
+      <p class="description">Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.</p>
+      <pre>AIコーディングエージェントにマーケティングの専門知識を持たせたい方へ。
+
+marketingskillsは、CROやSEO、コピーライティングなど実践的なマーケティングスキルをAIエージェントが使える形で体系化しています。
+
+技術者とマーケターが協業するプロジェクトや、AIにマーケティング業務を支援させたい場合に参考になります。
+
+<a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noreferrer">https://github.com/coreyhaines31/marketingskills</a>
+#AI #マーケティング</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/coreyhaines31-marketingskills-ed5355c7.html">Details</a>
+        <a class="badge" href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">state unseen</span><span class="badge topic">#claude</span><span class="badge topic">#codex</span><span class="badge topic">#marketing</span></div>
+    </article>
+    </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高い repo を先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">See all low-stars/high-score</a></span></p></div><p class='empty-state'>この条件に合う repo は、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
+    <article class="card rank-card top1" data-bucket="morning" data-name="coderluii/holyclaude" data-language="dockerfile" data-tags="ai ai-coding anthropic claude claude-code coding-agent container developer-tools devtools docker docker-compose gemini headless-browser openai playwright ai開発" data-stars="1818" data-score="64.89" data-sent-at="2026-04-05T01:10:07.532176+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/203967356?v=4" alt="CoderLuii">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/CoderLuii" target="_blank" rel="noreferrer">@CoderLuii</a>
+          </div>
+          <h2><a href="https://github.com/CoderLuii/HolyClaude" target="_blank" rel="noreferrer">CoderLuii/HolyClaude</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 64.89</span>
+        
+        <span>stars 1818</span>
+        <span>Dockerfile</span>
+      </div>
+      <p class="pick-reason">選定理由: AI開発環境をDockerで即座に構築できる尖り</p>
+      <p class="description">AI coding workstation: Claude Code + web UI + 7 AI CLIs + headless browser + 50+ tools</p>
+      <pre>Claude Codeを中心としたAI開発環境がDockerで即座に構築できます。
+
+HolyClaudeは、Web UI、ヘッドレスブラウザ、7つのAI CLI、50以上の開発ツールを統合したコンテナ環境です。既存のClaudeサブスクリプションがそのまま使えるのが便利です。
+
+開発環境のセットアップを簡略化したい方、複数のAIツールを統合して使いたい方に向いています。
+
+<a href="https://github.com/CoderLuii/HolyClaude" target="_blank" rel="noreferrer">https://github.com/CoderLuii/HolyClaude</a>
+#AI開発 #Docker</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/coderluii-holyclaude-e618bb02.html">Details</a>
+        <a class="badge" href="https://github.com/CoderLuii/HolyClaude" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Dockerfile</span><span class="badge review-state">state unseen</span><span class="badge topic">#ai</span><span class="badge topic">#ai-coding</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#coding-agent</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="onecli/onecli" data-language="typescript" data-tags="ai-agents cli mcp nanoclaw nodejs openclaw postgres rust secret-management security security-tools vault ai セキュリティ" data-stars="1645" data-score="60.90" data-sent-at="2026-04-05T01:10:07.532176+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/263660444?v=4" alt="onecli">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/onecli" target="_blank" rel="noreferrer">@onecli</a>
+          </div>
+          <h2><a href="https://github.com/onecli/onecli" target="_blank" rel="noreferrer">onecli/onecli</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 60.9</span>
+        
+        <span>stars 1645</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントの認証管理に特化した尖り</p>
+      <p class="description">Open-source credential vault, give your AI agents access to services without exposing keys.</p>
+      <pre>AIエージェントのAPIキー管理、どうしてますか？
+
+OneCLIは、エージェントに実際の鍵を見せずにサービスを呼び出せるオープンソースの認証ゲートウェイです。エージェントはダミーキーでHTTPリクエストを送り、Rust製ゲートウェイがリクエスト時に実際の認証情報を差し替えます。
+
+複数のAIエージェントを運用していて、認証情報の分散管理やセキュリティが気になる開発者やチームに向いています。
+
+<a href="https://github.com/onecli/onecli" target="_blank" rel="noreferrer">https://github.com/onecli/onecli</a>
+#AI #セキュリティ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/onecli-onecli-0652faa4.html">Details</a>
+        <a class="badge" href="https://github.com/onecli/onecli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">state unseen</span><span class="badge topic">#ai-agents</span><span class="badge topic">#cli</span><span class="badge topic">#mcp</span><span class="badge topic">#nanoclaw</span><span class="badge topic">#nodejs</span><span class="badge topic">#openclaw</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="mukul975/anthropic-cybersecurity-skills" data-language="python" data-tags="ai-agents claude claude-code cloud-security cybersecurity devsecops ethical-hacking incident-response infosec llm malware-analysis mcp mitre-attack osint penetration-testing red-team security security-automation security-tools threat-intelligence ai セキュリティ" data-stars="4040" data-score="60.13" data-sent-at="2026-04-05T01:10:07.532176+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/42860185?v=4" alt="mukul975">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/mukul975" target="_blank" rel="noreferrer">@mukul975</a>
+          </div>
+          <h2><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">mukul975/Anthropic-Cybersecurity-Skills</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 60.13</span>
+        
+        <span>stars 4040</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェント向けセキュリティスキルの大規模OSS</p>
+      <p class="description">753+ structured cybersecurity skills for AI agents · MITRE ATT&amp;CK mapped · agentskills.io open standard · Works with Claude Code, GitHub...</p>
+      <pre>AIエージェントにセキュリティの専門知識を。
+
+Anthropic-Cybersecurity-Skillsは、750以上の構造化されたサイバーセキュリティスキルをAIエージェントに提供します。ペネトレーションテストや脅威分析など多岐にわたる作業を、MITRE ATT&amp;CKにマップされた知識ベースで支援できるのが特徴です。
+
+Claude CodeやGitHub Copilotなど20以上のプラットフォームと互換性があり、ワンコマンドで導入可能。セキュリティ担当者の作業効率化や、セキュアなAIエージェントの開発に役立ちます。
+
+<a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">https://github.com/mukul975/Anthropic-Cybersecurity-Skills</a>
+#AI #セキュリティ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/mukul975-anthropic-cybersecurity-skills-25236f32.html">Details</a>
+        <a class="badge" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#cloud-security</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="teng-lin/notebooklm-py" data-language="python" data-tags="agentic-skill api claude claude-skills google-notebooklm notebooklm notebooklm-api notebooklm-skill openclaw-skills podcast-generator python python-api sdk skills" data-stars="9079" data-score="81.12" data-sent-at="2026-04-05T00:29:01.487138+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/737447?v=4" alt="teng-lin">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/teng-lin" target="_blank" rel="noreferrer">@teng-lin</a>
+          </div>
+          <h2><a href="https://github.com/teng-lin/notebooklm-py" target="_blank" rel="noreferrer">teng-lin/notebooklm-py</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 81.12</span>
+        
+        <span>stars 9079</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: 公式未公開のNotebookLM APIをPythonで</p>
+      <p class="description">Unofficial Python API and agentic skill for Google NotebookLM. Full programmatic access to NotebookLM&#x27;s features—including capabilities t...</p>
+      <pre>GoogleのNotebookLMをPythonからプログラムで操作できる非公式ライブラリ。
+
+Web UIではできないバッチ処理や、音声・動画・クイズなど多彩な生成物の一括ダウンロードが可能。研究の自動化やコンテンツ生成パイプラインに使えます。
+
+AIエージェント連携やCLIでの自動化を求めている開発者、研究者に向いています。
+
+<a href="https://github.com/teng-lin/notebooklm-py" target="_blank" rel="noreferrer">https://github.com/teng-lin/notebooklm-py</a>
+#NotebookLM #Python</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/teng-lin-notebooklm-py-a7a027dd.html">Details</a>
+        <a class="badge" href="https://github.com/teng-lin/notebooklm-py" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">state unseen</span><span class="badge topic">#agentic-skill</span><span class="badge topic">#api</span><span class="badge topic">#claude</span><span class="badge topic">#claude-skills</span><span class="badge topic">#google-notebooklm</span><span class="badge topic">#notebooklm</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="googleworkspace/cli" data-language="rust" data-tags="agent-skills ai-agent automation cli discovery-api gemini-cli-extension google-admin google-api google-calendar google-chat google-docs google-drive google-sheets google-workspace oauth2 rust googleworkspace" data-stars="23800" data-score="75.65" data-sent-at="2026-04-05T00:29:01.487138+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/3708359?v=4" alt="googleworkspace">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/googleworkspace" target="_blank" rel="noreferrer">@googleworkspace</a>
+          </div>
+          <h2><a href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">googleworkspace/cli</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 75.65</span>
+        
+        <span>stars 23800</span>
+        <span>Rust</span>
+      </div>
+      <p class="pick-reason">選定理由: Google Workspace全APIを統合するCLI</p>
+      <p class="description">Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Goog...</p>
+      <pre>Google WorkspaceをCLIで操作できる「gws」が登場。
+
+Drive、Gmail、Calendar、Sheetsなど全APIを一つのコマンドラインツールで扱えます。APIが追加されても自動で対応。
+
+自動化スクリプトやAIエージェントとの連携、開発時のAPI確認に便利です。
+
+<a href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">https://github.com/googleworkspace/cli</a>
+#GoogleWorkspace #CLI</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/googleworkspace-cli-41ebe280.html">Details</a>
+        <a class="badge" href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">state unseen</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai-agent</span><span class="badge topic">#automation</span><span class="badge topic">#cli</span><span class="badge topic">#discovery-api</span><span class="badge topic">#gemini-cli-extension</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="qwibitai/nanoclaw" data-language="typescript" data-tags="ai-agents ai-assistant claude-code claude-skills openclaw aiエージェント セキュリティ" data-stars="26488" data-score="74.30" data-sent-at="2026-04-05T00:29:01.487138+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/255066954?v=4" alt="qwibitai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/qwibitai" target="_blank" rel="noreferrer">@qwibitai</a>
+          </div>
+          <h2><a href="https://github.com/qwibitai/nanoclaw" target="_blank" rel="noreferrer">qwibitai/nanoclaw</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 74.3</span>
+        
+        <span>stars 26488</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: セキュリティを重視した軽量AIエージェントの新潮流</p>
+      <p class="description">A lightweight alternative to OpenClaw that runs in containers for security. Connects to WhatsApp, Telegram, Slack, Discord, Gmail and oth...</p>
+      <pre>OpenClawの軽量な代替として注目のAIエージェント。
+
+nanoclawは、コンテナ内で隔離された安全なAIアシスタントを実現します。WhatsAppやTelegramなど複数チャネルと連携し、スケジュール管理やWebアクセスも可能です。
+
+個人のニーズに合わせてフォークしてカスタマイズする用途に適しています。コードベースが小さいため、Claude Codeで簡単に修正できます。
+
+<a href="https://github.com/qwibitai/nanoclaw" target="_blank" rel="noreferrer">https://github.com/qwibitai/nanoclaw</a>
+#AIエージェント #セキュリティ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/qwibitai-nanoclaw-976aada2.html">Details</a>
+        <a class="badge" href="https://github.com/qwibitai/nanoclaw" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">state unseen</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#openclaw</span><span class="badge topic">#aiエージェント</span></div>
+    </article>
+    </div></section>
   </main>
   <script>
     const toggle = document.querySelector('.menu-toggle');
@@ -409,6 +1384,208 @@
           card.classList.toggle('hidden-by-filter', !matches);
         }
       });
+    }
+    const archiveRoot = document.querySelector('[data-archive-root]');
+    if (archiveRoot) {
+      const archiveCards = Array.from(document.querySelectorAll('[data-archive-card]'));
+      const searchInput = archiveRoot.querySelector('[data-filter-search]');
+      const languageInput = archiveRoot.querySelector('[data-filter-language]');
+      const tagInput = archiveRoot.querySelector('[data-filter-tag]');
+      const reviewStateInput = archiveRoot.querySelector('[data-filter-review-state]');
+      const minStarsInput = archiveRoot.querySelector('[data-filter-stars-min]');
+      const maxStarsInput = archiveRoot.querySelector('[data-filter-stars-max]');
+      const minScoreInput = archiveRoot.querySelector('[data-filter-score-min]');
+      const maxScoreInput = archiveRoot.querySelector('[data-filter-score-max]');
+      const sortInput = archiveRoot.querySelector('[data-filter-sort]');
+      const countOutput = document.querySelector('[data-filter-count]');
+      const copyLinkButton = archiveRoot.querySelector('[data-copy-filter-link]');
+      const openLink = archiveRoot.querySelector('[data-open-filter-link]');
+      const linkOutput = archiveRoot.querySelector('[data-filter-link-output]');
+      const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
+      const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
+
+      const activePanelId = () => daySelect ? daySelect.value : '';
+      const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
+      const normalizeText = (value) => String(value || '').toLowerCase();
+      const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
+      const allowedSorts = new Set(['newest', 'score', 'stars']);
+      const searchParams = new URLSearchParams(window.location.search);
+      const initialSearch = String(searchParams.get('search') || '').trim();
+      const initialReviewState = normalizeText(searchParams.get('review_state'));
+      const initialLanguage = normalizeText(searchParams.get('language'));
+      const initialTag = normalizeText(searchParams.get('tag'));
+      const initialStarsMin = searchParams.get('stars_min');
+      const initialStarsMax = searchParams.get('stars_max');
+      const initialScoreMin = searchParams.get('score_min');
+      const initialScoreMax = searchParams.get('score_max');
+      const initialSort = normalizeText(searchParams.get('sort'));
+      const parseNumber = (value) => {
+        if (value === '' || value == null) return null;
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : null;
+      };
+      const setNumericInputIfValid = (input, rawValue) => {
+        if (!input) return;
+        const parsed = parseNumber(rawValue);
+        if (parsed == null || parsed < 0) return;
+        input.value = String(parsed);
+      };
+      const buildArchiveShareUrl = () => {
+        const params = new URLSearchParams();
+        const search = String(searchInput?.value || '').trim();
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (search) params.set('search', search);
+        if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
+        if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {
+          params.set('language', language);
+        }
+        if (tag && Array.from(tagInput?.options || []).some((option) => option.value === tag)) {
+          params.set('tag', tag);
+        }
+        if (minStars != null && minStars >= 0) params.set('stars_min', String(minStars));
+        if (maxStars != null && maxStars >= 0) params.set('stars_max', String(maxStars));
+        if (minScore != null && minScore >= 0) params.set('score_min', String(minScore));
+        if (maxScore != null && maxScore >= 0) params.set('score_max', String(maxScore));
+        if (allowedSorts.has(sortKey) && sortKey !== 'newest') params.set('sort', sortKey);
+        const shareUrl = new URL(window.location.pathname, window.location.href);
+        shareUrl.search = params.toString();
+        return shareUrl.toString();
+      };
+      const updateArchiveShareUi = (statusText = '') => {
+        const shareUrl = buildArchiveShareUrl();
+        if (openLink) openLink.href = shareUrl;
+        if (linkOutput) linkOutput.value = shareUrl;
+        if (shareStatus) shareStatus.textContent = statusText || '';
+      };
+
+      const applyArchiveFilters = () => {
+        const search = normalizeText(searchInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = sortInput?.value || 'newest';
+        const panelId = activePanelId();
+        const bucket = activeBucket();
+
+        for (const card of archiveCards) {
+          const inActivePanel = !panelId || card.closest('.tab-panel')?.id === panelId;
+          const matchesBucket = bucket === 'all' || card.dataset.bucket === bucket;
+          const name = normalizeText(card.dataset.name);
+          const cardLanguage = normalizeText(card.dataset.language);
+          const tags = normalizeText(card.dataset.tags);
+          const cardReviewState = normalizeText(card.dataset.reviewState);
+          const stars = parseNumber(card.dataset.stars) ?? 0;
+          const score = parseNumber(card.dataset.score) ?? 0;
+          const matchesSearch = !search || name.includes(search);
+          const matchesLanguage = !language || cardLanguage === language;
+          const matchesTag = !tag || tags.includes(tag);
+          const matchesReviewState = !reviewState || cardReviewState === reviewState;
+          const matchesMinStars = minStars == null || stars >= minStars;
+          const matchesMaxStars = maxStars == null || stars <= maxStars;
+          const matchesMinScore = minScore == null || score >= minScore;
+          const matchesMaxScore = maxScore == null || score <= maxScore;
+          const visible =
+            inActivePanel &&
+            matchesBucket &&
+            matchesSearch &&
+            matchesLanguage &&
+            matchesTag &&
+            matchesReviewState &&
+            matchesMinStars &&
+            matchesMaxStars &&
+            matchesMinScore &&
+            matchesMaxScore;
+          card.classList.toggle('hidden-by-filter', !visible);
+        }
+
+        const activePanel = panelId ? panelsById.get(panelId) : null;
+        const sortableCards = archiveCards.filter((card) => !card.classList.contains('hidden-by-filter'));
+        sortableCards.sort((left, right) => {
+          if (sortKey === 'score') return Number(right.dataset.score || 0) - Number(left.dataset.score || 0);
+          if (sortKey === 'stars') return Number(right.dataset.stars || 0) - Number(left.dataset.stars || 0);
+          return String(right.dataset.sentAt || '').localeCompare(String(left.dataset.sentAt || ''));
+        });
+        if (activePanel) {
+          for (const card of sortableCards) {
+            activePanel.appendChild(card);
+          }
+        }
+        if (countOutput) {
+          countOutput.textContent = `${sortableCards.length} 件表示`;
+        }
+        updateArchiveShareUi();
+      };
+
+      [
+        searchInput,
+        languageInput,
+        tagInput,
+        reviewStateInput,
+        minStarsInput,
+        maxStarsInput,
+        minScoreInput,
+        maxScoreInput,
+        sortInput,
+      ].filter(Boolean).forEach((element) => {
+        element.addEventListener('input', applyArchiveFilters);
+        element.addEventListener('change', applyArchiveFilters);
+      });
+      if (daySelect) {
+        daySelect.addEventListener('change', applyArchiveFilters);
+      }
+      if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {
+        reviewStateInput.value = initialReviewState;
+      }
+      if (searchInput && initialSearch) {
+        searchInput.value = initialSearch;
+      }
+      if (languageInput && initialLanguage && Array.from(languageInput.options).some((option) => option.value === initialLanguage)) {
+        languageInput.value = initialLanguage;
+      }
+      if (tagInput && initialTag && Array.from(tagInput.options).some((option) => option.value === initialTag)) {
+        tagInput.value = initialTag;
+      }
+      setNumericInputIfValid(minStarsInput, initialStarsMin);
+      setNumericInputIfValid(maxStarsInput, initialStarsMax);
+      setNumericInputIfValid(minScoreInput, initialScoreMin);
+      setNumericInputIfValid(maxScoreInput, initialScoreMax);
+      if (sortInput && allowedSorts.has(initialSort)) {
+        sortInput.value = initialSort;
+      }
+      for (const button of filterButtons) {
+        button.addEventListener('click', applyArchiveFilters);
+      }
+      if (copyLinkButton) {
+        copyLinkButton.addEventListener('click', async () => {
+          const shareUrl = buildArchiveShareUrl();
+          try {
+            if (navigator.clipboard?.writeText) {
+              await navigator.clipboard.writeText(shareUrl);
+            } else {
+              throw new Error('clipboard-unavailable');
+            }
+            updateArchiveShareUi('現在の絞り込み URL をコピーしました');
+          } catch (_error) {
+            if (linkOutput) {
+              linkOutput.focus();
+              linkOutput.select();
+            }
+            updateArchiveShareUi('URL を選択したので、そのまま手動でコピーしてください');
+          }
+        });
+      }
+      applyArchiveFilters();
     }
   </script>
 </body>
