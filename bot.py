@@ -209,8 +209,9 @@ def review_state_usage() -> str:
     return (
         "Usage:\n"
         "  python bot.py review-state set <owner/repo> <state>\n"
+        "  python bot.py review-state unset <owner/repo>\n"
         "  python bot.py review-state get <owner/repo>\n"
-        "  python bot.py review-state list"
+        "  python bot.py review-state list [--state <state>] [--prefix <owner/>]"
     )
 
 
@@ -238,15 +239,65 @@ def review_state_get(full_name: str) -> None:
     print(f"{normalized_full_name}: {normalized}{suffix}")
 
 
-def review_state_list() -> None:
+def review_state_unset(full_name: str) -> None:
+    normalized_full_name = str(full_name or "").strip()
+    if not normalized_full_name:
+        print(review_state_usage(), file=sys.stderr)
+        raise SystemExit(1)
+    state = load_state()
+    removed = state.get("review_states", {}).pop(normalized_full_name, None)
+    save_state(state)
+    suffix = "removed" if removed else "already unset"
+    print(f"{normalized_full_name}: {suffix}")
+
+
+def review_state_list(
+    state_filter: str | None = None,
+    prefix_filter: str | None = None,
+) -> None:
     state = load_state()
     review_states = state.get("review_states", {})
     if not review_states:
         print("review_states: empty")
         return
+    matches = []
     for full_name in sorted(review_states):
         normalized = normalize_review_state(review_states.get(full_name))
+        if state_filter and normalized != state_filter:
+            continue
+        if prefix_filter and not full_name.startswith(prefix_filter):
+            continue
+        matches.append((full_name, normalized))
+    if not matches:
+        print("review_states: no matches")
+        return
+    for full_name, normalized in matches:
         print(f"{full_name}: {normalized}")
+
+
+def parse_review_state_list_args(args: list[str]) -> tuple[str | None, str | None]:
+    state_filter = None
+    prefix_filter = None
+    index = 0
+    while index < len(args):
+        option = args[index]
+        if option == "--state":
+            if index + 1 >= len(args):
+                print(review_state_usage(), file=sys.stderr)
+                raise SystemExit(1)
+            state_filter = validate_review_state_or_exit(args[index + 1])
+            index += 2
+            continue
+        if option == "--prefix":
+            if index + 1 >= len(args):
+                print(review_state_usage(), file=sys.stderr)
+                raise SystemExit(1)
+            prefix_filter = str(args[index + 1] or "").strip()
+            index += 2
+            continue
+        print(review_state_usage(), file=sys.stderr)
+        raise SystemExit(1)
+    return state_filter, prefix_filter
 
 
 def handle_review_state_cli(args: list[str]) -> None:
@@ -260,8 +311,12 @@ def handle_review_state_cli(args: list[str]) -> None:
     if action == "get" and len(args) == 2:
         review_state_get(args[1])
         return
-    if action == "list" and len(args) == 1:
-        review_state_list()
+    if action == "unset" and len(args) == 2:
+        review_state_unset(args[1])
+        return
+    if action == "list":
+        state_filter, prefix_filter = parse_review_state_list_args(args[1:])
+        review_state_list(state_filter=state_filter, prefix_filter=prefix_filter)
         return
     print(review_state_usage(), file=sys.stderr)
     raise SystemExit(1)
