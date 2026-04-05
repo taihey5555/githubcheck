@@ -918,9 +918,9 @@ def site_shell(
   <title>{escape(title)}</title>
   <style>
     :root {{
-      --bg: #f5efe4;
-      --bg-alt: #eaf3ff;
-      --panel: rgba(255, 252, 245, 0.88);
+      --bg: #f5f7fb;
+      --bg-alt: #eef3f8;
+      --panel: rgba(255, 255, 255, 0.96);
       --ink: #1f2937;
       --muted: #6b7280;
       --line: rgba(148, 163, 184, 0.35);
@@ -934,8 +934,8 @@ def site_shell(
       font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, #fde68a 0, transparent 24%),
-        radial-gradient(circle at top right, #bfdbfe 0, transparent 26%),
+        radial-gradient(circle at top left, rgba(191, 219, 254, 0.26) 0, transparent 24%),
+        radial-gradient(circle at top right, rgba(148, 163, 184, 0.18) 0, transparent 28%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
     }}
     a {{
@@ -947,7 +947,7 @@ def site_shell(
       top: 0;
       z-index: 20;
       backdrop-filter: blur(14px);
-      background: rgba(255, 250, 240, 0.82);
+      background: rgba(245, 247, 251, 0.88);
       border-bottom: 1px solid var(--line);
     }}
     .header-inner {{
@@ -1046,7 +1046,7 @@ def site_shell(
     .date-select {{
       width: min(280px, 100%);
       border: 1px solid var(--line);
-      background: rgba(255, 250, 240, 0.92);
+      background: rgba(238, 243, 248, 0.96);
       color: var(--ink);
       padding: 12px 14px;
       border-radius: 14px;
@@ -1066,7 +1066,7 @@ def site_shell(
       padding: 16px;
       border: 1px solid var(--line);
       border-radius: 20px;
-      background: rgba(255, 250, 240, 0.72);
+      background: rgba(238, 243, 248, 0.88);
       box-shadow: var(--shadow);
     }}
     .control-group {{
@@ -1102,7 +1102,7 @@ def site_shell(
       padding: 14px 16px;
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: rgba(255, 250, 240, 0.72);
+      background: rgba(238, 243, 248, 0.88);
       box-shadow: var(--shadow);
     }}
     .archive-share input {{
@@ -1121,6 +1121,9 @@ def site_shell(
     }}
     .section-block {{
       margin: 0 0 36px;
+      background: rgba(238, 243, 248, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 24px;
     }}
     .section-header {{
       display: flex;
@@ -1149,13 +1152,13 @@ def site_shell(
       padding: 18px;
       border: 1px dashed var(--line);
       border-radius: 18px;
-      background: rgba(255,255,255,0.55);
+      background: rgba(238, 243, 248, 0.82);
       color: var(--muted);
     }}
     .tab-button,
     .filter-button {{
       border: 1px solid var(--line);
-      background: rgba(255, 250, 240, 0.72);
+      background: rgba(238, 243, 248, 0.9);
       color: var(--ink);
       padding: 10px 16px;
       border-radius: 999px;
@@ -1201,7 +1204,7 @@ def site_shell(
       align-items: center;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.68);
+      background: rgba(238, 243, 248, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.06);
     }}
     .card-header {{
@@ -1361,7 +1364,7 @@ def site_shell(
     }}
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {{
-      background: rgba(255,255,255,0.56);
+      background: rgba(238, 243, 248, 0.92);
     }}
     .inline-links {{
       display: inline-flex;
@@ -1377,7 +1380,7 @@ def site_shell(
       padding: 16px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.62);
+      background: rgba(238, 243, 248, 0.88);
       box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
     }}
     .history-item h3 {{
@@ -1398,7 +1401,7 @@ def site_shell(
       line-height: 1.7;
       padding: 14px 16px;
       border-radius: 16px;
-      background: rgba(255,255,255,0.58);
+      background: rgba(238, 243, 248, 0.72);
       border: 1px solid rgba(15, 23, 42, 0.06);
     }}
     @media (max-width: 720px) {{
