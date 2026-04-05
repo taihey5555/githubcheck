@@ -380,7 +380,8 @@
   },
   "review_states": {
     "HKUDS/CLI-Anything": "interested",
-    "nextlevelbuilder/goclaw": "unseen"
+    "nextlevelbuilder/goclaw": "unseen",
+    "Gitlawb/openclaude": "interested"
   },
   "alerts": {},
   "last_run_started_at": "2026-04-05T03:30:06.245675+00:00",
