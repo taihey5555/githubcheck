@@ -673,7 +673,7 @@ def render_repo_detail_sites() -> None:
                   {f'<p class="pick-reason">{escape(str(similar_repo.get("similarity_reason") or ""))}</p>' if similar_repo.get("similarity_reason") else ''}
                   {f'<p class="description">{escape(str(similar_repo.get("description") or ""))}</p>' if similar_repo.get("description") else ''}
                   {f'<div class="badge-row">{shared_topics}</div>' if shared_topics else ''}
-                  <div class="detail-links">
+                  <div class="detail-links primary-links">
                     <a class="badge" href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}">Details</a>
                     <a class="badge" href="{escape(str(similar_repo.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
                   </div>
@@ -744,20 +744,20 @@ def render_repo_detail_sites() -> None:
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
             <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
             {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">state {escape(current_review_state)}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
-            <div class="detail-links">
+            <div class="detail-links primary-links">
               <a class="badge" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
               <a class="badge" href="../index.html">History</a>
               <a class="badge" href="../weekly.html">Weekly</a>
             </div>
-            <div class="detail-links">
+            <div class="detail-links secondary-links">
               <a class="badge review-state" href="{current_state_href}">View all {escape(current_review_state)} repos</a>
             </div>
-            <div class="detail-links">
+            <div class="detail-links secondary-links">
               {language_link_html}
               <a class="badge" href="{score_focus_href}">View high-score repos</a>
               <a class="badge" href="{low_star_focus_href}">See low-stars/high-score</a>
             </div>
-            <div class="detail-links">
+            <div class="detail-links secondary-links">
               {shortcut_links}
             </div>
           </article>
@@ -1030,6 +1030,11 @@ def site_shell(
       gap: 10px;
       align-items: center;
       margin: 0 0 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 250, 240, 0.72);
+      box-shadow: var(--shadow);
     }}
     .archive-share input {{
       flex: 1 1 320px;
@@ -1046,15 +1051,15 @@ def site_shell(
       font-size: 12px;
     }}
     .section-block {{
-      margin: 0 0 28px;
+      margin: 0 0 36px;
     }}
     .section-header {{
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 10px;
-      margin: 0 0 12px;
-      align-items: end;
+      gap: 12px;
+      margin: 0 0 16px;
+      align-items: start;
     }}
     .section-header h2,
     .section-header h3 {{
@@ -1064,11 +1069,12 @@ def site_shell(
       margin: 0;
       color: var(--muted);
       font-size: 13px;
+      line-height: 1.6;
       max-width: 720px;
     }}
     .section-grid {{
       display: grid;
-      gap: 16px;
+      gap: 18px;
     }}
     .empty-state {{
       padding: 18px;
@@ -1106,18 +1112,28 @@ def site_shell(
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 22px;
-      padding: 18px;
+      padding: 22px;
       margin: 0 0 16px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }}
     .meta {{
       display: flex;
-      gap: 12px;
+      gap: 8px;
+      row-gap: 8px;
       flex-wrap: wrap;
       color: var(--muted);
       font-size: 13px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }}
+    .meta span {{
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(15, 23, 42, 0.06);
     }}
     .card-header {{
       display: flex;
@@ -1151,34 +1167,37 @@ def site_shell(
     }}
     .description {{
       margin: 0 0 14px;
-      color: var(--muted);
+      color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
       font-size: 14px;
     }}
     .pick-reason {{
-      margin: 0 0 10px;
-      color: var(--muted);
+      margin: 0 0 12px;
+      color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
-      opacity: 0.82;
+      opacity: 0.92;
+      padding-left: 10px;
+      border-left: 3px solid rgba(15, 118, 110, 0.22);
     }}
     .badge-row {{
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin: 10px 0 0;
+      margin: 14px 0 0;
     }}
     .badge {{
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 10px;
+      padding: 8px 11px;
       border-radius: 999px;
       background: rgba(255,255,255,0.74);
       border: 1px solid var(--line);
       color: var(--ink);
       font-size: 12px;
       line-height: 1;
+      font-weight: 500;
     }}
     .badge.topic {{
       background: rgba(15, 118, 110, 0.08);
@@ -1186,9 +1205,9 @@ def site_shell(
       border-color: rgba(15, 118, 110, 0.16);
     }}
     .badge.review-state {{
-      background: rgba(180, 83, 9, 0.10);
+      background: rgba(180, 83, 9, 0.14);
       color: var(--accent-2);
-      border-color: rgba(180, 83, 9, 0.18);
+      border-color: rgba(180, 83, 9, 0.24);
     }}
     .date-label {{
       font-variant-numeric: tabular-nums;
@@ -1261,8 +1280,19 @@ def site_shell(
     .detail-links {{
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin: 12px 0 0;
+      gap: 8px;
+      margin: 14px 0 0;
+      align-items: center;
+    }}
+    .detail-links.primary-links .badge:first-child,
+    .detail-links.primary-links a:first-child {{
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }}
+    .detail-links.secondary-links .badge,
+    .detail-links.secondary-links a {{
+      background: rgba(255,255,255,0.56);
     }}
     .inline-links {{
       display: inline-flex;
@@ -1272,13 +1302,19 @@ def site_shell(
     }}
     .history-list {{
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }}
     .history-item {{
-      padding: 14px;
+      padding: 16px;
       border-radius: 16px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.62);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }}
+    .history-item h3 {{
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.3;
     }}
     h2 {{
       margin: 0 0 10px;
@@ -1288,9 +1324,13 @@ def site_shell(
     pre {{
       white-space: pre-wrap;
       word-break: break-word;
-      margin: 0;
+      margin: 16px 0 0;
       font: inherit;
       line-height: 1.7;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(15, 23, 42, 0.06);
     }}
     @media (max-width: 720px) {{
       .menu-toggle {{
@@ -2148,7 +2188,7 @@ def render_repo_card(
       {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
       {f'<p class="description">{description}</p>' if description else ''}
       <pre>{x_post}</pre>
-      <div class="detail-links">
+      <div class="detail-links primary-links">
         <a class="badge" href="{details_href}">Details</a>
         <a class="badge" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
       </div>
