@@ -193,6 +193,80 @@ def low_star_high_score_settings() -> dict[str, int | float]:
     }
 
 
+def validate_review_state_or_exit(value: str) -> str:
+    normalized = str(value or "").strip().lower()
+    if normalized not in REVIEW_STATES:
+        print(
+            "Invalid review state. "
+            f"Expected one of: {', '.join(REVIEW_STATES)}",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+    return normalized
+
+
+def review_state_usage() -> str:
+    return (
+        "Usage:\n"
+        "  python bot.py review-state set <owner/repo> <state>\n"
+        "  python bot.py review-state get <owner/repo>\n"
+        "  python bot.py review-state list"
+    )
+
+
+def review_state_set(full_name: str, raw_state: str) -> None:
+    normalized_full_name = str(full_name or "").strip()
+    if not normalized_full_name:
+        print(review_state_usage(), file=sys.stderr)
+        raise SystemExit(1)
+    state = load_state()
+    review_state = validate_review_state_or_exit(raw_state)
+    state["review_states"][normalized_full_name] = review_state
+    save_state(state)
+    print(f"{normalized_full_name}: {review_state}")
+
+
+def review_state_get(full_name: str) -> None:
+    normalized_full_name = str(full_name or "").strip()
+    if not normalized_full_name:
+        print(review_state_usage(), file=sys.stderr)
+        raise SystemExit(1)
+    state = load_state()
+    raw_value = state.get("review_states", {}).get(normalized_full_name)
+    normalized = normalize_review_state(raw_value)
+    suffix = "" if raw_value else " (unset)"
+    print(f"{normalized_full_name}: {normalized}{suffix}")
+
+
+def review_state_list() -> None:
+    state = load_state()
+    review_states = state.get("review_states", {})
+    if not review_states:
+        print("review_states: empty")
+        return
+    for full_name in sorted(review_states):
+        normalized = normalize_review_state(review_states.get(full_name))
+        print(f"{full_name}: {normalized}")
+
+
+def handle_review_state_cli(args: list[str]) -> None:
+    if not args:
+        print(review_state_usage(), file=sys.stderr)
+        raise SystemExit(1)
+    action = args[0]
+    if action == "set" and len(args) == 3:
+        review_state_set(args[1], args[2])
+        return
+    if action == "get" and len(args) == 2:
+        review_state_get(args[1])
+        return
+    if action == "list" and len(args) == 1:
+        review_state_list()
+        return
+    print(review_state_usage(), file=sys.stderr)
+    raise SystemExit(1)
+
+
 def extract_tags(item: dict[str, Any]) -> list[str]:
     tags = []
     seen = set()
@@ -1854,11 +1928,17 @@ def run_daemon(config: Config) -> None:
 
 
 def main() -> None:
-    if len(sys.argv) < 2 or sys.argv[1] not in {"once", "daemon", "test-telegram", "render"}:
-        print("Usage: python bot.py [once --force|daemon|test-telegram|render]")
+    if len(sys.argv) < 2 or sys.argv[1] not in {"once", "daemon", "test-telegram", "render", "review-state"}:
+        print(
+            "Usage: python bot.py "
+            "[once --force|daemon|test-telegram|render|review-state]"
+        )
         raise SystemExit(1)
 
     mode = sys.argv[1]
+    if mode == "review-state":
+        handle_review_state_cli(sys.argv[2:])
+        return
     if mode == "render":
         render_static_sites()
         print("Rendered docs pages.")
