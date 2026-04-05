@@ -182,6 +182,16 @@ def format_state_timestamp(value: Any) -> str:
     return dt.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M")
 
 
+def parse_state_iso(value: Any) -> datetime | None:
+    raw = str(value or "").strip()
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(raw)
+    except ValueError:
+        return None
+
+
 def normalize_review_state(value: Any) -> str:
     state = str(value or "").strip().lower()
     return state if state in REVIEW_STATES else "unseen"
@@ -696,7 +706,27 @@ def render_repo_detail_sites() -> None:
         if repo.name == "index.html":
             continue
         repo.unlink()
+    cooldown_days = parse_int_env("COOLDOWN_DAYS", 14, minimum=0)
     for repo_data in aggregated.values():
+        state_repo = state.get("repos", {}).get(repo_data["full_name"], {})
+        state_notification = state.get("notifications", {}).get(repo_data["full_name"], {})
+        last_sent_dt = parse_state_iso(state_notification.get("last_sent"))
+        cooldown_remaining_days = None
+        if last_sent_dt is not None:
+            cooldown_until = last_sent_dt + timedelta(days=cooldown_days)
+            cooldown_remaining = cooldown_until - datetime.now(UTC)
+            cooldown_remaining_days = max(0, cooldown_remaining.days + (1 if cooldown_remaining.seconds > 0 else 0))
+        cooldown_label = (
+            f"cooldown active ({cooldown_remaining_days}d left)"
+            if cooldown_remaining_days and cooldown_remaining_days > 0
+            else "cooldown clear"
+        )
+        if last_sent_dt is None:
+            cooldown_label = "cooldown unknown"
+        last_sent_label = format_state_timestamp(state_notification.get("last_sent"))
+        last_seen_label = format_state_timestamp(state_repo.get("last_seen"))
+        last_stars_value = state_repo.get("last_stars")
+        last_stars_label = str(int(last_stars_value)) if last_stars_value is not None else "-"
         low_star_settings = low_star_high_score_settings()
         current_review_state = normalize_review_state(repo_data.get("review_state"))
         current_state_href = history_archive_href(path_prefix="..", review_state=current_review_state)
@@ -819,6 +849,12 @@ def render_repo_detail_sites() -> None:
               <span>{escape(str(repo_data['language'] or 'N/A'))}</span>
               <span>state {escape(current_review_state)}</span>
               <span>appearances {int(repo_data['appearances'])}</span>
+            </div>
+            <div class="meta">
+              <span>last sent {escape(last_sent_label)}</span>
+              <span>{escape(cooldown_label)}</span>
+              <span>last seen {escape(last_seen_label)}</span>
+              <span>last stars {escape(last_stars_label)}</span>
             </div>
             {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
