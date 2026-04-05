@@ -4,6 +4,7 @@ import re
 import re
 import sys
 import time
+import hashlib
 from html import escape
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -18,6 +19,7 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent
 STATE_PATH = ROOT / "state.json"
 DOCS_DIR = ROOT / "docs"
+REPOS_DIR = DOCS_DIR / "repos"
 HISTORY_PATH = DOCS_DIR / "history.json"
 LOGS_DIR = ROOT / "logs"
 SEND_LOG_PATH = LOGS_DIR / "send.log"
@@ -380,6 +382,164 @@ def summarize_languages(items: list[dict[str, Any]], limit: int = 5) -> str:
     return ", ".join(f"{language} {count}" for language, count in ranking)
 
 
+def repo_slug(full_name: str) -> str:
+    normalized = str(full_name or "").strip().lower()
+    if not normalized:
+        normalized = "repo"
+    safe = re.sub(r"[^a-z0-9]+", "-", normalized).strip("-") or "repo"
+    digest = hashlib.sha1(normalized.encode("utf-8")).hexdigest()[:8]
+    return f"{safe}-{digest}"
+
+
+def repo_detail_href(full_name: str, path_prefix: str = ".") -> str:
+    return f"{path_prefix}/repos/{repo_slug(full_name)}.html"
+
+
+def aggregate_repo_history(
+    history: list[dict[str, Any]],
+    review_states: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    aggregated: dict[str, dict[str, Any]] = {}
+    for item in history:
+        full_name = str(item.get("full_name") or "").strip()
+        sent_at = item.get("sent_at")
+        if not full_name or not sent_at:
+            continue
+        sent_at_dt = parse_sent_at(sent_at)
+        owner_login, owner_html_url, owner_avatar_url = fallback_owner_fields(item)
+        entry = aggregated.setdefault(
+            full_name,
+            {
+                "full_name": full_name,
+                "slug": repo_slug(full_name),
+                "html_url": item.get("html_url") or "",
+                "owner_login": owner_login,
+                "owner_html_url": owner_html_url,
+                "owner_avatar_url": owner_avatar_url,
+                "review_state": normalize_review_state(review_states.get(full_name)),
+                "first_seen": sent_at_dt,
+                "latest_seen": sent_at_dt,
+                "appearances": 0,
+                "latest_score": float(item.get("score") or 0),
+                "latest_stars": int(item.get("stars") or 0),
+                "language": item.get("language") or "N/A",
+                "description": item.get("description") or "",
+                "pick_reason": item.get("pick_reason") or "",
+                "latest_x_post": item.get("x_post") or "",
+                "topics": item.get("topics") or [],
+                "history_entries": [],
+            },
+        )
+        entry["appearances"] += 1
+        entry["first_seen"] = min(entry["first_seen"], sent_at_dt)
+        if sent_at_dt >= entry["latest_seen"]:
+            entry["latest_seen"] = sent_at_dt
+            entry["latest_score"] = float(item.get("score") or 0)
+            entry["latest_stars"] = int(item.get("stars") or 0)
+            entry["language"] = item.get("language") or entry["language"] or "N/A"
+            entry["description"] = item.get("description") or entry["description"]
+            entry["pick_reason"] = item.get("pick_reason") or entry["pick_reason"]
+            entry["latest_x_post"] = item.get("x_post") or entry["latest_x_post"]
+            entry["html_url"] = item.get("html_url") or entry["html_url"]
+        merged_topics = list(dict.fromkeys((entry.get("topics") or []) + (item.get("topics") or [])))
+        entry["topics"] = merged_topics[:12]
+        entry["history_entries"].append(
+            {
+                "sent_at": sent_at_dt,
+                "score": float(item.get("score") or 0),
+                "bucket": item.get("bucket") or "morning",
+                "pick_reason": item.get("pick_reason") or "",
+            }
+        )
+    for entry in aggregated.values():
+        entry["history_entries"].sort(key=lambda item: item["sent_at"], reverse=True)
+    return aggregated
+
+
+def render_repo_detail_sites() -> None:
+    history = load_history()
+    state = load_state()
+    aggregated = aggregate_repo_history(history, state.get("review_states", {}))
+    REPOS_DIR.mkdir(parents=True, exist_ok=True)
+    for repo in REPOS_DIR.glob("*.html"):
+        if repo.name == "index.html":
+            continue
+        repo.unlink()
+    for repo_data in aggregated.values():
+        topics_html = "".join(
+            f'<span class="badge topic">#{escape(topic)}</span>'
+            for topic in repo_data.get("topics") or []
+        )
+        history_items = []
+        for item in repo_data["history_entries"]:
+            bucket = "朝の新顔枠" if item["bucket"] == "morning" else "夜の尖り枠"
+            pick_reason = escape(item["pick_reason"] or "")
+            history_items.append(
+                f"""
+                <article class="history-item">
+                  <div class="meta">
+                    <span class="date-label">{escape(item["sent_at"].strftime("%Y-%m-%d %H:%M"))}</span>
+                    <span>{bucket}</span>
+                    <span>score {item["score"]}</span>
+                  </div>
+                  {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
+                </article>
+                """
+            )
+        body_html = f"""
+        <section class="section-block">
+          <article class="card">
+            <div class="card-header">
+              <img class="avatar" src="{escape(repo_data['owner_avatar_url'])}" alt="{escape(repo_data['owner_login'])}">
+              <div class="card-title-wrap">
+                <div class="owner-line">
+                  <a href="{escape(repo_data['owner_html_url'])}" target="_blank" rel="noreferrer">@{escape(repo_data['owner_login'])}</a>
+                </div>
+                <h2>{escape(repo_data['full_name'])}</h2>
+              </div>
+            </div>
+            <div class="meta">
+              <span>stars {int(repo_data['latest_stars'])}</span>
+              <span>score {repo_data['latest_score']}</span>
+              <span>{escape(str(repo_data['language'] or 'N/A'))}</span>
+              <span>state {escape(repo_data['review_state'])}</span>
+              <span>appearances {int(repo_data['appearances'])}</span>
+            </div>
+            {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
+            {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
+            <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
+            {f'<div class="badge-row"><span class="badge">{escape(str(repo_data["language"] or "N/A"))}</span><span class="badge review-state">state {escape(repo_data["review_state"])}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
+            <div class="detail-links">
+              <a class="badge" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="badge" href="../index.html">History</a>
+              <a class="badge" href="../weekly.html">Weekly</a>
+            </div>
+          </article>
+        </section>
+        <section class="stats-grid">
+          <article class="stat-card"><strong>{escape(repo_data["first_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>初回出現日時</span></article>
+          <article class="stat-card"><strong>{escape(repo_data["latest_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>最新出現日時</span></article>
+          <article class="stat-card"><strong>{int(repo_data["appearances"])}</strong><span>出現回数</span></article>
+          <article class="stat-card"><strong>{escape(repo_data["review_state"])}</strong><span>review state</span></article>
+        </section>
+        <section class="section-block">
+          <div class="section-header">
+            <h2>Related History</h2>
+            <p>同じ repo の通知履歴を新しい順に並べています。</p>
+          </div>
+          {f'<div class="history-list">{"".join(history_items)}</div>' if history_items else '<p class="empty-state">関連履歴はまだありません。</p>'}
+        </section>
+        """
+        html = site_shell(
+            repo_data["full_name"],
+            "repo ごとの通知履歴をまとめた静的詳細ページです。",
+            body_html,
+            "detail",
+            path_prefix="..",
+        )
+        (REPOS_DIR / f"{repo_data['slug']}.html").write_text(html, encoding="utf-8")
+
+
 def append_send_log(event: str, **fields: Any) -> None:
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     payload = {
@@ -419,7 +579,13 @@ def linkify_text(text: str) -> str:
     return pattern.sub(r'<a href="\1" target="_blank" rel="noreferrer">\1</a>', escaped)
 
 
-def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> str:
+def site_shell(
+    title: str,
+    subtitle: str,
+    body_html: str,
+    current_page: str,
+    path_prefix: str = ".",
+) -> str:
     history_active = 'aria-current="page"' if current_page == "history" else ""
     weekly_active = 'aria-current="page"' if current_page == "weekly" else ""
     return f"""<!doctype html>
@@ -818,6 +984,22 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       color: var(--muted);
       font-size: 13px;
     }}
+    .detail-links {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0 0;
+    }}
+    .history-list {{
+      display: grid;
+      gap: 12px;
+    }}
+    .history-item {{
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+    }}
     h2 {{
       margin: 0 0 10px;
       font-size: clamp(20px, 3vw, 24px);
@@ -867,7 +1049,7 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="./index.html">
+      <a class="brand" href="{path_prefix}/index.html">
         <strong>GitHub Check</strong>
         <span>repo digest and weekly ranking</span>
       </a>
@@ -879,8 +1061,8 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
         </span>
       </button>
       <nav id="site-nav" class="site-nav">
-        <a href="./index.html" {history_active}>履歴</a>
-        <a href="./weekly.html" {weekly_active}>週間トップ10</a>
+        <a href="{path_prefix}/index.html" {history_active}>履歴</a>
+        <a href="{path_prefix}/weekly.html" {weekly_active}>週間トップ10</a>
       </nav>
     </div>
   </header>
@@ -1521,6 +1703,7 @@ def render_repo_card(
     review_state: str,
     rank: int | None = None,
     archive_card: bool = False,
+    path_prefix: str = ".",
 ) -> str:
     sent_at = escape(str(item.get("_display_time") or ""))
     full_name = escape(str(item.get("full_name") or ""))
@@ -1560,6 +1743,7 @@ def render_repo_card(
         if item.get("count") is not None
         else ""
     )
+    details_href = repo_detail_href(str(item.get("full_name") or ""), path_prefix)
     return f"""
     <article class="card{rank_class}" {attrs}{' data-archive-card' if archive_card else ''}>
       <div class="card-header">
@@ -1583,6 +1767,10 @@ def render_repo_card(
       {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
       {f'<p class="description">{description}</p>' if description else ''}
       <pre>{x_post}</pre>
+      <div class="detail-links">
+        <a class="badge" href="{details_href}">Details</a>
+        <a class="badge" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
       {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
     </article>
     """
@@ -1889,6 +2077,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
 def render_static_sites(now: datetime | None = None) -> None:
     render_history_site()
     render_weekly_site(now)
+    render_repo_detail_sites()
 
 
 def build_weekly_telegram_message(config: Config, now: datetime | None = None) -> str:
