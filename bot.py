@@ -47,6 +47,27 @@ REVIEW_STATES = [
     "production_candidate",
 ]
 
+REVIEW_STATE_LABELS = {
+    "unseen": "未確認",
+    "interested": "気になる",
+    "tested": "試した",
+    "good": "良い",
+    "meh": "微妙",
+    "production_candidate": "本番候補",
+}
+
+RUN_STATUS_LABELS = {
+    "running": "実行中",
+    "success": "成功",
+    "failed": "失敗",
+    "unknown": "不明",
+}
+
+DEEPSEEK_WARNING_LABELS = {
+    "quota/auth/billing": "認証・課金・残高",
+    "rate_limit": "レート制限",
+}
+
 DEEPSEEK_WARNING_COOLDOWN_HOURS = 12
 
 LOW_STAR_HIGH_SCORE = {
@@ -195,6 +216,23 @@ def parse_state_iso(value: Any) -> datetime | None:
 def normalize_review_state(value: Any) -> str:
     state = str(value or "").strip().lower()
     return state if state in REVIEW_STATES else "unseen"
+
+
+def review_state_label(value: Any) -> str:
+    normalized = normalize_review_state(value)
+    return REVIEW_STATE_LABELS.get(normalized, normalized)
+
+
+def run_status_label(value: Any) -> str:
+    normalized = str(value or "").strip().lower() or "unknown"
+    return RUN_STATUS_LABELS.get(normalized, normalized)
+
+
+def deepseek_warning_label(value: Any) -> str:
+    normalized = str(value or "").strip()
+    if not normalized or normalized == "none":
+        return "なし"
+    return DEEPSEEK_WARNING_LABELS.get(normalized, normalized)
 
 
 def parse_int_env(name: str, default: int, minimum: int | None = None) -> int:
@@ -541,7 +579,7 @@ def render_review_state_shortcuts(path_prefix: str, current_review_state: str) -
         (
             f'<a class="badge{" review-state" if state_name == current_review_state else ""}" '
             f'href="{history_archive_href(path_prefix=path_prefix, review_state=state_name)}">'
-            f'See {escape(state_name)}</a>'
+            f'{escape(review_state_label(state_name))}を見る</a>'
         )
         for state_name in ["good", "production_candidate", "unseen", "interested", "tested"]
     )
@@ -671,14 +709,14 @@ def find_similar_repos(
             continue
         reason_parts = []
         if same_language:
-            reason_parts.append(f"same language: {repo_data.get('language') or 'N/A'}")
+            reason_parts.append(f"同じ言語: {repo_data.get('language') or 'N/A'}")
         if shared_topics:
             reason_parts.append(
-                "shared tags: "
+                "共通タグ: "
                 + ", ".join(f"#{topic}" for topic in shared_topics[:3])
             )
         if same_state and target_state != "unseen":
-            reason_parts.append(f"same state: {target_state}")
+            reason_parts.append(f"同じ状態: {review_state_label(target_state)}")
         candidate = dict(repo_data)
         candidate["similarity_reason"] = " / ".join(reason_parts)
         candidate["shared_topics"] = shared_topics
@@ -717,12 +755,12 @@ def render_repo_detail_sites() -> None:
             cooldown_remaining = cooldown_until - datetime.now(UTC)
             cooldown_remaining_days = max(0, cooldown_remaining.days + (1 if cooldown_remaining.seconds > 0 else 0))
         cooldown_label = (
-            f"cooldown active ({cooldown_remaining_days}d left)"
+            f"クールダウン中（残り{cooldown_remaining_days}日）"
             if cooldown_remaining_days and cooldown_remaining_days > 0
-            else "cooldown clear"
+            else "クールダウン解除"
         )
         if last_sent_dt is None:
-            cooldown_label = "cooldown unknown"
+            cooldown_label = "クールダウン情報なし"
         last_sent_label = format_state_timestamp(state_notification.get("last_sent"))
         last_seen_label = format_state_timestamp(state_repo.get("last_seen"))
         last_stars_value = state_repo.get("last_stars")
@@ -755,7 +793,7 @@ def render_repo_detail_sites() -> None:
             else f'<span class="badge">{escape(language_value or "N/A")}</span>'
         )
         language_link_html = (
-            f'<a class="badge" href="{language_href}">View all {escape(language_value)} repos</a>'
+            f'<a class="badge" href="{language_href}">{escape(language_value)} のリポジトリ一覧を見る</a>'
             if language_href
             else ""
         )
@@ -775,14 +813,14 @@ def render_repo_detail_sites() -> None:
                     <span>{escape(str(similar_repo.get("language") or "N/A"))}</span>
                     <span>score {float(similar_repo.get("latest_score") or 0):.2f}</span>
                     <span>stars {int(similar_repo.get("latest_stars") or 0)}</span>
-                    <span>state {escape(normalize_review_state(similar_repo.get("review_state")))}</span>
+                    <span>状態 {escape(review_state_label(similar_repo.get("review_state")))}</span>
                   </div>
                   <h3><a href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}" target="_self">{escape(str(similar_repo.get("full_name") or ""))}</a></h3>
                   {f'<p class="pick-reason">{escape(str(similar_repo.get("similarity_reason") or ""))}</p>' if similar_repo.get("similarity_reason") else ''}
                   {f'<p class="description">{escape(str(similar_repo.get("description") or ""))}</p>' if similar_repo.get("description") else ''}
                   {f'<div class="badge-row">{shared_topics}</div>' if shared_topics else ''}
                   <div class="detail-links primary-links">
-                    <a class="badge" href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}">Details</a>
+                    <a class="badge" href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}">詳細</a>
                     <a class="badge" href="{escape(str(similar_repo.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
                   </div>
                 </article>
@@ -797,7 +835,7 @@ def render_repo_detail_sites() -> None:
             score_delta = format_delta(item.get("score_delta"), digits=2)
             stars_delta = format_delta(item.get("stars_delta"))
             language = escape(str(item.get("language") or "N/A"))
-            review_state = escape(normalize_review_state(item.get("review_state")))
+            review_state = escape(review_state_label(item.get("review_state")))
             topics_html = "".join(
                 f'<span class="badge topic">#{escape(topic)}</span>'
                 for topic in item.get("topics") or []
@@ -805,11 +843,11 @@ def render_repo_detail_sites() -> None:
             topic_changes = []
             if item.get("topics_added"):
                 topic_changes.append(
-                    "added " + ", ".join(f"#{topic}" for topic in item["topics_added"][:4])
+                    "追加: " + ", ".join(f"#{topic}" for topic in item["topics_added"][:4])
                 )
             if item.get("topics_removed"):
                 topic_changes.append(
-                    "removed " + ", ".join(f"#{topic}" for topic in item["topics_removed"][:4])
+                    "削除: " + ", ".join(f"#{topic}" for topic in item["topics_removed"][:4])
                 )
             history_items.append(
                 f"""
@@ -818,15 +856,15 @@ def render_repo_detail_sites() -> None:
                     <span class="date-label">{escape(item["sent_at"].strftime("%Y-%m-%d %H:%M"))}</span>
                     <span>{bucket}</span>
                     <span>score {item["score"] if item["score"] is not None else "-"}</span>
-                    {f'<span>{score_delta} vs prev</span>' if score_delta else ''}
+                    {f'<span>前回比 {score_delta}</span>' if score_delta else ''}
                     <span>stars {item["stars"] if item["stars"] is not None else "-"}</span>
-                    {f'<span>{stars_delta} vs prev</span>' if stars_delta else ''}
+                    {f'<span>前回比 {stars_delta}</span>' if stars_delta else ''}
                     <span>{language}</span>
-                    <span>state {review_state}</span>
+                    <span>状態 {review_state}</span>
                   </div>
                   {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
-                  {f'<p class="pick-reason">pick_reason changed vs prev</p>' if item.get("pick_reason_changed") else ''}
-                  {f'<p class="pick-reason">topics: {" / ".join(topic_changes)}</p>' if topic_changes else ''}
+                  {f'<p class="pick-reason">選定理由が前回から変化しています</p>' if item.get("pick_reason_changed") else ''}
+                  {f'<p class="pick-reason">トピック変化: {" / ".join(topic_changes)}</p>' if topic_changes else ''}
                   {f'<div class="badge-row">{topics_html}</div>' if topics_html else ''}
                 </article>
                 """
@@ -847,31 +885,31 @@ def render_repo_detail_sites() -> None:
               <span>stars {int(repo_data['latest_stars'])}</span>
               <span>score {repo_data['latest_score']}</span>
               <span>{escape(str(repo_data['language'] or 'N/A'))}</span>
-              <span>state {escape(current_review_state)}</span>
-              <span>appearances {int(repo_data['appearances'])}</span>
+              <span>状態 {escape(review_state_label(current_review_state))}</span>
+              <span>登場 {int(repo_data['appearances'])}回</span>
             </div>
             <div class="meta">
-              <span>last sent {escape(last_sent_label)}</span>
+              <span>最終通知 {escape(last_sent_label)}</span>
               <span>{escape(cooldown_label)}</span>
-              <span>last seen {escape(last_seen_label)}</span>
-              <span>last stars {escape(last_stars_label)}</span>
+              <span>最終観測 {escape(last_seen_label)}</span>
+              <span>最終stars {escape(last_stars_label)}</span>
             </div>
             {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
             <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
-            {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">state {escape(current_review_state)}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
+            {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">状態 {escape(review_state_label(current_review_state))}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
             <div class="detail-links primary-links">
               <a class="badge" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="badge" href="../index.html">History</a>
-              <a class="badge" href="../weekly.html">Weekly</a>
+              <a class="badge" href="../index.html">履歴</a>
+              <a class="badge" href="../weekly.html">週間</a>
             </div>
             <div class="detail-links secondary-links">
-              <a class="badge review-state" href="{current_state_href}">View all {escape(current_review_state)} repos</a>
+              <a class="badge review-state" href="{current_state_href}">{escape(review_state_label(current_review_state))}の一覧を見る</a>
             </div>
             <div class="detail-links secondary-links">
               {language_link_html}
-              <a class="badge" href="{score_focus_href}">View high-score repos</a>
-              <a class="badge" href="{low_star_focus_href}">See low-stars/high-score</a>
+              <a class="badge" href="{score_focus_href}">高スコアの一覧を見る</a>
+              <a class="badge" href="{low_star_focus_href}">低スター高スコアを見る</a>
             </div>
             <div class="detail-links secondary-links">
               {shortcut_links}
@@ -882,26 +920,26 @@ def render_repo_detail_sites() -> None:
           <article class="stat-card"><strong>{escape(repo_data["first_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>初回出現日時</span></article>
           <article class="stat-card"><strong>{escape(repo_data["latest_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>{int(repo_data["appearances"])}</strong><span>出現回数</span></article>
-          <article class="stat-card"><strong>{escape(current_review_state)}</strong><span>review state</span></article>
+          <article class="stat-card"><strong>{escape(review_state_label(current_review_state))}</strong><span>状態</span></article>
         </section>
         {render_section_block(
-            "Similar Repos",
-            "同じ language や共通 tag を手がかりに、近い repo を見返しやすく並べています。",
+            "似ているリポジトリ",
+            "同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。",
             "".join(similar_repo_cards),
-            "この repo に近い候補は、まだ十分に集まっていません。",
+            "このリポジトリに近い候補は、まだ十分に集まっていません。",
             layout_class="history-list",
         )}
         {render_section_block(
-            "Related History",
-            "同じ repo の通知履歴を新しい順に並べています。score や stars の変化もここで追えます。",
+            "関連する履歴",
+            "同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。",
             "".join(history_items),
-            "この repo の比較できる履歴は、まだありません。",
+            "このリポジトリの比較できる履歴は、まだありません。",
             layout_class="history-list",
         )}
         """
         html = site_shell(
             repo_data["full_name"],
-            "repo ごとの通知履歴をまとめた静的詳細ページです。",
+            "リポジトリごとの通知履歴をまとめた静的詳細ページです。",
             body_html,
             "detail",
             path_prefix="..",
@@ -1490,7 +1528,7 @@ def site_shell(
     <div class="header-inner">
       <a class="brand" href="{path_prefix}/index.html">
         <strong>GitHub Check</strong>
-        <span>repo digest and weekly ranking</span>
+        <span>repo 通知の履歴と週間まとめ</span>
       </a>
       <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
         <span class="menu-icon" aria-hidden="true">
@@ -2237,7 +2275,7 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
     )
     tags = sorted({tag for item in history for tag in extract_tags(item)})
     review_state_options = "".join(
-        f'<option value="{escape(state)}">{escape(state)}</option>'
+        f'<option value="{escape(state)}">{escape(review_state_label(state))}</option>'
         for state in REVIEW_STATES
     )
     language_options = "".join(
@@ -2254,21 +2292,21 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
         <input id="search-name" type="search" placeholder="owner/repo" data-filter-search>
       </div>
       <div class="control-group">
-        <label for="filter-language">Language</label>
+        <label for="filter-language">言語</label>
         <select id="filter-language" data-filter-language>
           <option value="">すべて</option>
           {language_options}
         </select>
       </div>
       <div class="control-group">
-        <label for="filter-tag">Hashtag / Tag</label>
+        <label for="filter-tag">ハッシュタグ / タグ</label>
         <select id="filter-tag" data-filter-tag>
           <option value="">すべて</option>
           {tag_options}
         </select>
       </div>
       <div class="control-group">
-        <label for="filter-review-state">Review State</label>
+        <label for="filter-review-state">状態</label>
         <select id="filter-review-state" data-filter-review-state>
           <option value="">すべて</option>
           {review_state_options}
@@ -2300,9 +2338,9 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
       </div>
     </section>
     <div class="archive-share">
-      <button class="filter-button" type="button" data-copy-filter-link>Copy current filters</button>
-      <a class="badge" href="./index.html" data-open-filter-link>Open this filtered view</a>
-      <input type="text" readonly value="./index.html" data-filter-link-output aria-label="Shareable filtered link">
+      <button class="filter-button" type="button" data-copy-filter-link>現在の絞り込みURLをコピー</button>
+      <a class="badge" href="./index.html" data-open-filter-link>この絞り込みを開く</a>
+      <input type="text" readonly value="./index.html" data-filter-link-output aria-label="共有用の絞り込みURL">
       <span class="archive-share-status" data-filter-link-status></span>
     </div>
     <p class="archive-summary" data-filter-count>{len(history)} 件表示。いまの絞り込みは上のリンクで共有できます。</p>
@@ -2335,7 +2373,7 @@ def render_repo_card(
         for topic in extract_tags(item)[:6]
     )
     review_badge = (
-        f'<span class="badge review-state">state {escape(review_state)}</span>'
+        f'<span class="badge review-state">状態 {escape(review_state_label(review_state))}</span>'
         if review_state
         else ""
     )
@@ -2350,7 +2388,7 @@ def render_repo_card(
     rank_badge = f'<span class="rank-number">{rank}</span>' if rank is not None else ""
     score_value = item.get("best_score", item.get("score", 0))
     count_label = (
-        f"<span>picked {int(item.get('count') or 0)} times</span>"
+        f"<span>登場 {int(item.get('count') or 0)}回</span>"
         if item.get("count") is not None
         else ""
     )
@@ -2379,7 +2417,7 @@ def render_repo_card(
       {f'<p class="description">{description}</p>' if description else ''}
       <pre>{x_post}</pre>
       <div class="detail-links primary-links">
-        <a class="badge" href="{details_href}">Details</a>
+        <a class="badge" href="{details_href}">詳細</a>
         <a class="badge" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
@@ -2414,27 +2452,27 @@ def render_history_site() -> None:
     operations_summary_html = f"""
     <section class="section-block">
       <div class="section-header">
-        <h2>Operations Summary</h2>
-        <p>定時実行の状態と DeepSeek の直近 warning を、Pages 上ですぐ確認するための小さい運用サマリーです。</p>
+        <h2>運用サマリー</h2>
+        <p>定時実行の状態と DeepSeek の直近警告を、Pages 上ですぐ確認するための小さい運用サマリーです。</p>
       </div>
       <div class="section-grid">
         <article class="card">
-          <h3>Run Status</h3>
+          <h3>実行状況</h3>
           <div class="meta">
-            <span>status {escape(run_status)}</span>
-            <span>started {escape(started_at)}</span>
-            <span>finished {escape(finished_at)}</span>
+            <span>状態 {escape(run_status_label(run_status))}</span>
+            <span>開始 {escape(started_at)}</span>
+            <span>終了 {escape(finished_at)}</span>
           </div>
-          {f'<p class="pick-reason">error: {escape(run_error)}</p>' if run_error else '<p class="pick-reason">error: -</p>'}
+          {f'<p class="pick-reason">エラー: {escape(run_error)}</p>' if run_error else '<p class="pick-reason">エラー: -</p>'}
         </article>
         <article class="card">
-          <h3>DeepSeek Alerts</h3>
+          <h3>DeepSeek 警告</h3>
           <div class="meta">
-            <span>latest {escape(latest_warning_kind or "none")}</span>
-            <span>sent {escape(latest_warning_sent)}</span>
-            <span>repo {escape(latest_warning_repo)}</span>
+            <span>最新 {escape(deepseek_warning_label(latest_warning_kind or "none"))}</span>
+            <span>送信 {escape(latest_warning_sent)}</span>
+            <span>対象 {escape(latest_warning_repo)}</span>
           </div>
-          <p class="pick-reason">detail: {escape(latest_warning_detail)}</p>
+          <p class="pick-reason">詳細: {escape(latest_warning_detail)}</p>
         </article>
       </div>
     </section>
@@ -2483,8 +2521,8 @@ def render_history_site() -> None:
     body_html = (
         operations_summary_html
         + render_section_block(
-            "Low Stars / High Score",
-            "stars がまだ少なくても、score が高い repo を見つけるための発掘枠です。",
+            "低スター高スコア",
+            "stars がまだ少なくても、score が高いリポジトリを見つけるための発掘枠です。",
             low_star_cards,
             "今の条件に合う発掘候補は、まだありません。",
         )
@@ -2511,8 +2549,8 @@ def render_history_site() -> None:
         )
     )
     html = site_shell(
-        "Repo History",
-        "Telegram に送った repo を、検索・選別・再利用しやすい形で見返せるアーカイブです。",
+        "通知履歴",
+        "Telegram に送ったリポジトリを、検索・選別・再利用しやすい形で見返せるアーカイブです。",
         body_html,
         "history",
     )
@@ -2640,7 +2678,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         item["_review_state"] = review_state
         review_state_counts[review_state] = review_state_counts.get(review_state, 0) + 1
     review_state_summary = " ".join(
-        f'<a class="badge" href="{history_archive_href(review_state=state_name)}">{escape(state_name)} {review_state_counts[state_name]}</a>'
+        f'<a class="badge" href="{history_archive_href(review_state=state_name)}">{escape(review_state_label(state_name))} {review_state_counts[state_name]}</a>'
         for state_name in REVIEW_STATES
         if review_state_counts.get(state_name)
     ) or "なし"
@@ -2665,11 +2703,11 @@ def render_weekly_site(now: datetime | None = None) -> None:
     unique_repos = len({item.get("full_name") for item in this_week_items})
     stats_html = f"""
     <section class="stats-grid">
-      <article class="stat-card"><strong>{unique_repos}</strong><span>今週の repo 数</span></article>
+      <article class="stat-card"><strong>{unique_repos}</strong><span>今週のリポジトリ数</span></article>
       <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>
       <article class="stat-card"><strong>{avg_score:.1f}</strong><span>平均 score</span></article>
       <article class="stat-card"><strong>{escape(summarize_languages(this_week_items, 4))}</strong><span>言語分布</span></article>
-      <article class="stat-card"><strong class="inline-links">{review_state_summary}</strong><span>review state 分布</span></article>
+      <article class="stat-card"><strong class="inline-links">{review_state_summary}</strong><span>状態の分布</span></article>
     </section>
     """
 
@@ -2691,29 +2729,29 @@ def render_weekly_site(now: datetime | None = None) -> None:
             title,
             description,
             cards,
-            "この条件に合う repo は、今週まだありません。",
+            "この条件に合うリポジトリは、今週まだありません。",
             links_html=links_html,
         )
 
     html = site_shell(
-        "Weekly Archive",
+        "週間まとめ",
         f"{label} の通知履歴を、見返しやすい週次ビューとしてまとめています。",
         stats_html
         + render_week_section(
-            "今週の good / production_candidate",
-            "すでに手応えがある repo を、review state ベースで先に見返せます。",
+            "今週の良い / 本番候補",
+            "すでに手応えがあるリポジトリを、状態ベースで先に見返せます。",
             review_priority_items,
             links_html=(
-                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="good", sort="score")}">See all good</a>'
-                f'<a class="badge" href="{history_archive_href(review_state="production_candidate", sort="score")}">See all production_candidate</a></span>'
+                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="good", sort="score")}">良いをすべて見る</a>'
+                f'<a class="badge" href="{history_archive_href(review_state="production_candidate", sort="score")}">本番候補をすべて見る</a></span>'
             ),
         )
         + render_week_section(
-            "今週の未確認 repo",
-            "まだ見ていない repo をまとめています。あとで確認する入口として使えます。",
+            "今週の未確認リポジトリ",
+            "まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。",
             unseen_items,
             links_html=(
-                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="unseen", sort="newest")}">See all unseen</a></span>'
+                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="unseen", sort="newest")}">未確認をすべて見る</a></span>'
             ),
         )
         + render_week_section(
@@ -2723,10 +2761,10 @@ def render_weekly_site(now: datetime | None = None) -> None:
         )
         + render_week_section(
             "今週の低スター枠トップ",
-            "stars が少なくても評価が高い repo を先に見たいときの入口です。",
+            "stars が少なくても評価が高いリポジトリを先に見たいときの入口です。",
             low_star_ranking,
             links_html=(
-                f' <span class="inline-links"><a class="badge" href="{low_star_history_href}">See all low-stars/high-score</a></span>'
+                f' <span class="inline-links"><a class="badge" href="{low_star_history_href}">低スター高スコアをすべて見る</a></span>'
             ),
         )
         + render_week_section(
