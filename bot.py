@@ -32,6 +32,21 @@ TOPIC_KEYWORDS = {
     "developer-tools": ["developer", "devtools", "tooling", "debug", "build"],
 }
 
+REVIEW_STATES = [
+    "unseen",
+    "interested",
+    "tested",
+    "good",
+    "meh",
+    "production_candidate",
+]
+
+LOW_STAR_HIGH_SCORE = {
+    "max_stars": 1000,
+    "min_score": 70.0,
+    "limit": 6,
+}
+
 
 @dataclass
 class Config:
@@ -93,8 +108,12 @@ def parse_csv(value: str) -> list[str]:
 
 def load_state() -> dict[str, Any]:
     if not STATE_PATH.exists():
-        return {"repos": {}, "notifications": {}}
-    return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+        return {"repos": {}, "notifications": {}, "review_states": {}}
+    state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    state.setdefault("repos", {})
+    state.setdefault("notifications", {})
+    state.setdefault("review_states", {})
+    return state
 
 
 def save_state(state: dict[str, Any]) -> None:
@@ -120,6 +139,68 @@ def save_history(history: list[dict[str, Any]]) -> None:
 
 def parse_sent_at(sent_at: str) -> datetime:
     return datetime.fromisoformat(sent_at).astimezone(ZoneInfo("Asia/Tokyo"))
+
+
+def normalize_review_state(value: Any) -> str:
+    state = str(value or "").strip().lower()
+    return state if state in REVIEW_STATES else "unseen"
+
+
+def extract_tags(item: dict[str, Any]) -> list[str]:
+    tags = []
+    seen = set()
+    for topic in item.get("topics") or []:
+        normalized = str(topic).strip().lower()
+        if normalized and normalized not in seen:
+            seen.add(normalized)
+            tags.append(normalized)
+    for raw in re.findall(r"#([^\s#]+)", str(item.get("x_post") or "")):
+        normalized = raw.strip().lower()
+        if normalized and normalized not in seen:
+            seen.add(normalized)
+            tags.append(normalized)
+    return tags
+
+
+def build_card_dataset(item: dict[str, Any], review_state: str) -> dict[str, str]:
+    sent_at = str(item.get("sent_at") or "")
+    score = float(item.get("score") or 0)
+    stars = int(item.get("stars") or 0)
+    return {
+        "bucket": str(item.get("bucket") or "morning"),
+        "name": str(item.get("full_name") or "").lower(),
+        "language": str(item.get("language") or "N/A").lower(),
+        "tags": " ".join(extract_tags(item)),
+        "stars": str(stars),
+        "score": f"{score:.2f}",
+        "sent-at": sent_at,
+        "review-state": review_state,
+    }
+
+
+def render_data_attrs(values: dict[str, str]) -> str:
+    return " ".join(
+        f'data-{key}="{escape(value, quote=True)}"'
+        for key, value in values.items()
+    )
+
+
+def is_low_star_high_score(item: dict[str, Any]) -> bool:
+    return (
+        int(item.get("stars") or 0) <= LOW_STAR_HIGH_SCORE["max_stars"]
+        and float(item.get("score") or 0) >= LOW_STAR_HIGH_SCORE["min_score"]
+    )
+
+
+def summarize_languages(items: list[dict[str, Any]], limit: int = 5) -> str:
+    counts: dict[str, int] = {}
+    for item in items:
+        language = str(item.get("language") or "N/A")
+        counts[language] = counts.get(language, 0) + 1
+    ranking = sorted(counts.items(), key=lambda pair: (-pair[1], pair[0]))[:limit]
+    if not ranking:
+        return "なし"
+    return ", ".join(f"{language} {count}" for language, count in ranking)
 
 
 def append_send_log(event: str, **fields: Any) -> None:
@@ -312,6 +393,73 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       flex-wrap: wrap;
       margin: 0 0 18px;
     }}
+    .archive-controls {{
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      margin: 0 0 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 250, 240, 0.72);
+      box-shadow: var(--shadow);
+    }}
+    .control-group {{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }}
+    .control-group label {{
+      font-size: 12px;
+      color: var(--muted);
+    }}
+    .control-group input,
+    .control-group select {{
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }}
+    .archive-summary {{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }}
+    .section-block {{
+      margin: 0 0 28px;
+    }}
+    .section-header {{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 12px;
+      align-items: end;
+    }}
+    .section-header h2,
+    .section-header h3 {{
+      margin: 0;
+    }}
+    .section-header p {{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 720px;
+    }}
+    .section-grid {{
+      display: grid;
+      gap: 16px;
+    }}
+    .empty-state {{
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.55);
+      color: var(--muted);
+    }}
     .tab-button,
     .filter-button {{
       border: 1px solid var(--line);
@@ -420,6 +568,11 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
       color: var(--accent);
       border-color: rgba(15, 118, 110, 0.16);
     }}
+    .badge.review-state {{
+      background: rgba(180, 83, 9, 0.10);
+      color: var(--accent-2);
+      border-color: rgba(180, 83, 9, 0.18);
+    }}
     .date-label {{
       font-variant-numeric: tabular-nums;
     }}
@@ -464,6 +617,29 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
     .rank-card.top2 .rank-number,
     .rank-card.top3 .rank-number {{
       background: linear-gradient(135deg, #0f766e, #14b8a6);
+    }}
+    .stats-grid {{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+    }}
+    .stat-card {{
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      box-shadow: var(--shadow);
+    }}
+    .stat-card strong {{
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }}
+    .stat-card span {{
+      color: var(--muted);
+      font-size: 13px;
     }}
     h2 {{
       margin: 0 0 10px;
@@ -575,6 +751,107 @@ def site_shell(title: str, subtitle: str, body_html: str, current_page: str) -> 
           card.classList.toggle('hidden-by-filter', !matches);
         }}
       }});
+    }}
+    const archiveRoot = document.querySelector('[data-archive-root]');
+    if (archiveRoot) {{
+      const archiveCards = Array.from(document.querySelectorAll('[data-archive-card]'));
+      const searchInput = archiveRoot.querySelector('[data-filter-search]');
+      const languageInput = archiveRoot.querySelector('[data-filter-language]');
+      const tagInput = archiveRoot.querySelector('[data-filter-tag]');
+      const minStarsInput = archiveRoot.querySelector('[data-filter-stars-min]');
+      const maxStarsInput = archiveRoot.querySelector('[data-filter-stars-max]');
+      const minScoreInput = archiveRoot.querySelector('[data-filter-score-min]');
+      const maxScoreInput = archiveRoot.querySelector('[data-filter-score-max]');
+      const sortInput = archiveRoot.querySelector('[data-filter-sort]');
+      const countOutput = document.querySelector('[data-filter-count]');
+      const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
+
+      const activePanelId = () => daySelect ? daySelect.value : '';
+      const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
+      const normalizeText = (value) => String(value || '').toLowerCase();
+      const parseNumber = (value) => {{
+        if (value === '' || value == null) return null;
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : null;
+      }};
+
+      const applyArchiveFilters = () => {{
+        const search = normalizeText(searchInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = sortInput?.value || 'newest';
+        const panelId = activePanelId();
+        const bucket = activeBucket();
+
+        for (const card of archiveCards) {{
+          const inActivePanel = !panelId || card.closest('.tab-panel')?.id === panelId;
+          const matchesBucket = bucket === 'all' || card.dataset.bucket === bucket;
+          const name = normalizeText(card.dataset.name);
+          const cardLanguage = normalizeText(card.dataset.language);
+          const tags = normalizeText(card.dataset.tags);
+          const stars = parseNumber(card.dataset.stars) ?? 0;
+          const score = parseNumber(card.dataset.score) ?? 0;
+          const matchesSearch = !search || name.includes(search);
+          const matchesLanguage = !language || cardLanguage === language;
+          const matchesTag = !tag || tags.includes(tag);
+          const matchesMinStars = minStars == null || stars >= minStars;
+          const matchesMaxStars = maxStars == null || stars <= maxStars;
+          const matchesMinScore = minScore == null || score >= minScore;
+          const matchesMaxScore = maxScore == null || score <= maxScore;
+          const visible =
+            inActivePanel &&
+            matchesBucket &&
+            matchesSearch &&
+            matchesLanguage &&
+            matchesTag &&
+            matchesMinStars &&
+            matchesMaxStars &&
+            matchesMinScore &&
+            matchesMaxScore;
+          card.classList.toggle('hidden-by-filter', !visible);
+        }}
+
+        const activePanel = panelId ? panelsById.get(panelId) : null;
+        const sortableCards = archiveCards.filter((card) => !card.classList.contains('hidden-by-filter'));
+        sortableCards.sort((left, right) => {{
+          if (sortKey === 'score') return Number(right.dataset.score || 0) - Number(left.dataset.score || 0);
+          if (sortKey === 'stars') return Number(right.dataset.stars || 0) - Number(left.dataset.stars || 0);
+          return String(right.dataset.sentAt || '').localeCompare(String(left.dataset.sentAt || ''));
+        }});
+        if (activePanel) {{
+          for (const card of sortableCards) {{
+            activePanel.appendChild(card);
+          }}
+        }}
+        if (countOutput) {{
+          countOutput.textContent = `${{sortableCards.length}} 件表示`;
+        }}
+      }};
+
+      [
+        searchInput,
+        languageInput,
+        tagInput,
+        minStarsInput,
+        maxStarsInput,
+        minScoreInput,
+        maxScoreInput,
+        sortInput,
+      ].filter(Boolean).forEach((element) => {{
+        element.addEventListener('input', applyArchiveFilters);
+        element.addEventListener('change', applyArchiveFilters);
+      }});
+      if (daySelect) {{
+        daySelect.addEventListener('change', applyArchiveFilters);
+      }}
+      for (const button of filterButtons) {{
+        button.addEventListener('click', applyArchiveFilters);
+      }}
+      applyArchiveFilters();
     }}
   </script>
 </body>
@@ -982,8 +1259,144 @@ def append_history(repos: list[dict[str, Any]], bucket: str) -> None:
     save_history(history[-300:])
 
 
+def build_archive_controls(history: list[dict[str, Any]]) -> str:
+    languages = sorted(
+        {str(item.get("language") or "N/A") for item in history},
+        key=lambda value: value.lower(),
+    )
+    tags = sorted({tag for item in history for tag in extract_tags(item)})
+    language_options = "".join(
+        f'<option value="{escape(language.lower())}">{escape(language)}</option>'
+        for language in languages
+    )
+    tag_options = "".join(
+        f'<option value="{escape(tag)}">#{escape(tag)}</option>' for tag in tags[:80]
+    )
+    return f"""
+    <section class="archive-controls" data-archive-root>
+      <div class="control-group">
+        <label for="search-name">Repo 名検索</label>
+        <input id="search-name" type="search" placeholder="owner/repo" data-filter-search>
+      </div>
+      <div class="control-group">
+        <label for="filter-language">Language</label>
+        <select id="filter-language" data-filter-language>
+          <option value="">すべて</option>
+          {language_options}
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="filter-tag">Hashtag / Tag</label>
+        <select id="filter-tag" data-filter-tag>
+          <option value="">すべて</option>
+          {tag_options}
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="filter-stars-min">Stars 最小</label>
+        <input id="filter-stars-min" type="number" min="0" placeholder="0" data-filter-stars-min>
+      </div>
+      <div class="control-group">
+        <label for="filter-stars-max">Stars 最大</label>
+        <input id="filter-stars-max" type="number" min="0" placeholder="{LOW_STAR_HIGH_SCORE["max_stars"]}" data-filter-stars-max>
+      </div>
+      <div class="control-group">
+        <label for="filter-score-min">Score 最小</label>
+        <input id="filter-score-min" type="number" min="0" step="0.01" placeholder="0" data-filter-score-min>
+      </div>
+      <div class="control-group">
+        <label for="filter-score-max">Score 最大</label>
+        <input id="filter-score-max" type="number" min="0" step="0.01" placeholder="999" data-filter-score-max>
+      </div>
+      <div class="control-group">
+        <label for="filter-sort">並び替え</label>
+        <select id="filter-sort" data-filter-sort>
+          <option value="newest">新着順</option>
+          <option value="score">score順</option>
+          <option value="stars">stars順</option>
+        </select>
+      </div>
+    </section>
+    <p class="archive-summary" data-filter-count>{len(history)} 件表示</p>
+    """
+
+
+def render_repo_card(
+    item: dict[str, Any],
+    review_state: str,
+    rank: int | None = None,
+    archive_card: bool = False,
+) -> str:
+    sent_at = escape(str(item.get("_display_time") or ""))
+    full_name = escape(str(item.get("full_name") or ""))
+    html_url = escape(str(item.get("html_url") or ""))
+    x_post = linkify_text(str(item.get("x_post") or item.get("latest_x_post") or ""))
+    language_label = str(item.get("language") or "N/A")
+    language = escape(language_label)
+    description = escape(normalize_card_description(item))
+    owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
+    owner_login = escape(owner_login_raw)
+    owner_html_url = escape(owner_html_url_raw)
+    owner_avatar_url = escape(owner_avatar_url_raw)
+    bucket = str(item.get("bucket") or "morning")
+    bucket_label = "朝の新顔枠" if bucket == "morning" else "夜の尖り枠"
+    pick_reason = escape(str(item.get("pick_reason") or ""))
+    topics = "".join(
+        f'<span class="badge topic">#{escape(topic)}</span>'
+        for topic in extract_tags(item)[:6]
+    )
+    review_badge = (
+        f'<span class="badge review-state">state {escape(review_state)}</span>'
+        if review_state
+        else ""
+    )
+    attrs = render_data_attrs(build_card_dataset(item, review_state))
+    rank_class = " rank-card" if rank is not None else ""
+    if rank == 1:
+        rank_class += " top1"
+    elif rank == 2:
+        rank_class += " top2"
+    elif rank == 3:
+        rank_class += " top3"
+    rank_badge = f'<span class="rank-number">{rank}</span>' if rank is not None else ""
+    score_value = item.get("best_score", item.get("score", 0))
+    count_label = (
+        f"<span>picked {int(item.get('count') or 0)} times</span>"
+        if item.get("count") is not None
+        else ""
+    )
+    return f"""
+    <article class="card{rank_class}" {attrs}{' data-archive-card' if archive_card else ''}>
+      <div class="card-header">
+        {rank_badge}
+        <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
+          </div>
+          <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        {f'<span class="date-label">通知 {sent_at}</span>' if sent_at else ''}
+        <span>{bucket_label}</span>
+        <span>score {score_value}</span>
+        {count_label}
+        <span>stars {int(item.get("stars") or 0)}</span>
+        <span>{language}</span>
+      </div>
+      {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
+      {f'<p class="description">{description}</p>' if description else ''}
+      <pre>{x_post}</pre>
+      {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
+    </article>
+    """
+
+
 def render_history_site() -> None:
     history = list(reversed(load_history()))
+    state = load_state()
+    review_states = state.get("review_states", {})
     grouped: dict[str, list[dict[str, Any]]] = {}
     tokyo = ZoneInfo("Asia/Tokyo")
     for item in history:
@@ -1004,49 +1417,8 @@ def render_history_site() -> None:
 
         cards = []
         for item in items:
-            sent_at = escape(item["_display_time"])
-            full_name = escape(item["full_name"])
-            html_url = escape(item["html_url"])
-            x_post = linkify_text(item["x_post"])
-            language = escape(item["language"])
-            description = escape(normalize_card_description(item))
-            owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
-            owner_login = escape(owner_login_raw)
-            owner_html_url = escape(owner_html_url_raw)
-            owner_avatar_url = escape(owner_avatar_url_raw)
-            bucket = item.get("bucket") or "morning"
-            bucket_label = "朝の新顔枠" if bucket == "morning" else "夜の尖り枠"
-            pick_reason = escape(item.get("pick_reason") or "")
-            topics = "".join(
-                f'<span class="badge topic">#{escape(topic)}</span>'
-                for topic in (item.get("topics") or [])[:6]
-            )
-            cards.append(
-                f"""
-                <article class="card" data-bucket="{escape(bucket)}">
-                  <div class="card-header">
-                    <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
-                    <div class="card-title-wrap">
-                      <div class="owner-line">
-                        <a href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
-                      </div>
-                      <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
-                    </div>
-                  </div>
-                  <div class="meta">
-                    <span class="date-label">通知 {sent_at}</span>
-                    <span>{bucket_label}</span>
-                    <span>score {item["score"]}</span>
-                    <span>stars {item["stars"]}</span>
-                    <span>{language}</span>
-                  </div>
-                  {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
-                  {f'<p class="description">{description}</p>' if description else ''}
-                  <pre>{x_post}</pre>
-                  {f'<div class="badge-row"><span class="badge">{language}</span>{topics}</div>' if topics or language else ''}
-                </article>
-                """
-            )
+            review_state = normalize_review_state(review_states.get(item.get("full_name")))
+            cards.append(render_repo_card(item, review_state, archive_card=True))
 
         tab_panels.append(
             f"""
@@ -1056,7 +1428,32 @@ def render_history_site() -> None:
             """
         )
 
+    low_star_items = [
+        item for item in history if is_low_star_high_score(item)
+    ][: LOW_STAR_HIGH_SCORE["limit"]]
+    low_star_cards = "".join(
+        render_repo_card(
+            item,
+            normalize_review_state(review_states.get(item.get("full_name"))),
+        )
+        for item in low_star_items
+    )
     body_html = (
+        (
+            "<section class='section-block'>"
+            "<div class='section-header'>"
+            "<h2>Low Stars / High Score</h2>"
+            f"<p>stars <= {LOW_STAR_HIGH_SCORE['max_stars']} かつ score >= {LOW_STAR_HIGH_SCORE['min_score']} の発掘枠です。</p>"
+            "</div>"
+            + (
+                f"<div class='section-grid'>{low_star_cards}</div>"
+                if low_star_cards
+                else "<p class='empty-state'>条件に合う repo はまだありません。</p>"
+            )
+            + "</section>"
+        )
+        + build_archive_controls(history)
+        +
         (
             "<div class='filter-bar'>"
             "<button class='filter-button active' data-bucket-filter='all'>全部</button>"
@@ -1071,11 +1468,15 @@ def render_history_site() -> None:
             if tab_options
             else ""
         )
-        + (''.join(tab_panels) if tab_panels else '<p>まだ履歴はありません。</p>')
+        + (
+            "".join(tab_panels)
+            if tab_panels
+            else "<p class='empty-state'>まだ履歴はありません。</p>"
+        )
     )
     html = site_shell(
         "Repo History",
-        "Telegram に送った X 投稿文の履歴です。日付タブをクリックするとその日の通知だけ見られます。",
+        "Telegram に送った repo を、検索・選別・再利用しやすい形で見返せるアーカイブです。",
         body_html,
         "history",
     )
@@ -1083,31 +1484,57 @@ def render_history_site() -> None:
     (DOCS_DIR / "index.html").write_text(html, encoding="utf-8")
 
 
-def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[list[dict[str, Any]], str]:
+def build_week_window(
+    now: datetime,
+    scope: str = "previous",
+) -> tuple[datetime, datetime, str]:
     tokyo_now = now.astimezone(ZoneInfo("Asia/Tokyo"))
     week_start = (tokyo_now - timedelta(days=tokyo_now.weekday())).replace(
         hour=0, minute=0, second=0, microsecond=0
     )
-    previous_week_start = week_start - timedelta(days=7)
-    previous_week_end = week_start
+    if scope == "current":
+        range_start = week_start
+        range_end = tokyo_now
+    else:
+        range_start = week_start - timedelta(days=7)
+        range_end = week_start
+    label = (
+        f"{range_start.month}/{range_start.day}"
+        f" - {(range_end - timedelta(days=1)).month}/{(range_end - timedelta(days=1)).day}"
+        if range_end > range_start
+        else f"{range_start.month}/{range_start.day}"
+    )
+    return range_start, range_end, label
+
+
+def build_weekly_ranking(
+    history: list[dict[str, Any]],
+    now: datetime,
+    scope: str = "previous",
+) -> tuple[list[dict[str, Any]], str]:
+    range_start, range_end, label = build_week_window(now, scope)
 
     aggregated: dict[str, dict[str, Any]] = {}
     for item in history:
-        sent_at_dt = parse_sent_at(item["sent_at"])
-        if not (previous_week_start <= sent_at_dt < previous_week_end):
+        sent_at = item.get("sent_at")
+        full_name = item.get("full_name")
+        if not sent_at or not full_name:
+            continue
+        sent_at_dt = parse_sent_at(sent_at)
+        if not (range_start <= sent_at_dt < range_end):
             continue
         owner_login, owner_html_url, owner_avatar_url = fallback_owner_fields(item)
         entry = aggregated.setdefault(
-            item["full_name"],
+            full_name,
             {
-                "full_name": item["full_name"],
-                "html_url": item["html_url"],
-                "language": item["language"],
+                "full_name": full_name,
+                "html_url": item.get("html_url") or "",
+                "language": item.get("language") or "N/A",
                 "count": 0,
                 "best_score": 0.0,
-                "latest_x_post": item["x_post"],
+                "latest_x_post": item.get("x_post") or "",
                 "latest_sent_at": sent_at_dt,
-                "stars": item["stars"],
+                "stars": item.get("stars") or 0,
                 "description": normalize_card_description(item),
                 "topics": item.get("topics") or [],
                 "owner_login": owner_login,
@@ -1118,10 +1545,11 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
             },
         )
         entry["count"] += 1
-        if item["score"] >= entry["best_score"]:
-            entry["best_score"] = item["score"]
-            entry["latest_x_post"] = item["x_post"]
-            entry["stars"] = item["stars"]
+        item_score = float(item.get("score") or 0)
+        if item_score >= entry["best_score"]:
+            entry["best_score"] = item_score
+            entry["latest_x_post"] = item.get("x_post") or ""
+            entry["stars"] = item.get("stars") or 0
         if sent_at_dt > entry["latest_sent_at"]:
             entry["latest_sent_at"] = sent_at_dt
 
@@ -1130,68 +1558,101 @@ def build_weekly_ranking(history: list[dict[str, Any]], now: datetime) -> tuple[
         key=lambda item: (item["count"], item["best_score"], item["stars"]),
         reverse=True,
     )[:10]
-    label = (
-        f"{previous_week_start.month}/{previous_week_start.day}"
-        f" - {(previous_week_end - timedelta(days=1)).month}/{(previous_week_end - timedelta(days=1)).day}"
-    )
     return ranking, label
 
 
 def render_weekly_site(now: datetime | None = None) -> None:
     history = load_history()
+    state = load_state()
+    review_states = state.get("review_states", {})
     if now is None:
         now = datetime.now(UTC)
-    ranking, label = build_weekly_ranking(history, now)
-    cards = []
-    for index, item in enumerate(ranking, start=1):
-        rank_class = "rank-card"
-        if index == 1:
-            rank_class += " top1"
-        elif index == 2:
-            rank_class += " top2"
-        elif index == 3:
-            rank_class += " top3"
-        owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
-        owner_login = escape(owner_login_raw)
-        owner_html_url = escape(owner_html_url_raw)
-        owner_avatar_url = escape(owner_avatar_url_raw)
-        description = escape(normalize_card_description(item))
-        pick_reason = escape(item.get("pick_reason") or "")
-        topics = "".join(
-            f'<span class="badge topic">#{escape(topic)}</span>'
-            for topic in (item.get("topics") or [])[:6]
+    ranking, label = build_weekly_ranking(history, now, scope="current")
+    range_start, range_end, _ = build_week_window(now, "current")
+    this_week_items = []
+    for item in history:
+        sent_at = item.get("sent_at")
+        if not sent_at:
+            continue
+        sent_at_dt = parse_sent_at(sent_at)
+        if range_start <= sent_at_dt < range_end:
+            enriched_item = dict(item)
+            enriched_item["_parsed_sent_at"] = sent_at_dt
+            this_week_items.append(enriched_item)
+    low_star_ranking = [item for item in ranking if is_low_star_high_score(item)][
+        : LOW_STAR_HIGH_SCORE["limit"]
+    ]
+    fresh_repo_map: dict[str, dict[str, Any]] = {}
+    for item in sorted(
+        this_week_items,
+        key=lambda current: (
+            current.get("_parsed_sent_at"),
+            float(current.get("score") or 0),
+        ),
+        reverse=True,
+    ):
+        full_name = str(item.get("full_name") or "").strip()
+        if not full_name or full_name in fresh_repo_map:
+            continue
+        fresh_repo_map[full_name] = item
+    fresh_picks = list(fresh_repo_map.values())[: LOW_STAR_HIGH_SCORE["limit"]]
+    avg_score = (
+        sum(float(item.get("score") or 0) for item in this_week_items) / len(this_week_items)
+        if this_week_items
+        else 0.0
+    )
+    unique_repos = len({item.get("full_name") for item in this_week_items})
+    stats_html = f"""
+    <section class="stats-grid">
+      <article class="stat-card"><strong>{unique_repos}</strong><span>今週の repo 数</span></article>
+      <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>
+      <article class="stat-card"><strong>{avg_score:.1f}</strong><span>平均 score</span></article>
+      <article class="stat-card"><strong>{escape(summarize_languages(this_week_items, 4))}</strong><span>言語分布</span></article>
+    </section>
+    """
+
+    def render_week_section(title: str, description: str, items: list[dict[str, Any]]) -> str:
+        cards = "".join(
+            render_repo_card(
+                item,
+                normalize_review_state(review_states.get(item.get("full_name"))),
+                rank=index,
+            )
+            for index, item in enumerate(items, start=1)
         )
-        cards.append(
-            f"""
-            <article class="card {rank_class}">
-              <div class="card-header">
-                <span class="rank-number">{index}</span>
-                <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
-                <div class="card-title-wrap">
-                  <div class="owner-line">
-                    <a href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
-                  </div>
-                  <h2><a href="{escape(item["html_url"])}" target="_blank" rel="noreferrer">{escape(item["full_name"])}</a></h2>
-                </div>
-              </div>
-              <div class="meta">
-                <span>score {item["best_score"]}</span>
-                <span>picked {item["count"]} times</span>
-                <span>stars {item["stars"]}</span>
-                <span>{escape(item["language"])}</span>
-              </div>
-              {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
-              {f'<p class="description">{description}</p>' if description else ''}
-              <pre>{linkify_text(item["latest_x_post"])}</pre>
-              {f'<div class="badge-row"><span class="badge">{escape(item["language"])}</span>{topics}</div>' if topics or item.get("language") else ''}
-            </article>
-            """
+        return (
+            "<section class='section-block'>"
+            "<div class='section-header'>"
+            f"<h2>{escape(title)}</h2>"
+            f"<p>{escape(description)}</p>"
+            "</div>"
+            + (
+                f"<div class='section-grid'>{cards}</div>"
+                if cards
+                else "<p class='empty-state'>該当する repo はまだありません。</p>"
+            )
+            + "</section>"
         )
 
     html = site_shell(
-        "Weekly Top 10",
-        f"{label} の通知履歴から作ったランキングです。毎週月曜日に更新されます。",
-        ''.join(cards) if cards else '<p>まだ週間ランキングはありません。</p>',
+        "Weekly Archive",
+        f"{label} の通知履歴から、再利用しやすい週次ビューを作っています。",
+        stats_html
+        + render_week_section(
+            "今週の総合トップ",
+            "pick 回数、最高 score、stars をまとめて見た総合ランキングです。",
+            ranking,
+        )
+        + render_week_section(
+            "今週の低スター枠トップ",
+            f"stars <= {LOW_STAR_HIGH_SCORE['max_stars']} かつ score >= {LOW_STAR_HIGH_SCORE['min_score']} の発掘枠です。",
+            low_star_ranking,
+        )
+        + render_week_section(
+            "今週の新着で面白かったもの",
+            "今週通知したものを新着寄りで並べています。",
+            fresh_picks,
+        ),
         "weekly",
     )
     DOCS_DIR.mkdir(exist_ok=True)
@@ -1206,7 +1667,7 @@ def render_static_sites(now: datetime | None = None) -> None:
 def build_weekly_telegram_message(config: Config, now: datetime | None = None) -> str:
     if now is None:
         now = datetime.now(UTC)
-    ranking, label = build_weekly_ranking(load_history(), now)
+    ranking, label = build_weekly_ranking(load_history(), now, scope="previous")
     if not ranking:
         return ""
 
