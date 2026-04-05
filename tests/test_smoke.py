@@ -1,6 +1,7 @@
 import os
 import unittest
 from datetime import UTC, datetime, timedelta
+from urllib.parse import parse_qs, urlparse
 from unittest.mock import patch
 
 import bot
@@ -86,6 +87,15 @@ class SmokeTests(unittest.TestCase):
             "params.set('search', search)",
         ]:
             self.assertIn(snippet, html)
+
+    def test_review_state_request_issue_url_contains_repo_and_state(self) -> None:
+        url = bot.review_state_request_issue_url("owner/repo", "good")
+        parsed = urlparse(url)
+        query = parse_qs(parsed.query)
+        self.assertEqual(parsed.path, "/taihey5555/githubcheck/issues/new")
+        self.assertIn("[review-state] owner/repo -> good", query["title"][0])
+        self.assertIn("repo: owner/repo", query["body"][0])
+        self.assertIn("state: good", query["body"][0])
 
     def test_aggregate_repo_history_builds_comparison_fields(self) -> None:
         history = [

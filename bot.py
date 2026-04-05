@@ -24,6 +24,8 @@ REPOS_DIR = DOCS_DIR / "repos"
 HISTORY_PATH = DOCS_DIR / "history.json"
 LOGS_DIR = ROOT / "logs"
 SEND_LOG_PATH = LOGS_DIR / "send.log"
+CONTROL_REPO_FULL_NAME = "taihey5555/githubcheck"
+CONTROL_REPO_ISSUES_NEW_URL = f"https://github.com/{CONTROL_REPO_FULL_NAME}/issues/new"
 GITHUB_API = "https://api.github.com"
 DEEPSEEK_API = "https://api.deepseek.com/chat/completions"
 
@@ -221,6 +223,33 @@ def normalize_review_state(value: Any) -> str:
 def review_state_label(value: Any) -> str:
     normalized = normalize_review_state(value)
     return REVIEW_STATE_LABELS.get(normalized, normalized)
+
+
+def review_state_options_html(selected_state: str) -> str:
+    return "".join(
+        f'<option value="{escape(state)}"{" selected" if state == selected_state else ""}>'
+        f"{escape(review_state_label(state))}</option>"
+        for state in REVIEW_STATES
+    )
+
+
+def review_state_request_issue_url(full_name: str, state: str) -> str:
+    repo_name = str(full_name or "").strip()
+    normalized_state = normalize_review_state(state)
+    params = urlencode(
+        {
+            "title": f"[review-state] {repo_name} -> {normalized_state}",
+            "body": (
+                "repo: "
+                + repo_name
+                + "\nstate: "
+                + normalized_state
+                + "\nsource: pages\n\n"
+                + "送信すると workflow が state.json を更新して Pages を再生成します。"
+            ),
+        }
+    )
+    return f"{CONTROL_REPO_ISSUES_NEW_URL}?{params}"
 
 
 def run_status_label(value: Any) -> str:
@@ -783,6 +812,22 @@ def render_repo_detail_sites() -> None:
             sort="score",
         )
         shortcut_links = render_review_state_shortcuts("..", current_review_state)
+        review_state_request_link = review_state_request_issue_url(
+            repo_data["full_name"], current_review_state
+        )
+        review_state_controls_html = f"""
+        <div class="review-state-panel" data-review-state-panel data-repo-full-name="{escape(repo_data["full_name"], quote=True)}">
+          <h3>状態を更新</h3>
+          <p class="pick-reason">GitHub の issue 作成画面を開いて更新要求を送ります。送信後、workflow が state.json を更新して Pages を再生成します。</p>
+          <div class="review-state-actions">
+            <select data-review-state-select aria-label="更新する状態">
+              {review_state_options_html(current_review_state)}
+            </select>
+            <a class="badge review-state" href="{escape(review_state_request_link, quote=True)}" target="_blank" rel="noreferrer" data-review-state-link>GitHubで「{escape(review_state_label(current_review_state))}」に更新</a>
+          </div>
+          <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
+        </div>
+        """
         topics_html = "".join(
             f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
             for topic in repo_data.get("topics") or []
@@ -894,6 +939,7 @@ def render_repo_detail_sites() -> None:
               <span>最終観測 {escape(last_seen_label)}</span>
               <span>最終stars {escape(last_stars_label)}</span>
             </div>
+            {review_state_controls_html}
             {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
             <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
@@ -1366,6 +1412,38 @@ def site_shell(
       color: var(--accent-2);
       border-color: rgba(180, 83, 9, 0.24);
     }}
+    .review-state-panel {{
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+    }}
+    .review-state-panel h3 {{
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+    }}
+    .review-state-actions {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }}
+    .review-state-actions select {{
+      min-width: 180px;
+      font: inherit;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 10px 12px;
+      color: var(--text);
+    }}
+    .review-state-note {{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }}
     .date-label {{
       font-variant-numeric: tabular-nums;
     }}
@@ -1789,6 +1867,43 @@ def site_shell(
         }});
       }}
       applyArchiveFilters();
+    }}
+    const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
+    if (reviewStatePanels.length) {{
+      const reviewStateLabels = {{
+        unseen: '未確認',
+        interested: '気になる',
+        tested: '試した',
+        good: '良い',
+        meh: '微妙',
+        production_candidate: '本番候補',
+      }};
+      const buildReviewStateIssueUrl = (fullName, state) => {{
+        const params = new URLSearchParams({{
+          title: `[review-state] ${{fullName}} -> ${{state}}`,
+          body:
+            `repo: ${{fullName}}\\nstate: ${{state}}\\nsource: pages\\n\\n送信すると workflow が state.json を更新して Pages を再生成します。`,
+        }});
+        return `https://github.com/{CONTROL_REPO_FULL_NAME}/issues/new?${{params.toString()}}`;
+      }};
+      for (const panel of reviewStatePanels) {{
+        const fullName = String(panel.dataset.repoFullName || '').trim();
+        const select = panel.querySelector('[data-review-state-select]');
+        const link = panel.querySelector('[data-review-state-link]');
+        const note = panel.querySelector('[data-review-state-note]');
+        if (!fullName || !select || !link) continue;
+        const updateReviewStateLink = () => {{
+          const selectedState = String(select.value || 'unseen').trim();
+          const label = reviewStateLabels[selectedState] || selectedState;
+          link.href = buildReviewStateIssueUrl(fullName, selectedState);
+          link.textContent = `GitHubで「${{label}}」に更新`;
+          if (note) {{
+            note.textContent = `GitHub の issue 作成画面が開きます。${{label}} で送信すると、workflow が state.json を更新して Pages を再生成します。`;
+          }}
+        }};
+        select.addEventListener('change', updateReviewStateLink);
+        updateReviewStateLink();
+      }}
     }}
   </script>
 </body>

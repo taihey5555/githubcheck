@@ -1,0 +1,84 @@
+name: Review State From Issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update-review-state:
+    if: startsWith(github.event.issue.title, '[review-state]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync latest main
+        run: git pull --rebase origin main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Parse request
+        id: parse
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          full_name=$(printf '%s\n' "$ISSUE_BODY" | sed -n 's/^repo:[[:space:]]*//p' | head -n1 | tr -d '\r')
+          review_state=$(printf '%s\n' "$ISSUE_BODY" | sed -n 's/^state:[[:space:]]*//p' | head -n1 | tr -d '\r')
+          if [ -z "$full_name" ] || [ -z "$review_state" ]; then
+            echo "Failed to parse repo/state from issue body" >&2
+            exit 1
+          fi
+          echo "full_name=$full_name" >> "$GITHUB_OUTPUT"
+          echo "review_state=$review_state" >> "$GITHUB_OUTPUT"
+
+      - name: Update review state
+        run: python bot.py review-state set "${{ steps.parse.outputs.full_name }}" "${{ steps.parse.outputs.review_state }}"
+
+      - name: Render pages
+        run: python bot.py render
+
+      - name: Commit updated state
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json docs
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "Update review state for ${{ steps.parse.outputs.full_name }} -> ${{ steps.parse.outputs.review_state }}"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Comment success
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ steps.commit.outputs.changed }}" = "true" ]; then
+            gh issue comment "${{ github.event.issue.number }}" --body "review state を `${{ steps.parse.outputs.review_state }}` に更新し、Pages を再生成しました。"
+          else
+            gh issue comment "${{ github.event.issue.number }}" --body "review state は `${{ steps.parse.outputs.review_state }}` のままで、追加の変更はありませんでした。"
+          fi
+          gh issue close "${{ github.event.issue.number }}"
+
+      - name: Comment failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "review state の更新に失敗しました。Actions の実行ログを確認してください。"

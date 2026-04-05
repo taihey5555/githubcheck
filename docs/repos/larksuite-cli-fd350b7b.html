@@ -369,6 +369,38 @@
       color: var(--accent-2);
       border-color: rgba(180, 83, 9, 0.24);
     }
+    .review-state-panel {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+    }
+    .review-state-panel h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+    }
+    .review-state-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .review-state-actions select {
+      min-width: 180px;
+      font: inherit;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 10px 12px;
+      color: var(--text);
+    }
+    .review-state-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
     .date-label {
       font-variant-numeric: tabular-nums;
     }
@@ -576,6 +608,19 @@
               <span>最終観測 2026-04-05 10:37</span>
               <span>最終stars 6626</span>
             </div>
+            
+        <div class="review-state-panel" data-review-state-panel data-repo-full-name="larksuite/cli">
+          <h3>状態を更新</h3>
+          <p class="pick-reason">GitHub の issue 作成画面を開いて更新要求を送ります。送信後、workflow が state.json を更新して Pages を再生成します。</p>
+          <div class="review-state-actions">
+            <select data-review-state-select aria-label="更新する状態">
+              <option value="unseen" selected>未確認</option><option value="interested">気になる</option><option value="tested">試した</option><option value="good">良い</option><option value="meh">微妙</option><option value="production_candidate">本番候補</option>
+            </select>
+            <a class="badge review-state" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+larksuite%2Fcli+-%3E+unseen&amp;body=repo%3A+larksuite%2Fcli%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" data-review-state-link>GitHubで「未確認」に更新</a>
+          </div>
+          <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
+        </div>
+        
             
             
             <pre>Lark/Feishuの公式CLIツール「larksuite/cli」が公開されています。
@@ -888,6 +933,43 @@ AIエージェントが直接利用できる19のスキルも備えており、�
         });
       }
       applyArchiveFilters();
+    }
+    const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
+    if (reviewStatePanels.length) {
+      const reviewStateLabels = {
+        unseen: '未確認',
+        interested: '気になる',
+        tested: '試した',
+        good: '良い',
+        meh: '微妙',
+        production_candidate: '本番候補',
+      };
+      const buildReviewStateIssueUrl = (fullName, state) => {
+        const params = new URLSearchParams({
+          title: `[review-state] ${fullName} -> ${state}`,
+          body:
+            `repo: ${fullName}\nstate: ${state}\nsource: pages\n\n送信すると workflow が state.json を更新して Pages を再生成します。`,
+        });
+        return `https://github.com/taihey5555/githubcheck/issues/new?${params.toString()}`;
+      };
+      for (const panel of reviewStatePanels) {
+        const fullName = String(panel.dataset.repoFullName || '').trim();
+        const select = panel.querySelector('[data-review-state-select]');
+        const link = panel.querySelector('[data-review-state-link]');
+        const note = panel.querySelector('[data-review-state-note]');
+        if (!fullName || !select || !link) continue;
+        const updateReviewStateLink = () => {
+          const selectedState = String(select.value || 'unseen').trim();
+          const label = reviewStateLabels[selectedState] || selectedState;
+          link.href = buildReviewStateIssueUrl(fullName, selectedState);
+          link.textContent = `GitHubで「${label}」に更新`;
+          if (note) {
+            note.textContent = `GitHub の issue 作成画面が開きます。${label} で送信すると、workflow が state.json を更新して Pages を再生成します。`;
+          }
+        };
+        select.addEventListener('change', updateReviewStateLink);
+        updateReviewStateLink();
+      }
     }
   </script>
 </body>

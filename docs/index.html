@@ -369,6 +369,38 @@
       color: var(--accent-2);
       border-color: rgba(180, 83, 9, 0.24);
     }
+    .review-state-panel {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+    }
+    .review-state-panel h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+    }
+    .review-state-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .review-state-actions select {
+      min-width: 180px;
+      font: inherit;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 10px 12px;
+      color: var(--text);
+    }
+    .review-state-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
     .date-label {
       font-variant-numeric: tabular-nums;
     }
@@ -1974,6 +2006,43 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
         });
       }
       applyArchiveFilters();
+    }
+    const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
+    if (reviewStatePanels.length) {
+      const reviewStateLabels = {
+        unseen: '未確認',
+        interested: '気になる',
+        tested: '試した',
+        good: '良い',
+        meh: '微妙',
+        production_candidate: '本番候補',
+      };
+      const buildReviewStateIssueUrl = (fullName, state) => {
+        const params = new URLSearchParams({
+          title: `[review-state] ${fullName} -> ${state}`,
+          body:
+            `repo: ${fullName}\nstate: ${state}\nsource: pages\n\n送信すると workflow が state.json を更新して Pages を再生成します。`,
+        });
+        return `https://github.com/taihey5555/githubcheck/issues/new?${params.toString()}`;
+      };
+      for (const panel of reviewStatePanels) {
+        const fullName = String(panel.dataset.repoFullName || '').trim();
+        const select = panel.querySelector('[data-review-state-select]');
+        const link = panel.querySelector('[data-review-state-link]');
+        const note = panel.querySelector('[data-review-state-note]');
+        if (!fullName || !select || !link) continue;
+        const updateReviewStateLink = () => {
+          const selectedState = String(select.value || 'unseen').trim();
+          const label = reviewStateLabels[selectedState] || selectedState;
+          link.href = buildReviewStateIssueUrl(fullName, selectedState);
+          link.textContent = `GitHubで「${label}」に更新`;
+          if (note) {
+            note.textContent = `GitHub の issue 作成画面が開きます。${label} で送信すると、workflow が state.json を更新して Pages を再生成します。`;
+          }
+        };
+        select.addEventListener('change', updateReviewStateLink);
+        updateReviewStateLink();
+      }
     }
   </script>
 </body>
