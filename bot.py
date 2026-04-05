@@ -506,6 +506,8 @@ def aggregate_repo_history(
     history: list[dict[str, Any]],
     review_states: dict[str, Any],
 ) -> dict[str, dict[str, Any]]:
+    # Detail page is repo-centric, so collapse repeated notifications into one record
+    # and keep just enough per-entry data to explain score/stars/topic changes later.
     aggregated: dict[str, dict[str, Any]] = {}
     for item in history:
         full_name = str(item.get("full_name") or "").strip()
@@ -597,6 +599,8 @@ def find_similar_repos(
     aggregated: dict[str, dict[str, Any]],
     limit: int = 4,
 ) -> list[dict[str, Any]]:
+    # Keep similarity heuristic intentionally light: same language and shared tags
+    # are enough to suggest nearby repos without introducing a heavier ranking model.
     target_name = str(target_repo.get("full_name") or "")
     target_language = str(target_repo.get("language") or "").strip().lower()
     target_topics = set(extract_tags(target_repo))
@@ -692,6 +696,8 @@ def render_repo_detail_sites() -> None:
         )
         similar_repos = find_similar_repos(repo_data, aggregated)
         similar_repo_cards = []
+        # Similar repos are a lightweight "what else should I open next" aid,
+        # so reuse existing archive metadata instead of fetching anything new.
         for similar_repo in similar_repos:
             shared_topics = "".join(
                 f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
@@ -718,6 +724,8 @@ def render_repo_detail_sites() -> None:
                 """
             )
         history_items = []
+        # Related history focuses on "what changed since last time" rather than raw dumps,
+        # so each entry carries deltas that make repeated notifications easier to compare.
         for item in repo_data["history_entries"]:
             bucket = "朝の新顔枠" if item["bucket"] == "morning" else "夜の尖り枠"
             pick_reason = escape(item["pick_reason"] or "")
