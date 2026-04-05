@@ -369,7 +369,9 @@
       "last_sent": "2026-04-05T01:37:53.622713+00:00"
     }
   },
-  "review_states": {},
+  "review_states": {
+    "HKUDS/CLI-Anything": "interested"
+  },
   "alerts": {},
   "last_run_started_at": "2026-04-05T01:37:17.904189+00:00",
   "last_run_status": "success",
