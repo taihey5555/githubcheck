@@ -1156,12 +1156,26 @@ def site_shell(
       const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
       const normalizeText = (value) => String(value || '').toLowerCase();
       const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
+      const allowedSorts = new Set(['newest', 'score', 'stars']);
       const searchParams = new URLSearchParams(window.location.search);
       const initialReviewState = normalizeText(searchParams.get('review_state'));
+      const initialLanguage = normalizeText(searchParams.get('language'));
+      const initialTag = normalizeText(searchParams.get('tag'));
+      const initialStarsMin = searchParams.get('stars_min');
+      const initialStarsMax = searchParams.get('stars_max');
+      const initialScoreMin = searchParams.get('score_min');
+      const initialScoreMax = searchParams.get('score_max');
+      const initialSort = normalizeText(searchParams.get('sort'));
       const parseNumber = (value) => {{
         if (value === '' || value == null) return null;
         const parsed = Number(value);
         return Number.isFinite(parsed) ? parsed : null;
+      }};
+      const setNumericInputIfValid = (input, rawValue) => {{
+        if (!input) return;
+        const parsed = parseNumber(rawValue);
+        if (parsed == null || parsed < 0) return;
+        input.value = String(parsed);
       }};
 
       const applyArchiveFilters = () => {{
@@ -1244,6 +1258,19 @@ def site_shell(
       }}
       if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {{
         reviewStateInput.value = initialReviewState;
+      }}
+      if (languageInput && initialLanguage && Array.from(languageInput.options).some((option) => option.value === initialLanguage)) {{
+        languageInput.value = initialLanguage;
+      }}
+      if (tagInput && initialTag && Array.from(tagInput.options).some((option) => option.value === initialTag)) {{
+        tagInput.value = initialTag;
+      }}
+      setNumericInputIfValid(minStarsInput, initialStarsMin);
+      setNumericInputIfValid(maxStarsInput, initialStarsMax);
+      setNumericInputIfValid(minScoreInput, initialScoreMin);
+      setNumericInputIfValid(maxScoreInput, initialScoreMax);
+      if (sortInput && allowedSorts.has(initialSort)) {{
+        sortInput.value = initialSort;
       }}
       for (const button of filterButtons) {{
         button.addEventListener('click', applyArchiveFilters);
