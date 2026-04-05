@@ -771,16 +771,16 @@ def render_repo_detail_sites() -> None:
         <section class="section-block">
           <div class="section-header">
             <h2>Similar Repos</h2>
-            <p>language と共通 tag を優先して、近い repo を軽く並べています。</p>
+            <p>同じ language や共通 tag を手がかりに、近い repo を見返しやすく並べています。</p>
           </div>
-          {f'<div class="history-list">{"".join(similar_repo_cards)}</div>' if similar_repo_cards else '<p class="empty-state">似た repo はまだ見つかっていません。</p>'}
+          {f'<div class="history-list">{"".join(similar_repo_cards)}</div>' if similar_repo_cards else '<p class="empty-state">この repo に近い候補は、まだ十分に集まっていません。</p>'}
         </section>
         <section class="section-block">
           <div class="section-header">
             <h2>Related History</h2>
-            <p>同じ repo の通知履歴を新しい順に並べ、score と stars の前回比も見られるようにしています。</p>
+            <p>同じ repo の通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p>
           </div>
-          {f'<div class="history-list">{"".join(history_items)}</div>' if history_items else '<p class="empty-state">関連履歴はまだありません。</p>'}
+          {f'<div class="history-list">{"".join(history_items)}</div>' if history_items else '<p class="empty-state">この repo の比較できる履歴は、まだありません。</p>'}
         </section>
         """
         html = site_shell(
@@ -1621,13 +1621,13 @@ def site_shell(
             }} else {{
               throw new Error('clipboard-unavailable');
             }}
-            updateArchiveShareUi('Copied');
+            updateArchiveShareUi('現在の絞り込み URL をコピーしました');
           }} catch (_error) {{
             if (linkOutput) {{
               linkOutput.focus();
               linkOutput.select();
             }}
-            updateArchiveShareUi('Select the URL and copy manually');
+            updateArchiveShareUi('URL を選択したので、そのまま手動でコピーしてください');
           }}
         }});
       }}
@@ -2110,12 +2110,12 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
       </div>
     </section>
     <div class="archive-share">
-      <button class="filter-button" type="button" data-copy-filter-link>Copy filtered link</button>
-      <a class="badge" href="./index.html" data-open-filter-link>Open filtered link</a>
+      <button class="filter-button" type="button" data-copy-filter-link>Copy current filters</button>
+      <a class="badge" href="./index.html" data-open-filter-link>Open this filtered view</a>
       <input type="text" readonly value="./index.html" data-filter-link-output aria-label="Shareable filtered link">
       <span class="archive-share-status" data-filter-link-status></span>
     </div>
-    <p class="archive-summary" data-filter-count>{len(history)} 件表示</p>
+    <p class="archive-summary" data-filter-count>{len(history)} 件表示。いまの絞り込みは上のリンクで共有できます。</p>
     """
 
 
@@ -2248,12 +2248,12 @@ def render_history_site() -> None:
             "<section class='section-block'>"
             "<div class='section-header'>"
             "<h2>Low Stars / High Score</h2>"
-            f"<p>stars <= {int(settings['max_stars'])} かつ score >= {float(settings['min_score']):g} の発掘枠です。</p>"
+            f"<p>stars がまだ少なくても、score が高い repo を見つけるための発掘枠です。</p>"
             "</div>"
             + (
                 f"<div class='section-grid'>{low_star_cards}</div>"
                 if low_star_cards
-                else "<p class='empty-state'>条件に合う repo はまだありません。</p>"
+                else "<p class='empty-state'>今の条件に合う発掘候補は、まだありません。</p>"
             )
             + "</section>"
         )
@@ -2276,7 +2276,7 @@ def render_history_site() -> None:
         + (
             "".join(tab_panels)
             if tab_panels
-            else "<p class='empty-state'>まだ履歴はありません。</p>"
+            else "<p class='empty-state'>まだ通知履歴がありません。次回の render 後にここへ表示されます。</p>"
         )
     )
     html = site_shell(
@@ -2465,18 +2465,18 @@ def render_weekly_site(now: datetime | None = None) -> None:
             + (
                 f"<div class='section-grid'>{cards}</div>"
                 if cards
-                else "<p class='empty-state'>該当する repo はまだありません。</p>"
+                else "<p class='empty-state'>この条件に合う repo は、今週まだありません。</p>"
             )
             + "</section>"
         )
 
     html = site_shell(
         "Weekly Archive",
-        f"{label} の通知履歴から、再利用しやすい週次ビューを作っています。",
+        f"{label} の通知履歴を、見返しやすい週次ビューとしてまとめています。",
         stats_html
         + render_week_section(
             "今週の good / production_candidate",
-            "見返す優先度が高い repo を review state ベースでまとめています。",
+            "すでに手応えがある repo を、review state ベースで先に見返せます。",
             review_priority_items,
             links_html=(
                 f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="good", sort="score")}">See all good</a>'
@@ -2485,7 +2485,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         )
         + render_week_section(
             "今週の未確認 repo",
-            "review state が unseen のものです。未確認が多い週かどうかもここで分かります。",
+            "まだ見ていない repo をまとめています。あとで確認する入口として使えます。",
             unseen_items,
             links_html=(
                 f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="unseen", sort="newest")}">See all unseen</a></span>'
@@ -2493,12 +2493,12 @@ def render_weekly_site(now: datetime | None = None) -> None:
         )
         + render_week_section(
             "今週の総合トップ",
-            "pick 回数、最高 score、stars をまとめて見た総合ランキングです。review state も併せて見返せます。",
+            "pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。",
             ranking,
         )
         + render_week_section(
             "今週の低スター枠トップ",
-            f"stars <= {int(settings['max_stars'])} かつ score >= {float(settings['min_score']):g} の発掘枠です。",
+            "stars が少なくても評価が高い repo を先に見たいときの入口です。",
             low_star_ranking,
             links_html=(
                 f' <span class="inline-links"><a class="badge" href="{low_star_history_href}">See all low-stars/high-score</a></span>'
@@ -2506,7 +2506,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
         )
         + render_week_section(
             "今週の新着で面白かったもの",
-            "今週通知したものを新着寄りで並べています。未確認の掘り起こしにも使えます。",
+            "今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。",
             fresh_picks,
         ),
         "weekly",
