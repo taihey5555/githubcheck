@@ -1,56 +1,56 @@
 {
   "repos": {
     "karpathy/autoresearch": {
-      "last_stars": 67762,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 68240,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "koala73/worldmonitor": {
-      "last_stars": 47105,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 47219,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "ZhuLinsen/daily_stock_analysis": {
-      "last_stars": 28354,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 28435,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "vercel-labs/agent-browser": {
-      "last_stars": 27904,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 28032,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "googleworkspace/cli": {
-      "last_stars": 24029,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 24090,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "volcengine/OpenViking": {
       "last_stars": 21061,
       "last_seen": "2026-04-05T11:37:12.279836+00:00"
     },
     "coreyhaines31/marketingskills": {
-      "last_stars": 19321,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 19502,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "mvanhorn/last30days-skill": {
-      "last_stars": 19371,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 19531,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Leey21/awesome-ai-research-writing": {
-      "last_stars": 16035,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 16127,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "jamiepine/voicebox": {
       "last_stars": 14572,
       "last_seen": "2026-04-07T11:57:19.322843+00:00"
     },
     "tanweai/pua": {
-      "last_stars": 15369,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 15439,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Panniantong/Agent-Reach": {
-      "last_stars": 16127,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 16317,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "agentscope-ai/CoPaw": {
-      "last_stars": 14639,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 14752,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "cft0808/edict": {
       "last_stars": 14592,
@@ -61,148 +61,148 @@
       "last_seen": "2026-04-01T11:57:07.163998+00:00"
     },
     "sickn33/antigravity-awesome-skills": {
-      "last_stars": 31240,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 31384,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "HKUDS/CLI-Anything": {
-      "last_stars": 28963,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 29148,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "rtk-ai/rtk": {
-      "last_stars": 19414,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 19832,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "jarrodwatts/claude-hud": {
       "last_stars": 16060,
       "last_seen": "2026-04-02T03:18:28.937455+00:00"
     },
     "jackwener/opencli": {
-      "last_stars": 13927,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 14109,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "teng-lin/notebooklm-py": {
       "last_stars": 9417,
       "last_seen": "2026-04-07T11:57:19.322843+00:00"
     },
     "ValueCell-ai/ClawX": {
-      "last_stars": 6241,
-      "last_seen": "2026-04-07T11:57:19.322898+00:00"
+      "last_stars": 6268,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "larksuite/cli": {
-      "last_stars": 6930,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 6992,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Lakr233/vphone-cli": {
-      "last_stars": 5227,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 5246,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "fengshao1227/ccg-workflow": {
       "last_stars": 4882,
       "last_seen": "2026-04-04T11:35:32.581236+00:00"
     },
     "mukul975/Anthropic-Cybersecurity-Skills": {
-      "last_stars": 4089,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 4111,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "chenhg5/cc-connect": {
-      "last_stars": 4475,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 4527,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Yeachan-Heo/oh-my-claudecode": {
-      "last_stars": 25465,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 25805,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "saturndec/waoowaoo": {
-      "last_stars": 10943,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 10981,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "aden-hive/hive": {
-      "last_stars": 10097,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 10108,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "pinchtab/pinchtab": {
-      "last_stars": 8549,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 8559,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "JCodesMore/ai-website-cloner-template": {
-      "last_stars": 8401,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 8845,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "wanshuiyin/Auto-claude-code-research-in-sleep": {
-      "last_stars": 5715,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 5770,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "HKUDS/ClawTeam": {
-      "last_stars": 4514,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 4540,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "rudrankriyam/App-Store-Connect-CLI": {
-      "last_stars": 3743,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 3748,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "abhi1693/openclaw-mission-control": {
-      "last_stars": 3539,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 3548,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "AlexAnys/awesome-openclaw-usecases-zh": {
-      "last_stars": 3516,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 3530,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "jlcodes99/cockpit-tools": {
-      "last_stars": 3674,
-      "last_seen": "2026-04-07T11:57:19.322898+00:00"
+      "last_stars": 3731,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "golutra/golutra": {
-      "last_stars": 2949,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2969,
+      "last_seen": "2026-04-08T03:26:03.822938+00:00"
     },
     "affaan-m/everything-claude-code": {
-      "last_stars": 143950,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 145064,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "qwibitai/nanoclaw": {
-      "last_stars": 26758,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 26828,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "nearai/ironclaw": {
-      "last_stars": 11508,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 11525,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "trailofbits/skills": {
-      "last_stars": 4348,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 4362,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "TraderAlice/OpenAlice": {
-      "last_stars": 3204,
-      "last_seen": "2026-04-07T11:57:19.322898+00:00"
+      "last_stars": 3309,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "slowmist/openclaw-security-practice-guide": {
-      "last_stars": 2708,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2718,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "sheeki03/tirith": {
-      "last_stars": 2140,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2147,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "cisco-ai-defense/skill-scanner": {
-      "last_stars": 1688,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 1692,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "onecli/onecli": {
-      "last_stars": 1676,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 1683,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "eugene1g/agent-safehouse": {
-      "last_stars": 1554,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 1557,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "always-further/nono": {
-      "last_stars": 1697,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 1719,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "nextlevelbuilder/goclaw": {
-      "last_stars": 1963,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2147,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Leonxlnx/claude-code-system-prompts": {
       "last_stars": 1387,
@@ -213,32 +213,32 @@
       "last_seen": "2026-04-01T06:20:47.288492+00:00"
     },
     "builderz-labs/mission-control": {
-      "last_stars": 3847,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 3859,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Galaxy-Dawn/claude-scholar": {
-      "last_stars": 3170,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 3186,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "matt1398/claude-devtools": {
-      "last_stars": 2965,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2978,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "FlorianBruniaux/claude-code-ultimate-guide": {
-      "last_stars": 3015,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 3045,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "nyldn/claude-octopus": {
-      "last_stars": 2431,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2447,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "open-compress/claw-compactor": {
-      "last_stars": 2072,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2085,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "spacedriveapp/spacebot": {
-      "last_stars": 2045,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2051,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "yoanbernabeu/grepai": {
       "last_stars": 1563,
@@ -253,40 +253,44 @@
       "last_seen": "2026-04-07T03:23:25.899164+00:00"
     },
     "Leonxlnx/agentic-ai-prompt-research": {
-      "last_stars": 2196,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 2229,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "zeroclaw-labs/zeroclaw": {
-      "last_stars": 29668,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 29730,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "CoderLuii/HolyClaude": {
-      "last_stars": 1884,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 1897,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "HKUDS/nanobot": {
-      "last_stars": 38315,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 38423,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "Gitlawb/openclaude": {
-      "last_stars": 18488,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 19168,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "epiral/bb-browser": {
-      "last_stars": 4208,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 4235,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "santifer/career-ops": {
-      "last_stars": 14036,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 19024,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "yasasbanukaofficial/claude-code": {
-      "last_stars": 1847,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 1923,
+      "last_seen": "2026-04-08T03:26:03.822883+00:00"
     },
     "paoloanzn/free-code": {
-      "last_stars": 7186,
-      "last_seen": "2026-04-07T11:57:19.322843+00:00"
+      "last_stars": 7298,
+      "last_seen": "2026-04-08T03:26:03.822938+00:00"
+    },
+    "milla-jovovich/mempalace": {
+      "last_stars": 18477,
+      "last_seen": "2026-04-08T03:26:03.822938+00:00"
     }
   },
   "notifications": {
@@ -433,6 +437,15 @@
     },
     "jlcodes99/cockpit-tools": {
       "last_sent": "2026-04-07T11:57:19.322898+00:00"
+    },
+    "paoloanzn/free-code": {
+      "last_sent": "2026-04-08T03:26:03.822938+00:00"
+    },
+    "golutra/golutra": {
+      "last_sent": "2026-04-08T03:26:03.822938+00:00"
+    },
+    "milla-jovovich/mempalace": {
+      "last_sent": "2026-04-08T03:26:03.822938+00:00"
     }
   },
   "review_states": {
@@ -441,7 +454,7 @@
     "Gitlawb/openclaude": "interested"
   },
   "alerts": {},
-  "last_run_started_at": "2026-04-07T11:56:50.675631+00:00",
+  "last_run_started_at": "2026-04-08T03:25:35.680614+00:00",
   "last_run_status": "success",
-  "last_run_finished_at": "2026-04-07T11:57:19.322902+00:00"
+  "last_run_finished_at": "2026-04-08T03:26:03.822942+00:00"
 }
