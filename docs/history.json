@@ -1429,5 +1429,73 @@
     "owner_html_url": "https://github.com/saturndec",
     "bucket": "evening",
     "pick_reason": "AIによる映像制作の全自動化を実現する尖ったツール"
+  },
+  {
+    "sent_at": "2026-04-09T03:19:49.556440+00:00",
+    "full_name": "jamiepine/voicebox",
+    "html_url": "https://github.com/jamiepine/voicebox",
+    "x_post": "音声合成をローカルで完結させたい方へ。\n\nVoiceboxは、音声クローン、合成、エフェクト加工、マルチトラック編集までできるオープンソースのスタジオです。5つのTTSエンジンと23言語に対応し、データはすべて自分のマシンに留まります。\n\n音声付きコンテンツの制作や、自作アプリへの音声機能組み込みに。APIも提供されています。\n\nhttps://github.com/jamiepine/voicebox\n#音声合成 #オープンソース",
+    "summary": "音声クローンからエフェクトまで完結\nローカル環境で音声合成アプリを構築\n複数TTSエンジンとタイムライン編集\n音声生成を自作アプリに組み込みたい人",
+    "score": 64.75,
+    "stars": 14644,
+    "forks": 1755,
+    "language": "TypeScript",
+    "description": "The open-source voice synthesis studio",
+    "topics": [
+      "ai",
+      "cuda",
+      "mlx",
+      "qwen3-tts",
+      "qwen3-tts-ui",
+      "voice-ai",
+      "voice-clone",
+      "whisper"
+    ],
+    "owner_login": "jamiepine",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/32987599?v=4",
+    "owner_html_url": "https://github.com/jamiepine",
+    "bucket": "morning",
+    "pick_reason": "ローカルで動く音声合成スタジオの尖り"
+  },
+  {
+    "sent_at": "2026-04-09T03:19:49.556440+00:00",
+    "full_name": "jackwener/OpenCLI",
+    "html_url": "https://github.com/jackwener/OpenCLI",
+    "x_post": "WebサイトやElectronアプリをCLIコマンドとして扱えるOpenCLI。\n\nブラウザ操作を自動化し、70以上のサイト向けアダプターを提供。ログイン状態を安全に再利用できるので、スクレイピングや定型作業の自動化に便利です。\n\nAIエージェントがツールを統一的に実行する基盤としても設計されており、開発者や自動化ツール作成者に向いています。\n\nhttps://github.com/jackwener/OpenCLI\n#AI #自動化",
+    "summary": "WebサイトやアプリをCLI化できる\nAIエージェントがブラウザ操作や既存ツールを統一的に実行する用途\n既存セッションを再利用する安全な自動化が特徴\nAIエージェント開発者や自動化ツール作成者に刺さる",
+    "score": 58.44,
+    "stars": 14459,
+    "forks": 1349,
+    "language": "TypeScript",
+    "description": "Make Any Website & Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a standardized command-line interface. Built for AI Agents to discover, learn, and execute tools seamlessly via a unified AGENT.md integration.",
+    "topics": [
+      "ai-agent",
+      "ai-agents",
+      "ai-tools",
+      "cli"
+    ],
+    "owner_login": "jackwener",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/30525741?v=4",
+    "owner_html_url": "https://github.com/jackwener",
+    "bucket": "morning",
+    "pick_reason": "AIエージェント向けの統合CLI基盤として尖っている"
+  },
+  {
+    "sent_at": "2026-04-09T03:19:49.556440+00:00",
+    "full_name": "nearai/ironclaw",
+    "html_url": "https://github.com/nearai/ironclaw",
+    "x_post": "IronClawは、プライバシーとセキュリティを最優先した個人用AIアシスタントです。\n\nすべてのデータはローカルに保存され、WASMサンドボックスでツールを安全に実行。動的にツールを生成する自己拡張性も持ちます。\n\n機密情報を扱う個人や、データ主権を重視する開発者に向いています。\n\nhttps://github.com/nearai/ironclaw\n#AI #プライバシー",
+    "summary": "WASMサンドボックスで安全なAIエージェント\n個人データをローカル管理するプライベートAIアシスタント\nツールを動的に生成する自己拡張性が特徴\nデータ流出を懸念する技術者や個人に刺さる",
+    "score": 56.58,
+    "stars": 11556,
+    "forks": 1326,
+    "language": "Rust",
+    "description": "IronClaw is OpenClaw inspired implementation in Rust focused on privacy and security",
+    "topics": [],
+    "owner_login": "nearai",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/29134221?v=4",
+    "owner_html_url": "https://github.com/nearai",
+    "bucket": "morning",
+    "pick_reason": "セキュリティとプライバシーに特化した尖ったAIアシスタン"
   }
 ]
