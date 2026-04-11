@@ -1755,5 +1755,68 @@
     "owner_html_url": "https://github.com/trailofbits",
     "bucket": "evening",
     "pick_reason": "セキュリティ分析のAI支援ワークフローを拡張する尖り"
+  },
+  {
+    "sent_at": "2026-04-11T02:56:59.019512+00:00",
+    "full_name": "abhi1693/openclaw-mission-control",
+    "html_url": "https://github.com/abhi1693/openclaw-mission-control",
+    "x_post": "AIエージェントの運用管理を一元化するダッシュボードです。\n\nOpenClaw Mission Controlは、複数のAIエージェントにタスクを割り当て、協調動作を管理できます。承認フローや監査証跡も組み込まれています。\n\n組織内で複数チームがAIエージェントを運用・監視するプラットフォーム担当者に適しています。\n\nhttps://github.com/abhi1693/openclaw-mission-control\n#AIエージェント #自動化",
+    "summary": "複数AIエージェントの協調を一元的に管理\nチームでのAIエージェント運用を可視化・承認制で制御\nゲートウェイ連携とUI/API統一モデルが特徴\n組織内でのAIエージェント運用プラットフォーム担当者向け",
+    "score": 49.02,
+    "stars": 3607,
+    "forks": 752,
+    "language": "TypeScript",
+    "description": "AI Agent Orchestration Dashboard - Manage AI agents, assign tasks, and coordinate multi-agent collaboration via OpenClaw Gateway.",
+    "topics": [
+      "ai-agents",
+      "automation",
+      "openclaw",
+      "orchestration"
+    ],
+    "owner_login": "abhi1693",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/5083532?v=4",
+    "owner_html_url": "https://github.com/abhi1693",
+    "bucket": "morning",
+    "pick_reason": "AIエージェントの運用管理に特化した尖ったダッシュボード"
+  },
+  {
+    "sent_at": "2026-04-11T02:56:59.019512+00:00",
+    "full_name": "slowmist/openclaw-security-practice-guide",
+    "html_url": "https://github.com/slowmist/openclaw-security-practice-guide",
+    "x_post": "高権限で動作するAIエージェントのセキュリティ、どう考えていますか？\n\nOpenClaw向けの実践ガイドが公開されています。\nエージェント自身にガイドを読み込ませ、防御マトリックスの展開を自動化できます。\n\n高リスク操作の確認や夜間監査など、3層防御でリスクを管理。\nAIエージェントを本番環境で使う開発者に参考になりそうです。\n\nhttps://github.com/slowmist/openclaw-security-practice-guide\n#AIセキュリティ #OpenClaw",
+    "summary": "高権限AIエージェントのための防御マトリックス\nOpenClawなどのAIエージェント自身にセキュリティ対策を実行させる\n従来のホスト型防御からエージェント型ゼロトラストへの転換\n高権限でAIエージェントを運用する開発者や研究者",
+    "score": 46.97,
+    "stars": 2742,
+    "forks": 185,
+    "language": "Shell",
+    "description": "This guide is designed for OpenClaw itself (Agent-facing), not as a traditional human-only hardening checklist.",
+    "topics": [],
+    "owner_login": "slowmist",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/38198573?v=4",
+    "owner_html_url": "https://github.com/slowmist",
+    "bucket": "morning",
+    "pick_reason": "AIエージェント向けのゼロトラストセキュリティ実践ガイド"
+  },
+  {
+    "sent_at": "2026-04-11T02:56:59.019512+00:00",
+    "full_name": "cisco-ai-defense/skill-scanner",
+    "html_url": "https://github.com/cisco-ai-defense/skill-scanner",
+    "x_post": "AIエージェントのスキルをセキュリティ観点でスキャンするツールです。\n\nプロンプトインジェクションやデータ流出、悪意あるコードパターンを検出できます。パターンベースの検知とLLM判定、データフロー分析を組み合わせ、網羅性を高めています。\n\nAIエージェントのスキル開発者や、導入前のセキュリティチェックをしたい方に向いています。\n\nhttps://github.com/cisco-ai-defense/skill-scanner\n#AIセキュリティ #DevSecOps",
+    "summary": "AIエージェントスキルのセキュリティスキャナー\nプロンプトインジェクションや悪意あるコードを検出\nパターン検知、LLM判定、データフロー分析を組み合わせ\nAIエージェント開発者やセキュリティ担当者に",
+    "score": 46.45,
+    "stars": 1725,
+    "forks": 208,
+    "language": "Python",
+    "description": "Security Scanner for Agent Skills",
+    "topics": [
+      "agent",
+      "agent-skills",
+      "security"
+    ],
+    "owner_login": "cisco-ai-defense",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/220944709?v=4",
+    "owner_html_url": "https://github.com/cisco-ai-defense",
+    "bucket": "morning",
+    "pick_reason": "AIエージェントのスキルをセキュリティスキャンする尖った"
   }
 ]
