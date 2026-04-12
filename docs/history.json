@@ -1957,5 +1957,23 @@
     "owner_html_url": "https://github.com/TomBadash",
     "bucket": "morning",
     "pick_reason": "ロジクールマウスのオープンソース代替ツールとして尖ってい"
+  },
+  {
+    "sent_at": "2026-04-12T11:39:30.978856+00:00",
+    "full_name": "agentscope-ai/QwenPaw",
+    "html_url": "https://github.com/agentscope-ai/QwenPaw",
+    "x_post": "個人AIアシスタント「QwenPaw」がオープンソースで公開されています。\n\n自分のマシンやクラウドにデプロイでき、データを外部に送信しません。\nスキルを拡張でき、複数エージェントの連携で複雑なタスクも処理できます。\n\nプライバシーを重視しつつ、チャットやファイル処理など日常的にAIを使いたい方に。\n\nhttps://github.com/agentscope-ai/QwenPaw\n#AI #オープンソース",
+    "summary": "ローカルで動く個人AIアシスタント\n自分のPCやクラウドに簡単にデプロイできる\n拡張可能なスキルとマルチエージェント連携\nプライバシー重視でAIを使いたい人に",
+    "score": 41.78,
+    "stars": 15079,
+    "forks": 2033,
+    "language": "Python",
+    "description": "Your Personal AI Assistant; easy to install, deploy on your own machine or on the cloud; supports multiple chat apps with easily extensible capabilities.",
+    "topics": [],
+    "owner_login": "agentscope-ai",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/211762292?v=4",
+    "owner_html_url": "https://github.com/agentscope-ai",
+    "bucket": "evening",
+    "pick_reason": "個人AIアシスタントの実用的な尖り"
   }
 ]
