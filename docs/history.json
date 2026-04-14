@@ -2064,5 +2064,48 @@
     "owner_html_url": "https://github.com/jo-inc",
     "bucket": "morning",
     "pick_reason": "AIエージェント向けの検知回避ブラウザ"
+  },
+  {
+    "sent_at": "2026-04-14T12:02:45.758116+00:00",
+    "full_name": "addyosmani/agent-skills",
+    "html_url": "https://github.com/addyosmani/agent-skills",
+    "x_post": "AIコーディングエージェントの開発品質を高めるスキルセット。\n\n「agent-skills」は、仕様定義から実装、テスト、レビュー、リリースまでの開発ライフサイクル全体をカバーする20の構造化スキルを提供します。熟練エンジニアのベストプラクティスをAIエージェントに一貫して適用できる点が面白いです。\n\nClaude CodeやCursor、GitHub Copilotなど主要なAI開発ツールで利用でき、チームの開発品質を標準化したい場合に特に役立ちます。\n\nhttps://github.com/addyosmani/agent-skills\n#AI開発 #プログラミング",
+    "summary": "AIコーディングエージェントに熟練エンジニアのスキルを付与\nClaude CodeやCursorなど主要AI開発ツールで利用可能\n開発ライフサイクル全体をカバーする20の構造化スキル\nAI支援開発の品質向上を目指すチームや個人に",
+    "score": 46.38,
+    "stars": 15186,
+    "forks": 1937,
+    "language": "Shell",
+    "description": "Production-grade engineering skills for AI coding agents.",
+    "topics": [
+      "agent-skills",
+      "antigravity",
+      "antigravity-ide",
+      "claude-code",
+      "cursor",
+      "skills"
+    ],
+    "owner_login": "addyosmani",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/110953?v=4",
+    "owner_html_url": "https://github.com/addyosmani",
+    "bucket": "evening",
+    "pick_reason": "AIエージェントの開発品質を高める体系的な手法"
+  },
+  {
+    "sent_at": "2026-04-14T12:02:45.758116+00:00",
+    "full_name": "sanyuan0704/sanyuan-skills",
+    "html_url": "https://github.com/sanyuan0704/sanyuan-skills",
+    "x_post": "Claude CodeなどのAIエージェントを強化するスキル集「sanyuan-skills」が公開されています。\n\nコードレビュー、1対1チュートリアル、スキル作成支援など、5つの実用的なスキルを追加できます。専門的な用途に特化しているのが特徴です。\n\nAIエージェントの活用を深めたい開発者や、学習効率を上げたい方に向いています。\n\nhttps://github.com/sanyuan0704/sanyuan-skills\n#AI #開発効率",
+    "summary": "Claude Code向けの実践スキル集\nAIエージェントの機能を拡張する5つの専門スキル\nコードレビューや学習支援など用途別に設計\nAI活用を深化させたい開発者や学習者に",
+    "score": 39.33,
+    "stars": 3228,
+    "forks": 286,
+    "language": "Python",
+    "description": "Expert code review skill: SOLID, security, performance, error handling, boundary conditions",
+    "topics": [],
+    "owner_login": "sanyuan0704",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/39261479?v=4",
+    "owner_html_url": "https://github.com/sanyuan0704",
+    "bucket": "evening",
+    "pick_reason": "AIエージェント向けの本格的なスキル集"
   }
 ]
