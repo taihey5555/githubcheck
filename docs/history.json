@@ -2107,5 +2107,60 @@
     "owner_html_url": "https://github.com/sanyuan0704",
     "bucket": "evening",
     "pick_reason": "AIエージェント向けの本格的なスキル集"
+  },
+  {
+    "sent_at": "2026-04-15T03:32:30.443678+00:00",
+    "full_name": "manaflow-ai/cmux",
+    "html_url": "https://github.com/manaflow-ai/cmux",
+    "x_post": "AIコーディングエージェントを使うmacOS開発者向けのターミナル「cmux」。\n\n垂直タブと通知機能で、複数のAIセッションを並行して管理できます。Claude Code Teamsもワンコマンドで起動。\n\nブラウザペインを組み合わせたり、SSH接続も可能。Swift製のネイティブアプリで軽量動作です。\n\nhttps://github.com/manaflow-ai/cmux\n#AI開発 #macOS",
+    "summary": "垂直タブと通知でAIコーディングを管理\nClaude CodeなどのAIエージェント作業に特化\nGhosttyベースでSwift製の軽量ネイティブアプリ\nAIを併用するmacOS開発者に刺さる",
+    "score": 1021.36,
+    "stars": 14166,
+    "forks": 1031,
+    "language": "Swift",
+    "description": "Ghostty-based macOS terminal with vertical tabs and notifications for AI coding agents",
+    "topics": [
+      "amp",
+      "claude-code",
+      "codex",
+      "gemini",
+      "ghostty",
+      "opencode",
+      "terminal",
+      "tmux"
+    ],
+    "owner_login": "manaflow-ai",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/171392238?v=4",
+    "owner_html_url": "https://github.com/manaflow-ai",
+    "bucket": "morning",
+    "pick_reason": "AIエージェント向けに尖ったmacOSターミナル"
+  },
+  {
+    "sent_at": "2026-04-15T03:32:30.443678+00:00",
+    "full_name": "Ataraxy-Labs/sem",
+    "html_url": "https://github.com/Ataraxy-Labs/sem",
+    "x_post": "Gitの差分を「行」ではなく「関数やクラス」単位で見られるCLIツール sem。\n\n変更内容が「どの関数がどう変わったか」で把握できるので、コードレビューや影響調査が効率的になります。\n\n大規模プロジェクトのメンテナンスや、AIエージェントに正確なコンテキストを渡したい開発者に特に役立ちそうです。\n\nhttps://github.com/Ataraxy-Labs/sem\n#開発ツール #Git",
+    "summary": "行単位ではなく関数やクラス単位で差分を表示\nコードレビューや影響範囲の分析に使える\ntree-sitterで23言語を解析してエンティティを抽出\n大規模コードベースを扱う開発者やAIエージェント開発者",
+    "score": 50.89,
+    "stars": 1697,
+    "forks": 48,
+    "language": "Rust",
+    "description": "Semantic version control CLI. Entity-level diff, blame, graph, and impact analysis for code. 23 languages via tree-sitter.",
+    "topics": [
+      "ai-agents",
+      "cli",
+      "code-review",
+      "developer-tools",
+      "diff",
+      "git",
+      "rust",
+      "semantic-diff",
+      "tree-sitter"
+    ],
+    "owner_login": "Ataraxy-Labs",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/235773868?v=4",
+    "owner_html_url": "https://github.com/Ataraxy-Labs",
+    "bucket": "morning",
+    "pick_reason": "コードの意味的差分を扱う新しい視点"
   }
 ]
