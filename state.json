@@ -608,7 +608,8 @@
   "review_states": {
     "HKUDS/CLI-Anything": "interested",
     "nextlevelbuilder/goclaw": "unseen",
-    "Gitlawb/openclaude": "interested"
+    "Gitlawb/openclaude": "interested",
+    "mvanhorn/last30days-skill": "interested"
   },
   "alerts": {},
   "last_run_started_at": "2026-04-16T03:38:49.391862+00:00",
