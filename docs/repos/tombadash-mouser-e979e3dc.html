@@ -346,6 +346,26 @@
       flex-wrap: wrap;
       margin: 14px 0 0;
     }
+    .archive-select-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .archive-select-row label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .archive-select-row select {
+      min-width: min(320px, 100%);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.96);
+      color: var(--ink);
+      font: inherit;
+    }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -606,8 +626,8 @@
             <div class="meta">
               <span>最終通知 2026-04-12 12:37</span>
               <span>クールダウン中（残り10日）</span>
-              <span>最終観測 2026-04-16 21:03</span>
-              <span>最終stars 3114</span>
+              <span>最終観測 2026-04-17 12:35</span>
+              <span>最終stars 3119</span>
             </div>
             
         <div class="review-state-panel" data-review-state-panel data-repo-full-name="TomBadash/Mouser">
@@ -677,6 +697,23 @@ Logitech Options+を使わず、完全ローカルで動作。ボタン割り当
                 
                 <article class="history-item">
                   <div class="meta">
+                    <span>Go</span>
+                    <span>score 46.89</span>
+                    <span>stars 3900</span>
+                    <span>状態 未確認</span>
+                  </div>
+                  <h3><a href="../repos/rorkai-app-store-connect-cli-23fdfe3c.html" target="_self">rorkai/App-Store-Connect-CLI</a></h3>
+                  <p class="pick-reason">共通タグ: #automation, #macos</p>
+                  <p class="description">Fast, scriptable CLI for the App Store Connect API. Automate TestFlight, builds, submissions, signing, analytics, screenshots, subscriptions, and more. JSON-first, no interactive prompts</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=automation">#automation</a><a class="badge topic" href="../index.html?tag=macos">#macos</a></div>
+                  <div class="detail-links primary-links">
+                    <a class="badge" href="../repos/rorkai-app-store-connect-cli-23fdfe3c.html">詳細</a>
+                    <a class="badge" href="https://github.com/rorkai/App-Store-Connect-CLI" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                
+                <article class="history-item">
+                  <div class="meta">
                     <span>Python</span>
                     <span>score 58.19</span>
                     <span>stars 10127</span>
@@ -706,23 +743,6 @@ Logitech Options+を使わず、完全ローカルで動作。ボタン割り当
                   <div class="detail-links primary-links">
                     <a class="badge" href="../repos/panniantong-agent-reach-14b990a7.html">詳細</a>
                     <a class="badge" href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noreferrer">GitHub</a>
-                  </div>
-                </article>
-                
-                <article class="history-item">
-                  <div class="meta">
-                    <span>TypeScript</span>
-                    <span>score 50.35</span>
-                    <span>stars 11010</span>
-                    <span>状態 未確認</span>
-                  </div>
-                  <h3><a href="../repos/saturndec-waoowaoo-b098fcb2.html" target="_self">saturndec/waoowaoo</a></h3>
-                  <p class="pick-reason">共通タグ: #automation</p>
-                  <p class="description">首家工业级全流程 AI 影视生产平台。Industry-first professional AI Agent platform for controllable film &amp; video production. From shorts to live-action with Hollywood-standard workflows.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=automation">#automation</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/saturndec-waoowaoo-b098fcb2.html">詳細</a>
-                    <a class="badge" href="https://github.com/saturndec/waoowaoo" target="_blank" rel="noreferrer">GitHub</a>
                   </div>
                 </article>
                 </div></section>
@@ -769,6 +789,13 @@ Logitech Options+を使わず、完全ローカルで動作。ボタン割り当
         const target = daySelect.value;
         for (const panel of panels) panel.classList.remove('active');
         document.getElementById(target)?.classList.add('active');
+      });
+    }
+    const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
+    if (weeklyArchiveSelect) {
+      weeklyArchiveSelect.addEventListener('change', () => {
+        const target = String(weeklyArchiveSelect.value || '').trim();
+        if (target) window.location.href = target;
       });
     }
     const filterButtons = document.querySelectorAll('[data-bucket-filter]');

@@ -346,6 +346,26 @@
       flex-wrap: wrap;
       margin: 14px 0 0;
     }
+    .archive-select-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .archive-select-row label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .archive-select-row select {
+      min-width: min(320px, 100%);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.96);
+      color: var(--ink);
+      font: inherit;
+    }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -606,8 +626,8 @@
             <div class="meta">
               <span>最終通知 2026-04-12 12:37</span>
               <span>クールダウン中（残り10日）</span>
-              <span>最終観測 2026-04-16 21:03</span>
-              <span>最終stars 46902</span>
+              <span>最終観測 2026-04-17 12:35</span>
+              <span>最終stars 47184</span>
             </div>
             
         <div class="review-state-panel" data-review-state-panel data-repo-full-name="MemPalace/mempalace">
@@ -769,6 +789,13 @@ MemPalaceはすべての対話をそのまま保存し、意味検索で過去�
         const target = daySelect.value;
         for (const panel of panels) panel.classList.remove('active');
         document.getElementById(target)?.classList.add('active');
+      });
+    }
+    const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
+    if (weeklyArchiveSelect) {
+      weeklyArchiveSelect.addEventListener('change', () => {
+        const target = String(weeklyArchiveSelect.value || '').trim();
+        if (target) window.location.href = target;
       });
     }
     const filterButtons = document.querySelectorAll('[data-bucket-filter]');

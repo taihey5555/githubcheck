@@ -2433,5 +2433,39 @@
     "owner_html_url": "https://github.com/debba",
     "bucket": "evening",
     "pick_reason": "AI活用で開発された軽量DBクライアントの尖り"
+  },
+  {
+    "sent_at": "2026-04-17T03:35:32.347021+00:00",
+    "full_name": "rorkai/App-Store-Connect-CLI",
+    "html_url": "https://github.com/rorkai/App-Store-Connect-CLI",
+    "x_post": "App Store Connectの操作をCLIで自動化できるツール。\n\nTestFlightの管理やビルドアップロード、メタデータ同期など、リリース作業をターミナルやCIから実行できます。\n\niOS/macOSアプリ開発で、手作業を減らして効率化したい方に。\n\nhttps://github.com/rorkai/App-Store-Connect-CLI\n#AppStoreConnect #iOS開発",
+    "summary": "App Store Connect APIをCLIで操作\niOS/macOSアプリのリリース作業を自動化\nJSON出力優先でスクリプト連携しやすい\nCI/CDや自動化を求めるApple開発者向け",
+    "score": 46.89,
+    "stars": 3900,
+    "forks": 329,
+    "language": "Go",
+    "description": "Fast, scriptable CLI for the App Store Connect API. Automate TestFlight, builds, submissions, signing, analytics, screenshots, subscriptions, and more. JSON-first, no interactive prompts",
+    "topics": [
+      "app-store-connect",
+      "apple",
+      "automation",
+      "cicd",
+      "cli",
+      "command-line-tool",
+      "developer-tools",
+      "devops",
+      "go",
+      "golang",
+      "ios",
+      "macos",
+      "swift",
+      "testflight",
+      "xcode"
+    ],
+    "owner_login": "rorkai",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/181492441?v=4",
+    "owner_html_url": "https://github.com/rorkai",
+    "bucket": "morning",
+    "pick_reason": "App Store Connectの自動化が尖る"
   }
 ]
