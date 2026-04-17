@@ -84,6 +84,21 @@ class SmokeTests(unittest.TestCase):
             "./weekly/2026-04-06.html",
         )
 
+    def test_weekly_archive_links_render_as_select(self) -> None:
+        latest_week = bot.parse_sent_at("2026-04-13T00:00:00+09:00")
+        older_week = bot.parse_sent_at("2026-04-06T00:00:00+09:00")
+
+        html = bot.build_weekly_archive_links_html(
+            [latest_week, older_week],
+            latest_week,
+            older_week,
+            path_prefix="..",
+        )
+
+        self.assertIn('data-weekly-archive-select', html)
+        self.assertIn('value="../weekly.html"', html)
+        self.assertIn('value="../weekly/2026-04-06.html" selected', html)
+
     def test_site_shell_contains_history_query_initialization(self) -> None:
         html = bot.site_shell(
             "History",

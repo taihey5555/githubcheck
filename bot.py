@@ -1426,6 +1426,26 @@ def site_shell(
       flex-wrap: wrap;
       margin: 14px 0 0;
     }}
+    .archive-select-row {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }}
+    .archive-select-row label {{
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }}
+    .archive-select-row select {{
+      min-width: min(320px, 100%);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.96);
+      color: var(--ink);
+      font: inherit;
+    }}
     .badge {{
       display: inline-flex;
       align-items: center;
@@ -1689,6 +1709,13 @@ def site_shell(
         const target = daySelect.value;
         for (const panel of panels) panel.classList.remove('active');
         document.getElementById(target)?.classList.add('active');
+      }});
+    }}
+    const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
+    if (weeklyArchiveSelect) {{
+      weeklyArchiveSelect.addEventListener('change', () => {{
+        const target = String(weeklyArchiveSelect.value || '').trim();
+        if (target) window.location.href = target;
       }});
     }}
     const filterButtons = document.querySelectorAll('[data-bucket-filter]');
@@ -2815,25 +2842,42 @@ def build_weekly_ranking_for_range(
 
 def build_weekly_archive_links_html(
     archive_weeks: list[datetime],
-    current_week_start: datetime,
+    latest_week_start: datetime,
+    selected_week_start: datetime,
     path_prefix: str = ".",
 ) -> str:
-    latest_href = f"{path_prefix}/weekly.html"
-    archive_links = [
-        f'<a class="badge" href="{latest_href}">最新週 {escape(build_week_label(current_week_start, current_week_start + timedelta(days=7)))}</a>'
+    options = [
+        (
+            f"{path_prefix}/weekly.html",
+            f"最新週 {build_week_label(latest_week_start, latest_week_start + timedelta(days=7))}",
+            weekly_archive_slug(latest_week_start) == weekly_archive_slug(selected_week_start),
+        )
     ]
     for week_start in archive_weeks:
-        if weekly_archive_slug(week_start) == weekly_archive_slug(current_week_start):
+        if weekly_archive_slug(week_start) == weekly_archive_slug(latest_week_start):
             continue
-        archive_links.append(
-            f'<a class="badge" href="{weekly_archive_href(week_start, path_prefix)}">{escape(build_week_label(week_start, week_start + timedelta(days=7)))}</a>'
+        options.append(
+            (
+                weekly_archive_href(week_start, path_prefix),
+                build_week_label(week_start, week_start + timedelta(days=7)),
+                weekly_archive_slug(week_start) == weekly_archive_slug(selected_week_start),
+            )
         )
+    option_html = "".join(
+        f'<option value="{escape(href)}"{" selected" if selected else ""}>{escape(label)}</option>'
+        for href, label, selected in options
+    )
+    controls_html = (
+        '<div class="archive-select-row">'
+        '<label for="weekly-archive-select">表示する週</label>'
+        f'<select id="weekly-archive-select" data-weekly-archive-select>{option_html}</select>'
+        "</div>"
+    )
     return render_section_block(
         "週次アーカイブ",
-        "最新の週次ページに加えて、過去週のランキングもここから開けます。",
-        "".join(archive_links),
+        "最新の週次ページに加えて、過去週のランキングもここから選べます。",
+        controls_html,
         "過去週のアーカイブはまだありません。",
-        layout_class="badge-row",
     )
 
 
@@ -2991,7 +3035,11 @@ def render_weekly_site(now: datetime | None = None) -> None:
         now = datetime.now(UTC)
     range_start, range_end, label = build_week_window(now, "current")
     archive_weeks = collect_weekly_archive_starts(history)
-    archive_links_html = build_weekly_archive_links_html(archive_weeks, range_start)
+    archive_links_html = build_weekly_archive_links_html(
+        archive_weeks,
+        range_start,
+        range_start,
+    )
     html = render_weekly_page(
         history,
         review_states,
@@ -3017,6 +3065,7 @@ def render_weekly_site(now: datetime | None = None) -> None:
             archive_links_html=build_weekly_archive_links_html(
                 archive_weeks,
                 range_start,
+                week_start,
                 path_prefix="..",
             ),
             path_prefix="..",
