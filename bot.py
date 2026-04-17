@@ -22,6 +22,7 @@ STATE_PATH = ROOT / "state.json"
 DOCS_DIR = ROOT / "docs"
 REPOS_DIR = DOCS_DIR / "repos"
 HISTORY_PATH = DOCS_DIR / "history.json"
+WEEKLY_ARCHIVE_DIR = DOCS_DIR / "weekly"
 LOGS_DIR = ROOT / "logs"
 SEND_LOG_PATH = LOGS_DIR / "send.log"
 CONTROL_REPO_FULL_NAME = "taihey5555/githubcheck"
@@ -567,6 +568,41 @@ def history_archive_href(
         query["sort"] = sort
     query_string = urlencode(query)
     return f"{path_prefix}/index.html" + (f"?{query_string}" if query_string else "")
+
+
+def tokyo_week_start(value: datetime) -> datetime:
+    tokyo_value = value.astimezone(ZoneInfo("Asia/Tokyo"))
+    return (tokyo_value - timedelta(days=tokyo_value.weekday())).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+
+
+def build_week_label(range_start: datetime, range_end: datetime) -> str:
+    return (
+        f"{range_start.month}/{range_start.day}"
+        f" - {(range_end - timedelta(days=1)).month}/{(range_end - timedelta(days=1)).day}"
+        if range_end > range_start
+        else f"{range_start.month}/{range_start.day}"
+    )
+
+
+def weekly_archive_slug(week_start: datetime) -> str:
+    return week_start.astimezone(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d")
+
+
+def weekly_archive_href(week_start: datetime, path_prefix: str = ".") -> str:
+    return f"{path_prefix}/weekly/{weekly_archive_slug(week_start)}.html"
+
+
+def collect_weekly_archive_starts(history: list[dict[str, Any]]) -> list[datetime]:
+    week_starts: dict[str, datetime] = {}
+    for item in history:
+        sent_at = item.get("sent_at")
+        if not sent_at:
+            continue
+        week_start = tokyo_week_start(parse_sent_at(sent_at))
+        week_starts[weekly_archive_slug(week_start)] = week_start
+    return sorted(week_starts.values(), reverse=True)
 
 
 def normalized_language_query(value: Any) -> str:
@@ -2706,21 +2742,14 @@ def build_week_window(
     scope: str = "previous",
 ) -> tuple[datetime, datetime, str]:
     tokyo_now = now.astimezone(ZoneInfo("Asia/Tokyo"))
-    week_start = (tokyo_now - timedelta(days=tokyo_now.weekday())).replace(
-        hour=0, minute=0, second=0, microsecond=0
-    )
+    week_start = tokyo_week_start(now)
     if scope == "current":
         range_start = week_start
         range_end = tokyo_now
     else:
         range_start = week_start - timedelta(days=7)
         range_end = week_start
-    label = (
-        f"{range_start.month}/{range_start.day}"
-        f" - {(range_end - timedelta(days=1)).month}/{(range_end - timedelta(days=1)).day}"
-        if range_end > range_start
-        else f"{range_start.month}/{range_start.day}"
-    )
+    label = build_week_label(range_start, range_end)
     return range_start, range_end, label
 
 
@@ -2730,7 +2759,14 @@ def build_weekly_ranking(
     scope: str = "previous",
 ) -> tuple[list[dict[str, Any]], str]:
     range_start, range_end, label = build_week_window(now, scope)
+    return build_weekly_ranking_for_range(history, range_start, range_end), label
 
+
+def build_weekly_ranking_for_range(
+    history: list[dict[str, Any]],
+    range_start: datetime,
+    range_end: datetime,
+) -> list[dict[str, Any]]:
     aggregated: dict[str, dict[str, Any]] = {}
     for item in history:
         sent_at = item.get("sent_at")
@@ -2770,23 +2806,48 @@ def build_weekly_ranking(
         if sent_at_dt > entry["latest_sent_at"]:
             entry["latest_sent_at"] = sent_at_dt
 
-    ranking = sorted(
+    return sorted(
         aggregated.values(),
         key=lambda item: (item["count"], item["best_score"], item["stars"]),
         reverse=True,
     )[:10]
-    return ranking, label
 
 
-def render_weekly_site(now: datetime | None = None) -> None:
+def build_weekly_archive_links_html(
+    archive_weeks: list[datetime],
+    current_week_start: datetime,
+    path_prefix: str = ".",
+) -> str:
+    latest_href = f"{path_prefix}/weekly.html"
+    archive_links = [
+        f'<a class="badge" href="{latest_href}">最新週 {escape(build_week_label(current_week_start, current_week_start + timedelta(days=7)))}</a>'
+    ]
+    for week_start in archive_weeks:
+        if weekly_archive_slug(week_start) == weekly_archive_slug(current_week_start):
+            continue
+        archive_links.append(
+            f'<a class="badge" href="{weekly_archive_href(week_start, path_prefix)}">{escape(build_week_label(week_start, week_start + timedelta(days=7)))}</a>'
+        )
+    return render_section_block(
+        "週次アーカイブ",
+        "最新の週次ページに加えて、過去週のランキングもここから開けます。",
+        "".join(archive_links),
+        "過去週のアーカイブはまだありません。",
+        layout_class="badge-row",
+    )
+
+
+def render_weekly_page(
+    history: list[dict[str, Any]],
+    review_states: dict[str, Any],
+    range_start: datetime,
+    range_end: datetime,
+    label: str,
+    archive_links_html: str = "",
+    path_prefix: str = ".",
+) -> str:
     settings = low_star_high_score_settings()
-    history = load_history()
-    state = load_state()
-    review_states = state.get("review_states", {})
-    if now is None:
-        now = datetime.now(UTC)
-    ranking, label = build_weekly_ranking(history, now, scope="current")
-    range_start, range_end, _ = build_week_window(now, "current")
+    ranking = build_weekly_ranking_for_range(history, range_start, range_end)
     this_week_items = []
     for item in history:
         sent_at = item.get("sent_at")
@@ -2879,7 +2940,8 @@ def render_weekly_site(now: datetime | None = None) -> None:
     html = site_shell(
         "週間まとめ",
         f"{label} の通知履歴を、見返しやすい週次ビューとしてまとめています。",
-        stats_html
+        archive_links_html
+        + stats_html
         + render_week_section(
             "今週の良い / 本番候補",
             "すでに手応えがあるリポジトリを、状態ベースで先に見返せます。",
@@ -2916,9 +2978,53 @@ def render_weekly_site(now: datetime | None = None) -> None:
             fresh_picks,
         ),
         "weekly",
+        path_prefix=path_prefix,
+    )
+    return html
+
+
+def render_weekly_site(now: datetime | None = None) -> None:
+    history = load_history()
+    state = load_state()
+    review_states = state.get("review_states", {})
+    if now is None:
+        now = datetime.now(UTC)
+    range_start, range_end, label = build_week_window(now, "current")
+    archive_weeks = collect_weekly_archive_starts(history)
+    archive_links_html = build_weekly_archive_links_html(archive_weeks, range_start)
+    html = render_weekly_page(
+        history,
+        review_states,
+        range_start,
+        range_end,
+        label,
+        archive_links_html=archive_links_html,
     )
     DOCS_DIR.mkdir(exist_ok=True)
     (DOCS_DIR / "weekly.html").write_text(html, encoding="utf-8")
+    WEEKLY_ARCHIVE_DIR.mkdir(exist_ok=True)
+    current_week_slug = weekly_archive_slug(range_start)
+    for week_start in archive_weeks:
+        week_slug = weekly_archive_slug(week_start)
+        if week_slug == current_week_slug:
+            continue
+        archive_html = render_weekly_page(
+            history,
+            review_states,
+            week_start,
+            week_start + timedelta(days=7),
+            build_week_label(week_start, week_start + timedelta(days=7)),
+            archive_links_html=build_weekly_archive_links_html(
+                archive_weeks,
+                range_start,
+                path_prefix="..",
+            ),
+            path_prefix="..",
+        )
+        (WEEKLY_ARCHIVE_DIR / f"{week_slug}.html").write_text(
+            archive_html,
+            encoding="utf-8",
+        )
 
 
 def render_static_sites(now: datetime | None = None) -> None:

@@ -67,6 +67,23 @@ class SmokeTests(unittest.TestCase):
         self.assertRegex(slug_a, r"^[a-z0-9-]+-[0-9a-f]{8}$")
         self.assertIn("owner-name-my-repo", slug_a)
 
+    def test_weekly_archive_helpers_group_history_by_tokyo_week(self) -> None:
+        history = [
+            {"sent_at": "2026-04-13T00:30:00+00:00"},
+            {"sent_at": "2026-04-15T12:00:00+00:00"},
+            {"sent_at": "2026-04-06T00:30:00+00:00"},
+        ]
+        week_starts = bot.collect_weekly_archive_starts(history)
+
+        self.assertEqual(
+            [bot.weekly_archive_slug(item) for item in week_starts],
+            ["2026-04-13", "2026-04-06"],
+        )
+        self.assertEqual(
+            bot.weekly_archive_href(week_starts[1]),
+            "./weekly/2026-04-06.html",
+        )
+
     def test_site_shell_contains_history_query_initialization(self) -> None:
         html = bot.site_shell(
             "History",
