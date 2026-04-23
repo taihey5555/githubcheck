@@ -3304,5 +3304,79 @@
     "owner_html_url": "https://github.com/ValueCell-ai",
     "bucket": "evening",
     "pick_reason": "AIエージェントのGUI化で使いやすさに尖る"
+  },
+  {
+    "sent_at": "2026-04-23T03:38:06.553281+00:00",
+    "full_name": "jamiepine/voicebox",
+    "html_url": "https://github.com/jamiepine/voicebox",
+    "x_post": "音声合成をローカルで完結させるスタジオ\n\nVoiceboxは、音声クローンや合成からエフェクト処理まで、全てをローカル環境で行えるオープンソースのアプリです。7種類のTTSエンジンと50以上のプリセット音声を備えています。\n\nプライバシーを重視しつつ、ポッドキャストやナレーションなど多様な音声コンテンツを作成したい方に向いています。\n\nhttps://github.com/jamiepine/voicebox\n#音声合成 #ローカルAI",
+    "summary": "音声クローンから効果まで一貫\nローカル環境で音声合成アプリを構築\n複数TTSエンジンと効果処理を統合\n音声生成をプライベートに扱いたい開発者",
+    "score": 124.37,
+    "stars": 22514,
+    "forks": 2628,
+    "language": "TypeScript",
+    "description": "The open-source AI voice studio. Clone, dictate, create.",
+    "topics": [
+      "ai",
+      "cuda",
+      "mlx",
+      "qwen3-tts",
+      "qwen3-tts-ui",
+      "voice-ai",
+      "voice-clone",
+      "whisper"
+    ],
+    "owner_login": "jamiepine",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/32987599?v=4",
+    "owner_html_url": "https://github.com/jamiepine",
+    "bucket": "morning",
+    "pick_reason": "ローカルで動く音声合成スタジオの尖り"
+  },
+  {
+    "sent_at": "2026-04-23T03:38:06.553281+00:00",
+    "full_name": "jackwener/OpenCLI",
+    "html_url": "https://github.com/jackwener/OpenCLI",
+    "x_post": "WebサイトやElectronアプリをCLIコマンドとして扱えるOpenCLI。\n\nログイン状態を維持したまま、AIエージェントがブラウザ操作を自動化。既存サイトをCLIアダプタに変換し、再利用可能なコマンドにできます。\n\nブラウザ自動化のスクリプト作成や、AIエージェントに実際のWeb操作をさせたい開発者に向いています。\n\nhttps://github.com/jackwener/OpenCLI\n#AI #自動化",
+    "summary": "WebやElectronアプリをCLI化\nAIエージェントがログイン済みブラウザを操作\n既存サイトを自動でCLIアダプタ化\nブラウザ自動化とAI連携に興味ある人",
+    "score": 103.03,
+    "stars": 16900,
+    "forks": 1649,
+    "language": "JavaScript",
+    "description": "Make Any Website & Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a standardized command-line interface. Built for AI Agents to discover, learn, and execute tools seamlessly via a unified AGENT.md integration.",
+    "topics": [
+      "ai-agent",
+      "ai-agents",
+      "ai-tools",
+      "cli"
+    ],
+    "owner_login": "jackwener",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/30525741?v=4",
+    "owner_html_url": "https://github.com/jackwener",
+    "bucket": "morning",
+    "pick_reason": "AIエージェントがブラウザを直接操作できる尖り"
+  },
+  {
+    "sent_at": "2026-04-23T03:38:06.553281+00:00",
+    "full_name": "qwibitai/nanoclaw",
+    "html_url": "https://github.com/qwibitai/nanoclaw",
+    "x_post": "軽量なAIエージェントフレームワーク「nanoclaw」が面白い。\n\nOpenClawの軽量代替で、AIエージェントをコンテナ内で安全に実行。WhatsAppやDiscordなど複数チャネルと連携し、メモリや定期ジョブも持つ。\n\nセキュリティを重視し、自分専用のAIアシスタントを作りたい開発者に。コードベースが小さいのでClaude Codeでのカスタマイズも容易。\n\nhttps://github.com/qwibitai/nanoclaw\n#AIエージェント #TypeScript",
+    "summary": "コンテナで隔離されたAIエージェント\nメッセージングアプリと連携する個人用AIアシスタント\nAnthropic公式SDKを採用し、コード変更でカスタマイズ可能\nセキュリティを重視しつつ自分専用AIを作りたい開発者向け",
+    "score": 61.3,
+    "stars": 27686,
+    "forks": 12608,
+    "language": "TypeScript",
+    "description": "A lightweight alternative to OpenClaw that runs in containers for security. Connects to WhatsApp, Telegram, Slack, Discord, Gmail and other messaging apps,, has memory, scheduled jobs, and runs directly on Anthropic's Agents SDK",
+    "topics": [
+      "ai-agents",
+      "ai-assistant",
+      "claude-code",
+      "claude-skills",
+      "openclaw"
+    ],
+    "owner_login": "qwibitai",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/255066954?v=4",
+    "owner_html_url": "https://github.com/qwibitai",
+    "bucket": "morning",
+    "pick_reason": "コンテナで安全に動く軽量AIエージェントの新選択肢"
   }
 ]
