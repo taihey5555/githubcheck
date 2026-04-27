@@ -1,0 +1,1700 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>週間まとめ</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #eef3f8;
+      --panel: rgba(255, 255, 255, 0.96);
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: rgba(148, 163, 184, 0.35);
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(191, 219, 254, 0.26) 0, transparent 24%),
+        radial-gradient(circle at top right, rgba(148, 163, 184, 0.18) 0, transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(245, 247, 251, 0.88);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+      color: var(--ink);
+    }
+    .brand strong {
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .brand span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-icon span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 999px;
+    }
+    .site-nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .site-nav a {
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .site-nav a[aria-current="page"] {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .site-nav a:hover {
+      background: rgba(255,255,255,0.72);
+      border-color: var(--line);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 20px 64px;
+    }
+    .hero {
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.4vw, 18px);
+      max-width: 720px;
+    }
+    .date-selector {
+      margin: 0 0 22px;
+    }
+    .date-select {
+      width: min(280px, 100%);
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.96);
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font: inherit;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }
+    .archive-controls {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      margin: 0 0 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: var(--shadow);
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .control-group label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .control-group input,
+    .control-group select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+    .archive-summary {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .archive-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: var(--shadow);
+    }
+    .archive-share input {
+      flex: 1 1 320px;
+      min-width: 220px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+    .archive-share-status {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .section-block {
+      margin: 0 0 36px;
+      background: rgba(238, 243, 248, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 24px;
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 16px;
+      align-items: start;
+    }
+    .section-header h2,
+    .section-header h3 {
+      margin: 0;
+    }
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+    .section-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .empty-state {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+      color: var(--muted);
+    }
+    .tab-button,
+    .filter-button {
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.9);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 120ms ease, background 120ms ease;
+    }
+    .tab-button:hover,
+    .filter-button:hover {
+      transform: translateY(-1px);
+      background: #fff;
+    }
+    .tab-button.active,
+    .filter-button.active {
+      background: var(--accent-2);
+      color: white;
+      border-color: var(--accent-2);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .card.hidden-by-filter { display: none; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      margin: 0 0 16px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .meta {
+      display: flex;
+      gap: 8px;
+      row-gap: 8px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(238, 243, 248, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.9);
+      flex: 0 0 auto;
+    }
+    .card-title-wrap {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .owner-line {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    .owner-line a {
+      color: var(--muted);
+    }
+    .description {
+      margin: 0 0 14px;
+      color: rgba(15, 23, 42, 0.78);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .pick-reason {
+      margin: 0 0 12px;
+      color: rgba(15, 23, 42, 0.72);
+      line-height: 1.5;
+      font-size: 12px;
+      opacity: 0.92;
+      padding-left: 10px;
+      border-left: 3px solid rgba(15, 118, 110, 0.22);
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 14px 0 0;
+    }
+    .archive-select-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .archive-select-row label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .archive-select-row select {
+      min-width: min(320px, 100%);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.96);
+      color: var(--ink);
+      font: inherit;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 500;
+    }
+    .badge.topic {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      border-color: rgba(15, 118, 110, 0.16);
+    }
+    .badge.review-state {
+      background: rgba(180, 83, 9, 0.14);
+      color: var(--accent-2);
+      border-color: rgba(180, 83, 9, 0.24);
+    }
+    .review-state-panel {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 18px;
+      background: rgba(238, 243, 248, 0.82);
+    }
+    .review-state-panel h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+    }
+    .review-state-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .review-state-actions select {
+      min-width: 180px;
+      font: inherit;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 10px 12px;
+      color: var(--text);
+    }
+    .review-state-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .date-label {
+      font-variant-numeric: tabular-nums;
+    }
+    .rank-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .rank-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,118,110,0.14) 0, rgba(15,118,110,0) 70%);
+      pointer-events: none;
+    }
+    .rank-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+    .rank-card.top1 {
+      border-width: 2px;
+      border-color: rgba(180, 83, 9, 0.32);
+      background: linear-gradient(135deg, rgba(255,250,240,0.96), rgba(254,243,199,0.92));
+    }
+    .rank-card.top1 .rank-number {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #b45309, #f59e0b);
+      font-size: 22px;
+    }
+    .rank-card.top2 .rank-number,
+    .rank-card.top3 .rank-number {
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+    }
+    .stat-card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      box-shadow: var(--shadow);
+    }
+    .stat-card strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .detail-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      align-items: center;
+    }
+    .detail-links.primary-links .badge:first-child,
+    .detail-links.primary-links a:first-child {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .detail-links.secondary-links .badge,
+    .detail-links.secondary-links a {
+      background: rgba(238, 243, 248, 0.92);
+    }
+    .inline-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .history-list {
+      display: grid;
+      gap: 14px;
+    }
+    .history-item {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(238, 243, 248, 0.88);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+    .history-item h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.3;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: clamp(20px, 3vw, 24px);
+      line-height: 1.15;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 16px 0 0;
+      font: inherit;
+      line-height: 1.7;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(238, 243, 248, 0.72);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    @media (max-width: 720px) {
+      .menu-toggle {
+        display: inline-flex;
+      }
+      .site-nav {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 20px;
+        left: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(255, 250, 240, 0.96);
+        box-shadow: var(--shadow);
+      }
+      .site-nav.open {
+        display: flex;
+      }
+      .site-nav a {
+        width: 100%;
+        text-align: center;
+      }
+      main {
+        padding-top: 28px;
+      }
+      .card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html">
+        <strong>GitHub Check</strong>
+        <span>repo 通知の履歴と週間まとめ</span>
+      </a>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="../index.html" >履歴</a>
+        <a href="../weekly.html" aria-current="page">週次</a>
+        <a href="../operations.html" >運用サマリー</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>週間まとめ</h1>
+      <p>4/20 - 4/26 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
+    </section>
+    <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 4/27 - 5/3</option><option value="../weekly/2026-04-20.html" selected>4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html">4/6 - 4/12</option><option value="../weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
+    <section class="stats-grid">
+      <article class="stat-card"><strong>42</strong><span>今週のリポジトリ数</span></article>
+      <article class="stat-card"><strong>42</strong><span>通知総数</span></article>
+      <article class="stat-card"><strong>67.6</strong><span>平均 score</span></article>
+      <article class="stat-card"><strong>Python 14, TypeScript 13, JavaScript 5, Rust 5</strong><span>言語分布</span></article>
+      <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 10</a></strong><span>状態の分布</span></article>
+    </section>
+    <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
+    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph openclaw skills" data-stars="33840" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
+          </div>
+          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 214.81</span>
+        <span>登場 1回</span>
+        <span>stars 33840</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: コードやドキュメントを知識グラフ化する急成長ツール</p>
+      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot CLI, OpenClaw, Factory Droid, Trae, Google An...</p>
+      <pre>コードやドキュメントが散らばっていて、全体像を掴むのに苦労していませんか？
+
+graphifyは、フォルダ内のコード、PDF、画像、動画から自動で知識グラフを構築します。Claude CodeやCursorなど主要なAIコーディングアシスタント上で `/graphify` と打つだけ。
+
+発見した情報と推測をタグで区別するので、信頼性も明確。大規模なコードベースや研究資料の横断的理解に最適です。
+
+<a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">https://github.com/safishamsi/graphify</a>
+
+#AI #KnowledgeGraph</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="jamiepine/voicebox" data-language="typescript" data-tags="ai cuda mlx qwen3-tts qwen3-tts-ui voice-ai voice-clone whisper" data-stars="22514" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/32987599?v=4" alt="jamiepine">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/jamiepine" target="_blank" rel="noreferrer">@jamiepine</a>
+          </div>
+          <h2><a href="https://github.com/jamiepine/voicebox" target="_blank" rel="noreferrer">jamiepine/voicebox</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 124.37</span>
+        <span>登場 1回</span>
+        <span>stars 22514</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: ローカルで動く音声合成スタジオの尖り</p>
+      <p class="description">The open-source AI voice studio. Clone, dictate, create.</p>
+      <pre>音声合成をローカルで完結させるスタジオ
+
+Voiceboxは、音声クローンや合成からエフェクト処理まで、全てをローカル環境で行えるオープンソースのアプリです。7種類のTTSエンジンと50以上のプリセット音声を備えています。
+
+プライバシーを重視しつつ、ポッドキャストやナレーションなど多様な音声コンテンツを作成したい方に向いています。
+
+<a href="https://github.com/jamiepine/voicebox" target="_blank" rel="noreferrer">https://github.com/jamiepine/voicebox</a>
+#音声合成 #ローカルAI</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/jamiepine-voicebox-dcc23e41.html">詳細</a>
+        <a class="badge" href="https://github.com/jamiepine/voicebox" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#cuda</span><span class="badge topic">#mlx</span><span class="badge topic">#qwen3-tts</span><span class="badge topic">#qwen3-tts-ui</span><span class="badge topic">#voice-ai</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="evening" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens" data-stars="46168" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/JuliusBrussee" target="_blank" rel="noreferrer">@JuliusBrussee</a>
+          </div>
+          <h2><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">JuliusBrussee/caveman</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 106.42</span>
+        <span>登場 1回</span>
+        <span>stars 46168</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: トークン削減75%の尖ったプロンプト技術で急成長中</p>
+      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
+      <pre>「なぜ多くのトークンを使うのか、少ないトークンで十分なのに」
+
+cavemanはClaude Codeのスキルで、AIの応答を原始人語に変換しトークン消費を約75%削減します。技術的正確性はそのままに、無駄な説明をカット。
+
+トークンコストを抑えたい方、応答速度を上げたい方、あるいは単にコードレビューを面白くしたい方に。lite/full/ultra/文言文の4段階から選択可能。
+
+<a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">https://github.com/JuliusBrussee/caveman</a>
+#ClaudeCode #PromptEngineering</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
+        <a class="badge" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python" data-stars="49670" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/MemPalace" target="_blank" rel="noreferrer">@MemPalace</a>
+          </div>
+          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">MemPalace/mempalace</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 105.48</span>
+        <span>登場 1回</span>
+        <span>stars 49670</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: ベンチマーク最上位のオープンソースAIメモリシステム</p>
+      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <pre>MemPalaceは会話履歴を要約せずそのまま保存し、96.6%の精度で検索できるAI記憶システムです。
+
+要約による情報損失がなく、ChromaDBをデフォルトとしたプラグイン可能なバックエンド設計。ローカルで完結し、APIキー不要で動作します。
+
+プライバシーを重視するAI開発者や、長期間の会話コンテキストを正確に保持したい方に。
+
+<a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">https://github.com/MemPalace/mempalace</a>
+#AI #Memory</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/mempalace-mempalace-1746bed1.html">詳細</a>
+        <a class="badge" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="tophant-ai/clawvault" data-language="python" data-tags="clawdbot clawdbot-plugin openclaw security" data-stars="1080" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/31276772?v=4" alt="tophant-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/tophant-ai" target="_blank" rel="noreferrer">@tophant-ai</a>
+          </div>
+          <h2><a href="https://github.com/tophant-ai/ClawVault" target="_blank" rel="noreferrer">tophant-ai/ClawVault</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 104.01</span>
+        <span>登場 1回</span>
+        <span>stars 1080</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントのセキュリティ監視に尖ったアプローチ</p>
+      <p class="description">OpenClaw Security Vault — Atomic &quot;claw&quot; control: every AI reach, within your sight.</p>
+      <pre>AIエージェントが何にアクセスしているか、気になりませんか？
+
+ClawVaultは、AIエージェントと外部API間の通信を監視し、機密データへのアクセスや危険なコマンドを検知・ブロックします。プロキシゲートウェイと細かい制御ポリシーが特徴です。
+
+AIツールを業務で使い、セキュリティを強化したい開発者やチームにおすすめです。
+
+<a href="https://github.com/tophant-ai/ClawVault" target="_blank" rel="noreferrer">https://github.com/tophant-ai/ClawVault</a>
+#AIセキュリティ #Python</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/tophant-ai-clawvault-34e53a5d.html">詳細</a>
+        <a class="badge" href="https://github.com/tophant-ai/ClawVault" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#clawdbot</span><span class="badge topic">#clawdbot-plugin</span><span class="badge topic">#openclaw</span><span class="badge topic">#security</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="16900" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/jackwener" target="_blank" rel="noreferrer">@jackwener</a>
+          </div>
+          <h2><a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">jackwener/OpenCLI</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 103.03</span>
+        <span>登場 1回</span>
+        <span>stars 16900</span>
+        <span>JavaScript</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントがブラウザを直接操作できる尖り</p>
+      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
+      <pre>WebサイトやElectronアプリをCLIコマンドとして扱えるOpenCLI。
+
+ログイン状態を維持したまま、AIエージェントがブラウザ操作を自動化。既存サイトをCLIアダプタに変換し、再利用可能なコマンドにできます。
+
+ブラウザ自動化のスクリプト作成や、AIエージェントに実際のWeb操作をさせたい開発者に向いています。
+
+<a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">https://github.com/jackwener/OpenCLI</a>
+#AI #自動化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
+        <a class="badge" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
+    </article>
+    </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
+    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph openclaw skills" data-stars="33840" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
+          </div>
+          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 214.81</span>
+        <span>登場 1回</span>
+        <span>stars 33840</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: コードやドキュメントを知識グラフ化する急成長ツール</p>
+      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot CLI, OpenClaw, Factory Droid, Trae, Google An...</p>
+      <pre>コードやドキュメントが散らばっていて、全体像を掴むのに苦労していませんか？
+
+graphifyは、フォルダ内のコード、PDF、画像、動画から自動で知識グラフを構築します。Claude CodeやCursorなど主要なAIコーディングアシスタント上で `/graphify` と打つだけ。
+
+発見した情報と推測をタグで区別するので、信頼性も明確。大規模なコードベースや研究資料の横断的理解に最適です。
+
+<a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">https://github.com/safishamsi/graphify</a>
+
+#AI #KnowledgeGraph</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="jamiepine/voicebox" data-language="typescript" data-tags="ai cuda mlx qwen3-tts qwen3-tts-ui voice-ai voice-clone whisper" data-stars="22514" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/32987599?v=4" alt="jamiepine">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/jamiepine" target="_blank" rel="noreferrer">@jamiepine</a>
+          </div>
+          <h2><a href="https://github.com/jamiepine/voicebox" target="_blank" rel="noreferrer">jamiepine/voicebox</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 124.37</span>
+        <span>登場 1回</span>
+        <span>stars 22514</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: ローカルで動く音声合成スタジオの尖り</p>
+      <p class="description">The open-source AI voice studio. Clone, dictate, create.</p>
+      <pre>音声合成をローカルで完結させるスタジオ
+
+Voiceboxは、音声クローンや合成からエフェクト処理まで、全てをローカル環境で行えるオープンソースのアプリです。7種類のTTSエンジンと50以上のプリセット音声を備えています。
+
+プライバシーを重視しつつ、ポッドキャストやナレーションなど多様な音声コンテンツを作成したい方に向いています。
+
+<a href="https://github.com/jamiepine/voicebox" target="_blank" rel="noreferrer">https://github.com/jamiepine/voicebox</a>
+#音声合成 #ローカルAI</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/jamiepine-voicebox-dcc23e41.html">詳細</a>
+        <a class="badge" href="https://github.com/jamiepine/voicebox" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#cuda</span><span class="badge topic">#mlx</span><span class="badge topic">#qwen3-tts</span><span class="badge topic">#qwen3-tts-ui</span><span class="badge topic">#voice-ai</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="evening" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens" data-stars="46168" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/JuliusBrussee" target="_blank" rel="noreferrer">@JuliusBrussee</a>
+          </div>
+          <h2><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">JuliusBrussee/caveman</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 106.42</span>
+        <span>登場 1回</span>
+        <span>stars 46168</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: トークン削減75%の尖ったプロンプト技術で急成長中</p>
+      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
+      <pre>「なぜ多くのトークンを使うのか、少ないトークンで十分なのに」
+
+cavemanはClaude Codeのスキルで、AIの応答を原始人語に変換しトークン消費を約75%削減します。技術的正確性はそのままに、無駄な説明をカット。
+
+トークンコストを抑えたい方、応答速度を上げたい方、あるいは単にコードレビューを面白くしたい方に。lite/full/ultra/文言文の4段階から選択可能。
+
+<a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">https://github.com/JuliusBrussee/caveman</a>
+#ClaudeCode #PromptEngineering</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
+        <a class="badge" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python" data-stars="49670" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/MemPalace" target="_blank" rel="noreferrer">@MemPalace</a>
+          </div>
+          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">MemPalace/mempalace</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 105.48</span>
+        <span>登場 1回</span>
+        <span>stars 49670</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: ベンチマーク最上位のオープンソースAIメモリシステム</p>
+      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <pre>MemPalaceは会話履歴を要約せずそのまま保存し、96.6%の精度で検索できるAI記憶システムです。
+
+要約による情報損失がなく、ChromaDBをデフォルトとしたプラグイン可能なバックエンド設計。ローカルで完結し、APIキー不要で動作します。
+
+プライバシーを重視するAI開発者や、長期間の会話コンテキストを正確に保持したい方に。
+
+<a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">https://github.com/MemPalace/mempalace</a>
+#AI #Memory</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/mempalace-mempalace-1746bed1.html">詳細</a>
+        <a class="badge" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="tophant-ai/clawvault" data-language="python" data-tags="clawdbot clawdbot-plugin openclaw security" data-stars="1080" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/31276772?v=4" alt="tophant-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/tophant-ai" target="_blank" rel="noreferrer">@tophant-ai</a>
+          </div>
+          <h2><a href="https://github.com/tophant-ai/ClawVault" target="_blank" rel="noreferrer">tophant-ai/ClawVault</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 104.01</span>
+        <span>登場 1回</span>
+        <span>stars 1080</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントのセキュリティ監視に尖ったアプローチ</p>
+      <p class="description">OpenClaw Security Vault — Atomic &quot;claw&quot; control: every AI reach, within your sight.</p>
+      <pre>AIエージェントが何にアクセスしているか、気になりませんか？
+
+ClawVaultは、AIエージェントと外部API間の通信を監視し、機密データへのアクセスや危険なコマンドを検知・ブロックします。プロキシゲートウェイと細かい制御ポリシーが特徴です。
+
+AIツールを業務で使い、セキュリティを強化したい開発者やチームにおすすめです。
+
+<a href="https://github.com/tophant-ai/ClawVault" target="_blank" rel="noreferrer">https://github.com/tophant-ai/ClawVault</a>
+#AIセキュリティ #Python</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/tophant-ai-clawvault-34e53a5d.html">詳細</a>
+        <a class="badge" href="https://github.com/tophant-ai/ClawVault" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#clawdbot</span><span class="badge topic">#clawdbot-plugin</span><span class="badge topic">#openclaw</span><span class="badge topic">#security</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="16900" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/jackwener" target="_blank" rel="noreferrer">@jackwener</a>
+          </div>
+          <h2><a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">jackwener/OpenCLI</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 103.03</span>
+        <span>登場 1回</span>
+        <span>stars 16900</span>
+        <span>JavaScript</span>
+      </div>
+      <p class="pick-reason">選定理由: AIエージェントがブラウザを直接操作できる尖り</p>
+      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
+      <pre>WebサイトやElectronアプリをCLIコマンドとして扱えるOpenCLI。
+
+ログイン状態を維持したまま、AIエージェントがブラウザ操作を自動化。既存サイトをCLIアダプタに変換し、再利用可能なコマンドにできます。
+
+ブラウザ自動化のスクリプト作成や、AIエージェントに実際のWeb操作をさせたい開発者に向いています。
+
+<a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">https://github.com/jackwener/OpenCLI</a>
+#AI #自動化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
+        <a class="badge" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="36725" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">7</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/santifer" target="_blank" rel="noreferrer">@santifer</a>
+          </div>
+          <h2><a href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">santifer/career-ops</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 93.44</span>
+        <span>登場 1回</span>
+        <span>stars 36725</span>
+        <span>JavaScript</span>
+      </div>
+      <p class="pick-reason">選定理由: AIで求職活動を自動化する尖った実用ツール</p>
+      <p class="description">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.</p>
+      <pre>求職活動をAIで効率化するCareer-Ops。
+
+Claude Codeと連携し、求人を自動評価してスコア付け、職務経歴書をPDF生成します。740件以上の評価実績があり、意思決定を支援します。
+
+転職活動中のエンジニアや、多くの求人から絞り込みたい方に。
+
+<a href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">https://github.com/santifer/career-ops</a>
+#AI #転職</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
+        <a class="badge" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="donchitos/claude-code-game-studios" data-language="shell" data-tags="ai-agents ai-assisted-development anthropic claude claude-code game-design game-development gamedev godot indie-game-dev unity unreal-engine" data-stars="15638" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">8</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/150119193?v=4" alt="Donchitos">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Donchitos" target="_blank" rel="noreferrer">@Donchitos</a>
+          </div>
+          <h2><a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">Donchitos/Claude-Code-Game-Studios</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 78.37</span>
+        <span>登場 1回</span>
+        <span>stars 15638</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: 49のAIエージェントでゲーム開発スタジオを再現</p>
+      <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
+      <pre>Claude Codeをフルゲーム開発スタジオに変えるプロジェクト。
+
+49のAIエージェントがディレクター、リード、スペシャリストの3階層で連携。
+72のスラッシュコマンドで設計、コーディング、QA、リリースまでカバー。
+
+Godot/Unity/Unreal Engine対応。個人開発でもチーム開発と同じ品質管理が可能に。
+
+<a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">https://github.com/Donchitos/Claude-Code-Game-Studios</a>
+#gamedev #AI開発</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="ai ai-agent ai-agents anthropic chatgpt claude claude-code codex llm nanobot openai openclaw" data-stars="40120" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">9</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HKUDS" target="_blank" rel="noreferrer">@HKUDS</a>
+          </div>
+          <h2><a href="https://github.com/HKUDS/nanobot" target="_blank" rel="noreferrer">HKUDS/nanobot</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 76.34</span>
+        <span>登場 1回</span>
+        <span>stars 40120</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: 軽量AIエージェントの実用性が尖る</p>
+      <p class="description">&quot;🐈 nanobot: The Ultra-Lightweight Personal AI Agent&quot;</p>
+      <pre>軽量な個人用AIエージェント「nanobot」が公開されています。
+
+OpenClawやClaude Codeの思想を受け継ぎ、最小限のコードで動くのが特徴です。チャット対応やメモリ機能を備え、ローカル環境からすぐに使えます。
+
+個人のタスクを自動化したい方や、軽量AIエージェントの実装を学びたい開発者に向いています。
+
+<a href="https://github.com/HKUDS/nanobot" target="_blank" rel="noreferrer">https://github.com/HKUDS/nanobot</a>
+#AI #Python</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hkuds-nanobot-7efc7b75.html">詳細</a>
+        <a class="badge" href="https://github.com/HKUDS/nanobot" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#anthropic</span><span class="badge topic">#chatgpt</span><span class="badge topic">#claude</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="ericosiu/ai-marketing-skills" data-language="python" data-tags="" data-stars="2075" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">10</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/2354382?v=4" alt="ericosiu">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/ericosiu" target="_blank" rel="noreferrer">@ericosiu</a>
+          </div>
+          <h2><a href="https://github.com/ericosiu/ai-marketing-skills" target="_blank" rel="noreferrer">ericosiu/ai-marketing-skills</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 66.19</span>
+        <span>登場 1回</span>
+        <span>stars 2075</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: 実戦で磨かれたAIマーケティング自動化の尖り</p>
+      <p class="description">Open-source AI marketing skills — growth experiments, sales pipeline, content ops, outbound, SEO, and finance automation</p>
+      <pre>ericosiu/ai-marketing-skills は Open-source AI marketing skills — growth experiments, sales pipeline, content ops, outbound, SEO, and finance automation。
+
+刺さる人: OSSを追う開発者。
+
+<a href="https://github.com/ericosiu/ai-marketing-skills" target="_blank" rel="noreferrer">https://github.com/ericosiu/ai-marketing-skills</a>
+#GitHub</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/ericosiu-ai-marketing-skills-e28e8bd3.html">詳細</a>
+        <a class="badge" href="https://github.com/ericosiu/ai-marketing-skills" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
+    </article>
+    </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
+    <article class="card rank-card top1" data-bucket="evening" data-name="natively-ai-assistant/natively-cluely-ai-assistant" data-language="typescript" data-tags="ai ai-assistant cheating claude-code claude-skills cluely cluely-alternative cluely-clone developer-tools final-round-ai interview interviewcoder llm meeting-assistant moltbook moltbot open-source openclaw trending trending-repositories 面接対策" data-stars="1040" data-score="49.47" data-sent-at="2026-04-26T11:44:22.595852+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/273852369?v=4" alt="Natively-AI-assistant">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Natively-AI-assistant" target="_blank" rel="noreferrer">@Natively-AI-assistant</a>
+          </div>
+          <h2><a href="https://github.com/Natively-AI-assistant/natively-cluely-ai-assistant" target="_blank" rel="noreferrer">Natively-AI-assistant/natively-cluely-ai-assistant</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 49.47</span>
+        
+        <span>stars 1040</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: 無料で使えるCluely代替、ローカル完結型AIアシスタ</p>
+      <p class="description">Natively - Free open-source AI interview copilot &amp; meeting assistant. The best Cluely alternative, Final Round AI alternative, and Interv...</p>
+      <pre>Nativelyは面接対策に特化した無料のAIコパイロット。
+Cluelyの完全互換UIで、リアルタイム文字起こしとステルスモードを搭載。
+ローカルRAGやBYOK対応でデータ漏洩リスクなし。月額$149の有料ツールと同等の機能が$0で使える。
+面接対策や会議アシストに最適なオープンソースツール。
+<a href="https://github.com/Natively-AI-assistant/natively-cluely-ai-assistant" target="_blank" rel="noreferrer">https://github.com/Natively-AI-assistant/natively-cluely-ai-assistant</a>
+#AI #面接対策</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/natively-ai-assistant-natively-cluely-ai-assistant-1cb17339.html">詳細</a>
+        <a class="badge" href="https://github.com/Natively-AI-assistant/natively-cluely-ai-assistant" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#cheating</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#cluely</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="evening" data-name="agentscope-ai/qwenpaw" data-language="python" data-tags="agent agentscope agentscope-runtime llm-tools llms skills aiアシスタント オープンソース" data-stars="15953" data-score="47.97" data-sent-at="2026-04-26T11:44:22.595852+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/211762292?v=4" alt="agentscope-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/agentscope-ai" target="_blank" rel="noreferrer">@agentscope-ai</a>
+          </div>
+          <h2><a href="https://github.com/agentscope-ai/QwenPaw" target="_blank" rel="noreferrer">agentscope-ai/QwenPaw</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 47.97</span>
+        
+        <span>stars 15953</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: 自己ホスト可能な個人AIアシスタントが急成長中</p>
+      <p class="description">Your Personal AI Assistant; easy to install, deploy on your own machine or on the cloud; supports multiple chat apps with easily extensib...</p>
+      <pre>自分だけのAIアシスタントを完全に管理したいならQwenPaw。
+
+ローカルでもクラウドでも好きな場所にデプロイ可能。DingTalk、WeChat、Discordなど複数のチャットアプリから使えて、スキルも自由に追加できる。
+
+データは自分の管理下に置きつつ、エージェント同士の連携やメモリ進化で使い込むほど賢くなる。
+
+プライバシー重視の技術者や、カスタマイズ性を求める人に。
+<a href="https://github.com/agentscope-ai/QwenPaw" target="_blank" rel="noreferrer">https://github.com/agentscope-ai/QwenPaw</a>
+
+#AIアシスタント #オープンソース</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/agentscope-ai-qwenpaw-7d3298ec.html">詳細</a>
+        <a class="badge" href="https://github.com/agentscope-ai/QwenPaw" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agentscope</span><span class="badge topic">#agentscope-runtime</span><span class="badge topic">#llm-tools</span><span class="badge topic">#llms</span><span class="badge topic">#skills</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="evening" data-name="crshdn/mission-control" data-language="typescript" data-tags="aiagent automation openclaw aiエージェント 自動化" data-stars="1958" data-score="41.60" data-sent-at="2026-04-26T11:44:22.595852+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/53594482?v=4" alt="crshdn">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/crshdn" target="_blank" rel="noreferrer">@crshdn</a>
+          </div>
+          <h2><a href="https://github.com/crshdn/mission-control" target="_blank" rel="noreferrer">crshdn/mission-control</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 41.6</span>
+        
+        <span>stars 1958</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: 製品改善を完全自動化するAIエージェントエンジン</p>
+      <p class="description">The world&#x27;s first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode,...</p>
+      <pre>製品改善をAIエージェントが24時間自動で回す「mission-control」
+
+市場調査から機能アイデア生成、コード実装、PR作成までを完全自動化。
+Tinder風のスワイプUIで承認するだけ。並列実行やクラッシュ復旧も内蔵。
+
+プロダクトマネージャーや少人数チームの開発効率化に最適。
+<a href="https://github.com/crshdn/mission-control" target="_blank" rel="noreferrer">https://github.com/crshdn/mission-control</a>
+
+#AIエージェント #自動化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/crshdn-mission-control-0fe59b69.html">詳細</a>
+        <a class="badge" href="https://github.com/crshdn/mission-control" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#aiagent</span><span class="badge topic">#automation</span><span class="badge topic">#openclaw</span><span class="badge topic">#aiエージェント</span><span class="badge topic">#自動化</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python" data-stars="49670" data-score="105.48" data-sent-at="2026-04-26T03:48:54.033354+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/MemPalace" target="_blank" rel="noreferrer">@MemPalace</a>
+          </div>
+          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">MemPalace/mempalace</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 105.48</span>
+        
+        <span>stars 49670</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: ベンチマーク最上位のオープンソースAIメモリシステム</p>
+      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <pre>MemPalaceは会話履歴を要約せずそのまま保存し、96.6%の精度で検索できるAI記憶システムです。
+
+要約による情報損失がなく、ChromaDBをデフォルトとしたプラグイン可能なバックエンド設計。ローカルで完結し、APIキー不要で動作します。
+
+プライバシーを重視するAI開発者や、長期間の会話コンテキストを正確に保持したい方に。
+
+<a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">https://github.com/MemPalace/mempalace</a>
+#AI #Memory</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/mempalace-mempalace-1746bed1.html">詳細</a>
+        <a class="badge" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="hkuds/clawteam" data-language="python" data-tags="agentswarm ai自動化" data-stars="4979" data-score="58.73" data-sent-at="2026-04-26T03:48:54.033354+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HKUDS" target="_blank" rel="noreferrer">@HKUDS</a>
+          </div>
+          <h2><a href="https://github.com/HKUDS/ClawTeam" target="_blank" rel="noreferrer">HKUDS/ClawTeam</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 58.73</span>
+        
+        <span>stars 4979</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: エージェント群知能で複雑タスクを自動化する新興OSS</p>
+      <p class="description">&quot;ClawTeam: Agent Swarm Intelligence&quot; (One Command → Full Automation)</p>
+      <pre>AIエージェントが群れを組んで協調する時代が来た。
+
+ClawTeamは1コマンドでエージェントチームを起動。
+リーダーがタスクを分割し、各エージェントが自律的に動く。
+結果を共有しながら、全体で最適解を目指す。
+
+研究の自動実験、フルスタック開発、投資分析など、
+複雑なマルチタスクを任せたい人に刺さる。
+
+<a href="https://github.com/HKUDS/ClawTeam" target="_blank" rel="noreferrer">https://github.com/HKUDS/ClawTeam</a>
+#AgentSwarm #AI自動化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hkuds-clawteam-092f9e84.html">詳細</a>
+        <a class="badge" href="https://github.com/HKUDS/ClawTeam" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentswarm</span><span class="badge topic">#ai自動化</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="tombadash/mouser" data-language="python" data-tags="automation controler free linux linux-app logi logitech logitech-options macos macos-app mouse mouse-remapping mx-master mx-master-3s mx-master-4 open-source productivity python マウス オープンソース" data-stars="3548" data-score="57.02" data-sent-at="2026-04-26T03:48:54.033354+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/162909258?v=4" alt="TomBadash">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/TomBadash" target="_blank" rel="noreferrer">@TomBadash</a>
+          </div>
+          <h2><a href="https://github.com/TomBadash/Mouser" target="_blank" rel="noreferrer">TomBadash/Mouser</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 57.02</span>
+        
+        <span>stars 3548</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: Logitechマウスを完全ローカルで自由に再マッピング</p>
+      <p class="description">A lightweight, open-source, fully local alternative to Logitech Options+ for remapping Logitech HID++ mice.</p>
+      <pre>Mouserというツールが話題です。
+LogitechのMX MasterなどHID++対応マウスのボタンを、完全ローカルで自由に再マッピングできます。アプリごとにプロファイルを切り替えたり、DPI調整も可能。
+
+テレメトリやクラウド、アカウント不要。Windows/macOS/Linux対応で、インストール不要のポータブル版も用意されています。
+
+Logitech Options+に不満がある方、プライバシーを重視する方にぴったり。
+<a href="https://github.com/TomBadash/Mouser" target="_blank" rel="noreferrer">https://github.com/TomBadash/Mouser</a>
+#マウス #オープンソース</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/tombadash-mouser-e979e3dc.html">詳細</a>
+        <a class="badge" href="https://github.com/TomBadash/Mouser" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#automation</span><span class="badge topic">#controler</span><span class="badge topic">#free</span><span class="badge topic">#linux</span><span class="badge topic">#linux-app</span><span class="badge topic">#logi</span></div>
+    </article>
+    </div></section>
+  </main>
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('site-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        nav.classList.toggle('open');
+      });
+      nav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+    const daySelect = document.querySelector('[data-day-select]');
+    const panels = document.querySelectorAll('.tab-panel');
+    if (daySelect) {
+      daySelect.addEventListener('change', () => {
+        const target = daySelect.value;
+        for (const panel of panels) panel.classList.remove('active');
+        document.getElementById(target)?.classList.add('active');
+      });
+    }
+    const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
+    if (weeklyArchiveSelect) {
+      weeklyArchiveSelect.addEventListener('change', () => {
+        const target = String(weeklyArchiveSelect.value || '').trim();
+        if (target) window.location.href = target;
+      });
+    }
+    const filterButtons = document.querySelectorAll('[data-bucket-filter]');
+    const cards = document.querySelectorAll('[data-bucket]');
+    for (const button of filterButtons) {
+      button.addEventListener('click', () => {
+        const target = button.dataset.bucketFilter;
+        for (const item of filterButtons) item.classList.remove('active');
+        button.classList.add('active');
+        for (const card of cards) {
+          const matches = target === 'all' || card.dataset.bucket === target;
+          card.classList.toggle('hidden-by-filter', !matches);
+        }
+      });
+    }
+    const archiveRoot = document.querySelector('[data-archive-root]');
+    if (archiveRoot) {
+      const archiveCards = Array.from(document.querySelectorAll('[data-archive-card]'));
+      const searchInput = archiveRoot.querySelector('[data-filter-search]');
+      const languageInput = archiveRoot.querySelector('[data-filter-language]');
+      const tagInput = archiveRoot.querySelector('[data-filter-tag]');
+      const reviewStateInput = archiveRoot.querySelector('[data-filter-review-state]');
+      const minStarsInput = archiveRoot.querySelector('[data-filter-stars-min]');
+      const maxStarsInput = archiveRoot.querySelector('[data-filter-stars-max]');
+      const minScoreInput = archiveRoot.querySelector('[data-filter-score-min]');
+      const maxScoreInput = archiveRoot.querySelector('[data-filter-score-max]');
+      const sortInput = archiveRoot.querySelector('[data-filter-sort]');
+      const countOutput = document.querySelector('[data-filter-count]');
+      const copyLinkButton = archiveRoot.querySelector('[data-copy-filter-link]');
+      const openLink = archiveRoot.querySelector('[data-open-filter-link]');
+      const linkOutput = archiveRoot.querySelector('[data-filter-link-output]');
+      const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
+      const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
+
+      const activePanelId = () => daySelect ? daySelect.value : '';
+      const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
+      const normalizeText = (value) => String(value || '').toLowerCase();
+      const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
+      const allowedSorts = new Set(['newest', 'score', 'stars']);
+      const searchParams = new URLSearchParams(window.location.search);
+      const initialSearch = String(searchParams.get('search') || '').trim();
+      const initialReviewState = normalizeText(searchParams.get('review_state'));
+      const initialLanguage = normalizeText(searchParams.get('language'));
+      const initialTag = normalizeText(searchParams.get('tag'));
+      const initialStarsMin = searchParams.get('stars_min');
+      const initialStarsMax = searchParams.get('stars_max');
+      const initialScoreMin = searchParams.get('score_min');
+      const initialScoreMax = searchParams.get('score_max');
+      const initialSort = normalizeText(searchParams.get('sort'));
+      const parseNumber = (value) => {
+        if (value === '' || value == null) return null;
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : null;
+      };
+      const setNumericInputIfValid = (input, rawValue) => {
+        if (!input) return;
+        const parsed = parseNumber(rawValue);
+        if (parsed == null || parsed < 0) return;
+        input.value = String(parsed);
+      };
+      const buildArchiveShareUrl = () => {
+        const params = new URLSearchParams();
+        const search = String(searchInput?.value || '').trim();
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (search) params.set('search', search);
+        if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
+        if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {
+          params.set('language', language);
+        }
+        if (tag && Array.from(tagInput?.options || []).some((option) => option.value === tag)) {
+          params.set('tag', tag);
+        }
+        if (minStars != null && minStars >= 0) params.set('stars_min', String(minStars));
+        if (maxStars != null && maxStars >= 0) params.set('stars_max', String(maxStars));
+        if (minScore != null && minScore >= 0) params.set('score_min', String(minScore));
+        if (maxScore != null && maxScore >= 0) params.set('score_max', String(maxScore));
+        if (allowedSorts.has(sortKey) && sortKey !== 'newest') params.set('sort', sortKey);
+        const shareUrl = new URL(window.location.pathname, window.location.href);
+        shareUrl.search = params.toString();
+        return shareUrl.toString();
+      };
+      const updateArchiveShareUi = (statusText = '') => {
+        const shareUrl = buildArchiveShareUrl();
+        if (openLink) openLink.href = shareUrl;
+        if (linkOutput) linkOutput.value = shareUrl;
+        if (shareStatus) shareStatus.textContent = statusText || '';
+      };
+
+      const applyArchiveFilters = () => {
+        const search = normalizeText(searchInput?.value);
+        const language = normalizeText(languageInput?.value);
+        const tag = normalizeText(tagInput?.value);
+        const reviewState = normalizeText(reviewStateInput?.value);
+        const minStars = parseNumber(minStarsInput?.value);
+        const maxStars = parseNumber(maxStarsInput?.value);
+        const minScore = parseNumber(minScoreInput?.value);
+        const maxScore = parseNumber(maxScoreInput?.value);
+        const sortKey = sortInput?.value || 'newest';
+        const panelId = activePanelId();
+        const bucket = activeBucket();
+
+        for (const card of archiveCards) {
+          const inActivePanel = !panelId || card.closest('.tab-panel')?.id === panelId;
+          const matchesBucket = bucket === 'all' || card.dataset.bucket === bucket;
+          const name = normalizeText(card.dataset.name);
+          const cardLanguage = normalizeText(card.dataset.language);
+          const tags = normalizeText(card.dataset.tags);
+          const cardReviewState = normalizeText(card.dataset.reviewState);
+          const stars = parseNumber(card.dataset.stars) ?? 0;
+          const score = parseNumber(card.dataset.score) ?? 0;
+          const matchesSearch = !search || name.includes(search);
+          const matchesLanguage = !language || cardLanguage === language;
+          const matchesTag = !tag || tags.includes(tag);
+          const matchesReviewState = !reviewState || cardReviewState === reviewState;
+          const matchesMinStars = minStars == null || stars >= minStars;
+          const matchesMaxStars = maxStars == null || stars <= maxStars;
+          const matchesMinScore = minScore == null || score >= minScore;
+          const matchesMaxScore = maxScore == null || score <= maxScore;
+          const visible =
+            inActivePanel &&
+            matchesBucket &&
+            matchesSearch &&
+            matchesLanguage &&
+            matchesTag &&
+            matchesReviewState &&
+            matchesMinStars &&
+            matchesMaxStars &&
+            matchesMinScore &&
+            matchesMaxScore;
+          card.classList.toggle('hidden-by-filter', !visible);
+        }
+
+        const activePanel = panelId ? panelsById.get(panelId) : null;
+        const sortableCards = archiveCards.filter((card) => !card.classList.contains('hidden-by-filter'));
+        sortableCards.sort((left, right) => {
+          if (sortKey === 'score') return Number(right.dataset.score || 0) - Number(left.dataset.score || 0);
+          if (sortKey === 'stars') return Number(right.dataset.stars || 0) - Number(left.dataset.stars || 0);
+          return String(right.dataset.sentAt || '').localeCompare(String(left.dataset.sentAt || ''));
+        });
+        if (activePanel) {
+          for (const card of sortableCards) {
+            activePanel.appendChild(card);
+          }
+        }
+        if (countOutput) {
+          countOutput.textContent = `${sortableCards.length} 件表示`;
+        }
+        updateArchiveShareUi();
+      };
+
+      [
+        searchInput,
+        languageInput,
+        tagInput,
+        reviewStateInput,
+        minStarsInput,
+        maxStarsInput,
+        minScoreInput,
+        maxScoreInput,
+        sortInput,
+      ].filter(Boolean).forEach((element) => {
+        element.addEventListener('input', applyArchiveFilters);
+        element.addEventListener('change', applyArchiveFilters);
+      });
+      if (daySelect) {
+        daySelect.addEventListener('change', applyArchiveFilters);
+      }
+      if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {
+        reviewStateInput.value = initialReviewState;
+      }
+      if (searchInput && initialSearch) {
+        searchInput.value = initialSearch;
+      }
+      if (languageInput && initialLanguage && Array.from(languageInput.options).some((option) => option.value === initialLanguage)) {
+        languageInput.value = initialLanguage;
+      }
+      if (tagInput && initialTag && Array.from(tagInput.options).some((option) => option.value === initialTag)) {
+        tagInput.value = initialTag;
+      }
+      setNumericInputIfValid(minStarsInput, initialStarsMin);
+      setNumericInputIfValid(maxStarsInput, initialStarsMax);
+      setNumericInputIfValid(minScoreInput, initialScoreMin);
+      setNumericInputIfValid(maxScoreInput, initialScoreMax);
+      if (sortInput && allowedSorts.has(initialSort)) {
+        sortInput.value = initialSort;
+      }
+      for (const button of filterButtons) {
+        button.addEventListener('click', applyArchiveFilters);
+      }
+      if (copyLinkButton) {
+        copyLinkButton.addEventListener('click', async () => {
+          const shareUrl = buildArchiveShareUrl();
+          try {
+            if (navigator.clipboard?.writeText) {
+              await navigator.clipboard.writeText(shareUrl);
+            } else {
+              throw new Error('clipboard-unavailable');
+            }
+            updateArchiveShareUi('現在の絞り込み URL をコピーしました');
+          } catch (_error) {
+            if (linkOutput) {
+              linkOutput.focus();
+              linkOutput.select();
+            }
+            updateArchiveShareUi('URL を選択したので、そのまま手動でコピーしてください');
+          }
+        });
+      }
+      applyArchiveFilters();
+    }
+    const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
+    if (reviewStatePanels.length) {
+      const reviewStateLabels = {
+        unseen: '未確認',
+        interested: '気になる',
+        tested: '試した',
+        good: '良い',
+        meh: '微妙',
+        production_candidate: '本番候補',
+      };
+      const buildReviewStateIssueUrl = (fullName, state) => {
+        const params = new URLSearchParams({
+          title: `[review-state] ${fullName} -> ${state}`,
+          body:
+            `repo: ${fullName}\nstate: ${state}\nsource: pages\n\n送信すると workflow が state.json を更新して Pages を再生成します。`,
+        });
+        return `https://github.com/taihey5555/githubcheck/issues/new?${params.toString()}`;
+      };
+      for (const panel of reviewStatePanels) {
+        const fullName = String(panel.dataset.repoFullName || '').trim();
+        const select = panel.querySelector('[data-review-state-select]');
+        const link = panel.querySelector('[data-review-state-link]');
+        const note = panel.querySelector('[data-review-state-note]');
+        if (!fullName || !select || !link) continue;
+        const updateReviewStateLink = () => {
+          const selectedState = String(select.value || 'unseen').trim();
+          const label = reviewStateLabels[selectedState] || selectedState;
+          link.href = buildReviewStateIssueUrl(fullName, selectedState);
+          link.textContent = `GitHubで「${label}」に更新`;
+          if (note) {
+            note.textContent = `GitHub の issue 作成画面が開きます。${label} で送信すると、workflow が state.json を更新して Pages を再生成します。`;
+          }
+        };
+        select.addEventListener('change', updateReviewStateLink);
+        updateReviewStateLink();
+      }
+    }
+  </script>
+</body>
+</html>
