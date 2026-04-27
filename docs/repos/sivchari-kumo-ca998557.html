@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>debba/tabularis</title>
+  <title>sivchari/kumo</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -601,60 +601,60 @@
   </header>
   <main>
     <section class="hero">
-      <h1>debba/tabularis</h1>
+      <h1>sivchari/kumo</h1>
       <p>リポジトリごとの通知履歴をまとめた静的詳細ページです。</p>
     </section>
     
         <section class="section-block">
           <article class="card">
             <div class="card-header">
-              <img class="avatar" src="https://avatars.githubusercontent.com/u/3198901?v=4" alt="debba">
+              <img class="avatar" src="https://avatars.githubusercontent.com/u/55221074?v=4" alt="sivchari">
               <div class="card-title-wrap">
                 <div class="owner-line">
-                  <a href="https://github.com/debba" target="_blank" rel="noreferrer">@debba</a>
+                  <a href="https://github.com/sivchari" target="_blank" rel="noreferrer">@sivchari</a>
                 </div>
-                <h2>debba/tabularis</h2>
+                <h2>sivchari/kumo</h2>
               </div>
             </div>
             <div class="meta">
-              <span>stars 1124</span>
-              <span>score 53.72</span>
-              <span>TypeScript</span>
+              <span>stars 1055</span>
+              <span>score 42.78</span>
+              <span>Go</span>
               <span>状態 未確認</span>
               <span>登場 1回</span>
             </div>
             <div class="meta">
-              <span>最終通知 2026-04-16 21:03</span>
-              <span>クールダウン中（残り3日）</span>
-              <span>最終観測 2026-04-20 12:45</span>
-              <span>最終stars 1153</span>
+              <span>最終通知 2026-04-27 21:22</span>
+              <span>クールダウン中（残り14日）</span>
+              <span>最終観測 2026-04-27 21:22</span>
+              <span>最終stars 1055</span>
             </div>
             
-        <div class="review-state-panel" data-review-state-panel data-repo-full-name="debba/tabularis">
+        <div class="review-state-panel" data-review-state-panel data-repo-full-name="sivchari/kumo">
           <h3>状態を更新</h3>
           <p class="pick-reason">GitHub の issue 作成画面を開いて更新要求を送ります。送信後、workflow が state.json を更新して Pages を再生成します。</p>
           <div class="review-state-actions">
             <select data-review-state-select aria-label="更新する状態">
               <option value="unseen" selected>未確認</option><option value="interested">気になる</option><option value="tested">試した</option><option value="good">良い</option><option value="meh">微妙</option><option value="production_candidate">本番候補</option>
             </select>
-            <a class="badge review-state" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+debba%2Ftabularis+-%3E+unseen&amp;body=repo%3A+debba%2Ftabularis%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" data-review-state-link>GitHubで「未確認」に更新</a>
+            <a class="badge review-state" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+sivchari%2Fkumo+-%3E+unseen&amp;body=repo%3A+sivchari%2Fkumo%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" data-review-state-link>GitHubで「未確認」に更新</a>
           </div>
           <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
         </div>
         
-            <p class="pick-reason">選定理由: AI活用で開発された軽量DBクライアントの尖り</p>
-            <p class="description">A lightweight, cross-platform database client for developers. Supports MySQL, PostgreSQL and SQLite. Hackable with plugins. Built for speed, security, and aesthetics.</p>
-            <pre>軽量で高速なデータベースクライアント「tabularis」が面白い。
+            <p class="pick-reason">選定理由: Go製の軽量AWSエミュレータ、CI/CD用途に最適</p>
+            <p class="description">A lightweight AWS service emulator written in Go</p>
+            <pre>Goで書かれた軽量なAWSエミュレータ「kumo」が面白い。
 
-PostgreSQL、MySQL、SQLiteに対応し、AI支援やMCP統合でクエリ作成を補助します。プラグインで機能拡張も可能です。
+シングルバイナリで動作し、S3やDynamoDB、Lambdaなど76のAWSサービスをエミュレート。認証不要でCI/CDにそのまま組み込める。
 
-データベースを日常的に扱う開発者や、視覚的なクエリビルダーを求める人に合っています。
+Dockerでも使えて、データ永続化も可能。LocalStackの代替として、テストやローカル開発の高速化に。
 
-<a href="https://github.com/debba/tabularis" target="_blank" rel="noreferrer">https://github.com/debba/tabularis</a>
-#データベース #開発者向け</pre>
-            <div class="badge-row"><a class="badge" href="../index.html?language=typescript">TypeScript</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#cross-platform</span><span class="badge topic">#database-client</span><span class="badge topic">#database-gui</span><span class="badge topic">#database-management</span><span class="badge topic">#database-tool</span><span class="badge topic">#developer-tools</span><span class="badge topic">#er-diagram</span><span class="badge topic">#mcp</span><span class="badge topic">#mysql</span><span class="badge topic">#postgresql</span><span class="badge topic">#react</span><span class="badge topic">#rust</span><span class="badge topic">#sql</span><span class="badge topic">#sql-editor</span><span class="badge topic">#sqlite</span><span class="badge topic">#tauri</span><span class="badge topic">#typescript</span><span class="badge topic">#visual-query-builder</span><span class="badge topic">#データベース</span><span class="badge topic">#開発者向け</span></div>
+<a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">https://github.com/sivchari/kumo</a>
+#Go #AWS</pre>
+            <div class="badge-row"><a class="badge" href="../index.html?language=go">Go</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#aws</span><span class="badge topic">#cicd</span><span class="badge topic">#cloud</span><span class="badge topic">#continuous-integration</span><span class="badge topic">#developer-tools</span><span class="badge topic">#go</span><span class="badge topic">#localstack</span><span class="badge topic">#testing</span></div>
             <div class="detail-links primary-links">
-              <a class="badge" href="https://github.com/debba/tabularis" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="badge" href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">GitHub</a>
               <a class="badge" href="../index.html">履歴</a>
               <a class="badge" href="../weekly.html">週間</a>
             </div>
@@ -662,8 +662,8 @@ PostgreSQL、MySQL、SQLiteに対応し、AI支援やMCP統合でクエリ作成
               <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
             </div>
             <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?language=typescript">TypeScript のリポジトリ一覧を見る</a>
-              <a class="badge" href="../index.html?score_min=53.72&sort=score">高スコアの一覧を見る</a>
+              <a class="badge" href="../index.html?language=go">Go のリポジトリ一覧を見る</a>
+              <a class="badge" href="../index.html?score_min=42.78&sort=score">高スコアの一覧を見る</a>
               <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
             </div>
             <div class="detail-links secondary-links">
@@ -672,96 +672,96 @@ PostgreSQL、MySQL、SQLiteに対応し、AI支援やMCP統合でクエリ作成
           </article>
         </section>
         <section class="stats-grid">
-          <article class="stat-card"><strong>2026-04-16 21:03</strong><span>初回出現日時</span></article>
-          <article class="stat-card"><strong>2026-04-16 21:03</strong><span>最新出現日時</span></article>
+          <article class="stat-card"><strong>2026-04-27 21:22</strong><span>初回出現日時</span></article>
+          <article class="stat-card"><strong>2026-04-27 21:22</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>1</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
         </section>
         <section class='section-block'><div class='section-header'><h2>似ているリポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='history-list'>
                 <article class="history-item">
                   <div class="meta">
-                    <span>TypeScript</span>
-                    <span>score 53.92</span>
-                    <span>stars 1181</span>
+                    <span>Go</span>
+                    <span>score 46.89</span>
+                    <span>stars 3900</span>
                     <span>状態 未確認</span>
                   </div>
-                  <h3><a href="../repos/tabularisdb-tabularis-1e0fb603.html" target="_self">TabularisDB/tabularis</a></h3>
-                  <p class="pick-reason">同じ言語: TypeScript / 共通タグ: #ai-agent, #ai-assistant, #cross-platform</p>
-                  <p class="description">A lightweight, cross-platform database client for developers. Supports MySQL, PostgreSQL and SQLite. Hackable with plugins. Built for speed, security, and aesthetics.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agent">#ai-agent</a><a class="badge topic" href="../index.html?tag=ai-assistant">#ai-assistant</a><a class="badge topic" href="../index.html?tag=cross-platform">#cross-platform</a><a class="badge topic" href="../index.html?tag=database-client">#database-client</a><a class="badge topic" href="../index.html?tag=database-gui">#database-gui</a><a class="badge topic" href="../index.html?tag=database-management">#database-management</a><a class="badge topic" href="../index.html?tag=database-tool">#database-tool</a><a class="badge topic" href="../index.html?tag=developer-tools">#developer-tools</a><a class="badge topic" href="../index.html?tag=er-diagram">#er-diagram</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a><a class="badge topic" href="../index.html?tag=mysql">#mysql</a><a class="badge topic" href="../index.html?tag=postgresql">#postgresql</a></div>
+                  <h3><a href="../repos/rorkai-app-store-connect-cli-23fdfe3c.html" target="_self">rorkai/App-Store-Connect-CLI</a></h3>
+                  <p class="pick-reason">同じ言語: Go / 共通タグ: #cicd, #developer-tools, #go</p>
+                  <p class="description">Fast, scriptable CLI for the App Store Connect API. Automate TestFlight, builds, submissions, signing, analytics, screenshots, subscriptions, and more. JSON-first, no interactive prompts</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=cicd">#cicd</a><a class="badge topic" href="../index.html?tag=developer-tools">#developer-tools</a><a class="badge topic" href="../index.html?tag=go">#go</a></div>
                   <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/tabularisdb-tabularis-1e0fb603.html">詳細</a>
-                    <a class="badge" href="https://github.com/TabularisDB/tabularis" target="_blank" rel="noreferrer">GitHub</a>
+                    <a class="badge" href="../repos/rorkai-app-store-connect-cli-23fdfe3c.html">詳細</a>
+                    <a class="badge" href="https://github.com/rorkai/App-Store-Connect-CLI" target="_blank" rel="noreferrer">GitHub</a>
                   </div>
                 </article>
                 
                 <article class="history-item">
                   <div class="meta">
                     <span>Go</span>
-                    <span>score 59.67</span>
-                    <span>stars 2840</span>
+                    <span>score 50.86</span>
+                    <span>stars 3799</span>
                     <span>状態 未確認</span>
                   </div>
-                  <h3><a href="../repos/nextlevelbuilder-goclaw-f5707998.html" target="_self">nextlevelbuilder/goclaw</a></h3>
-                  <p class="pick-reason">共通タグ: #ai-agent, #mcp, #postgresql</p>
-                  <p class="description">GoClaw - GoClaw is OpenClaw rebuilt in Go — with multi-tenant isolation, 5-layer security, and native concurrency. Deploy AI agent teams at scale without compromising on safety.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agent">#ai-agent</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a><a class="badge topic" href="../index.html?tag=postgresql">#postgresql</a></div>
+                  <h3><a href="../repos/rudrankriyam-app-store-connect-cli-4d6b01d1.html" target="_self">rudrankriyam/App-Store-Connect-CLI</a></h3>
+                  <p class="pick-reason">同じ言語: Go / 共通タグ: #cicd, #developer-tools, #go</p>
+                  <p class="description">Fast, scriptable CLI for the App Store Connect API. Automate TestFlight, builds, submissions, signing, analytics, screenshots, subscriptions, and more. JSON-first, no interactive prompts</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=cicd">#cicd</a><a class="badge topic" href="../index.html?tag=developer-tools">#developer-tools</a><a class="badge topic" href="../index.html?tag=go">#go</a></div>
                   <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/nextlevelbuilder-goclaw-f5707998.html">詳細</a>
-                    <a class="badge" href="https://github.com/nextlevelbuilder/goclaw" target="_blank" rel="noreferrer">GitHub</a>
+                    <a class="badge" href="../repos/rudrankriyam-app-store-connect-cli-4d6b01d1.html">詳細</a>
+                    <a class="badge" href="https://github.com/rudrankriyam/App-Store-Connect-CLI" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+                </article>
+                
+                <article class="history-item">
+                  <div class="meta">
+                    <span>Python</span>
+                    <span>score 47.22</span>
+                    <span>stars 3441</span>
+                    <span>状態 未確認</span>
+                  </div>
+                  <h3><a href="../repos/galaxy-dawn-claude-scholar-e82c2f87.html" target="_self">Galaxy-Dawn/claude-scholar</a></h3>
+                  <p class="pick-reason">共通タグ: #developer-tools</p>
+                  <p class="description">Semi-automated research assistant for academic research and software development. Supports Claude Code, OpenCode, and Codex CLI across ideation, coding, experiments, writing, and publication.</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=developer-tools">#developer-tools</a></div>
+                  <div class="detail-links primary-links">
+                    <a class="badge" href="../repos/galaxy-dawn-claude-scholar-e82c2f87.html">詳細</a>
+                    <a class="badge" href="https://github.com/Galaxy-Dawn/claude-scholar" target="_blank" rel="noreferrer">GitHub</a>
                   </div>
                 </article>
                 
                 <article class="history-item">
                   <div class="meta">
                     <span>TypeScript</span>
-                    <span>score 49.47</span>
-                    <span>stars 1040</span>
+                    <span>score 47.78</span>
+                    <span>stars 1873</span>
                     <span>状態 未確認</span>
                   </div>
-                  <h3><a href="../repos/natively-ai-assistant-natively-cluely-ai-assistant-1cb17339.html" target="_self">Natively-AI-assistant/natively-cluely-ai-assistant</a></h3>
-                  <p class="pick-reason">同じ言語: TypeScript / 共通タグ: #ai-assistant, #developer-tools</p>
-                  <p class="description">Natively - Free open-source AI interview copilot &amp; meeting assistant. The best Cluely alternative, Final Round AI alternative, and Interview Coder alternative. Real-time transcription, undetectable stealth mode, local RAG, BYOK. No subscriptions. No data breaches.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-assistant">#ai-assistant</a><a class="badge topic" href="../index.html?tag=developer-tools">#developer-tools</a></div>
+                  <h3><a href="../repos/callstackincubator-agent-device-8c477dc3.html" target="_self">callstackincubator/agent-device</a></h3>
+                  <p class="pick-reason">共通タグ: #testing</p>
+                  <p class="description">CLI to control iOS and Android devices for AI agents</p>
+                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=testing">#testing</a></div>
                   <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/natively-ai-assistant-natively-cluely-ai-assistant-1cb17339.html">詳細</a>
-                    <a class="badge" href="https://github.com/Natively-AI-assistant/natively-cluely-ai-assistant" target="_blank" rel="noreferrer">GitHub</a>
-                  </div>
-                </article>
-                
-                <article class="history-item">
-                  <div class="meta">
-                    <span>TypeScript</span>
-                    <span>score 47.81</span>
-                    <span>stars 3183</span>
-                    <span>状態 未確認</span>
-                  </div>
-                  <h3><a href="../repos/matt1398-claude-devtools-c8dc2fcf.html" target="_self">matt1398/claude-devtools</a></h3>
-                  <p class="pick-reason">同じ言語: TypeScript / 共通タグ: #ai-agent, #developer-tools</p>
-                  <p class="description">The missing DevTools for Claude Code — inspect session logs, tool calls, token usage, subagents, and context window in a visual UI. Free, open source.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agent">#ai-agent</a><a class="badge topic" href="../index.html?tag=developer-tools">#developer-tools</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/matt1398-claude-devtools-c8dc2fcf.html">詳細</a>
-                    <a class="badge" href="https://github.com/matt1398/claude-devtools" target="_blank" rel="noreferrer">GitHub</a>
+                    <a class="badge" href="../repos/callstackincubator-agent-device-8c477dc3.html">詳細</a>
+                    <a class="badge" href="https://github.com/callstackincubator/agent-device" target="_blank" rel="noreferrer">GitHub</a>
                   </div>
                 </article>
                 </div></section>
         <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>
                 <article class="history-item">
                   <div class="meta">
-                    <span class="date-label">2026-04-16 21:03</span>
+                    <span class="date-label">2026-04-27 21:22</span>
                     <span>夜の尖り枠</span>
-                    <span>score 53.72</span>
+                    <span>score 42.78</span>
                     
-                    <span>stars 1124</span>
+                    <span>stars 1055</span>
                     
-                    <span>TypeScript</span>
+                    <span>Go</span>
                     <span>状態 未確認</span>
                   </div>
-                  <p class="pick-reason">選定理由: AI活用で開発された軽量DBクライアントの尖り</p>
+                  <p class="pick-reason">選定理由: Go製の軽量AWSエミュレータ、CI/CD用途に最適</p>
                   
                   
-                  <div class="badge-row"><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#cross-platform</span><span class="badge topic">#database-client</span><span class="badge topic">#database-gui</span><span class="badge topic">#database-management</span><span class="badge topic">#database-tool</span><span class="badge topic">#developer-tools</span><span class="badge topic">#er-diagram</span><span class="badge topic">#mcp</span><span class="badge topic">#mysql</span><span class="badge topic">#postgresql</span><span class="badge topic">#react</span><span class="badge topic">#rust</span><span class="badge topic">#sql</span><span class="badge topic">#sql-editor</span><span class="badge topic">#sqlite</span><span class="badge topic">#tauri</span><span class="badge topic">#typescript</span><span class="badge topic">#visual-query-builder</span><span class="badge topic">#データベース</span><span class="badge topic">#開発者向け</span></div>
+                  <div class="badge-row"><span class="badge topic">#aws</span><span class="badge topic">#cicd</span><span class="badge topic">#cloud</span><span class="badge topic">#continuous-integration</span><span class="badge topic">#developer-tools</span><span class="badge topic">#go</span><span class="badge topic">#localstack</span><span class="badge topic">#testing</span></div>
                 </article>
                 </div></section>
         
