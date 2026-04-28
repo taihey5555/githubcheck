@@ -602,15 +602,15 @@
   <main>
     <section class="hero">
       <h1>週間まとめ</h1>
-      <p>4/27 - 4/26 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
+      <p>4/27 - 4/27 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
     </section>
     <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="./weekly.html" selected>最新週 4/27 - 5/3</option><option value="./weekly/2026-04-20.html">4/20 - 4/26</option><option value="./weekly/2026-04-13.html">4/13 - 4/19</option><option value="./weekly/2026-04-06.html">4/6 - 4/12</option><option value="./weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
     <section class="stats-grid">
-      <article class="stat-card"><strong>3</strong><span>今週のリポジトリ数</span></article>
-      <article class="stat-card"><strong>3</strong><span>通知総数</span></article>
-      <article class="stat-card"><strong>57.4</strong><span>平均 score</span></article>
-      <article class="stat-card"><strong>HTML 1, JavaScript 1, Rust 1</strong><span>言語分布</span></article>
-      <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 3</a></strong><span>状態の分布</span></article>
+      <article class="stat-card"><strong>6</strong><span>今週のリポジトリ数</span></article>
+      <article class="stat-card"><strong>6</strong><span>通知総数</span></article>
+      <article class="stat-card"><strong>49.6</strong><span>平均 score</span></article>
+      <article class="stat-card"><strong>HTML 2, Go 1, JavaScript 1, Rust 1</strong><span>言語分布</span></article>
+      <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 6</a></strong><span>状態の分布</span></article>
     </section>
     <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
     <article class="card rank-card top1" data-bucket="morning" data-name="prompt-security/clawsec" data-language="javascript" data-tags="clawdbot clawdbot-skill hermes hermes-agent hermes-skill hermes-skills molt moltbot-skill moltbot-skills nanoclaw openclaw openclaw-extension openclaw-plugin openclaw-security openclaw-skill openclaw-skills picoclaw picoclaw-install" data-stars="953" data-score="0.00" data-sent-at="" data-review-state="unseen">
@@ -724,6 +724,112 @@ Docker対応で本番投入も簡単。ノーコードで使えるので、AIエ
       </div>
       <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent-templates</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#awesome</span></div>
     </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="sivchari/kumo" data-language="go" data-tags="aws cicd cloud continuous-integration developer-tools go localstack testing" data-stars="1055" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/55221074?v=4" alt="sivchari">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/sivchari" target="_blank" rel="noreferrer">@sivchari</a>
+          </div>
+          <h2><a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">sivchari/kumo</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 42.78</span>
+        <span>登場 1回</span>
+        <span>stars 1055</span>
+        <span>Go</span>
+      </div>
+      <p class="pick-reason">選定理由: Go製の軽量AWSエミュレータ、CI/CD用途に最適</p>
+      <p class="description">A lightweight AWS service emulator written in Go</p>
+      <pre>Goで書かれた軽量なAWSエミュレータ「kumo」が面白い。
+
+シングルバイナリで動作し、S3やDynamoDB、Lambdaなど76のAWSサービスをエミュレート。認証不要でCI/CDにそのまま組み込める。
+
+Dockerでも使えて、データ永続化も可能。LocalStackの代替として、テストやローカル開発の高速化に。
+
+<a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">https://github.com/sivchari/kumo</a>
+#Go #AWS</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/sivchari-kumo-ca998557.html">詳細</a>
+        <a class="badge" href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#aws</span><span class="badge topic">#cicd</span><span class="badge topic">#cloud</span><span class="badge topic">#continuous-integration</span><span class="badge topic">#developer-tools</span><span class="badge topic">#go</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="hbai-ltd/toonflow-app" data-language="html" data-tags="ai ai-content-creation ai-tool ai-video-generation automation content-generation desktop-app electron generative-ai image-generation llm nodejs shorts text-to-video typescript video-generation vite vue3" data-stars="7424" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/257465404?v=4" alt="HBAI-Ltd">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HBAI-Ltd" target="_blank" rel="noreferrer">@HBAI-Ltd</a>
+          </div>
+          <h2><a href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">HBAI-Ltd/Toonflow-app</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 42.08</span>
+        <span>登場 1回</span>
+        <span>stars 7424</span>
+        <span>HTML</span>
+      </div>
+      <p class="pick-reason">選定理由: 小説をAIでアニメ短劇化できるオープンソースツール</p>
+      <p class="description">Toonflow 是开源一站式 AI 短剧创作工具，将小说、剧本快速转化为动画短剧。集成 AI 编剧、智能分镜、角色与视频生成，跨平台桌面端轻量部署，助力创作者低成本批量产出视觉内容。Toonflow is an open-source AI tool that turns...</p>
+      <pre>Toonflowは小説や脚本をAIでアニメ短劇に変えるツール。
+
+AI脚本、絵コンテ、キャラ・映像生成を統合。無限キャンバス上でノードを自由に配置し、3層のAgentが協調して制作を効率化する。
+
+個人の動画クリエイターや小規模スタジオ、小説の映像化を試したい人に。
+
+<a href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">https://github.com/HBAI-Ltd/Toonflow-app</a>
+#AI動画生成 #オープンソース</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hbai-ltd-toonflow-app-361efd41.html">詳細</a>
+        <a class="badge" href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-content-creation</span><span class="badge topic">#ai-tool</span><span class="badge topic">#ai-video-generation</span><span class="badge topic">#automation</span><span class="badge topic">#content-generation</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="lakr233/vphone-cli" data-language="swift" data-tags="" data-stars="5774" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/25259084?v=4" alt="Lakr233">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Lakr233" target="_blank" rel="noreferrer">@Lakr233</a>
+          </div>
+          <h2><a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">Lakr233/vphone-cli</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 40.58</span>
+        <span>登場 1回</span>
+        <span>stars 5774</span>
+        <span>Swift</span>
+      </div>
+      <p class="pick-reason">選定理由: macOS上でiOS 26を仮想起動できるツール</p>
+      
+      <pre>macOSでiOS 26の仮想iPhoneを起動できる「vphone-cli」が登場。
+AppleのVirtualization.frameworkを活用し、PCC研究用VM基盤を流用。
+パッチレスから完全脱獄まで4段階のセキュリティバイパスを選択可能。
+iOSセキュリティ研究やファームウェア解析に携わる方に。
+<a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">https://github.com/Lakr233/vphone-cli</a>
+#iOS #仮想化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/lakr233-vphone-cli-3a4c8dd6.html">詳細</a>
+        <a class="badge" href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span></div>
+    </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
     <article class="card rank-card top1" data-bucket="morning" data-name="prompt-security/clawsec" data-language="javascript" data-tags="clawdbot clawdbot-skill hermes hermes-agent hermes-skill hermes-skills molt moltbot-skill moltbot-skills nanoclaw openclaw openclaw-extension openclaw-plugin openclaw-security openclaw-skill openclaw-skills picoclaw picoclaw-install" data-stars="953" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
@@ -836,10 +942,222 @@ Docker対応で本番投入も簡単。ノーコードで使えるので、AIエ
       </div>
       <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent-templates</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#awesome</span></div>
     </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="sivchari/kumo" data-language="go" data-tags="aws cicd cloud continuous-integration developer-tools go localstack testing" data-stars="1055" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/55221074?v=4" alt="sivchari">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/sivchari" target="_blank" rel="noreferrer">@sivchari</a>
+          </div>
+          <h2><a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">sivchari/kumo</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 42.78</span>
+        <span>登場 1回</span>
+        <span>stars 1055</span>
+        <span>Go</span>
+      </div>
+      <p class="pick-reason">選定理由: Go製の軽量AWSエミュレータ、CI/CD用途に最適</p>
+      <p class="description">A lightweight AWS service emulator written in Go</p>
+      <pre>Goで書かれた軽量なAWSエミュレータ「kumo」が面白い。
+
+シングルバイナリで動作し、S3やDynamoDB、Lambdaなど76のAWSサービスをエミュレート。認証不要でCI/CDにそのまま組み込める。
+
+Dockerでも使えて、データ永続化も可能。LocalStackの代替として、テストやローカル開発の高速化に。
+
+<a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">https://github.com/sivchari/kumo</a>
+#Go #AWS</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/sivchari-kumo-ca998557.html">詳細</a>
+        <a class="badge" href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#aws</span><span class="badge topic">#cicd</span><span class="badge topic">#cloud</span><span class="badge topic">#continuous-integration</span><span class="badge topic">#developer-tools</span><span class="badge topic">#go</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="hbai-ltd/toonflow-app" data-language="html" data-tags="ai ai-content-creation ai-tool ai-video-generation automation content-generation desktop-app electron generative-ai image-generation llm nodejs shorts text-to-video typescript video-generation vite vue3" data-stars="7424" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/257465404?v=4" alt="HBAI-Ltd">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HBAI-Ltd" target="_blank" rel="noreferrer">@HBAI-Ltd</a>
+          </div>
+          <h2><a href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">HBAI-Ltd/Toonflow-app</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 42.08</span>
+        <span>登場 1回</span>
+        <span>stars 7424</span>
+        <span>HTML</span>
+      </div>
+      <p class="pick-reason">選定理由: 小説をAIでアニメ短劇化できるオープンソースツール</p>
+      <p class="description">Toonflow 是开源一站式 AI 短剧创作工具，将小说、剧本快速转化为动画短剧。集成 AI 编剧、智能分镜、角色与视频生成，跨平台桌面端轻量部署，助力创作者低成本批量产出视觉内容。Toonflow is an open-source AI tool that turns...</p>
+      <pre>Toonflowは小説や脚本をAIでアニメ短劇に変えるツール。
+
+AI脚本、絵コンテ、キャラ・映像生成を統合。無限キャンバス上でノードを自由に配置し、3層のAgentが協調して制作を効率化する。
+
+個人の動画クリエイターや小規模スタジオ、小説の映像化を試したい人に。
+
+<a href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">https://github.com/HBAI-Ltd/Toonflow-app</a>
+#AI動画生成 #オープンソース</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hbai-ltd-toonflow-app-361efd41.html">詳細</a>
+        <a class="badge" href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-content-creation</span><span class="badge topic">#ai-tool</span><span class="badge topic">#ai-video-generation</span><span class="badge topic">#automation</span><span class="badge topic">#content-generation</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="lakr233/vphone-cli" data-language="swift" data-tags="" data-stars="5774" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/25259084?v=4" alt="Lakr233">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Lakr233" target="_blank" rel="noreferrer">@Lakr233</a>
+          </div>
+          <h2><a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">Lakr233/vphone-cli</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 40.58</span>
+        <span>登場 1回</span>
+        <span>stars 5774</span>
+        <span>Swift</span>
+      </div>
+      <p class="pick-reason">選定理由: macOS上でiOS 26を仮想起動できるツール</p>
+      
+      <pre>macOSでiOS 26の仮想iPhoneを起動できる「vphone-cli」が登場。
+AppleのVirtualization.frameworkを活用し、PCC研究用VM基盤を流用。
+パッチレスから完全脱獄まで4段階のセキュリティバイパスを選択可能。
+iOSセキュリティ研究やファームウェア解析に携わる方に。
+<a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">https://github.com/Lakr233/vphone-cli</a>
+#iOS #仮想化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/lakr233-vphone-cli-3a4c8dd6.html">詳細</a>
+        <a class="badge" href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span></div>
+    </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="morning" data-name="prompt-security/clawsec" data-language="javascript" data-tags="clawdbot clawdbot-skill hermes hermes-agent hermes-skill hermes-skills molt moltbot-skill moltbot-skills nanoclaw openclaw openclaw-extension openclaw-plugin openclaw-security openclaw-skill openclaw-skills picoclaw picoclaw-install aisecurity agentsecurity" data-stars="953" data-score="63.32" data-sent-at="2026-04-27T03:53:03.130619+00:00" data-review-state="unseen">
+    <article class="card rank-card top1" data-bucket="evening" data-name="sivchari/kumo" data-language="go" data-tags="aws cicd cloud continuous-integration developer-tools go localstack testing" data-stars="1055" data-score="42.78" data-sent-at="2026-04-27T12:22:24.236223+00:00" data-review-state="unseen">
       <div class="card-header">
         <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/55221074?v=4" alt="sivchari">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/sivchari" target="_blank" rel="noreferrer">@sivchari</a>
+          </div>
+          <h2><a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">sivchari/kumo</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 42.78</span>
+        
+        <span>stars 1055</span>
+        <span>Go</span>
+      </div>
+      <p class="pick-reason">選定理由: Go製の軽量AWSエミュレータ、CI/CD用途に最適</p>
+      <p class="description">A lightweight AWS service emulator written in Go</p>
+      <pre>Goで書かれた軽量なAWSエミュレータ「kumo」が面白い。
+
+シングルバイナリで動作し、S3やDynamoDB、Lambdaなど76のAWSサービスをエミュレート。認証不要でCI/CDにそのまま組み込める。
+
+Dockerでも使えて、データ永続化も可能。LocalStackの代替として、テストやローカル開発の高速化に。
+
+<a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">https://github.com/sivchari/kumo</a>
+#Go #AWS</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/sivchari-kumo-ca998557.html">詳細</a>
+        <a class="badge" href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#aws</span><span class="badge topic">#cicd</span><span class="badge topic">#cloud</span><span class="badge topic">#continuous-integration</span><span class="badge topic">#developer-tools</span><span class="badge topic">#go</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="evening" data-name="hbai-ltd/toonflow-app" data-language="html" data-tags="ai ai-content-creation ai-tool ai-video-generation automation content-generation desktop-app electron generative-ai image-generation llm nodejs shorts text-to-video typescript video-generation vite vue3 ai動画生成 オープンソース" data-stars="7424" data-score="42.08" data-sent-at="2026-04-27T12:22:24.236223+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/257465404?v=4" alt="HBAI-Ltd">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HBAI-Ltd" target="_blank" rel="noreferrer">@HBAI-Ltd</a>
+          </div>
+          <h2><a href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">HBAI-Ltd/Toonflow-app</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 42.08</span>
+        
+        <span>stars 7424</span>
+        <span>HTML</span>
+      </div>
+      <p class="pick-reason">選定理由: 小説をAIでアニメ短劇化できるオープンソースツール</p>
+      <p class="description">Toonflow 是开源一站式 AI 短剧创作工具，将小说、剧本快速转化为动画短剧。集成 AI 编剧、智能分镜、角色与视频生成，跨平台桌面端轻量部署，助力创作者低成本批量产出视觉内容。Toonflow is an open-source AI tool that turns...</p>
+      <pre>Toonflowは小説や脚本をAIでアニメ短劇に変えるツール。
+
+AI脚本、絵コンテ、キャラ・映像生成を統合。無限キャンバス上でノードを自由に配置し、3層のAgentが協調して制作を効率化する。
+
+個人の動画クリエイターや小規模スタジオ、小説の映像化を試したい人に。
+
+<a href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">https://github.com/HBAI-Ltd/Toonflow-app</a>
+#AI動画生成 #オープンソース</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/hbai-ltd-toonflow-app-361efd41.html">詳細</a>
+        <a class="badge" href="https://github.com/HBAI-Ltd/Toonflow-app" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-content-creation</span><span class="badge topic">#ai-tool</span><span class="badge topic">#ai-video-generation</span><span class="badge topic">#automation</span><span class="badge topic">#content-generation</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="evening" data-name="lakr233/vphone-cli" data-language="swift" data-tags="ios 仮想化" data-stars="5774" data-score="40.58" data-sent-at="2026-04-27T12:22:24.236223+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/25259084?v=4" alt="Lakr233">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Lakr233" target="_blank" rel="noreferrer">@Lakr233</a>
+          </div>
+          <h2><a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">Lakr233/vphone-cli</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>夜の尖り枠</span>
+        <span>score 40.58</span>
+        
+        <span>stars 5774</span>
+        <span>Swift</span>
+      </div>
+      <p class="pick-reason">選定理由: macOS上でiOS 26を仮想起動できるツール</p>
+      
+      <pre>macOSでiOS 26の仮想iPhoneを起動できる「vphone-cli」が登場。
+AppleのVirtualization.frameworkを活用し、PCC研究用VM基盤を流用。
+パッチレスから完全脱獄まで4段階のセキュリティバイパスを選択可能。
+iOSセキュリティ研究やファームウェア解析に携わる方に。
+<a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">https://github.com/Lakr233/vphone-cli</a>
+#iOS #仮想化</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/lakr233-vphone-cli-3a4c8dd6.html">詳細</a>
+        <a class="badge" href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ios</span><span class="badge topic">#仮想化</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="prompt-security/clawsec" data-language="javascript" data-tags="clawdbot clawdbot-skill hermes hermes-agent hermes-skill hermes-skills molt moltbot-skill moltbot-skills nanoclaw openclaw openclaw-extension openclaw-plugin openclaw-security openclaw-skill openclaw-skills picoclaw picoclaw-install aisecurity agentsecurity" data-stars="953" data-score="63.32" data-sent-at="2026-04-27T03:53:03.130619+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/131779717?v=4" alt="prompt-security">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -874,9 +1192,9 @@ AIエージェントの設定ドリフトやプロンプトインジェクショ
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#clawdbot</span><span class="badge topic">#clawdbot-skill</span><span class="badge topic">#hermes</span><span class="badge topic">#hermes-agent</span><span class="badge topic">#hermes-skill</span><span class="badge topic">#hermes-skills</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="morning" data-name="fallow-rs/fallow" data-language="rust" data-tags="cli code-duplication code-quality codebase-intelligence copy-paste-detection dead-code developer-tools duplicate-code javascript jscpd knip linter oxc runtime-intelligence rust static-analysis typescript unused-code unused-dependencies unused-exports" data-stars="1051" data-score="55.11" data-sent-at="2026-04-27T03:53:03.130619+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="fallow-rs/fallow" data-language="rust" data-tags="cli code-duplication code-quality codebase-intelligence copy-paste-detection dead-code developer-tools duplicate-code javascript jscpd knip linter oxc runtime-intelligence rust static-analysis typescript unused-code unused-dependencies unused-exports" data-stars="1051" data-score="55.11" data-sent-at="2026-04-27T03:53:03.130619+00:00" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">2</span>
+        <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/269229952?v=4" alt="fallow-rs">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -913,9 +1231,9 @@ AIが生成したコードの品質確認や、コードベースの健全性維
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#code-duplication</span><span class="badge topic">#code-quality</span><span class="badge topic">#codebase-intelligence</span><span class="badge topic">#copy-paste-detection</span><span class="badge topic">#dead-code</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="morning" data-name="mergisi/awesome-openclaw-agents" data-language="html" data-tags="ai-agent-templates ai-agents ai-automation anthropic automation awesome awesome-list claude community-agents crewclaw docker llm mcp multi-agent no-code openclaw productivity soul-md submit-your-agent telegram-bot aiエージェント" data-stars="3120" data-score="53.67" data-sent-at="2026-04-27T03:53:03.130619+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="mergisi/awesome-openclaw-agents" data-language="html" data-tags="ai-agent-templates ai-agents ai-automation anthropic automation awesome awesome-list claude community-agents crewclaw docker llm mcp multi-agent no-code openclaw productivity soul-md submit-your-agent telegram-bot aiエージェント" data-stars="3120" data-score="53.67" data-sent-at="2026-04-27T03:53:03.130619+00:00" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">3</span>
+        <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/6433678?v=4" alt="mergisi">
         <div class="card-title-wrap">
           <div class="owner-line">
