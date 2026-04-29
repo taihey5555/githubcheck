@@ -606,10 +606,10 @@
     </section>
     <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="./weekly.html" selected>最新週 4/27 - 5/3</option><option value="./weekly/2026-04-20.html">4/20 - 4/26</option><option value="./weekly/2026-04-13.html">4/13 - 4/19</option><option value="./weekly/2026-04-06.html">4/6 - 4/12</option><option value="./weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
     <section class="stats-grid">
-      <article class="stat-card"><strong>12</strong><span>今週のリポジトリ数</span></article>
-      <article class="stat-card"><strong>12</strong><span>通知総数</span></article>
-      <article class="stat-card"><strong>60.0</strong><span>平均 score</span></article>
-      <article class="stat-card"><strong>HTML 2, Shell 2, Swift 2, TypeScript 2</strong><span>言語分布</span></article>
+      <article class="stat-card"><strong>15</strong><span>今週のリポジトリ数</span></article>
+      <article class="stat-card"><strong>15</strong><span>通知総数</span></article>
+      <article class="stat-card"><strong>58.3</strong><span>平均 score</span></article>
+      <article class="stat-card"><strong>Swift 3, TypeScript 3, HTML 2, Rust 2</strong><span>言語分布</span></article>
       <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 10</a></strong><span>状態の分布</span></article>
     </section>
     <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
@@ -1179,45 +1179,152 @@ Docker対応で本番投入も簡単。ノーコードで使えるので、AIエ
       <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent-templates</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#awesome</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="evening" data-name="sivchari/kumo" data-language="go" data-tags="aws cicd cloud continuous-integration developer-tools go localstack testing" data-stars="1055" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="farzaa/clicky" data-language="swift" data-tags="" data-stars="5114" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
         <span class="rank-number">10</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/55221074?v=4" alt="sivchari">
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/15614124?v=4" alt="farzaa">
         <div class="card-title-wrap">
           <div class="owner-line">
-            <a href="https://github.com/sivchari" target="_blank" rel="noreferrer">@sivchari</a>
+            <a href="https://github.com/farzaa" target="_blank" rel="noreferrer">@farzaa</a>
           </div>
-          <h2><a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">sivchari/kumo</a></h2>
+          <h2><a href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">farzaa/clicky</a></h2>
         </div>
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 42.78</span>
+        <span>朝の新顔枠</span>
+        <span>score 53.33</span>
         <span>登場 1回</span>
-        <span>stars 1055</span>
-        <span>Go</span>
+        <span>stars 5114</span>
+        <span>Swift</span>
       </div>
-      <p class="pick-reason">選定理由: Go製の軽量AWSエミュレータ、CI/CD用途に最適</p>
-      <p class="description">A lightweight AWS service emulator written in Go</p>
-      <pre>Goで書かれた軽量なAWSエミュレータ「kumo」が面白い。
+      <p class="pick-reason">選定理由: Cursor横に寄り添うAI教師のオープンソース版</p>
+      
+      <pre>Clickyは、カーソルの横に常駐するAI教師のオープンソース版です。
 
-シングルバイナリで動作し、S3やDynamoDB、Lambdaなど76のAWSサービスをエミュレート。認証不要でCI/CDにそのまま組み込める。
+画面を見ながら音声で会話し、UI要素を指し示すこともできます。Claude＋AssemblyAI＋ElevenLabsの組み合わせで、リアルタイムな対話型学習が可能に。
 
-Dockerでも使えて、データ永続化も可能。LocalStackの代替として、テストやローカル開発の高速化に。
+Macのメニューバーで動作し、プライバシー重視でAPIキーはCloudflare Worker経由で管理。自分好みに改造したい開発者にぴったりです。
 
-<a href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">https://github.com/sivchari/kumo</a>
-#Go #AWS</pre>
+<a href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">https://github.com/farzaa/clicky</a>
+#AI #オープンソース</pre>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/sivchari-kumo-ca998557.html">詳細</a>
-        <a class="badge" href="https://github.com/sivchari/kumo" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge" href="./repos/farzaa-clicky-eee75b1a.html">詳細</a>
+        <a class="badge" href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#aws</span><span class="badge topic">#cicd</span><span class="badge topic">#cloud</span><span class="badge topic">#continuous-integration</span><span class="badge topic">#developer-tools</span><span class="badge topic">#go</span></div>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="evening" data-name="addyosmani/agent-skills" data-language="shell" data-tags="agent-skills antigravity antigravity-ide claude-code cursor skills aiエンジニアリング 開発効率化" data-stars="25030" data-score="118.86" data-sent-at="2026-04-28T12:26:45.624406+00:00" data-review-state="unseen">
+    <article class="card rank-card top1" data-bucket="morning" data-name="farzaa/clicky" data-language="swift" data-tags="ai オープンソース" data-stars="5114" data-score="53.33" data-sent-at="2026-04-29T03:54:02.305250+00:00" data-review-state="unseen">
       <div class="card-header">
         <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/15614124?v=4" alt="farzaa">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/farzaa" target="_blank" rel="noreferrer">@farzaa</a>
+          </div>
+          <h2><a href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">farzaa/clicky</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 53.33</span>
+        
+        <span>stars 5114</span>
+        <span>Swift</span>
+      </div>
+      <p class="pick-reason">選定理由: Cursor横に寄り添うAI教師のオープンソース版</p>
+      
+      <pre>Clickyは、カーソルの横に常駐するAI教師のオープンソース版です。
+
+画面を見ながら音声で会話し、UI要素を指し示すこともできます。Claude＋AssemblyAI＋ElevenLabsの組み合わせで、リアルタイムな対話型学習が可能に。
+
+Macのメニューバーで動作し、プライバシー重視でAPIキーはCloudflare Worker経由で管理。自分好みに改造したい開発者にぴったりです。
+
+<a href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">https://github.com/farzaa/clicky</a>
+#AI #オープンソース</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/farzaa-clicky-eee75b1a.html">詳細</a>
+        <a class="badge" href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#オープンソース</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="ataraxy-labs/sem" data-language="rust" data-tags="ai-agents code-intelligence coding-agents developer-tools git llm-tools semantic-diff tree-sitter typescript version-control" data-stars="1917" data-score="50.93" data-sent-at="2026-04-29T03:54:02.305250+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/235773868?v=4" alt="Ataraxy-Labs">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Ataraxy-Labs" target="_blank" rel="noreferrer">@Ataraxy-Labs</a>
+          </div>
+          <h2><a href="https://github.com/Ataraxy-Labs/sem" target="_blank" rel="noreferrer">Ataraxy-Labs/sem</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 50.93</span>
+        
+        <span>stars 1917</span>
+        <span>Rust</span>
+      </div>
+      <p class="pick-reason">選定理由: エンティティ単位で差分を表示する新しいGit体験</p>
+      <p class="description">Semantic version control — entity-level diffs, blame, and impact analysis on top of git. 26 languages via tree-sitter. Built for coding a...</p>
+      <pre>Gitの差分が「行単位」から「関数単位」に変わる。
+sem はコードをtree-sitterで解析し、変更された関数やクラスだけを表示。
+さらに、ある関数を変えたらどこが壊れるかも教えてくれる。
+コードレビューやAIエージェントとの連携に最適なツール。
+<a href="https://github.com/Ataraxy-Labs/sem" target="_blank" rel="noreferrer">https://github.com/Ataraxy-Labs/sem</a>
+#git #developer-tools</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/ataraxy-labs-sem-aae39015.html">詳細</a>
+        <a class="badge" href="https://github.com/Ataraxy-Labs/sem" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#code-intelligence</span><span class="badge topic">#coding-agents</span><span class="badge topic">#developer-tools</span><span class="badge topic">#git</span><span class="badge topic">#llm-tools</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="heygen-com/hyperframes" data-language="typescript" data-tags="ai animation ffmpeg framework gsap html mcp puppeteer rendering typescript video hyperframes 動画生成" data-stars="12581" data-score="50.89" data-sent-at="2026-04-29T03:54:02.305250+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/65394575?v=4" alt="heygen-com">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/heygen-com" target="_blank" rel="noreferrer">@heygen-com</a>
+          </div>
+          <h2><a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noreferrer">heygen-com/hyperframes</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 50.89</span>
+        
+        <span>stars 12581</span>
+        <span>TypeScript</span>
+      </div>
+      <p class="pick-reason">選定理由: HTMLから直接動画生成、AIエージェント向け設計が新し</p>
+      <p class="description">Write HTML. Render video. Built for agents.</p>
+      <pre>HTMLを書くだけで動画が作れる。  
+HyperFramesは、HTML+CSS+GSAPで動画を構成するオープンソースのレンダリングフレームワーク。React不要、ビルド不要で、AIエージェントがそのまま理解できる設計が新しい。
+
+AIコーディングエージェントと連携すれば、自然言語で「10秒の商品紹介動画」と指示するだけで、HTMLを生成→プレビュー→MP4出力まで自動で完結する。
+
+HTML/CSSが書ける人なら誰でも動画制作に参加できる。AIエージェントと組んで動画パイプラインを自動化したい開発者に刺さる。
+
+<a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noreferrer">https://github.com/heygen-com/hyperframes</a>
+#hyperframes #動画生成</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/heygen-com-hyperframes-8a65a0a2.html">詳細</a>
+        <a class="badge" href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#animation</span><span class="badge topic">#ffmpeg</span><span class="badge topic">#framework</span><span class="badge topic">#gsap</span><span class="badge topic">#html</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="addyosmani/agent-skills" data-language="shell" data-tags="agent-skills antigravity antigravity-ide claude-code cursor skills aiエンジニアリング 開発効率化" data-stars="25030" data-score="118.86" data-sent-at="2026-04-28T12:26:45.624406+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/110953?v=4" alt="addyosmani">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1253,9 +1360,9 @@ AIにコードを書かせるだけでなく、品質ゲートを通した本番
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#antigravity</span><span class="badge topic">#antigravity-ide</span><span class="badge topic">#claude-code</span><span class="badge topic">#cursor</span><span class="badge topic">#skills</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="evening" data-name="leonxlnx/taste-skill" data-language="shell" data-tags="agent ai coding lowcode nocode skill skills vibecoding フロントエンド" data-stars="13661" data-score="68.02" data-sent-at="2026-04-28T12:26:45.624406+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="leonxlnx/taste-skill" data-language="shell" data-tags="agent ai coding lowcode nocode skill skills vibecoding フロントエンド" data-stars="13661" data-score="68.02" data-sent-at="2026-04-28T12:26:45.624406+00:00" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">2</span>
+        <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/219127460?v=4" alt="Leonxlnx">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1291,9 +1398,9 @@ vibecoding勢や、AIに任せつつ品質を落としたくない人に。
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#coding</span><span class="badge topic">#lowcode</span><span class="badge topic">#nocode</span><span class="badge topic">#skill</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="evening" data-name="narcooo/inkos" data-language="typescript" data-tags="agent ai ai-agent ai-novel ai-writing chinese-novel cli cli-tool creative-writing-ai novel-ai novel-generation openclaw ai執筆 小説創作" data-stars="5092" data-score="54.03" data-sent-at="2026-04-28T12:26:45.624406+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="narcooo/inkos" data-language="typescript" data-tags="agent ai ai-agent ai-novel ai-writing chinese-novel cli cli-tool creative-writing-ai novel-ai novel-generation openclaw ai執筆 小説創作" data-stars="5092" data-score="54.03" data-sent-at="2026-04-28T12:26:45.624406+00:00" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">3</span>
+        <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/33502405?v=4" alt="Narcooo">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1326,120 +1433,6 @@ CLI、Web Studio、TUIの3つのインターフェースから操作可能。続
         <a class="badge" href="https://github.com/Narcooo/inkos" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-novel</span><span class="badge topic">#ai-writing</span><span class="badge topic">#chinese-novel</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="arthur-ficial/apfel" data-language="swift" data-tags="apple-intelligence apple-silicon cli foundationmodels homebrew llm macos macos-26 on-device openai-compatible swift tool-calling unix" data-stars="5080" data-score="66.09" data-sent-at="2026-04-28T03:57:01.087965+00:00" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/258112064?v=4" alt="Arthur-Ficial">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/Arthur-Ficial" target="_blank" rel="noreferrer">@Arthur-Ficial</a>
-          </div>
-          <h2><a href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">Arthur-Ficial/apfel</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 66.09</span>
-        
-        <span>stars 5080</span>
-        <span>Swift</span>
-      </div>
-      <p class="pick-reason">選定理由: Apple Siliconの内蔵LLMをCLIで即利用可</p>
-      <p class="description">The free AI already on your Mac. CLI tool, OpenAI-compatible server, and interactive chat — all on-device via Apple Intelligence. No API...</p>
-      <pre>Macに最初から入っているAI、使ってますか？
-
-apfelはApple Siliconの内蔵LLMをCLIツールやOpenAI互換サーバーとして解放するツール。
-パイプ処理・ファイル添付・ツール呼び出しに対応し、APIキー不要・完全オンデバイス。
-Homebrew一発でインストールでき、シェルスクリプトや自然言語→コマンド変換にも便利。
-
-<a href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">https://github.com/Arthur-Ficial/apfel</a>
-#macOS #LLM</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
-        <a class="badge" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#apple-intelligence</span><span class="badge topic">#apple-silicon</span><span class="badge topic">#cli</span><span class="badge topic">#foundationmodels</span><span class="badge topic">#homebrew</span><span class="badge topic">#llm</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="houseofmvps/codesight" data-language="typescript" data-tags="ai claude cli code-analysis codebase codex context-engineering copilot cursor developer-tools llm mcp repo-map token-savings devtools" data-stars="992" data-score="58.03" data-sent-at="2026-04-28T03:57:01.087965+00:00" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/223674346?v=4" alt="Houseofmvps">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/Houseofmvps" target="_blank" rel="noreferrer">@Houseofmvps</a>
-          </div>
-          <h2><a href="https://github.com/Houseofmvps/codesight" target="_blank" rel="noreferrer">Houseofmvps/codesight</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 58.03</span>
-        
-        <span>stars 992</span>
-        <span>TypeScript</span>
-      </div>
-      <p class="pick-reason">選定理由: AIのトークン消費を大幅削減する新ツール</p>
-      <p class="description">Universal AI context generator. Saves thousands of tokens per conversation in Claude Code, Cursor, Copilot, Codex, and more.</p>
-      <pre>AIアシスタントが毎回プロジェクト構造を理解するために
-数千トークンを無駄にしているのを、codesightが解決する。
-
-`npx codesight` を実行するだけで、コードベースのコンテキストを
-自動生成。Claude Code、Cursor、Copilot、Codexなどで
-トークン消費を大幅に削減できる。
-
-TypeScriptはAST、他言語は正規表現で解析。
-30以上のフレームワーク検出、13のORMパーサー、13のMCPツール。
-ゼロ依存で、設定不要。
-
-大規模コードベースでAIを多用する開発者に最適。
-<a href="https://github.com/Houseofmvps/codesight" target="_blank" rel="noreferrer">https://github.com/Houseofmvps/codesight</a>
-#devtools #ai</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/houseofmvps-codesight-bf6d70c6.html">詳細</a>
-        <a class="badge" href="https://github.com/Houseofmvps/codesight" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#claude</span><span class="badge topic">#cli</span><span class="badge topic">#code-analysis</span><span class="badge topic">#codebase</span><span class="badge topic">#codex</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="snailsploit/claude-red" data-language="n/a" data-tags="claude-ai claude-pt claude-skills redteam redteam-tools skills aisecurity" data-stars="977" data-score="56.91" data-sent-at="2026-04-28T03:57:01.087965+00:00" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/95986478?v=4" alt="SnailSploit">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/SnailSploit" target="_blank" rel="noreferrer">@SnailSploit</a>
-          </div>
-          <h2><a href="https://github.com/SnailSploit/Claude-Red" target="_blank" rel="noreferrer">SnailSploit/Claude-Red</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 56.91</span>
-        
-        <span>stars 977</span>
-        <span>N/A</span>
-      </div>
-      <p class="pick-reason">選定理由: Claudeをレッドチームオペレーター化する38のスキル</p>
-      <p class="description">claude-red is a curated library of offensive security skills designed for the Claude skills system. Each skill is a structured SKILL.md f...</p>
-      <pre>Claudeをレッドチームのオペレーターにする、38の攻撃スキル集が登場。
-
-SQLi、XSS、EDR回避、エクスプロイト開発まで、各スキルはSKILL.mdとして整理されていて、Claudeに読み込ませるだけで専門家のような判断ができるようになる。
-
-実際のレッドチーム経験から作られた意思決定ツリーやエスカレーションパスが詰まっていて、バグハンターやペネトレーションテスターに特に有用。
-
-<a href="https://github.com/SnailSploit/Claude-Red" target="_blank" rel="noreferrer">https://github.com/SnailSploit/Claude-Red</a>
-#redteam #AIsecurity</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/snailsploit-claude-red-313953ee.html">詳細</a>
-        <a class="badge" href="https://github.com/SnailSploit/Claude-Red" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-ai</span><span class="badge topic">#claude-pt</span><span class="badge topic">#claude-skills</span><span class="badge topic">#redteam</span><span class="badge topic">#redteam-tools</span><span class="badge topic">#skills</span></div>
     </article>
     </div></section>
   </main>
