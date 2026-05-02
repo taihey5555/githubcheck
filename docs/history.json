@@ -4925,5 +4925,27 @@
     "owner_html_url": "https://github.com/asamassekou10",
     "bucket": "morning",
     "pick_reason": "エージェント時代のセキュリティスキャナ"
+  },
+  {
+    "sent_at": "2026-05-02T11:52:18.712023+00:00",
+    "full_name": "YeQing17-2026/OmniAgent",
+    "html_url": "https://github.com/YeQing17-2026/OmniAgent",
+    "x_post": "OmniAgentは自己進化と動的セキュリティ強化を両立するエージェントフレームワーク。\n\nスキル・コンテキスト・脳モデルが対話中にリアルタイム進化し、4層の動的セキュリティスキャンがバイパス不可。GRPO+PRMによるオンライン強化学習ループでPASS@1を向上。\n\n自律エージェントを安全に運用したい開発者や、セキュリティ研究に携わる方に。\n\nhttps://github.com/YeQing17-2026/OmniAgent\n#AI #セキュリティ",
+    "summary": "自己進化するセキュリティエージェント\nスキル・記憶・モデルがリアルタイムに進化し、セキュリティも動的に強化されるエージェントフレームワーク\nGRPO+PRMによるオンライン強化学習ループと4層動的セキュリティスキャンが特徴\n高度な自律エージェントを安全に運用したい開発者やセキュリティ研究者向け",
+    "score": 34.62,
+    "stars": 666,
+    "forks": 122,
+    "language": "Python",
+    "description": "An agent capable of self-evolving and dynamically hardening security",
+    "topics": [
+      "agent",
+      "hermes",
+      "open-claw"
+    ],
+    "owner_login": "YeQing17-2026",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/276625368?v=4",
+    "owner_html_url": "https://github.com/YeQing17-2026",
+    "bucket": "evening",
+    "pick_reason": "自己進化とセキュリティ強化を両立するエージェントフレーム"
   }
 ]
