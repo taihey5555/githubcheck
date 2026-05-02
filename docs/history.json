@@ -4874,5 +4874,56 @@
     "owner_html_url": "https://github.com/rushindrasinha",
     "bucket": "evening",
     "pick_reason": "トピック入力からShort動画を自動生成する全自動パイプ"
+  },
+  {
+    "sent_at": "2026-05-02T03:39:22.918174+00:00",
+    "full_name": "Gitlawb/openclaude",
+    "html_url": "https://github.com/Gitlawb/openclaude",
+    "x_post": "1つのCLIで全部のAIモデルを操れる。\n\nOpenClaudeはOpenAI、Gemini、Ollamaなど様々なプロバイダを統一的に使えるコーディングエージェント。bash実行やファイル編集、grep、エージェントルーティング、MCPまで全部ターミナル上で完結する。\n\n複数のAIモデルを使い分けたい開発者や、ローカルとクラウドをシームレスに切り替えたい人にぴったり。\n\nhttps://github.com/Gitlawb/openclaude\n#cli #coding",
+    "summary": "1行目: 全AIモデルをCLI一つで統一的に操作\n2行目: OpenAI互換API、Gemini、Ollamaなど多様なプロバイダを一つのターミナルワークフローで使えるコーディングエージェントCLI\n3行目: プロバイダプロファイル保存、エージェントルーティング、MCP対応、ストリーミング出力をTypeScriptで実装\n4行目: 複数のAIモデルを使い分けたい開発者や、ローカルとクラウドをシームレスに切り替えたいエンジニアに",
+    "score": 101.66,
+    "stars": 25382,
+    "forks": 8201,
+    "language": "TypeScript",
+    "description": "runs anywhere. uses anything",
+    "topics": [
+      "ai",
+      "ai-agent",
+      "ai-tools",
+      "cli",
+      "coding"
+    ],
+    "owner_login": "Gitlawb",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/268502891?v=4",
+    "owner_html_url": "https://github.com/Gitlawb",
+    "bucket": "morning",
+    "pick_reason": "CLIで全モデルを統一的に使える新世代コーディングエージ"
+  },
+  {
+    "sent_at": "2026-05-02T03:39:22.918174+00:00",
+    "full_name": "asamassekou10/ship-safe",
+    "html_url": "https://github.com/asamassekou10/ship-safe",
+    "x_post": "Ship SafeはAIエージェント時代のセキュリティスキャナです。\n\nnpx ship-safe と打つだけで、CI/CD設定ミス、シークレット漏洩、MCPツール注入、DMCA違反の依存関係など80以上の脆弱性を23のエージェントが並列チェック。修正案の差分表示から検証まで自動実行します。\n\nAI/LLMアプリ開発者やDevSecOpsチームに。スキャンはAPIキー不要でオフライン動作。\n\nhttps://github.com/asamassekou10/ship-safe\n#セキュリティ #CLI",
+    "summary": "AI時代のセキュリティスキャナ\nCI/CDやAIエージェントの設定ミス、シークレット漏洩、MCPツール注入などを検出するCLIツール\n23のエージェントが並列動作し、修正提案から差分表示、検証までを自動化\nAI/LLMを活用する開発者やセキュリティエンジニアに刺さる",
+    "score": 43.59,
+    "stars": 658,
+    "forks": 76,
+    "language": "JavaScript",
+    "description": "CLI security scanner built for the agentic era. Detects CI/CD misconfigs, agent permission risks, MCP tool injection, hardcoded secrets, and DMCA-flagged AI dependencies.",
+    "topics": [
+      "cli",
+      "devscops",
+      "npm",
+      "owasp",
+      "secrets",
+      "security",
+      "security-tools",
+      "static-analysis"
+    ],
+    "owner_login": "asamassekou10",
+    "owner_avatar_url": "https://avatars.githubusercontent.com/u/208567150?v=4",
+    "owner_html_url": "https://github.com/asamassekou10",
+    "bucket": "morning",
+    "pick_reason": "エージェント時代のセキュリティスキャナ"
   }
 ]
