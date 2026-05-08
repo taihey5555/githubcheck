@@ -569,6 +569,7 @@ def build_card_dataset(item: dict[str, Any], review_state: str) -> dict[str, str
     sent_at = str(item.get("sent_at") or "")
     score = float(item.get("score") or 0)
     stars = int(item.get("stars") or 0)
+    gray = gray_display_profile(item)
     return {
         "bucket": str(item.get("bucket") or "morning"),
         "name": str(item.get("full_name") or "").lower(),
@@ -578,6 +579,9 @@ def build_card_dataset(item: dict[str, Any], review_state: str) -> dict[str, str
         "score": f"{score:.2f}",
         "sent-at": sent_at,
         "review-state": review_state,
+        "gray-mode": "true" if gray["is_gray"] else "false",
+        "gray-category": gray["category"],
+        "gray-risk": gray["risk_status"],
     }
 
 
@@ -586,6 +590,55 @@ def render_data_attrs(values: dict[str, str]) -> str:
         f'data-{key}="{escape(value, quote=True)}"'
         for key, value in values.items()
     )
+
+
+def gray_display_profile(item: dict[str, Any]) -> dict[str, str | bool]:
+    """Classify for display only. Never writes back to history/state."""
+    existing = item.get("gray_profile") if isinstance(item.get("gray_profile"), dict) else {}
+    category = str(existing.get("category") or "").strip()
+    risk_status = str(existing.get("risk_status") or "").strip()
+    if category:
+        return {
+            "is_gray": risk_status != "exclude",
+            "category": category,
+            "risk_status": risk_status or "allow",
+        }
+
+    text = normalize_keyword(
+        " ".join(
+            [
+                str(item.get("full_name") or ""),
+                str(item.get("description") or ""),
+                str(item.get("pick_reason") or ""),
+                str(item.get("x_post") or item.get("latest_x_post") or ""),
+                " ".join(str(topic) for topic in item.get("topics") or []),
+            ]
+        )
+    )
+    matched_category = ""
+    matched_count = 0
+    for candidate_category, keywords in GRAY_CATEGORY_KEYWORDS.items():
+        hits = keyword_hits(text, keywords)
+        if len(hits) > matched_count:
+            matched_category = candidate_category
+            matched_count = len(hits)
+
+    if not matched_category:
+        return {"is_gray": False, "category": "", "risk_status": "normal"}
+
+    risk_hits = keyword_hits(text, GRAY_EXCLUDE_KEYWORDS)
+    review_hits = keyword_hits(text, GRAY_NEEDS_REVIEW_KEYWORDS)
+    if risk_hits:
+        risk_status = "exclude"
+    elif review_hits:
+        risk_status = "needs_review"
+    else:
+        risk_status = "allow"
+    return {
+        "is_gray": risk_status != "exclude",
+        "category": matched_category,
+        "risk_status": risk_status,
+    }
 
 
 def is_low_star_high_score(item: dict[str, Any]) -> bool:
@@ -1749,9 +1802,359 @@ def site_shell(
       background: var(--surface-muted);
       border: 1px solid var(--line-soft);
     }}
+    .app-shell {{
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+    }}
+    .side-rail {{
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 16px 8px;
+      background: linear-gradient(180deg, #07182f 0%, #082442 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 30;
+    }}
+    .side-logo {{
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0;
+      border: 1px solid rgba(255,255,255,0.16);
+    }}
+    .side-nav {{
+      width: 100%;
+      display: grid;
+      gap: 8px;
+    }}
+    .side-nav a {{
+      min-height: 58px;
+      padding: 8px 4px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      color: rgba(255,255,255,0.76);
+      font-size: 11px;
+      border: 1px solid transparent;
+    }}
+    .side-nav a[aria-current="page"] {{
+      background: #0f4da0;
+      color: #fff;
+      border-color: rgba(255,255,255,0.12);
+    }}
+    .nav-icon {{
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 800;
+    }}
+    .app-main {{
+      min-width: 0;
+    }}
+    .site-header {{
+      left: 76px;
+    }}
+    .brand-row {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }}
+    .brand.brand-row {{
+      flex-direction: row;
+    }}
+    .brand-row > span:not(.brand-mark) {{
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }}
+    .brand-mark {{
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: none;
+      place-items: center;
+      background: #07182f;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }}
+    .top-actions {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }}
+    .icon-button {{
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }}
+    .dashboard-hero {{
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 24px;
+      align-items: center;
+      margin: 0 0 18px;
+    }}
+    .dashboard-hero h2 {{
+      margin: 0 0 8px;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.08;
+    }}
+    .hero-kicker {{
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }}
+    .hero-copy {{
+      margin: 0;
+      color: var(--muted);
+      max-width: 620px;
+    }}
+    .hero-pills {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }}
+    .hero-pill {{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+    }}
+    .mini-chart {{
+      height: 132px;
+      padding: 14px;
+      border-left: 1px solid var(--line);
+    }}
+    .mini-chart-title {{
+      margin: 0 0 10px;
+      font-weight: 800;
+      font-size: 13px;
+    }}
+    .mini-bars {{
+      height: 78px;
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      border-bottom: 1px solid var(--line-soft);
+    }}
+    .mini-bar {{
+      flex: 1;
+      min-width: 12px;
+      border-radius: 7px 7px 0 0;
+      background: linear-gradient(180deg, #2f7df6, #185bd8);
+    }}
+    .mini-chart-labels {{
+      display: flex;
+      justify-content: space-between;
+      color: var(--subtle);
+      font-size: 11px;
+      margin-top: 7px;
+    }}
+    .kpi-grid {{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 16px;
+    }}
+    .kpi-card {{
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      min-height: 88px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }}
+    .kpi-icon {{
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #eef4ff;
+      color: #164ca4;
+      font-weight: 900;
+    }}
+    .kpi-card strong {{
+      display: block;
+      font-size: 26px;
+      line-height: 1.05;
+      margin: 2px 0;
+    }}
+    .kpi-card span {{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }}
+    .dashboard-panel {{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin: 0 0 16px;
+    }}
+    .panel-title {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 14px;
+    }}
+    .panel-title h2,
+    .panel-title h3 {{
+      margin: 0;
+      font-size: 18px;
+    }}
+    .mode-toggle {{
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(84px, 1fr));
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-muted);
+      gap: 3px;
+    }}
+    .mode-toggle button {{
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }}
+    .mode-toggle button.active {{
+      background: #1f6feb;
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(31, 111, 235, 0.22);
+    }}
+    .archive-controls {{
+      box-shadow: none;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }}
+    .archive-share {{
+      display: none;
+    }}
+    .archive-list {{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }}
+    .archive-list .card {{
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }}
+    .archive-list pre {{
+      max-height: 8.2em;
+      overflow: hidden;
+    }}
+    .spotlight-strip {{
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(240px, 1fr);
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }}
+    .spotlight-strip .card {{
+      margin: 0;
+      background: #071d38;
+      border-color: #12345f;
+      color: #fff;
+    }}
+    .spotlight-strip .card a,
+    .spotlight-strip .card h2 a {{
+      color: #fff;
+    }}
+    .spotlight-strip .meta span,
+    .spotlight-strip pre,
+    .spotlight-strip .badge {{
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.86);
+    }}
+    .mobile-segment {{
+      display: none;
+    }}
+    body.gray-mode .card[data-archive-card][data-gray-mode="false"] {{
+      display: none;
+    }}
     @media (max-width: 720px) {{
+      .app-shell {{
+        display: block;
+      }}
+      .side-rail {{
+        display: none;
+      }}
       .menu-toggle {{
         display: inline-flex;
+      }}
+      .brand-mark {{
+        display: grid;
+      }}
+      .top-actions {{
+        display: none;
+      }}
+      .mobile-segment {{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        margin: 10px 14px 0;
+      }}
+      .mobile-segment a {{
+        text-align: center;
+        padding: 8px;
+        border-radius: 9px;
+        color: var(--ink);
+        font-weight: 800;
+        font-size: 13px;
+      }}
+      .mobile-segment a[aria-current="page"] {{
+        background: #1f6feb;
+        color: #fff;
       }}
       .site-nav {{
         position: absolute;
@@ -1778,8 +2181,35 @@ def site_shell(
         padding: 22px 14px 48px;
       }}
       .hero {{
-        display: block;
-        padding-bottom: 14px;
+        display: none;
+      }}
+      .dashboard-hero {{
+        grid-template-columns: 1fr;
+        padding: 18px;
+        border-radius: 16px;
+      }}
+      .mini-chart {{
+        display: none;
+      }}
+      .kpi-grid {{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }}
+      .stats-grid {{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }}
+      .stat-card strong {{
+        font-size: 22px;
+        line-height: 1.12;
+      }}
+      .kpi-card {{
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }}
+      .archive-list {{
+        grid-template-columns: 1fr;
+      }}
+      .spotlight-strip {{
+        grid-auto-columns: minmax(170px, 74vw);
       }}
       .card {{
         padding: 14px;
@@ -1791,33 +2221,53 @@ def site_shell(
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="{path_prefix}/index.html">
-        <strong>GitHub Check</strong>
-        <span>repo 通知の履歴と週間まとめ</span>
-      </a>
-      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
-        <span class="menu-icon" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </button>
-      <nav id="site-nav" class="site-nav">
-        <a href="{path_prefix}/index.html" {history_active}>履歴</a>
-        <a href="{path_prefix}/weekly.html" {weekly_active}>週次</a>
-        <a href="{path_prefix}/operations.html" {operations_active}>運用サマリー</a>
+  <div class="app-shell">
+    <aside class="side-rail" aria-label="主要ナビゲーション">
+      <a class="side-logo" href="{path_prefix}/index.html" aria-label="GitHub Check">GH</a>
+      <nav class="side-nav">
+        <a href="{path_prefix}/index.html" {history_active}><span class="nav-icon">H</span><span>履歴</span></a>
+        <a href="{path_prefix}/weekly.html" {weekly_active}><span class="nav-icon">W</span><span>週次</span></a>
+        <a href="{path_prefix}/operations.html" {operations_active}><span class="nav-icon">O</span><span>運用</span></a>
       </nav>
+    </aside>
+    <div class="app-main">
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="brand brand-row" href="{path_prefix}/index.html">
+            <span class="brand-mark">GH</span>
+            <span>
+              <strong>GitHub Check</strong>
+              <span>repo 通知の履歴と週間まとめ</span>
+            </span>
+          </a>
+          <nav id="site-nav" class="site-nav">
+            <a href="{path_prefix}/index.html" {history_active}>履歴</a>
+            <a href="{path_prefix}/weekly.html" {weekly_active}>週次</a>
+            <a href="{path_prefix}/operations.html" {operations_active}>運用サマリー</a>
+          </nav>
+          <div class="top-actions" aria-label="ページ操作">
+            <span>静的アーカイブ</span>
+            <span class="icon-button" aria-hidden="true">R</span>
+          </div>
+          <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
+            <span class="menu-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+        <nav class="mobile-segment" aria-label="主要ナビゲーション">
+          <a href="{path_prefix}/index.html" {history_active}>履歴</a>
+          <a href="{path_prefix}/weekly.html" {weekly_active}>週次</a>
+          <a href="{path_prefix}/operations.html" {operations_active}>運用</a>
+        </nav>
+      </header>
+      <main>
+        {body_html}
+      </main>
     </div>
-  </header>
-  <main>
-    <section class="hero">
-      <h1>{escape(title)}</h1>
-      <p>{escape(subtitle)}</p>
-    </section>
-    {body_html}
-  </main>
+  </div>
   <script>
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.getElementById('site-nav');
@@ -1897,6 +2347,9 @@ def site_shell(
       const initialScoreMin = searchParams.get('score_min');
       const initialScoreMax = searchParams.get('score_max');
       const initialSort = normalizeText(searchParams.get('sort'));
+      const initialMode = normalizeText(searchParams.get('mode')) === 'gray' ? 'gray' : 'normal';
+      const modeButtons = Array.from(document.querySelectorAll('[data-archive-mode]'));
+      let archiveMode = initialMode;
       const parseNumber = (value) => {{
         if (value === '' || value == null) return null;
         const parsed = Number(value);
@@ -1919,6 +2372,7 @@ def site_shell(
         const minScore = parseNumber(minScoreInput?.value);
         const maxScore = parseNumber(maxScoreInput?.value);
         const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (archiveMode === 'gray') params.set('mode', 'gray');
         if (search) params.set('search', search);
         if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
         if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {{
@@ -1955,6 +2409,12 @@ def site_shell(
         const sortKey = sortInput?.value || 'newest';
         const panelId = activePanelId();
         const bucket = activeBucket();
+        document.body.classList.toggle('gray-mode', archiveMode === 'gray');
+        for (const button of modeButtons) {{
+          const active = button.dataset.archiveMode === archiveMode;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        }}
 
         for (const card of archiveCards) {{
           const inActivePanel = !panelId || card.closest('.tab-panel')?.id === panelId;
@@ -1963,6 +2423,7 @@ def site_shell(
           const cardLanguage = normalizeText(card.dataset.language);
           const tags = normalizeText(card.dataset.tags);
           const cardReviewState = normalizeText(card.dataset.reviewState);
+          const cardGrayMode = normalizeText(card.dataset.grayMode);
           const stars = parseNumber(card.dataset.stars) ?? 0;
           const score = parseNumber(card.dataset.score) ?? 0;
           const matchesSearch = !search || name.includes(search);
@@ -1973,6 +2434,7 @@ def site_shell(
           const matchesMaxStars = maxStars == null || stars <= maxStars;
           const matchesMinScore = minScore == null || score >= minScore;
           const matchesMaxScore = maxScore == null || score <= maxScore;
+          const matchesMode = archiveMode !== 'gray' || cardGrayMode === 'true';
           const visible =
             inActivePanel &&
             matchesBucket &&
@@ -1983,7 +2445,8 @@ def site_shell(
             matchesMinStars &&
             matchesMaxStars &&
             matchesMinScore &&
-            matchesMaxScore;
+            matchesMaxScore &&
+            matchesMode;
           card.classList.toggle('hidden-by-filter', !visible);
         }}
 
@@ -2019,6 +2482,12 @@ def site_shell(
         element.addEventListener('input', applyArchiveFilters);
         element.addEventListener('change', applyArchiveFilters);
       }});
+      for (const button of modeButtons) {{
+        button.addEventListener('click', () => {{
+          archiveMode = button.dataset.archiveMode === 'gray' ? 'gray' : 'normal';
+          applyArchiveFilters();
+        }});
+      }}
       if (daySelect) {{
         daySelect.addEventListener('change', applyArchiveFilters);
       }}
@@ -2787,7 +3256,15 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
         f'<option value="{escape(tag)}">#{escape(tag)}</option>' for tag in tags[:80]
     )
     return f"""
-    <section class="archive-controls" data-archive-root>
+    <section class="dashboard-panel" data-archive-root>
+      <div class="panel-title">
+        <h2>検索・フィルター</h2>
+        <div class="mode-toggle" aria-label="表示モード">
+          <button type="button" class="active" data-archive-mode="normal" aria-pressed="true">通常</button>
+          <button type="button" data-archive-mode="gray" aria-pressed="false">グレー</button>
+        </div>
+      </div>
+      <div class="archive-controls">
       <div class="control-group">
         <label for="search-name">Repo 名検索</label>
         <input id="search-name" type="search" placeholder="owner/repo" data-filter-search>
@@ -2837,14 +3314,15 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
           <option value="stars">stars順</option>
         </select>
       </div>
+      </div>
+      <div class="archive-share">
+        <button class="filter-button" type="button" data-copy-filter-link>現在の絞り込みURLをコピー</button>
+        <a class="badge" href="./index.html" data-open-filter-link>この絞り込みを開く</a>
+        <input type="text" readonly value="./index.html" data-filter-link-output aria-label="共有用の絞り込みURL">
+        <span class="archive-share-status" data-filter-link-status></span>
+      </div>
+      <p class="archive-summary" data-filter-count>{len(history)} 件表示</p>
     </section>
-    <div class="archive-share">
-      <button class="filter-button" type="button" data-copy-filter-link>現在の絞り込みURLをコピー</button>
-      <a class="badge" href="./index.html" data-open-filter-link>この絞り込みを開く</a>
-      <input type="text" readonly value="./index.html" data-filter-link-output aria-label="共有用の絞り込みURL">
-      <span class="archive-share-status" data-filter-link-status></span>
-    </div>
-    <p class="archive-summary" data-filter-count>{len(history)} 件表示。いまの絞り込みは上のリンクで共有できます。</p>
     """
 
 
@@ -2981,6 +3459,51 @@ def build_operations_summary_html(path_prefix: str = ".") -> str:
     """
 
 
+def history_dashboard_stats(history: list[dict[str, Any]]) -> dict[str, Any]:
+    unique_repos = {str(item.get("full_name") or "") for item in history if item.get("full_name")}
+    scores = [float(item.get("score") or 0) for item in history]
+    latest_day = ""
+    latest_count = 0
+    day_counts: dict[str, int] = {}
+    tokyo = ZoneInfo("Asia/Tokyo")
+    for item in history:
+        sent_at = item.get("sent_at")
+        if not sent_at:
+            continue
+        day = parse_sent_at(sent_at).astimezone(tokyo).strftime("%-m/%-d") if os.name != "nt" else parse_sent_at(sent_at).astimezone(tokyo).strftime("%#m/%#d")
+        day_counts[day] = day_counts.get(day, 0) + 1
+    if day_counts:
+        latest_day = next(iter(day_counts.keys()))
+        latest_count = day_counts[latest_day]
+    return {
+        "unique_repos": len(unique_repos),
+        "total_notifications": len(history),
+        "latest_day": latest_day,
+        "latest_count": latest_count,
+        "avg_score": sum(scores) / len(scores) if scores else 0,
+        "gray_count": sum(1 for item in history if gray_display_profile(item)["is_gray"]),
+        "day_counts": list(day_counts.items())[:7],
+    }
+
+
+def render_mini_chart(day_counts: list[tuple[str, int]]) -> str:
+    if not day_counts:
+        return ""
+    max_count = max(count for _, count in day_counts) or 1
+    bars = "".join(
+        f'<span class="mini-bar" style="height:{max(12, int(count / max_count * 76))}px"></span>'
+        for _, count in day_counts
+    )
+    labels = "".join(f"<span>{escape(day)}</span>" for day, _ in day_counts)
+    return f"""
+    <div class="mini-chart" aria-label="最近の通知数">
+      <p class="mini-chart-title">通知アクティビティ</p>
+      <div class="mini-bars">{bars}</div>
+      <div class="mini-chart-labels">{labels}</div>
+    </div>
+    """
+
+
 def render_history_site() -> None:
     settings = low_star_high_score_settings()
     history = list(reversed(load_history()))
@@ -3011,7 +3534,7 @@ def render_history_site() -> None:
 
         tab_panels.append(
             f"""
-            <section id="{tab_id}" class="{panel_class}">
+            <section id="{tab_id}" class="{panel_class} archive-list">
               {''.join(cards)}
             </section>
             """
@@ -3027,24 +3550,49 @@ def render_history_site() -> None:
         )
         for item in low_star_items
     )
+    stats = history_dashboard_stats(history)
+    hero_html = f"""
+    <section class="dashboard-hero">
+      <div>
+        <p class="hero-kicker">GitHub repository archive</p>
+        <h2>通知履歴</h2>
+        <p class="hero-copy">Telegram通知のリポジトリを検索・選別・再利用しやすい形で見返せるアーカイブです。</p>
+        <div class="hero-pills">
+          <span class="hero-pill">毎日自動収集</span>
+          <span class="hero-pill">AIスコアリング</span>
+          <span class="hero-pill">人力レビュー併用</span>
+        </div>
+      </div>
+      {render_mini_chart(stats["day_counts"])}
+    </section>
+    <section class="kpi-grid">
+      <article class="kpi-card"><span class="kpi-icon">R</span><div><span>総リポジトリ数</span><strong>{stats['unique_repos']:,}</strong><span>アーカイブ済み</span></div></article>
+      <article class="kpi-card"><span class="kpi-icon">N</span><div><span>最新日の通知</span><strong>{stats['latest_count']}</strong><span>{escape(stats['latest_day'] or '-')}</span></div></article>
+      <article class="kpi-card"><span class="kpi-icon">G</span><div><span>グレー候補</span><strong>{stats['gray_count']}</strong><span>表示フィルタ対象</span></div></article>
+      <article class="kpi-card"><span class="kpi-icon">S</span><div><span>平均スコア</span><strong>{stats['avg_score']:.1f}</strong><span>履歴全体</span></div></article>
+    </section>
+    """
+    low_star_section = f"""
+    <section class="dashboard-panel">
+      <div class="panel-title">
+        <div>
+          <h2>低スター高スコア発掘</h2>
+          <p class="archive-summary">stars がまだ少なくても、score が高いリポジトリを見つけるための発掘枠です。</p>
+        </div>
+        <a class="badge" href="{history_archive_href(stars_max=settings['max_stars'], score_min=settings['min_score'], sort='score')}">もっと見る</a>
+      </div>
+      <div class="spotlight-strip">
+        {low_star_cards}
+      </div>
+    </section>
+    """ if low_star_cards else ""
     body_html = (
-        (
-            '<section class="section-block"><div class="section-header">'
-            '<h2>運用状況</h2>'
-            '<p>定時実行や DeepSeek 警告の状況は、運用サマリーページで確認できます。'
-            ' <span class="inline-links"><a class="badge" href="./operations.html">運用サマリーを開く</a></span></p>'
-            '</div></section>'
-        )
-        + render_section_block(
-            "低スター高スコア",
-            "stars がまだ少なくても、score が高いリポジトリを見つけるための発掘枠です。",
-            low_star_cards,
-            "今の条件に合う発掘候補は、まだありません。",
-        )
+        hero_html
+        + low_star_section
         + build_archive_controls(history)
         +
         (
-            "<div class='filter-bar'>"
+            "<div class='filter-bar dashboard-panel'>"
             "<button class='filter-button active' data-bucket-filter='all'>全部</button>"
             "<button class='filter-button' data-bucket-filter='morning'>朝の新顔枠</button>"
             "<button class='filter-button' data-bucket-filter='evening'>夜の尖り枠</button>"
@@ -3074,7 +3622,18 @@ def render_history_site() -> None:
 
 
 def render_operations_site() -> None:
-    body_html = build_operations_summary_html(".")
+    body_html = (
+        """
+        <section class="dashboard-hero">
+          <div>
+            <p class="hero-kicker">Operations</p>
+            <h2>運用サマリー</h2>
+            <p class="hero-copy">定時実行の状態や DeepSeek の警告など、運用上の確認項目をまとめたページです。</p>
+          </div>
+        </section>
+        """
+        + build_operations_summary_html(".")
+    )
     html = site_shell(
         "運用サマリー",
         "定時実行の状態や DeepSeek の警告など、運用上の確認項目をまとめたページです。",
@@ -3271,6 +3830,13 @@ def render_weekly_page(
     )
     unique_repos = len({item.get("full_name") for item in this_week_items})
     stats_html = f"""
+    <section class="dashboard-hero">
+      <div>
+        <p class="hero-kicker">Weekly summary</p>
+        <h2>週間まとめ</h2>
+        <p class="hero-copy">{escape(label)} の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
+      </div>
+    </section>
     <section class="stats-grid">
       <article class="stat-card"><strong>{unique_repos}</strong><span>今週のリポジトリ数</span></article>
       <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>

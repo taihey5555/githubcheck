@@ -319,6 +319,38 @@ class SmokeTests(unittest.TestCase):
         )
         self.assertIn("adult_ai_media", tags)
 
+    def test_gray_display_profile_does_not_require_saved_profile(self) -> None:
+        profile = bot.gray_display_profile(
+            {
+                "full_name": "owner/video-tool",
+                "description": "mosaic restore utility",
+                "topics": ["video-restoration"],
+                "x_post": "",
+            }
+        )
+        self.assertTrue(profile["is_gray"])
+        self.assertEqual(profile["category"], "adult_ai_media")
+
+    def test_build_card_dataset_includes_gray_display_attrs(self) -> None:
+        dataset = bot.build_card_dataset(
+            {
+                "full_name": "owner/repo",
+                "sent_at": "2026-04-01T00:00:00+00:00",
+                "score": 91,
+                "stars": 120,
+                "language": "Python",
+                "bucket": "morning",
+                "gray_profile": {
+                    "category": "scraper_downloader",
+                    "risk_status": "needs_review",
+                },
+            },
+            "unseen",
+        )
+        self.assertEqual(dataset["gray-mode"], "true")
+        self.assertEqual(dataset["gray-category"], "scraper_downloader")
+        self.assertEqual(dataset["gray-risk"], "needs_review")
+
     def test_classify_deepseek_error_handles_billing_and_rate_limit(self) -> None:
         billing_response = requests.Response()
         billing_response.status_code = 402

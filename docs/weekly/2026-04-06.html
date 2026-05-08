@@ -561,9 +561,359 @@
       background: var(--surface-muted);
       border: 1px solid var(--line-soft);
     }
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+    }
+    .side-rail {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 16px 8px;
+      background: linear-gradient(180deg, #07182f 0%, #082442 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 30;
+    }
+    .side-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+    .side-nav {
+      width: 100%;
+      display: grid;
+      gap: 8px;
+    }
+    .side-nav a {
+      min-height: 58px;
+      padding: 8px 4px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      color: rgba(255,255,255,0.76);
+      font-size: 11px;
+      border: 1px solid transparent;
+    }
+    .side-nav a[aria-current="page"] {
+      background: #0f4da0;
+      color: #fff;
+      border-color: rgba(255,255,255,0.12);
+    }
+    .nav-icon {
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 800;
+    }
+    .app-main {
+      min-width: 0;
+    }
+    .site-header {
+      left: 76px;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .brand.brand-row {
+      flex-direction: row;
+    }
+    .brand-row > span:not(.brand-mark) {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: none;
+      place-items: center;
+      background: #07182f;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+    .dashboard-hero {
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 24px;
+      align-items: center;
+      margin: 0 0 18px;
+    }
+    .dashboard-hero h2 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.08;
+    }
+    .hero-kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .hero-copy {
+      margin: 0;
+      color: var(--muted);
+      max-width: 620px;
+    }
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .mini-chart {
+      height: 132px;
+      padding: 14px;
+      border-left: 1px solid var(--line);
+    }
+    .mini-chart-title {
+      margin: 0 0 10px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .mini-bars {
+      height: 78px;
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .mini-bar {
+      flex: 1;
+      min-width: 12px;
+      border-radius: 7px 7px 0 0;
+      background: linear-gradient(180deg, #2f7df6, #185bd8);
+    }
+    .mini-chart-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--subtle);
+      font-size: 11px;
+      margin-top: 7px;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 16px;
+    }
+    .kpi-card {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      min-height: 88px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #eef4ff;
+      color: #164ca4;
+      font-weight: 900;
+    }
+    .kpi-card strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1.05;
+      margin: 2px 0;
+    }
+    .kpi-card span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .dashboard-panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin: 0 0 16px;
+    }
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 14px;
+    }
+    .panel-title h2,
+    .panel-title h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .mode-toggle {
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(84px, 1fr));
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-muted);
+      gap: 3px;
+    }
+    .mode-toggle button {
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .mode-toggle button.active {
+      background: #1f6feb;
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(31, 111, 235, 0.22);
+    }
+    .archive-controls {
+      box-shadow: none;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .archive-share {
+      display: none;
+    }
+    .archive-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .archive-list .card {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .archive-list pre {
+      max-height: 8.2em;
+      overflow: hidden;
+    }
+    .spotlight-strip {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(240px, 1fr);
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .spotlight-strip .card {
+      margin: 0;
+      background: #071d38;
+      border-color: #12345f;
+      color: #fff;
+    }
+    .spotlight-strip .card a,
+    .spotlight-strip .card h2 a {
+      color: #fff;
+    }
+    .spotlight-strip .meta span,
+    .spotlight-strip pre,
+    .spotlight-strip .badge {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.86);
+    }
+    .mobile-segment {
+      display: none;
+    }
+    body.gray-mode .card[data-archive-card][data-gray-mode="false"] {
+      display: none;
+    }
     @media (max-width: 720px) {
+      .app-shell {
+        display: block;
+      }
+      .side-rail {
+        display: none;
+      }
       .menu-toggle {
         display: inline-flex;
+      }
+      .brand-mark {
+        display: grid;
+      }
+      .top-actions {
+        display: none;
+      }
+      .mobile-segment {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        margin: 10px 14px 0;
+      }
+      .mobile-segment a {
+        text-align: center;
+        padding: 8px;
+        border-radius: 9px;
+        color: var(--ink);
+        font-weight: 800;
+        font-size: 13px;
+      }
+      .mobile-segment a[aria-current="page"] {
+        background: #1f6feb;
+        color: #fff;
       }
       .site-nav {
         position: absolute;
@@ -590,8 +940,35 @@
         padding: 22px 14px 48px;
       }
       .hero {
-        display: block;
-        padding-bottom: 14px;
+        display: none;
+      }
+      .dashboard-hero {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        border-radius: 16px;
+      }
+      .mini-chart {
+        display: none;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .stat-card strong {
+        font-size: 22px;
+        line-height: 1.12;
+      }
+      .kpi-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .archive-list {
+        grid-template-columns: 1fr;
+      }
+      .spotlight-strip {
+        grid-auto-columns: minmax(170px, 74vw);
       }
       .card {
         padding: 14px;
@@ -603,32 +980,57 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="../index.html">
-        <strong>GitHub Check</strong>
-        <span>repo 通知の履歴と週間まとめ</span>
-      </a>
-      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
-        <span class="menu-icon" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </button>
-      <nav id="site-nav" class="site-nav">
-        <a href="../index.html" >履歴</a>
-        <a href="../weekly.html" aria-current="page">週次</a>
-        <a href="../operations.html" >運用サマリー</a>
+  <div class="app-shell">
+    <aside class="side-rail" aria-label="主要ナビゲーション">
+      <a class="side-logo" href="../index.html" aria-label="GitHub Check">GH</a>
+      <nav class="side-nav">
+        <a href="../index.html" ><span class="nav-icon">H</span><span>履歴</span></a>
+        <a href="../weekly.html" aria-current="page"><span class="nav-icon">W</span><span>週次</span></a>
+        <a href="../operations.html" ><span class="nav-icon">O</span><span>運用</span></a>
       </nav>
-    </div>
-  </header>
-  <main>
-    <section class="hero">
-      <h1>週間まとめ</h1>
-      <p>4/6 - 4/12 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
+    </aside>
+    <div class="app-main">
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="brand brand-row" href="../index.html">
+            <span class="brand-mark">GH</span>
+            <span>
+              <strong>GitHub Check</strong>
+              <span>repo 通知の履歴と週間まとめ</span>
+            </span>
+          </a>
+          <nav id="site-nav" class="site-nav">
+            <a href="../index.html" >履歴</a>
+            <a href="../weekly.html" aria-current="page">週次</a>
+            <a href="../operations.html" >運用サマリー</a>
+          </nav>
+          <div class="top-actions" aria-label="ページ操作">
+            <span>静的アーカイブ</span>
+            <span class="icon-button" aria-hidden="true">R</span>
+          </div>
+          <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
+            <span class="menu-icon" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+        <nav class="mobile-segment" aria-label="主要ナビゲーション">
+          <a href="../index.html" >履歴</a>
+          <a href="../weekly.html" aria-current="page">週次</a>
+          <a href="../operations.html" >運用</a>
+        </nav>
+      </header>
+      <main>
+        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html">4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html" selected>4/6 - 4/12</option><option value="../weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
+    <section class="dashboard-hero">
+      <div>
+        <p class="hero-kicker">Weekly summary</p>
+        <h2>週間まとめ</h2>
+        <p class="hero-copy">4/6 - 4/12 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
+      </div>
     </section>
-    <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html">4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html" selected>4/6 - 4/12</option><option value="../weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
     <section class="stats-grid">
       <article class="stat-card"><strong>39</strong><span>今週のリポジトリ数</span></article>
       <article class="stat-card"><strong>39</strong><span>通知総数</span></article>
@@ -637,7 +1039,7 @@
       <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 10</a></strong><span>状態の分布</span></article>
     </section>
     <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">1</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
@@ -671,7 +1073,7 @@
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="evening" data-name="santifer/career-ops" data-language="go" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="6825" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top2" data-bucket="evening" data-name="santifer/career-ops" data-language="go" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="6825" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
       <div class="card-header">
         <span class="rank-number">2</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
@@ -707,7 +1109,7 @@ Claude Codeベースで、求人評価からCV生成、ポータルスキャン�
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="morning" data-name="cft0808/edict" data-language="python" data-tags="ai-agents ai-orchestration autonomous-agents claude dashboard kanban llm multi-agent openai openclaw orchestration python workflow-automation" data-stars="14451" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top3" data-bucket="morning" data-name="cft0808/edict" data-language="python" data-tags="ai-agents ai-orchestration autonomous-agents claude dashboard kanban llm multi-agent openai openclaw orchestration python workflow-automation" data-stars="14451" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
       <div class="card-header">
         <span class="rank-number">3</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/41196455?v=4" alt="cft0808">
@@ -743,7 +1145,7 @@ Claude Codeベースで、求人評価からCV生成、ポータルスキャン�
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-orchestration</span><span class="badge topic">#autonomous-agents</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span><span class="badge topic">#kanban</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
       <div class="card-header">
         <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/48523873?v=4" alt="rohitg00">
@@ -779,7 +1181,7 @@ Claude CodeやCursorを使う開発者、特にプロジェクト固有の規約
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="paoloanzn/free-code" data-language="typescript" data-tags="" data-stars="7298" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="paoloanzn/free-code" data-language="typescript" data-tags="" data-stars="7298" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/201222836?v=4" alt="paoloanzn">
@@ -815,7 +1217,7 @@ AIによるコーディング支援をカスタマイズしたい開発者や、
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="" data-stars="38071" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="" data-stars="38071" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
@@ -851,7 +1253,7 @@ Python開発者や、軽量なAIエージェントを試したい方に適して
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">1</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
@@ -885,7 +1287,7 @@ Python開発者や、軽量なAIエージェントを試したい方に適して
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="evening" data-name="santifer/career-ops" data-language="go" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="6825" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top2" data-bucket="evening" data-name="santifer/career-ops" data-language="go" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="6825" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
       <div class="card-header">
         <span class="rank-number">2</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
@@ -921,7 +1323,7 @@ Claude Codeベースで、求人評価からCV生成、ポータルスキャン�
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="morning" data-name="cft0808/edict" data-language="python" data-tags="ai-agents ai-orchestration autonomous-agents claude dashboard kanban llm multi-agent openai openclaw orchestration python workflow-automation" data-stars="14451" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top3" data-bucket="morning" data-name="cft0808/edict" data-language="python" data-tags="ai-agents ai-orchestration autonomous-agents claude dashboard kanban llm multi-agent openai openclaw orchestration python workflow-automation" data-stars="14451" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
       <div class="card-header">
         <span class="rank-number">3</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/41196455?v=4" alt="cft0808">
@@ -957,7 +1359,7 @@ Claude Codeベースで、求人評価からCV生成、ポータルスキャン�
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-orchestration</span><span class="badge topic">#autonomous-agents</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span><span class="badge topic">#kanban</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
       <div class="card-header">
         <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/48523873?v=4" alt="rohitg00">
@@ -993,7 +1395,7 @@ Claude CodeやCursorを使う開発者、特にプロジェクト固有の規約
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="paoloanzn/free-code" data-language="typescript" data-tags="" data-stars="7298" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="paoloanzn/free-code" data-language="typescript" data-tags="" data-stars="7298" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/201222836?v=4" alt="paoloanzn">
@@ -1029,7 +1431,7 @@ AIによるコーディング支援をカスタマイズしたい開発者や、
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="" data-stars="38071" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="" data-stars="38071" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
@@ -1065,7 +1467,7 @@ Python開発者や、軽量なAIエージェントを試したい方に適して
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="zeroclaw-labs/zeroclaw" data-language="rust" data-tags="agent agentic ai infra ml openclaw os zeroclaw" data-stars="29628" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="zeroclaw-labs/zeroclaw" data-language="rust" data-tags="agent agentic ai infra ml openclaw os zeroclaw" data-stars="29628" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">7</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/261820148?v=4" alt="zeroclaw-labs">
@@ -1101,7 +1503,7 @@ Rust製で、5MB未満のRAMでも動作し、10ドルのハードウェアで�
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agentic</span><span class="badge topic">#ai</span><span class="badge topic">#infra</span><span class="badge topic">#ml</span><span class="badge topic">#openclaw</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="evening" data-name="yasasbanukaofficial/claude-code" data-language="typescript" data-tags="claude-ai claude-code leaked-claude-code leaked-code" data-stars="1687" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="yasasbanukaofficial/claude-code" data-language="typescript" data-tags="claude-ai claude-code leaked-claude-code leaked-code" data-stars="1687" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">8</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/170727401?v=4" alt="yasasbanukaofficial">
@@ -1137,7 +1539,7 @@ AIエージェント開発者やアーキテクチャ調査に興味がある方
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-ai</span><span class="badge topic">#claude-code</span><span class="badge topic">#leaked-claude-code</span><span class="badge topic">#leaked-code</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="" data-stars="4356" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="" data-stars="4356" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">9</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/259771830?v=4" alt="epiral">
@@ -1171,7 +1573,7 @@ AIエージェント開発者やアーキテクチャ調査に興味がある方
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="leey21/awesome-ai-research-writing" data-language="n/a" data-tags="" data-stars="15935" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="leey21/awesome-ai-research-writing" data-language="n/a" data-tags="" data-stars="15935" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">10</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/112166430?v=4" alt="Leey21">
@@ -1207,7 +1609,7 @@ Leey21/awesome-ai-research-writing は、翻訳や校閲など論文執筆に特
       <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="evening" data-name="agentscope-ai/qwenpaw" data-language="python" data-tags="ai オープンソース" data-stars="15079" data-score="41.78" data-sent-at="2026-04-12T11:39:30.978856+00:00" data-review-state="unseen">
+    <article class="card rank-card top1" data-bucket="evening" data-name="agentscope-ai/qwenpaw" data-language="python" data-tags="ai オープンソース" data-stars="15079" data-score="41.78" data-sent-at="2026-04-12T11:39:30.978856+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">1</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/211762292?v=4" alt="agentscope-ai">
@@ -1244,7 +1646,7 @@ Leey21/awesome-ai-research-writing は、翻訳や校閲など論文執筆に特
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#オープンソース</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="github" data-stars="4356" data-score="73.94" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen">
+    <article class="card rank-card top2" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="github" data-stars="4356" data-score="73.94" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">2</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/259771830?v=4" alt="epiral">
@@ -1278,7 +1680,7 @@ Leey21/awesome-ai-research-writing は、翻訳や校閲など論文執筆に特
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#github</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python 開発効率化" data-stars="41918" data-score="60.44" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen">
+    <article class="card rank-card top3" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python 開発効率化" data-stars="41918" data-score="60.44" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">3</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
@@ -1314,7 +1716,7 @@ MemPalaceはすべての対話をそのまま保存し、意味検索で過去�
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="morning" data-name="tombadash/mouser" data-language="python" data-tags="automation controler free linux linux-app logi logitech logitech-options macos macos-app mouse mouse-remapping mx-master mx-master-3s mx-master-4 open-source productivity python ロジクール オープンソース" data-stars="2921" data-score="49.78" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="tombadash/mouser" data-language="python" data-tags="automation controler free linux linux-app logi logitech logitech-options macos macos-app mouse mouse-remapping mx-master mx-master-3s mx-master-4 open-source productivity python ロジクール オープンソース" data-stars="2921" data-score="49.78" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/162909258?v=4" alt="TomBadash">
@@ -1350,7 +1752,7 @@ Logitech Options+を使わず、完全ローカルで動作。ボタン割り当
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#automation</span><span class="badge topic">#controler</span><span class="badge topic">#free</span><span class="badge topic">#linux</span><span class="badge topic">#linux-app</span><span class="badge topic">#logi</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="evening" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens github" data-stars="15719" data-score="54.22" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens github" data-stars="15719" data-score="54.22" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
@@ -1384,7 +1786,7 @@ Logitech Options+を使わず、完全ローカルで動作。ボタン割り当
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
     </article>
     
-    <article class="card rank-card" data-bucket="evening" data-name="galaxy-dawn/claude-scholar" data-language="python" data-tags="academic-research ai-agents claude claude-code codex-cli developer-tools mcp openai-codex opencode paper-writing zotero 研究支援 ai" data-stars="3128" data-score="52.31" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="galaxy-dawn/claude-scholar" data-language="python" data-tags="academic-research ai-agents claude claude-code codex-cli developer-tools mcp openai-codex opencode paper-writing zotero 研究支援 ai" data-stars="3128" data-score="52.31" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-header">
         <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/121143489?v=4" alt="Galaxy-Dawn">
@@ -1420,7 +1822,9 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#academic-research</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex-cli</span><span class="badge topic">#developer-tools</span></div>
     </article>
     </div></section>
-  </main>
+      </main>
+    </div>
+  </div>
   <script>
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.getElementById('site-nav');
@@ -1500,6 +1904,9 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
       const initialScoreMin = searchParams.get('score_min');
       const initialScoreMax = searchParams.get('score_max');
       const initialSort = normalizeText(searchParams.get('sort'));
+      const initialMode = normalizeText(searchParams.get('mode')) === 'gray' ? 'gray' : 'normal';
+      const modeButtons = Array.from(document.querySelectorAll('[data-archive-mode]'));
+      let archiveMode = initialMode;
       const parseNumber = (value) => {
         if (value === '' || value == null) return null;
         const parsed = Number(value);
@@ -1522,6 +1929,7 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
         const minScore = parseNumber(minScoreInput?.value);
         const maxScore = parseNumber(maxScoreInput?.value);
         const sortKey = normalizeText(sortInput?.value || 'newest');
+        if (archiveMode === 'gray') params.set('mode', 'gray');
         if (search) params.set('search', search);
         if (allowedReviewStates.has(reviewState)) params.set('review_state', reviewState);
         if (language && Array.from(languageInput?.options || []).some((option) => option.value === language)) {
@@ -1558,6 +1966,12 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
         const sortKey = sortInput?.value || 'newest';
         const panelId = activePanelId();
         const bucket = activeBucket();
+        document.body.classList.toggle('gray-mode', archiveMode === 'gray');
+        for (const button of modeButtons) {
+          const active = button.dataset.archiveMode === archiveMode;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        }
 
         for (const card of archiveCards) {
           const inActivePanel = !panelId || card.closest('.tab-panel')?.id === panelId;
@@ -1566,6 +1980,7 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
           const cardLanguage = normalizeText(card.dataset.language);
           const tags = normalizeText(card.dataset.tags);
           const cardReviewState = normalizeText(card.dataset.reviewState);
+          const cardGrayMode = normalizeText(card.dataset.grayMode);
           const stars = parseNumber(card.dataset.stars) ?? 0;
           const score = parseNumber(card.dataset.score) ?? 0;
           const matchesSearch = !search || name.includes(search);
@@ -1576,6 +1991,7 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
           const matchesMaxStars = maxStars == null || stars <= maxStars;
           const matchesMinScore = minScore == null || score >= minScore;
           const matchesMaxScore = maxScore == null || score <= maxScore;
+          const matchesMode = archiveMode !== 'gray' || cardGrayMode === 'true';
           const visible =
             inActivePanel &&
             matchesBucket &&
@@ -1586,7 +2002,8 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
             matchesMinStars &&
             matchesMaxStars &&
             matchesMinScore &&
-            matchesMaxScore;
+            matchesMaxScore &&
+            matchesMode;
           card.classList.toggle('hidden-by-filter', !visible);
         }
 
@@ -1622,6 +2039,12 @@ Claude Scholarは、論文執筆から実験、コーディングまで研究ワ
         element.addEventListener('input', applyArchiveFilters);
         element.addEventListener('change', applyArchiveFilters);
       });
+      for (const button of modeButtons) {
+        button.addEventListener('click', () => {
+          archiveMode = button.dataset.archiveMode === 'gray' ? 'gray' : 'normal';
+          applyArchiveFilters();
+        });
+      }
       if (daySelect) {
         daySelect.addEventListener('change', applyArchiveFilters);
       }
