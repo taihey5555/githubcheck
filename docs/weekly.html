@@ -6,25 +6,28 @@
   <title>週間まとめ</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --bg-alt: #eef3f8;
-      --panel: rgba(255, 255, 255, 0.96);
-      --ink: #1f2937;
-      --muted: #6b7280;
-      --line: rgba(148, 163, 184, 0.35);
-      --accent: #0f766e;
-      --accent-2: #b45309;
-      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --surface-muted: #f1f4f8;
+      --surface-strong: #e7edf4;
+      --ink: #172033;
+      --muted: #637083;
+      --subtle: #8994a6;
+      --line: #d7dee8;
+      --line-soft: #e8edf4;
+      --accent: #1f6feb;
+      --accent-2: #0f8a7a;
+      --warn: #a35c00;
+      --shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(191, 219, 254, 0.26) 0, transparent 24%),
-        radial-gradient(circle at top right, rgba(148, 163, 184, 0.18) 0, transparent 28%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+      background: var(--bg);
+      font-size: 15px;
+      line-height: 1.55;
     }
     a {
       color: var(--accent);
@@ -34,14 +37,13 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(14px);
-      background: rgba(245, 247, 251, 0.88);
+      background: rgba(255, 255, 255, 0.94);
       border-bottom: 1px solid var(--line);
     }
     .header-inner {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -50,23 +52,23 @@
     .brand {
       display: inline-flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
       color: var(--ink);
     }
     .brand strong {
-      font-size: 15px;
-      letter-spacing: 0.04em;
+      font-size: 14px;
+      letter-spacing: 0;
       text-transform: uppercase;
     }
     .brand span {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
     }
     .menu-toggle {
       display: none;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.7);
-      border-radius: 999px;
+      border-radius: 8px;
       width: 44px;
       height: 44px;
       align-items: center;
@@ -86,47 +88,54 @@
       width: 18px;
       height: 2px;
       background: var(--ink);
-      border-radius: 999px;
+      border-radius: 8px;
     }
     .site-nav {
       display: flex;
-      gap: 10px;
+      gap: 6px;
       align-items: center;
     }
     .site-nav a {
       color: var(--ink);
-      padding: 10px 14px;
-      border-radius: 999px;
+      padding: 7px 10px;
+      border-radius: 8px;
       border: 1px solid transparent;
+      font-size: 13px;
     }
     .site-nav a[aria-current="page"] {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+      background: #eef4ff;
+      color: #164ca4;
+      border-color: #b8cdf8;
     }
     .site-nav a:hover {
-      background: rgba(255,255,255,0.72);
+      background: var(--surface-muted);
       border-color: var(--line);
     }
     main {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 36px 20px 64px;
+      padding: 28px 24px 64px;
     }
     .hero {
-      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
     }
     .hero h1 {
-      margin: 0 0 10px;
-      font-size: clamp(34px, 7vw, 64px);
-      line-height: 0.95;
-      letter-spacing: -0.05em;
+      margin: 0 0 6px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.04;
+      letter-spacing: 0;
     }
     .hero p {
       margin: 0;
       color: var(--muted);
-      font-size: clamp(15px, 2.4vw, 18px);
-      max-width: 720px;
+      font-size: 14px;
+      max-width: 760px;
     }
     .date-selector {
       margin: 0 0 22px;
@@ -137,25 +146,25 @@
       background: rgba(238, 243, 248, 0.96);
       color: var(--ink);
       padding: 12px 14px;
-      border-radius: 14px;
+      border-radius: 8px;
       font: inherit;
     }
     .filter-bar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
       margin: 0 0 18px;
     }
     .archive-controls {
       display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      margin: 0 0 18px;
-      padding: 16px;
+      gap: 10px;
+      grid-template-columns: minmax(220px, 1.5fr) repeat(auto-fit, minmax(140px, 1fr));
+      margin: 0 0 12px;
+      padding: 12px;
       border: 1px solid var(--line);
-      border-radius: 20px;
-      background: rgba(238, 243, 248, 0.88);
-      box-shadow: var(--shadow);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: none;
     }
     .control-group {
       display: flex;
@@ -163,44 +172,46 @@
       gap: 6px;
     }
     .control-group label {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
+      font-weight: 700;
     }
     .control-group input,
     .control-group select {
       width: 100%;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.86);
+      background: var(--surface-muted);
       color: var(--ink);
-      padding: 10px 12px;
-      border-radius: 12px;
+      padding: 8px 10px;
+      border-radius: 8px;
       font: inherit;
+      font-size: 13px;
     }
     .archive-summary {
-      margin: 0 0 18px;
+      margin: 0 0 14px;
       color: var(--muted);
       font-size: 13px;
     }
     .archive-share {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
-      margin: 0 0 18px;
-      padding: 14px 16px;
+      margin: 0 0 12px;
+      padding: 10px 12px;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(238, 243, 248, 0.88);
-      box-shadow: var(--shadow);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: none;
     }
     .archive-share input {
       flex: 1 1 320px;
       min-width: 220px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.86);
+      background: var(--surface-muted);
       color: var(--ink);
       padding: 10px 12px;
-      border-radius: 12px;
+      border-radius: 8px;
       font: inherit;
     }
     .archive-share-status {
@@ -208,10 +219,10 @@
       font-size: 12px;
     }
     .section-block {
-      margin: 0 0 36px;
-      background: rgba(238, 243, 248, 0.62);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      border-radius: 24px;
+      margin: 0 0 28px;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
     }
     .section-header {
       display: flex;
@@ -234,22 +245,22 @@
     }
     .section-grid {
       display: grid;
-      gap: 18px;
+      gap: 12px;
     }
     .empty-state {
       padding: 18px;
       border: 1px dashed var(--line);
-      border-radius: 18px;
-      background: rgba(238, 243, 248, 0.82);
+      border-radius: 8px;
+      background: var(--surface);
       color: var(--muted);
     }
     .tab-button,
     .filter-button {
       border: 1px solid var(--line);
-      background: rgba(238, 243, 248, 0.9);
+      background: var(--surface);
       color: var(--ink);
-      padding: 10px 16px;
-      border-radius: 999px;
+      padding: 8px 12px;
+      border-radius: 8px;
       cursor: pointer;
       font: inherit;
       transition: transform 120ms ease, background 120ms ease;
@@ -257,54 +268,53 @@
     .tab-button:hover,
     .filter-button:hover {
       transform: translateY(-1px);
-      background: #fff;
+      background: var(--surface-muted);
     }
     .tab-button.active,
     .filter-button.active {
-      background: var(--accent-2);
-      color: white;
-      border-color: var(--accent-2);
+      background: #eaf6f4;
+      color: #0b655a;
+      border-color: #bde4de;
     }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
     .card.hidden-by-filter { display: none; }
     .card {
-      background: var(--panel);
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 22px;
-      margin: 0 0 16px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 0 0 10px;
+      box-shadow: none;
     }
     .meta {
       display: flex;
-      gap: 8px;
-      row-gap: 8px;
+      gap: 6px;
+      row-gap: 6px;
       flex-wrap: wrap;
       color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 14px;
+      font-size: 12px;
+      margin-bottom: 10px;
       line-height: 1.3;
     }
     .meta span {
       display: inline-flex;
       align-items: center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(238, 243, 248, 0.92);
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--surface-muted);
       border: 1px solid rgba(15, 23, 42, 0.06);
     }
     .card-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 14px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
     .avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
       object-fit: cover;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.9);
@@ -314,35 +324,48 @@
       min-width: 0;
       flex: 1 1 auto;
     }
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+    .card h2 a {
+      color: var(--ink);
+    }
+    .card:hover {
+      border-color: #b8cdf8;
+      box-shadow: var(--shadow);
+    }
     .owner-line {
       display: inline-flex;
       gap: 6px;
       align-items: center;
       color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 4px;
+      font-size: 12px;
+      margin-bottom: 2px;
     }
     .owner-line a {
       color: var(--muted);
     }
     .description {
-      margin: 0 0 14px;
+      margin: 0 0 10px;
       color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
-      font-size: 14px;
+      font-size: 13px;
     }
     .pick-reason {
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
       opacity: 0.92;
       padding-left: 10px;
-      border-left: 3px solid rgba(15, 118, 110, 0.22);
+      border-left: 3px solid #b8cdf8;
     }
     .badge-row {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       margin: 14px 0 0;
     }
@@ -360,41 +383,41 @@
     .archive-select-row select {
       min-width: min(320px, 100%);
       padding: 10px 14px;
-      border-radius: 999px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.96);
+      background: var(--surface);
       color: var(--ink);
       font: inherit;
     }
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 11px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.74);
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: var(--surface-muted);
       border: 1px solid var(--line);
       color: var(--ink);
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1;
       font-weight: 500;
     }
     .badge.topic {
-      background: rgba(15, 118, 110, 0.08);
-      color: var(--accent);
-      border-color: rgba(15, 118, 110, 0.16);
+      background: #eef4ff;
+      color: #164ca4;
+      border-color: #c8d8f6;
     }
     .badge.review-state {
-      background: rgba(180, 83, 9, 0.14);
-      color: var(--accent-2);
-      border-color: rgba(180, 83, 9, 0.24);
+      background: #fff5e6;
+      color: var(--warn);
+      border-color: #f0d2a5;
     }
     .review-state-panel {
       margin-top: 14px;
       padding: 14px 16px;
       border: 1px solid rgba(15, 23, 42, 0.08);
-      border-radius: 18px;
-      background: rgba(238, 243, 248, 0.82);
+      border-radius: 8px;
+      background: var(--surface-muted);
     }
     .review-state-panel h3 {
       margin: 0 0 8px;
@@ -410,9 +433,9 @@
     .review-state-actions select {
       min-width: 180px;
       font: inherit;
-      border-radius: 12px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.96);
+      background: var(--surface);
       padding: 10px 12px;
       color: var(--text);
     }
@@ -428,43 +451,37 @@
       position: relative;
       overflow: hidden;
     }
-    .rank-card::after {
-      content: "";
-      position: absolute;
-      inset: auto -40px -40px auto;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(15,118,110,0.14) 0, rgba(15,118,110,0) 70%);
-      pointer-events: none;
-    }
     .rank-number {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: #eef4ff;
+      border: 1px solid #b8cdf8;
+      color: #164ca4;
       font-weight: 700;
       font-size: 18px;
       flex: 0 0 auto;
     }
     .rank-card.top1 {
-      border-width: 2px;
-      border-color: rgba(180, 83, 9, 0.32);
-      background: linear-gradient(135deg, rgba(255,250,240,0.96), rgba(254,243,199,0.92));
+      border-width: 1px;
+      border-color: #f0d2a5;
+      background: #fffaf2;
     }
     .rank-card.top1 .rank-number {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #b45309, #f59e0b);
-      font-size: 22px;
+      width: 44px;
+      height: 44px;
+      background: #fff0d6;
+      color: var(--warn);
+      font-size: 20px;
     }
     .rank-card.top2 .rank-number,
     .rank-card.top3 .rank-number {
-      background: linear-gradient(135deg, #0f766e, #14b8a6);
+      background: #eaf6f4;
+      color: #0b655a;
+      border-color: #bde4de;
     }
     .stats-grid {
       display: grid;
@@ -474,10 +491,10 @@
     }
     .stat-card {
       padding: 16px;
-      border-radius: 18px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.70);
-      box-shadow: var(--shadow);
+      background: var(--surface);
+      box-shadow: none;
     }
     .stat-card strong {
       display: block;
@@ -498,13 +515,13 @@
     }
     .detail-links.primary-links .badge:first-child,
     .detail-links.primary-links a:first-child {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+      background: #eef4ff;
+      color: #164ca4;
+      border-color: #b8cdf8;
     }
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {
-      background: rgba(238, 243, 248, 0.92);
+      background: var(--surface-muted);
     }
     .inline-links {
       display: inline-flex;
@@ -514,14 +531,14 @@
     }
     .history-list {
       display: grid;
-      gap: 14px;
+      gap: 10px;
     }
     .history-item {
       padding: 16px;
-      border-radius: 16px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      background: rgba(238, 243, 248, 0.88);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+      background: var(--surface);
+      box-shadow: none;
     }
     .history-item h3 {
       margin: 0 0 10px;
@@ -536,13 +553,13 @@
     pre {
       white-space: pre-wrap;
       word-break: break-word;
-      margin: 16px 0 0;
+      margin: 12px 0 0;
       font: inherit;
-      line-height: 1.7;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(238, 243, 248, 0.72);
-      border: 1px solid rgba(15, 23, 42, 0.06);
+      line-height: 1.62;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--surface-muted);
+      border: 1px solid var(--line-soft);
     }
     @media (max-width: 720px) {
       .menu-toggle {
@@ -558,8 +575,8 @@
         align-items: stretch;
         padding: 12px;
         border: 1px solid var(--line);
-        border-radius: 20px;
-        background: rgba(255, 250, 240, 0.96);
+        border-radius: 8px;
+        background: var(--surface);
         box-shadow: var(--shadow);
       }
       .site-nav.open {
@@ -570,10 +587,17 @@
         text-align: center;
       }
       main {
-        padding-top: 28px;
+        padding: 22px 14px 48px;
+      }
+      .hero {
+        display: block;
+        padding-bottom: 14px;
       }
       .card {
-        padding: 16px;
+        padding: 14px;
+      }
+      .archive-controls {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -606,10 +630,10 @@
     </section>
     <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="./weekly.html" selected>最新週 5/4 - 5/10</option><option value="./weekly/2026-04-27.html">4/27 - 5/3</option><option value="./weekly/2026-04-20.html">4/20 - 4/26</option><option value="./weekly/2026-04-13.html">4/13 - 4/19</option><option value="./weekly/2026-04-06.html">4/6 - 4/12</option><option value="./weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
     <section class="stats-grid">
-      <article class="stat-card"><strong>24</strong><span>今週のリポジトリ数</span></article>
-      <article class="stat-card"><strong>24</strong><span>通知総数</span></article>
-      <article class="stat-card"><strong>92.6</strong><span>平均 score</span></article>
-      <article class="stat-card"><strong>TypeScript 8, Python 7, JavaScript 3, Go 2</strong><span>言語分布</span></article>
+      <article class="stat-card"><strong>27</strong><span>今週のリポジトリ数</span></article>
+      <article class="stat-card"><strong>27</strong><span>通知総数</span></article>
+      <article class="stat-card"><strong>97.2</strong><span>平均 score</span></article>
+      <article class="stat-card"><strong>Python 8, TypeScript 8, JavaScript 3, Go 2</strong><span>言語分布</span></article>
       <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 10</a></strong><span>状態の分布</span></article>
     </section>
     <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
@@ -649,9 +673,80 @@ WordPressからの移行、ソースコード紛失時の復元、実サイト�
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="19033" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top2" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph leiden openclaw rag skills tree-sitter" data-stars="44541" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
         <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
+          </div>
+          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 213.69</span>
+        <span>登場 1回</span>
+        <span>stars 44541</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
+      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
+      <pre>コードの全体像を把握するの、いつも大変ですよね。
+
+safishamsi/graphify は、プロジェクトのコードやドキュメントをそのまま知識グラフに変換。
+Claude CodeやCursorで「/graphify .」と打つだけで、ファイルを横断して関連を可視化してくれます。
+
+大規模リポジトリや複数言語混在のプロジェクトで、AIアシスタントに全体を理解させたいチームに。
+
+<a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">https://github.com/safishamsi/graphify</a>
+#KnowledgeGraph #AIAssistant</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="eugene1g/agent-safehouse" data-language="shell" data-tags="ai-agents claude-code llm macos sandbox security" data-stars="1736" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/147496?v=4" alt="eugene1g">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/eugene1g" target="_blank" rel="noreferrer">@eugene1g</a>
+          </div>
+          <h2><a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">eugene1g/agent-safehouse</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 104.47</span>
+        <span>登場 1回</span>
+        <span>stars 1736</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
+      <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
+      <pre>AIエージェントに好き勝手ファイルを読ませたくない。
+agent-safehouseはmacOSのsandbox-execを使って、エージェントが必要なファイルだけにアクセス制限するツール。
+Claude CodeやCodexなど主要エージェントに対応。deny-firstモデルで最小権限を徹底。
+安全にローカルAI開発を進めたい人に。
+<a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">https://github.com/eugene1g/agent-safehouse</a>
+#AIエージェント #セキュリティ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
+        <a class="badge" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="19033" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -685,9 +780,45 @@ CLI好きな開発者やAIエージェントでWebタスクを効率化したい
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="42323" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="donchitos/claude-code-game-studios" data-language="shell" data-tags="ai-agents ai-assisted-development anthropic claude claude-code game-design game-development gamedev godot indie-game-dev unity unreal-engine" data-stars="17652" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">3</span>
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/150119193?v=4" alt="Donchitos">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Donchitos" target="_blank" rel="noreferrer">@Donchitos</a>
+          </div>
+          <h2><a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">Donchitos/Claude-Code-Game-Studios</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 83.72</span>
+        <span>登場 1回</span>
+        <span>stars 17652</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
+      <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
+      <pre>Claude Codeをそのままゲーム開発スタジオに変えるテンプレート。
+
+49のAIエージェントがディレクター、デザイナー、プログラマーなど役割分担。
+72のスラッシュコマンドで企画からQA、リリースまで一貫管理できる。
+
+Godot/Unity/Unreal Engine対応。一人でもチーム開発の品質を保ちたい人に。
+<a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">https://github.com/Donchitos/Claude-Code-Game-Studios</a>
+#gamedev #AI開発</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="42323" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -720,115 +851,6 @@ URLを貼るだけで求人をA-F評価、カスタムCVをPDF生成、応募状
         <a class="badge" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="lum1104/understand-anything" data-language="typescript" data-tags="antigravity-skills business-knowledge claude-code claude-skills codex codex-skills gemini-cli-skills karpathy-llm-wiki knowledge-base knowledge-graph memory opencode-skills pi-agent understandcode" data-stars="13034" data-score="0.00" data-sent-at="" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/87774050?v=4" alt="Lum1104">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/Lum1104" target="_blank" rel="noreferrer">@Lum1104</a>
-          </div>
-          <h2><a href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">Lum1104/Understand-Anything</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>夜の尖り枠</span>
-        <span>score 80.61</span>
-        <span>登場 1回</span>
-        <span>stars 13034</span>
-        <span>TypeScript</span>
-      </div>
-      <p class="pick-reason">選定理由: コードベースを即座に知識グラフ化する新感覚ツール</p>
-      <p class="description">Graphs that teach &gt; graphs that impress. Turn any code, or knowledge base (Karpathy LLM wiki), into an interactive knowledge graph you ca...</p>
-      <pre>コードベースが20万行あっても、どこから手をつければいいか分かる。
-
-Understand-Anythingは、コードや知識ベースを対話型の知識グラフに変換するツール。
-ファイル・関数・クラスがノードになり、検索や質問も可能。
-
-新規参入の開発者や、巨大なコードベースを理解したいチームにぴったり。
-Claude CodeやCursorなど主要なAIコーディングツールで動作する。
-
-<a href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">https://github.com/Lum1104/Understand-Anything</a>
-#KnowledgeGraph #CodeUnderstanding</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/lum1104-understand-anything-c881db87.html">詳細</a>
-        <a class="badge" href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity-skills</span><span class="badge topic">#business-knowledge</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#codex</span><span class="badge topic">#codex-skills</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="builderz-labs/mission-control" data-language="typescript" data-tags="agent-orchestration ai-agents ai-automation ai-dashboard claude dashboard developer-tools llm mcp nextjs open-source openclaw self-hosted sqlite task-management typescript" data-stars="4667" data-score="0.00" data-sent-at="" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/108542510?v=4" alt="builderz-labs">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/builderz-labs" target="_blank" rel="noreferrer">@builderz-labs</a>
-          </div>
-          <h2><a href="https://github.com/builderz-labs/mission-control" target="_blank" rel="noreferrer">builderz-labs/mission-control</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>夜の尖り枠</span>
-        <span>score 72.53</span>
-        <span>登場 1回</span>
-        <span>stars 4667</span>
-        <span>TypeScript</span>
-      </div>
-      <p class="pick-reason">選定理由: 自己ホスト型AIエージェント統制盤が急伸中</p>
-      <p class="description">Self-hosted AI agent orchestration platform: dispatch tasks, run multi-agent workflows, monitor spend, and govern operations from one mis...</p>
-      <pre>AIエージェントの運用、バラバラになっていませんか？
-
-Mission Controlは、タスク管理・コスト監視・マルチエージェント連携を
-一つの自己ホスト型ダッシュボードに統合します。
-SQLiteベースで外部DB不要、pnpm start一発で起動。
-複数エージェントを運用する開発者やチームに。
-
-<a href="https://github.com/builderz-labs/mission-control" target="_blank" rel="noreferrer">https://github.com/builderz-labs/mission-control</a>
-#AI #OSS</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/builderz-labs-mission-control-19a7c0a0.html">詳細</a>
-        <a class="badge" href="https://github.com/builderz-labs/mission-control" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#ai-dashboard</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="qlhazycoder/codex-oauth-automation-extension" data-language="javascript" data-tags="" data-stars="2888" data-score="0.00" data-sent-at="" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/109800873?v=4" alt="QLHazyCoder">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/QLHazyCoder" target="_blank" rel="noreferrer">@QLHazyCoder</a>
-          </div>
-          <h2><a href="https://github.com/QLHazyCoder/codex-oauth-automation-extension" target="_blank" rel="noreferrer">QLHazyCoder/codex-oauth-automation-extension</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 70.17</span>
-        <span>登場 1回</span>
-        <span>stars 2888</span>
-        <span>JavaScript</span>
-      </div>
-      <p class="pick-reason">選定理由: 大量Star急増、OpenAIアカウント自動量産ツール</p>
-      <p class="description">Chrome扩展：支持OpenAI OAuth注册(自动开通plus账号)、验证码获取、CPA/sub/cpdex2api回调验证与自动恢复</p>
-      <pre>Chrome拡張でOpenAIアカウントを量産するツールが話題に。
-CPAパネルからOAuthリンクを自動取得し、メール認証コードも自動入力。
-Hotmail/QQ/163/2925など複数サービス対応、失敗時の自動リトライや24時間クールダウンも管理。
-大量アカウント運用が必要な開発者や事業者に。
-<a href="https://github.com/QLHazyCoder/codex-oauth-automation-extension" target="_blank" rel="noreferrer">https://github.com/QLHazyCoder/codex-oauth-automation-extension</a>
-#OpenAI #Chrome拡張</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/qlhazycoder-codex-oauth-automation-extension-66b97b4a.html">詳細</a>
-        <a class="badge" href="https://github.com/QLHazyCoder/codex-oauth-automation-extension" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
     <article class="card rank-card top1" data-bucket="evening" data-name="jcodesmore/ai-website-cloner-template" data-language="typescript" data-tags="ai ai-agents ai-tools automation boilerplate claude claude-code clone developer-tools nextjs react reverse-engineering shadcn-ui skills tailwindcss template typescript web-scraping website-clone" data-stars="14135" data-score="0.00" data-sent-at="" data-review-state="unseen">
@@ -867,9 +889,80 @@ WordPressからの移行、ソースコード紛失時の復元、実サイト�
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="19033" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card top2" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph leiden openclaw rag skills tree-sitter" data-stars="44541" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
         <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
+          </div>
+          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 213.69</span>
+        <span>登場 1回</span>
+        <span>stars 44541</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
+      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
+      <pre>コードの全体像を把握するの、いつも大変ですよね。
+
+safishamsi/graphify は、プロジェクトのコードやドキュメントをそのまま知識グラフに変換。
+Claude CodeやCursorで「/graphify .」と打つだけで、ファイルを横断して関連を可視化してくれます。
+
+大規模リポジトリや複数言語混在のプロジェクトで、AIアシスタントに全体を理解させたいチームに。
+
+<a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">https://github.com/safishamsi/graphify</a>
+#KnowledgeGraph #AIAssistant</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="eugene1g/agent-safehouse" data-language="shell" data-tags="ai-agents claude-code llm macos sandbox security" data-stars="1736" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/147496?v=4" alt="eugene1g">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/eugene1g" target="_blank" rel="noreferrer">@eugene1g</a>
+          </div>
+          <h2><a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">eugene1g/agent-safehouse</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 104.47</span>
+        <span>登場 1回</span>
+        <span>stars 1736</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
+      <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
+      <pre>AIエージェントに好き勝手ファイルを読ませたくない。
+agent-safehouseはmacOSのsandbox-execを使って、エージェントが必要なファイルだけにアクセス制限するツール。
+Claude CodeやCodexなど主要エージェントに対応。deny-firstモデルで最小権限を徹底。
+安全にローカルAI開発を進めたい人に。
+<a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">https://github.com/eugene1g/agent-safehouse</a>
+#AIエージェント #セキュリティ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
+        <a class="badge" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="19033" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -903,9 +996,45 @@ CLI好きな開発者やAIエージェントでWebタスクを効率化したい
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="42323" data-score="0.00" data-sent-at="" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="morning" data-name="donchitos/claude-code-game-studios" data-language="shell" data-tags="ai-agents ai-assisted-development anthropic claude claude-code game-design game-development gamedev godot indie-game-dev unity unreal-engine" data-stars="17652" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">3</span>
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/150119193?v=4" alt="Donchitos">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Donchitos" target="_blank" rel="noreferrer">@Donchitos</a>
+          </div>
+          <h2><a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">Donchitos/Claude-Code-Game-Studios</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 83.72</span>
+        <span>登場 1回</span>
+        <span>stars 17652</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
+      <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
+      <pre>Claude Codeをそのままゲーム開発スタジオに変えるテンプレート。
+
+49のAIエージェントがディレクター、デザイナー、プログラマーなど役割分担。
+72のスラッシュコマンドで企画からQA、リリースまで一貫管理できる。
+
+Godot/Unity/Unreal Engine対応。一人でもチーム開発の品質を保ちたい人に。
+<a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">https://github.com/Donchitos/Claude-Code-Game-Studios</a>
+#gamedev #AI開発</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="42323" data-score="0.00" data-sent-at="" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -942,7 +1071,7 @@ URLを貼るだけで求人をA-F評価、カスタムCVをPDF生成、応募状
     
     <article class="card rank-card" data-bucket="evening" data-name="lum1104/understand-anything" data-language="typescript" data-tags="antigravity-skills business-knowledge claude-code claude-skills codex codex-skills gemini-cli-skills karpathy-llm-wiki knowledge-base knowledge-graph memory opencode-skills pi-agent understandcode" data-stars="13034" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">4</span>
+        <span class="rank-number">7</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/87774050?v=4" alt="Lum1104">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -980,7 +1109,7 @@ Claude CodeやCursorなど主要なAIコーディングツールで動作する�
     
     <article class="card rank-card" data-bucket="evening" data-name="builderz-labs/mission-control" data-language="typescript" data-tags="agent-orchestration ai-agents ai-automation ai-dashboard claude dashboard developer-tools llm mcp nextjs open-source openclaw self-hosted sqlite task-management typescript" data-stars="4667" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">5</span>
+        <span class="rank-number">8</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/108542510?v=4" alt="builderz-labs">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1017,7 +1146,7 @@ SQLiteベースで外部DB不要、pnpm start一発で起動。
     
     <article class="card rank-card" data-bucket="morning" data-name="qlhazycoder/codex-oauth-automation-extension" data-language="javascript" data-tags="" data-stars="2888" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">6</span>
+        <span class="rank-number">9</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/109800873?v=4" alt="QLHazyCoder">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1051,7 +1180,7 @@ Hotmail/QQ/163/2925など複数サービス対応、失敗時の自動リトラ�
     
     <article class="card rank-card" data-bucket="evening" data-name="pikpikcu/airecon" data-language="python" data-tags="ai-agents automation bugbounty cli ollama penetration-testing python reconnaissance" data-stars="552" data-score="0.00" data-sent-at="" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">7</span>
+        <span class="rank-number">10</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/60111811?v=4" alt="pikpikcu">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1084,118 +1213,117 @@ APIキー不要で完全オフライン動作。RECON→ANALYSIS→EXPLOIT→REP
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#automation</span><span class="badge topic">#bugbounty</span><span class="badge topic">#cli</span><span class="badge topic">#ollama</span><span class="badge topic">#penetration-testing</span></div>
     </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="zeroclaw-labs/zeroclaw" data-language="rust" data-tags="agent agentic ai infra ml openclaw os zeroclaw" data-stars="31057" data-score="0.00" data-sent-at="" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">8</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/261820148?v=4" alt="zeroclaw-labs">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/zeroclaw-labs" target="_blank" rel="noreferrer">@zeroclaw-labs</a>
-          </div>
-          <h2><a href="https://github.com/zeroclaw-labs/zeroclaw" target="_blank" rel="noreferrer">zeroclaw-labs/zeroclaw</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 61.1</span>
-        <span>登場 1回</span>
-        <span>stars 31057</span>
-        <span>Rust</span>
-      </div>
-      <p class="pick-reason">選定理由: 完全自律型AIエージェント基盤、Rust製で爆速</p>
-      <p class="description">Fast, small, and fully autonomous AI personal assistant infrastructure, ANY OS, ANY PLATFORM — deploy anywhere, swap anything 🦀</p>
-      <pre>ZeroClawはRust製の完全自律型AIエージェント基盤です。
-
-1つのバイナリで、AnthropicやOpenAI、ローカルのOllamaなど20以上のLLMと連携。DiscordやTelegram、メールなど30以上のチャンネルから操作可能。シェルやブラウザ、ハードウェア制御もツールとして実行できます。
-
-すべて自前のマシンで動作し、データと鍵は自分で管理。セキュリティポリシーも細かく設定可能。セルフホストでAIエージェントを運用したい開発者に最適です。
-
-<a href="https://github.com/zeroclaw-labs/zeroclaw" target="_blank" rel="noreferrer">https://github.com/zeroclaw-labs/zeroclaw</a>
-#Rust #AI</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/zeroclaw-labs-zeroclaw-8bca4ce6.html">詳細</a>
-        <a class="badge" href="https://github.com/zeroclaw-labs/zeroclaw" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agentic</span><span class="badge topic">#ai</span><span class="badge topic">#infra</span><span class="badge topic">#ml</span><span class="badge topic">#openclaw</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="ott-cybersecurity-llc/lyrie-ai" data-language="typescript" data-tags="ai-agent autonomous cybersecurity llm lyrie ott-cybersecurity security threat-intelligence typescript zero-day" data-stars="541" data-score="0.00" data-sent-at="" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">9</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/280796386?v=4" alt="OTT-Cybersecurity-LLC">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/OTT-Cybersecurity-LLC" target="_blank" rel="noreferrer">@OTT-Cybersecurity-LLC</a>
-          </div>
-          <h2><a href="https://github.com/OTT-Cybersecurity-LLC/lyrie-ai" target="_blank" rel="noreferrer">OTT-Cybersecurity-LLC/lyrie-ai</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 60.22</span>
-        <span>登場 1回</span>
-        <span>stars 541</span>
-        <span>TypeScript</span>
-      </div>
-      <p class="pick-reason">選定理由: 自律型AIセキュリティエージェント、世界初のOSS実装</p>
-      <p class="description">Lyrie.ai — The world&#x27;s first autonomous AI cybersecurity agent. Built by OTT Cybersecurity LLC.</p>
-      <pre>Lyrieは世界初の自律型AIセキュリティエージェント。
-ペネトレーションテスト、エージェント防御、バイナリ解析を1つのデーモンで実行可能。
-Agent Trust Protocol (ATP)でAIエージェントの身元と行動を暗号検証。
-GCG攻撃やZ3 SMTソルバーも内蔵。セキュリティ研究者やAI開発者向け。
-<a href="https://github.com/OTT-Cybersecurity-LLC/lyrie-ai" target="_blank" rel="noreferrer">https://github.com/OTT-Cybersecurity-LLC/lyrie-ai</a>
-#AIセキュリティ #ペネトレーションテスト</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/ott-cybersecurity-llc-lyrie-ai-5702ddb7.html">詳細</a>
-        <a class="badge" href="https://github.com/OTT-Cybersecurity-LLC/lyrie-ai" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#autonomous</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#llm</span><span class="badge topic">#lyrie</span><span class="badge topic">#ott-cybersecurity</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="foryourhealth111-pixel/vibe-skills" data-language="python" data-tags="agent-framework agent-skills agentic-coding ai-agents ai-scientist ai-skills ai-workflow automation claude-code codex context-engineering developer-tools llm multi-agent prompt-engineering skills vibe-coding vibecoding workflow-automation" data-stars="1949" data-score="0.00" data-sent-at="" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">10</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/251585801?v=4" alt="foryourhealth111-pixel">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/foryourhealth111-pixel" target="_blank" rel="noreferrer">@foryourhealth111-pixel</a>
-          </div>
-          <h2><a href="https://github.com/foryourhealth111-pixel/Vibe-Skills" target="_blank" rel="noreferrer">foryourhealth111-pixel/Vibe-Skills</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 59.82</span>
-        <span>登場 1回</span>
-        <span>stars 1949</span>
-        <span>Python</span>
-      </div>
-      <p class="pick-reason">選定理由: AIエージェントに本格的な作業リズムを与える統合スキルパ</p>
-      <p class="description">Vibe-Skills is an all-in-one AI skills package. It seamlessly integrates expert-level capabilities and context management into a general-...</p>
-      <pre>AIエージェント、ただのツール詰め合わせじゃ物足りない。
-
-Vibe-Skillsは違う。`vibe`と打つだけで、要件定義→計画→スキル実行→検証→コンテキスト保存までを自動で回してくれる。
-
-340以上のエキスパートスキルを内蔵し、Claude CodeやCodexと連携。開発、研究、デザイン、どんな分野のスキルも後から追加可能。
-
-AIに「考えるリズム」を与えたい人に。
-
-<a href="https://github.com/foryourhealth111-pixel/Vibe-Skills" target="_blank" rel="noreferrer">https://github.com/foryourhealth111-pixel/Vibe-Skills</a>
-#AIエージェント #開発ツール</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/foryourhealth111-pixel-vibe-skills-18c82cee.html">詳細</a>
-        <a class="badge" href="https://github.com/foryourhealth111-pixel/Vibe-Skills" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-framework</span><span class="badge topic">#agent-skills</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-scientist</span><span class="badge topic">#ai-skills</span></div>
-    </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="evening" data-name="jcodesmore/ai-website-cloner-template" data-language="typescript" data-tags="ai ai-agents ai-tools automation boilerplate claude claude-code clone developer-tools nextjs react reverse-engineering shadcn-ui skills tailwindcss template typescript web-scraping website-clone クローン" data-stars="14135" data-score="826.39" data-sent-at="2026-05-07T13:00:02.915345+00:00" data-review-state="unseen">
+    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph leiden openclaw rag skills tree-sitter knowledgegraph aiassistant" data-stars="44541" data-score="213.69" data-sent-at="2026-05-08T03:45:16.517352+00:00" data-review-state="unseen">
       <div class="card-header">
         <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
+          </div>
+          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 213.69</span>
+        
+        <span>stars 44541</span>
+        <span>Python</span>
+      </div>
+      <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
+      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
+      <pre>コードの全体像を把握するの、いつも大変ですよね。
+
+safishamsi/graphify は、プロジェクトのコードやドキュメントをそのまま知識グラフに変換。
+Claude CodeやCursorで「/graphify .」と打つだけで、ファイルを横断して関連を可視化してくれます。
+
+大規模リポジトリや複数言語混在のプロジェクトで、AIアシスタントに全体を理解させたいチームに。
+
+<a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">https://github.com/safishamsi/graphify</a>
+#KnowledgeGraph #AIAssistant</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="eugene1g/agent-safehouse" data-language="shell" data-tags="ai-agents claude-code llm macos sandbox security aiエージェント セキュリティ" data-stars="1736" data-score="104.47" data-sent-at="2026-05-08T03:45:16.517352+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/147496?v=4" alt="eugene1g">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/eugene1g" target="_blank" rel="noreferrer">@eugene1g</a>
+          </div>
+          <h2><a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">eugene1g/agent-safehouse</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 104.47</span>
+        
+        <span>stars 1736</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
+      <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
+      <pre>AIエージェントに好き勝手ファイルを読ませたくない。
+agent-safehouseはmacOSのsandbox-execを使って、エージェントが必要なファイルだけにアクセス制限するツール。
+Claude CodeやCodexなど主要エージェントに対応。deny-firstモデルで最小権限を徹底。
+安全にローカルAI開発を進めたい人に。
+<a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">https://github.com/eugene1g/agent-safehouse</a>
+#AIエージェント #セキュリティ</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
+        <a class="badge" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="donchitos/claude-code-game-studios" data-language="shell" data-tags="ai-agents ai-assisted-development anthropic claude claude-code game-design game-development gamedev godot indie-game-dev unity unreal-engine ai開発" data-stars="17652" data-score="83.72" data-sent-at="2026-05-08T03:45:16.517352+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/150119193?v=4" alt="Donchitos">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Donchitos" target="_blank" rel="noreferrer">@Donchitos</a>
+          </div>
+          <h2><a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">Donchitos/Claude-Code-Game-Studios</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        
+        <span>朝の新顔枠</span>
+        <span>score 83.72</span>
+        
+        <span>stars 17652</span>
+        <span>Shell</span>
+      </div>
+      <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
+      <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
+      <pre>Claude Codeをそのままゲーム開発スタジオに変えるテンプレート。
+
+49のAIエージェントがディレクター、デザイナー、プログラマーなど役割分担。
+72のスラッシュコマンドで企画からQA、リリースまで一貫管理できる。
+
+Godot/Unity/Unreal Engine対応。一人でもチーム開発の品質を保ちたい人に。
+<a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">https://github.com/Donchitos/Claude-Code-Game-Studios</a>
+#gamedev #AI開発</pre>
+      <div class="detail-links primary-links">
+        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="jcodesmore/ai-website-cloner-template" data-language="typescript" data-tags="ai ai-agents ai-tools automation boilerplate claude claude-code clone developer-tools nextjs react reverse-engineering shadcn-ui skills tailwindcss template typescript web-scraping website-clone クローン" data-stars="14135" data-score="826.39" data-sent-at="2026-05-07T13:00:02.915345+00:00" data-review-state="unseen">
+      <div class="card-header">
+        <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/182581310?v=4" alt="JCodesMore">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1229,9 +1357,9 @@ WordPressからの移行、ソースコード紛失時の復元、実サイト�
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
     </article>
     
-    <article class="card rank-card top2" data-bucket="evening" data-name="lum1104/understand-anything" data-language="typescript" data-tags="antigravity-skills business-knowledge claude-code claude-skills codex codex-skills gemini-cli-skills karpathy-llm-wiki knowledge-base knowledge-graph memory opencode-skills pi-agent understandcode knowledgegraph codeunderstanding" data-stars="13034" data-score="80.61" data-sent-at="2026-05-07T13:00:02.915345+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="lum1104/understand-anything" data-language="typescript" data-tags="antigravity-skills business-knowledge claude-code claude-skills codex codex-skills gemini-cli-skills karpathy-llm-wiki knowledge-base knowledge-graph memory opencode-skills pi-agent understandcode knowledgegraph codeunderstanding" data-stars="13034" data-score="80.61" data-sent-at="2026-05-07T13:00:02.915345+00:00" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">2</span>
+        <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/87774050?v=4" alt="Lum1104">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1267,9 +1395,9 @@ Claude CodeやCursorなど主要なAIコーディングツールで動作する�
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity-skills</span><span class="badge topic">#business-knowledge</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#codex</span><span class="badge topic">#codex-skills</span></div>
     </article>
     
-    <article class="card rank-card top3" data-bucket="evening" data-name="builderz-labs/mission-control" data-language="typescript" data-tags="agent-orchestration ai-agents ai-automation ai-dashboard claude dashboard developer-tools llm mcp nextjs open-source openclaw self-hosted sqlite task-management typescript ai oss" data-stars="4667" data-score="72.53" data-sent-at="2026-05-07T13:00:02.915345+00:00" data-review-state="unseen">
+    <article class="card rank-card" data-bucket="evening" data-name="builderz-labs/mission-control" data-language="typescript" data-tags="agent-orchestration ai-agents ai-automation ai-dashboard claude dashboard developer-tools llm mcp nextjs open-source openclaw self-hosted sqlite task-management typescript ai oss" data-stars="4667" data-score="72.53" data-sent-at="2026-05-07T13:00:02.915345+00:00" data-review-state="unseen">
       <div class="card-header">
-        <span class="rank-number">3</span>
+        <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/108542510?v=4" alt="builderz-labs">
         <div class="card-title-wrap">
           <div class="owner-line">
@@ -1302,115 +1430,6 @@ SQLiteベースで外部DB不要、pnpm start一発で起動。
         <a class="badge" href="https://github.com/builderz-labs/mission-control" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#ai-dashboard</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli aiagent" data-stars="19033" data-score="98.57" data-sent-at="2026-05-07T03:54:26.003857+00:00" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/jackwener" target="_blank" rel="noreferrer">@jackwener</a>
-          </div>
-          <h2><a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">jackwener/OpenCLI</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 98.57</span>
-        
-        <span>stars 19033</span>
-        <span>JavaScript</span>
-      </div>
-      <p class="pick-reason">選定理由: サイトやツールをCLI化するAIエージェント向けハブ</p>
-      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
-      <pre>OpenCLIは、あらゆるWebサイトやツールをCLI化するユニバーサルハブです。
-
-ブラウザ操作、Electronアプリ、ローカルバイナリを標準化されたCLIに変換。AIエージェントがログイン済みChrome経由でサイトを操作・自動化できます。
-
-CLI好きな開発者やAIエージェントでWebタスクを効率化したい人に。ランタイムコストゼロで決定的な出力が得られます。
-
-<a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">https://github.com/jackwener/OpenCLI</a>
-#cli #aiagent</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
-        <a class="badge" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span><span class="badge topic">#aiagent</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="dodo-reach/hermes-desktop" data-language="swift" data-tags="agent-tools apple-silicon developer-tools hermes hermes-agent macos remote-development ssh swift swiftui terminal" data-stars="1039" data-score="59.78" data-sent-at="2026-05-07T03:54:26.003857+00:00" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/254021826?v=4" alt="dodo-reach">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/dodo-reach" target="_blank" rel="noreferrer">@dodo-reach</a>
-          </div>
-          <h2><a href="https://github.com/dodo-reach/hermes-desktop" target="_blank" rel="noreferrer">dodo-reach/hermes-desktop</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 59.78</span>
-        
-        <span>stars 1039</span>
-        <span>Swift</span>
-      </div>
-      <p class="pick-reason">選定理由: SSH直結でHermesをMacネイティブ操作できる新し</p>
-      <p class="description">The safest, simplest way to manage Hermes from your Mac. Pure SSH. No gateways, no exposed ports, no browser layer.</p>
-      <pre>Hermes Desktopは、Hermes AgentをMacからSSH直結で操作するネイティブアプリです。
-
-ゲートウェイやブラウザ層を介さず、セッション管理、カンバン、ファイル編集、ターミナルを一つのウィンドウに集約。リモートホストを唯一の情報源とし、余計な同期やミラーリングは行いません。
-
-SSHが通る環境（Raspberry Pi、VPS、別のMacなど）ならすぐ使えます。macOS 14以降が必要で、セットアップは1分程度。Hermesを日常的に使う開発者に。
-
-<a href="https://github.com/dodo-reach/hermes-desktop" target="_blank" rel="noreferrer">https://github.com/dodo-reach/hermes-desktop</a>
-#Hermes #SSH</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/dodo-reach-hermes-desktop-2e07a7a8.html">詳細</a>
-        <a class="badge" href="https://github.com/dodo-reach/hermes-desktop" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-tools</span><span class="badge topic">#apple-silicon</span><span class="badge topic">#developer-tools</span><span class="badge topic">#hermes</span><span class="badge topic">#hermes-agent</span><span class="badge topic">#macos</span></div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="mukul975/cve-mcp-server" data-language="python" data-tags="cisa-kev claude-ai cve cybersecurity devsecops epss fastmcp mcp mitre-attack model-context-protocol nvd osv python security shodan threat-intelligence virustotal vulnerability-management 脆弱性管理" data-stars="544" data-score="53.40" data-sent-at="2026-05-07T03:54:26.003857+00:00" data-review-state="unseen">
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/42860185?v=4" alt="mukul975">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/mukul975" target="_blank" rel="noreferrer">@mukul975</a>
-          </div>
-          <h2><a href="https://github.com/mukul975/cve-mcp-server" target="_blank" rel="noreferrer">mukul975/cve-mcp-server</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        
-        <span>朝の新顔枠</span>
-        <span>score 53.4</span>
-        
-        <span>stars 544</span>
-        <span>Python</span>
-      </div>
-      <p class="pick-reason">選定理由: Claudeをセキュリティアナリストに変える27ツール搭</p>
-      <p class="description">Production-grade MCP server giving Claude 27 security intelligence tools across 21 APIs — CVE lookup, EPSS scoring, CISA KEV, MITRE ATT&amp;C...</p>
-      <pre>CVE調査、タブ15個開いてませんか？
-
-cve-mcp-serverはClaudeに27のセキュリティツールを統合。
-CVE検索、EPSSスコア、CISA KEV、Shodan、VirusTotalなど21のAPIを横断し、
-「このCVE、優先してパッチ当てるべき？」に複合リスクスコア付きで答えてくれる。
-
-脆弱性トリアージを日々やってるDevSecOpsエンジニアに。
-<a href="https://github.com/mukul975/cve-mcp-server" target="_blank" rel="noreferrer">https://github.com/mukul975/cve-mcp-server</a>
-#MCP #脆弱性管理</pre>
-      <div class="detail-links primary-links">
-        <a class="badge" href="./repos/mukul975-cve-mcp-server-a379f9a6.html">詳細</a>
-        <a class="badge" href="https://github.com/mukul975/cve-mcp-server" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cisa-kev</span><span class="badge topic">#claude-ai</span><span class="badge topic">#cve</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span><span class="badge topic">#epss</span></div>
     </article>
     </div></section>
   </main>
