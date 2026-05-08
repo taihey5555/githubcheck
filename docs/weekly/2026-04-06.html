@@ -306,17 +306,18 @@
     .tab-panel.active { display: block; }
     .card.hidden-by-filter { display: none; }
     .card {
+      position: relative;
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 16px;
       margin: 0 0 10px;
-      box-shadow: none;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
     }
     .meta {
       display: flex;
-      gap: 6px;
-      row-gap: 6px;
+      gap: 10px;
+      row-gap: 8px;
       flex-wrap: wrap;
       color: var(--muted);
       font-size: 12px;
@@ -327,10 +328,10 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      background: var(--surface-muted);
-      border: 1px solid rgba(15, 23, 42, 0.06);
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
     }
     .meta span::before {
       display: inline-flex;
@@ -343,21 +344,28 @@
       line-height: 1;
     }
     .date-label::before { content: "◷"; }
-    .meta-bucket::before { content: "●"; }
-    .meta-score::before { content: "◆"; }
+    .meta-bucket::before { content: none; }
+    .meta-score::before { content: none; }
     .meta-count::before { content: "↻"; }
     .meta-stars::before { content: "★"; }
-    .meta-language::before { content: "{}"; font-size: 0.78em; }
+    .meta-language::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #1f6feb;
+    }
     .card-header {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-right: 54px;
     }
     .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
       object-fit: cover;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.9);
@@ -369,9 +377,10 @@
     }
     .card h2 {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.22;
       letter-spacing: 0;
+      font-weight: 900;
     }
     .card h2 a {
       color: var(--ink);
@@ -386,18 +395,19 @@
       gap: 6px;
       align-items: center;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       margin-bottom: 2px;
+      line-height: 1.2;
     }
     .owner-line a {
       color: var(--muted);
     }
     .description {
       margin: 0 0 10px;
-      color: rgba(15, 23, 42, 0.78);
-      line-height: 1.6;
-      font-size: 13px;
-      font-weight: 560;
+      color: rgba(15, 23, 42, 0.8);
+      line-height: 1.55;
+      font-size: 12.5px;
+      font-weight: 650;
       overflow-wrap: anywhere;
     }
     .pick-reason {
@@ -405,17 +415,40 @@
       color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
-      font-weight: 650;
+      font-weight: 700;
       opacity: 0.92;
-      padding-left: 10px;
-      border-left: 3px solid #b8cdf8;
       overflow-wrap: anywhere;
     }
     .badge-row {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      margin: 14px 0 0;
+      margin: 12px 0 0;
+    }
+    .card-score {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: inline-grid;
+      place-items: center;
+      min-width: 38px;
+      min-height: 42px;
+      padding: 5px 7px;
+      border-radius: 10px;
+      background: #e7f8ef;
+      color: #078243;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(7, 130, 67, 0.08);
+    }
+    .card-score small {
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      font-weight: 900;
+      line-height: 1;
     }
     .archive-select-row {
       display: flex;
@@ -555,17 +588,23 @@
       font-size: 13px;
     }
     .detail-links {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
       gap: 8px;
       margin: 14px 0 0;
       align-items: center;
     }
     .detail-links.primary-links .badge:first-child,
     .detail-links.primary-links a:first-child {
-      background: #eef4ff;
-      color: #164ca4;
-      border-color: #b8cdf8;
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .detail-links.primary-links .badge:last-child,
+    .detail-links.primary-links a:last-child {
+      background: #061b3a;
+      color: #fff;
+      border-color: #061b3a;
     }
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {
@@ -1107,14 +1146,15 @@
         grid-auto-columns: minmax(170px, 74vw);
       }
       .card {
-        padding: 16px;
+        padding: 16px 14px;
         min-width: 0;
       }
       .card-header {
         align-items: flex-start;
+        padding-right: 50px;
       }
       .card h2 {
-        font-size: 17px;
+        font-size: 16.5px;
         line-height: 1.28;
         font-weight: 900;
         overflow-wrap: anywhere;
@@ -1124,22 +1164,22 @@
         font-weight: 750;
       }
       .meta {
-        gap: 7px;
+        gap: 10px;
         row-gap: 7px;
         font-size: 12.5px;
         font-weight: 750;
       }
       .meta span {
-        padding: 5px 8px;
+        padding: 0;
       }
       .description {
-        font-size: 14px;
-        line-height: 1.65;
-        font-weight: 620;
+        font-size: 13px;
+        line-height: 1.62;
+        font-weight: 650;
       }
       .pick-reason {
-        font-size: 13px;
-        line-height: 1.6;
+        font-size: 12.5px;
+        line-height: 1.55;
         font-weight: 750;
       }
       .badge {
@@ -1152,6 +1192,10 @@
         justify-content: center;
         font-size: 13px;
         font-weight: 850;
+      }
+      .card-score {
+        top: 13px;
+        right: 13px;
       }
       pre {
         font-size: 12px;
@@ -1358,6 +1402,7 @@
     </section>
     <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
     <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">1314<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">1</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
@@ -1369,23 +1414,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 1313.67</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 18087</span>
         <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: コードと文書から知識グラフを自動構築する尖り</p>
       <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, OpenClaw, Factory Droid, Trae). Turn any folder of code, doc...</p>
+      <p class="pick-reason">選定理由: コードと文書から知識グラフを自動構築する尖り</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
         <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
     </article>
     
     <article class="card rank-card top2" data-bucket="evening" data-name="santifer/career-ops" data-language="go" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="6825" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">843<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">2</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
@@ -1397,23 +1441,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">夜の尖り枠</span>
-        <span class="meta-score">score 842.89</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 6825</span>
         <span class="meta-language">Go</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: AIで求職を自動化する尖った実用ツール</p>
       <p class="description">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.</p>
+      <p class="pick-reason">選定理由: AIで求職を自動化する尖った実用ツール</p>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
         <a class="badge action-github" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
     <article class="card rank-card top3" data-bucket="morning" data-name="cft0808/edict" data-language="python" data-tags="ai-agents ai-orchestration autonomous-agents claude dashboard kanban llm multi-agent openai openclaw orchestration python workflow-automation" data-stars="14451" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">293<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">3</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/41196455?v=4" alt="cft0808">
@@ -1425,23 +1468,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 293.09</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 14451</span>
         <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: 古代の官僚制度をAIエージェント協調に応用した尖った発想</p>
       <p class="description">🏛️ 三省六部制 · OpenClaw Multi-Agent Orchestration System — 9 specialized AI agents with real-time dashboard, model config, and full audit trails</p>
+      <p class="pick-reason">選定理由: 古代の官僚制度をAIエージェント協調に応用した尖った発想</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-orchestration</span><span class="badge topic">#autonomous-agents</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span><span class="badge topic">#kanban</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/cft0808-edict-e8fd0f07.html">詳細</a>
         <a class="badge action-github" href="https://github.com/cft0808/edict" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-orchestration</span><span class="badge topic">#autonomous-agents</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span><span class="badge topic">#kanban</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">188<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/48523873?v=4" alt="rohitg00">
@@ -1453,23 +1495,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 187.88</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 1821</span>
         <span class="meta-language">JavaScript</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: AI開発支援の自己修正メモリによる尖り</p>
       <p class="description">Claude Code learns from your corrections: self-correcting memory that compounds over 50+ sessions. Context engineering, parallel worktree...</p>
+      <p class="pick-reason">選定理由: AI開発支援の自己修正メモリによる尖り</p>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/rohitg00-pro-workflow-3222c9e2.html">詳細</a>
         <a class="badge action-github" href="https://github.com/rohitg00/pro-workflow" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="paoloanzn/free-code" data-language="typescript" data-tags="" data-stars="7298" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">104<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/201222836?v=4" alt="paoloanzn">
@@ -1481,23 +1522,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 104.27</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 7298</span>
         <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: Claude Codeの無制限版という尖り</p>
       <p class="description">[NOTE] Parent repo is migrating ownership, until the operation is done this repo is blocked. The free build of Claude Code. All telemetry...</p>
+      <p class="pick-reason">選定理由: Claude Codeの無制限版という尖り</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/paoloanzn-free-code-c32b8e9a.html">詳細</a>
         <a class="badge action-github" href="https://github.com/paoloanzn/free-code" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="" data-stars="38071" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">85<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
@@ -1509,23 +1549,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 84.65</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 38071</span>
         <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: 超軽量AIエージェントの実装が尖っている</p>
       <p class="description">&quot;🐈 nanobot: The Ultra-Lightweight Personal AI Agent&quot;</p>
+      <p class="pick-reason">選定理由: 超軽量AIエージェントの実装が尖っている</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/hkuds-nanobot-7efc7b75.html">詳細</a>
         <a class="badge action-github" href="https://github.com/HKUDS/nanobot" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
     <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">1314<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">1</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
@@ -1537,23 +1576,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 1313.67</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 18087</span>
         <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: コードと文書から知識グラフを自動構築する尖り</p>
       <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, OpenClaw, Factory Droid, Trae). Turn any folder of code, doc...</p>
+      <p class="pick-reason">選定理由: コードと文書から知識グラフを自動構築する尖り</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
         <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
     </article>
     
     <article class="card rank-card top2" data-bucket="evening" data-name="santifer/career-ops" data-language="go" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="6825" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">843<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">2</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/256850418?v=4" alt="santifer">
@@ -1565,23 +1603,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">夜の尖り枠</span>
-        <span class="meta-score">score 842.89</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 6825</span>
         <span class="meta-language">Go</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: AIで求職を自動化する尖った実用ツール</p>
       <p class="description">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.</p>
+      <p class="pick-reason">選定理由: AIで求職を自動化する尖った実用ツール</p>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
         <a class="badge action-github" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
     <article class="card rank-card top3" data-bucket="morning" data-name="cft0808/edict" data-language="python" data-tags="ai-agents ai-orchestration autonomous-agents claude dashboard kanban llm multi-agent openai openclaw orchestration python workflow-automation" data-stars="14451" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">293<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">3</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/41196455?v=4" alt="cft0808">
@@ -1593,23 +1630,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 293.09</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 14451</span>
         <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: 古代の官僚制度をAIエージェント協調に応用した尖った発想</p>
       <p class="description">🏛️ 三省六部制 · OpenClaw Multi-Agent Orchestration System — 9 specialized AI agents with real-time dashboard, model config, and full audit trails</p>
+      <p class="pick-reason">選定理由: 古代の官僚制度をAIエージェント協調に応用した尖った発想</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-orchestration</span><span class="badge topic">#autonomous-agents</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span><span class="badge topic">#kanban</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/cft0808-edict-e8fd0f07.html">詳細</a>
         <a class="badge action-github" href="https://github.com/cft0808/edict" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-orchestration</span><span class="badge topic">#autonomous-agents</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span><span class="badge topic">#kanban</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">188<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/48523873?v=4" alt="rohitg00">
@@ -1621,23 +1657,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 187.88</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 1821</span>
         <span class="meta-language">JavaScript</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: AI開発支援の自己修正メモリによる尖り</p>
       <p class="description">Claude Code learns from your corrections: self-correcting memory that compounds over 50+ sessions. Context engineering, parallel worktree...</p>
+      <p class="pick-reason">選定理由: AI開発支援の自己修正メモリによる尖り</p>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/rohitg00-pro-workflow-3222c9e2.html">詳細</a>
         <a class="badge action-github" href="https://github.com/rohitg00/pro-workflow" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="paoloanzn/free-code" data-language="typescript" data-tags="" data-stars="7298" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">104<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/201222836?v=4" alt="paoloanzn">
@@ -1649,23 +1684,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 104.27</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 7298</span>
         <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: Claude Codeの無制限版という尖り</p>
       <p class="description">[NOTE] Parent repo is migrating ownership, until the operation is done this repo is blocked. The free build of Claude Code. All telemetry...</p>
+      <p class="pick-reason">選定理由: Claude Codeの無制限版という尖り</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/paoloanzn-free-code-c32b8e9a.html">詳細</a>
         <a class="badge action-github" href="https://github.com/paoloanzn/free-code" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="hkuds/nanobot" data-language="python" data-tags="" data-stars="38071" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">85<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
@@ -1677,23 +1711,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 84.65</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 38071</span>
         <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: 超軽量AIエージェントの実装が尖っている</p>
       <p class="description">&quot;🐈 nanobot: The Ultra-Lightweight Personal AI Agent&quot;</p>
+      <p class="pick-reason">選定理由: 超軽量AIエージェントの実装が尖っている</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/hkuds-nanobot-7efc7b75.html">詳細</a>
         <a class="badge action-github" href="https://github.com/HKUDS/nanobot" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="zeroclaw-labs/zeroclaw" data-language="rust" data-tags="agent agentic ai infra ml openclaw os zeroclaw" data-stars="29628" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">81<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">7</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/261820148?v=4" alt="zeroclaw-labs">
@@ -1705,23 +1738,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 81.04</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 29628</span>
         <span class="meta-language">Rust</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: 軽量AIアシスタントの尖った実装</p>
       <p class="description">Fast, small, and fully autonomous AI personal assistant infrastructure, ANY OS, ANY PLATFORM — deploy anywhere, swap anything 🦀</p>
+      <p class="pick-reason">選定理由: 軽量AIアシスタントの尖った実装</p>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agentic</span><span class="badge topic">#ai</span><span class="badge topic">#infra</span><span class="badge topic">#ml</span><span class="badge topic">#openclaw</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/zeroclaw-labs-zeroclaw-8bca4ce6.html">詳細</a>
         <a class="badge action-github" href="https://github.com/zeroclaw-labs/zeroclaw" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agentic</span><span class="badge topic">#ai</span><span class="badge topic">#infra</span><span class="badge topic">#ml</span><span class="badge topic">#openclaw</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="evening" data-name="yasasbanukaofficial/claude-code" data-language="typescript" data-tags="claude-ai claude-code leaked-claude-code leaked-code" data-stars="1687" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">74<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">8</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/170727401?v=4" alt="yasasbanukaofficial">
@@ -1733,23 +1765,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">夜の尖り枠</span>
-        <span class="meta-score">score 74.3</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 1687</span>
         <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: 流出したClaude Codeの内部実装を公開</p>
       <p class="description">🚀 Open source Claude Code CLI source code. Advanced AI Agent for developers. Includes TypeScript codebase for LLM tool-calling, agentic w...</p>
+      <p class="pick-reason">選定理由: 流出したClaude Codeの内部実装を公開</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-ai</span><span class="badge topic">#claude-code</span><span class="badge topic">#leaked-claude-code</span><span class="badge topic">#leaked-code</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/yasasbanukaofficial-claude-code-b1aa7b28.html">詳細</a>
         <a class="badge action-github" href="https://github.com/yasasbanukaofficial/claude-code" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-ai</span><span class="badge topic">#claude-code</span><span class="badge topic">#leaked-claude-code</span><span class="badge topic">#leaked-code</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="" data-stars="4356" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">74<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">9</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/259771830?v=4" alt="epiral">
@@ -1761,23 +1792,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 73.94</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 4356</span>
         <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: AIエージェントがログイン済みブラウザを直接操作</p>
       <p class="description">Your browser is the API. CLI + MCP server for AI agents to control Chrome with your login state.</p>
+      <p class="pick-reason">選定理由: AIエージェントがログイン済みブラウザを直接操作</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/epiral-bb-browser-2562aaad.html">詳細</a>
         <a class="badge action-github" href="https://github.com/epiral/bb-browser" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="leey21/awesome-ai-research-writing" data-language="n/a" data-tags="" data-stars="15935" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">74<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">10</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/112166430?v=4" alt="Leey21">
@@ -1789,23 +1819,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 73.56</span>
-        <span class="meta-count">登場 1回</span>
         <span class="meta-stars">stars 15935</span>
         <span class="meta-language">N/A</span>
+        
+        <span class="meta-count">登場 1回</span>
       </div>
-      <p class="pick-reason">選定理由: AI研究ライティングの実践的テンプレート集</p>
       <p class="description">Elevate your AI research writing, no more tedious polishing ✨</p>
+      <p class="pick-reason">選定理由: AI研究ライティングの実践的テンプレート集</p>
+      <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/leey21-awesome-ai-research-writing-ae268849.html">詳細</a>
         <a class="badge action-github" href="https://github.com/Leey21/awesome-ai-research-writing" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span></div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
     <article class="card rank-card top1" data-bucket="evening" data-name="agentscope-ai/qwenpaw" data-language="python" data-tags="ai オープンソース" data-stars="15079" data-score="41.78" data-sent-at="2026-04-12T11:39:30.978856+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">42<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">1</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/211762292?v=4" alt="agentscope-ai">
@@ -1817,23 +1846,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">夜の尖り枠</span>
-        <span class="meta-score">score 41.78</span>
-        
         <span class="meta-stars">stars 15079</span>
         <span class="meta-language">Python</span>
+        
+        
       </div>
-      <p class="pick-reason">選定理由: 個人AIアシスタントの実用的な尖り</p>
       <p class="description">Your Personal AI Assistant; easy to install, deploy on your own machine or on the cloud; supports multiple chat apps with easily extensib...</p>
+      <p class="pick-reason">選定理由: 個人AIアシスタントの実用的な尖り</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#オープンソース</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/agentscope-ai-qwenpaw-7d3298ec.html">詳細</a>
         <a class="badge action-github" href="https://github.com/agentscope-ai/QwenPaw" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#オープンソース</span></div>
     </article>
     
     <article class="card rank-card top2" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="github" data-stars="4356" data-score="73.94" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">74<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">2</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/259771830?v=4" alt="epiral">
@@ -1845,23 +1873,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 73.94</span>
-        
         <span class="meta-stars">stars 4356</span>
         <span class="meta-language">TypeScript</span>
+        
+        
       </div>
-      <p class="pick-reason">選定理由: AIエージェントがログイン済みブラウザを直接操作</p>
       <p class="description">Your browser is the API. CLI + MCP server for AI agents to control Chrome with your login state.</p>
+      <p class="pick-reason">選定理由: AIエージェントがログイン済みブラウザを直接操作</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#github</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/epiral-bb-browser-2562aaad.html">詳細</a>
         <a class="badge action-github" href="https://github.com/epiral/bb-browser" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#github</span></div>
     </article>
     
     <article class="card rank-card top3" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python 開発効率化" data-stars="41918" data-score="60.44" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">60<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">3</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
@@ -1873,23 +1900,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 60.44</span>
-        
         <span class="meta-stars">stars 41918</span>
         <span class="meta-language">Python</span>
+        
+        
       </div>
-      <p class="pick-reason">選定理由: AIの会話履歴をすべて保存し検索可能にする新アプローチ</p>
       <p class="description">The highest-scoring AI memory system ever benchmarked. And it&#x27;s free.</p>
+      <p class="pick-reason">選定理由: AIの会話履歴をすべて保存し検索可能にする新アプローチ</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/mempalace-mempalace-1746bed1.html">詳細</a>
         <a class="badge action-github" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="morning" data-name="tombadash/mouser" data-language="python" data-tags="automation controler free linux linux-app logi logitech logitech-options macos macos-app mouse mouse-remapping mx-master mx-master-3s mx-master-4 open-source productivity python ロジクール オープンソース" data-stars="2921" data-score="49.78" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">50<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">4</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/162909258?v=4" alt="TomBadash">
@@ -1901,23 +1927,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">朝の新顔枠</span>
-        <span class="meta-score">score 49.78</span>
-        
         <span class="meta-stars">stars 2921</span>
         <span class="meta-language">Python</span>
+        
+        
       </div>
-      <p class="pick-reason">選定理由: ロジクールマウスのオープンソース代替ツールとして尖ってい</p>
       <p class="description">A lightweight, open-source, fully local alternative to Logitech Options+ for remapping Logitech HID++ mice.</p>
+      <p class="pick-reason">選定理由: ロジクールマウスのオープンソース代替ツールとして尖ってい</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#automation</span><span class="badge topic">#controler</span><span class="badge topic">#free</span><span class="badge topic">#linux</span><span class="badge topic">#linux-app</span><span class="badge topic">#logi</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/tombadash-mouser-e979e3dc.html">詳細</a>
         <a class="badge action-github" href="https://github.com/TomBadash/Mouser" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#automation</span><span class="badge topic">#controler</span><span class="badge topic">#free</span><span class="badge topic">#linux</span><span class="badge topic">#linux-app</span><span class="badge topic">#logi</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="evening" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens github" data-stars="15719" data-score="54.22" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">54<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">5</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
@@ -1929,23 +1954,22 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">夜の尖り枠</span>
-        <span class="meta-score">score 54.22</span>
-        
         <span class="meta-stars">stars 15719</span>
         <span class="meta-language">Python</span>
+        
+        
       </div>
-      <p class="pick-reason">選定理由: AIの冗長な応答を原始人語で圧縮する尖った発想</p>
       <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
+      <p class="pick-reason">選定理由: AIの冗長な応答を原始人語で圧縮する尖った発想</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
         <a class="badge action-github" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
     </article>
     
     <article class="card rank-card" data-bucket="evening" data-name="galaxy-dawn/claude-scholar" data-language="python" data-tags="academic-research ai-agents claude claude-code codex-cli developer-tools mcp openai-codex opencode paper-writing zotero 研究支援 ai" data-stars="3128" data-score="52.31" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">52<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">6</span>
         <img class="avatar" src="https://avatars.githubusercontent.com/u/121143489?v=4" alt="Galaxy-Dawn">
@@ -1957,20 +1981,18 @@
         </div>
       </div>
       <div class="meta">
-        
-        <span class="meta-bucket">夜の尖り枠</span>
-        <span class="meta-score">score 52.31</span>
-        
         <span class="meta-stars">stars 3128</span>
         <span class="meta-language">Python</span>
+        
+        
       </div>
-      <p class="pick-reason">選定理由: 研究支援の半自動化が尖る</p>
       <p class="description">Semi-automated research assistant for academic research and software development. Supports Claude Code, OpenCode, and Codex CLI across id...</p>
+      <p class="pick-reason">選定理由: 研究支援の半自動化が尖る</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#academic-research</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex-cli</span><span class="badge topic">#developer-tools</span></div>
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="./repos/galaxy-dawn-claude-scholar-e82c2f87.html">詳細</a>
         <a class="badge action-github" href="https://github.com/Galaxy-Dawn/claude-scholar" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#academic-research</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex-cli</span><span class="badge topic">#developer-tools</span></div>
     </article>
     </div></section>
       </main>

@@ -1561,17 +1561,18 @@ def site_shell(
     .tab-panel.active {{ display: block; }}
     .card.hidden-by-filter {{ display: none; }}
     .card {{
+      position: relative;
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 16px;
       margin: 0 0 10px;
-      box-shadow: none;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
     }}
     .meta {{
       display: flex;
-      gap: 6px;
-      row-gap: 6px;
+      gap: 10px;
+      row-gap: 8px;
       flex-wrap: wrap;
       color: var(--muted);
       font-size: 12px;
@@ -1582,10 +1583,10 @@ def site_shell(
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      background: var(--surface-muted);
-      border: 1px solid rgba(15, 23, 42, 0.06);
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
     }}
     .meta span::before {{
       display: inline-flex;
@@ -1598,21 +1599,28 @@ def site_shell(
       line-height: 1;
     }}
     .date-label::before {{ content: "◷"; }}
-    .meta-bucket::before {{ content: "●"; }}
-    .meta-score::before {{ content: "◆"; }}
+    .meta-bucket::before {{ content: none; }}
+    .meta-score::before {{ content: none; }}
     .meta-count::before {{ content: "↻"; }}
     .meta-stars::before {{ content: "★"; }}
-    .meta-language::before {{ content: "{{}}"; font-size: 0.78em; }}
+    .meta-language::before {{
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #1f6feb;
+    }}
     .card-header {{
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-right: 54px;
     }}
     .avatar {{
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
       object-fit: cover;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.9);
@@ -1624,9 +1632,10 @@ def site_shell(
     }}
     .card h2 {{
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.22;
       letter-spacing: 0;
+      font-weight: 900;
     }}
     .card h2 a {{
       color: var(--ink);
@@ -1641,18 +1650,19 @@ def site_shell(
       gap: 6px;
       align-items: center;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       margin-bottom: 2px;
+      line-height: 1.2;
     }}
     .owner-line a {{
       color: var(--muted);
     }}
     .description {{
       margin: 0 0 10px;
-      color: rgba(15, 23, 42, 0.78);
-      line-height: 1.6;
-      font-size: 13px;
-      font-weight: 560;
+      color: rgba(15, 23, 42, 0.8);
+      line-height: 1.55;
+      font-size: 12.5px;
+      font-weight: 650;
       overflow-wrap: anywhere;
     }}
     .pick-reason {{
@@ -1660,17 +1670,40 @@ def site_shell(
       color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
-      font-weight: 650;
+      font-weight: 700;
       opacity: 0.92;
-      padding-left: 10px;
-      border-left: 3px solid #b8cdf8;
       overflow-wrap: anywhere;
     }}
     .badge-row {{
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      margin: 14px 0 0;
+      margin: 12px 0 0;
+    }}
+    .card-score {{
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: inline-grid;
+      place-items: center;
+      min-width: 38px;
+      min-height: 42px;
+      padding: 5px 7px;
+      border-radius: 10px;
+      background: #e7f8ef;
+      color: #078243;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(7, 130, 67, 0.08);
+    }}
+    .card-score small {{
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      font-weight: 900;
+      line-height: 1;
     }}
     .archive-select-row {{
       display: flex;
@@ -1810,17 +1843,23 @@ def site_shell(
       font-size: 13px;
     }}
     .detail-links {{
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
       gap: 8px;
       margin: 14px 0 0;
       align-items: center;
     }}
     .detail-links.primary-links .badge:first-child,
     .detail-links.primary-links a:first-child {{
-      background: #eef4ff;
-      color: #164ca4;
-      border-color: #b8cdf8;
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+    }}
+    .detail-links.primary-links .badge:last-child,
+    .detail-links.primary-links a:last-child {{
+      background: #061b3a;
+      color: #fff;
+      border-color: #061b3a;
     }}
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {{
@@ -2362,14 +2401,15 @@ def site_shell(
         grid-auto-columns: minmax(170px, 74vw);
       }}
       .card {{
-        padding: 16px;
+        padding: 16px 14px;
         min-width: 0;
       }}
       .card-header {{
         align-items: flex-start;
+        padding-right: 50px;
       }}
       .card h2 {{
-        font-size: 17px;
+        font-size: 16.5px;
         line-height: 1.28;
         font-weight: 900;
         overflow-wrap: anywhere;
@@ -2379,22 +2419,22 @@ def site_shell(
         font-weight: 750;
       }}
       .meta {{
-        gap: 7px;
+        gap: 10px;
         row-gap: 7px;
         font-size: 12.5px;
         font-weight: 750;
       }}
       .meta span {{
-        padding: 5px 8px;
+        padding: 0;
       }}
       .description {{
-        font-size: 14px;
-        line-height: 1.65;
-        font-weight: 620;
+        font-size: 13px;
+        line-height: 1.62;
+        font-weight: 650;
       }}
       .pick-reason {{
-        font-size: 13px;
-        line-height: 1.6;
+        font-size: 12.5px;
+        line-height: 1.55;
         font-weight: 750;
       }}
       .badge {{
@@ -2407,6 +2447,10 @@ def site_shell(
         justify-content: center;
         font-size: 13px;
         font-weight: 850;
+      }}
+      .card-score {{
+        top: 13px;
+        right: 13px;
       }}
       pre {{
         font-size: 12px;
@@ -3757,6 +3801,10 @@ def render_repo_card(
         rank_class += " top3"
     rank_badge = f'<span class="rank-number">{rank}</span>' if rank is not None else ""
     score_value = item.get("best_score", item.get("score", 0))
+    try:
+        score_label = str(int(round(float(score_value))))
+    except (TypeError, ValueError):
+        score_label = escape(str(score_value or 0))
     count_label = (
         f'<span class="meta-count">登場 {int(item.get("count") or 0)}回</span>'
         if item.get("count") is not None
@@ -3765,6 +3813,7 @@ def render_repo_card(
     details_href = repo_detail_href(str(item.get("full_name") or ""), path_prefix)
     return f"""
     <article class="card{rank_class}" {attrs}{' data-archive-card' if archive_card else ''}>
+      <div class="card-score">{score_label}<small>スコア</small></div>
       <div class="card-header">
         {rank_badge}
         <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
@@ -3776,20 +3825,18 @@ def render_repo_card(
         </div>
       </div>
       <div class="meta">
-        {f'<span class="date-label">通知 {sent_at}</span>' if sent_at else ''}
-        <span class="meta-bucket">{bucket_label}</span>
-        <span class="meta-score">score {score_value}</span>
-        {count_label}
         <span class="meta-stars">stars {int(item.get("stars") or 0)}</span>
         <span class="meta-language">{language}</span>
+        {f'<span class="date-label">{sent_at}</span>' if sent_at else ''}
+        {count_label}
       </div>
-      {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
       {f'<p class="description">{description}</p>' if description else ''}
+      {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
+      {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="{details_href}">詳細</a>
         <a class="badge action-github" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-      {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
     </article>
     """
 
