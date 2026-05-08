@@ -2300,6 +2300,22 @@ def site_shell(
       color: #164ca4;
       font-weight: 900;
     }}
+    .kpi-total .kpi-icon {{
+      background: #eef4ff;
+      color: #1f6feb;
+    }}
+    .kpi-latest .kpi-icon {{
+      background: #e8f8ef;
+      color: #078243;
+    }}
+    .kpi-gray .kpi-icon {{
+      background: #f1ecff;
+      color: #7249d6;
+    }}
+    .kpi-score .kpi-icon {{
+      background: #fff3dc;
+      color: #e98600;
+    }}
     .kpi-card strong {{
       display: block;
       font-size: 26px;
@@ -2547,7 +2563,17 @@ def site_shell(
         display: none;
       }}
       .kpi-grid {{
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(106px, 31vw);
+        gap: 8px;
+        overflow-x: auto;
+        padding: 1px 2px 8px;
+        margin-bottom: 14px;
+        scrollbar-width: none;
+      }}
+      .kpi-grid::-webkit-scrollbar {{
+        display: none;
       }}
       .stats-grid {{
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2557,8 +2583,35 @@ def site_shell(
         line-height: 1.12;
       }}
       .kpi-card {{
-        grid-template-columns: 1fr;
-        gap: 8px;
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 7px;
+        align-items: start;
+        min-height: 72px;
+        padding: 9px;
+        border-radius: 10px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+      }}
+      .kpi-icon {{
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        font-size: 12px;
+      }}
+      .kpi-card strong {{
+        font-size: 18px;
+        line-height: 1.05;
+        margin: 1px 0 2px;
+      }}
+      .kpi-card span {{
+        font-size: 10px;
+        line-height: 1.25;
+        font-weight: 800;
+      }}
+      .kpi-card div span:first-child {{
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }}
       .archive-list {{
         grid-template-columns: 1fr;
@@ -4191,10 +4244,10 @@ def render_history_site() -> None:
       {render_mini_chart(stats["day_counts"])}
     </section>
     <section class="kpi-grid">
-      <article class="kpi-card"><span class="kpi-icon">R</span><div><span>総リポジトリ数</span><strong>{stats['unique_repos']:,}</strong><span>アーカイブ済み</span></div></article>
-      <article class="kpi-card"><span class="kpi-icon">N</span><div><span>最新日の通知</span><strong>{stats['latest_count']}</strong><span>{escape(stats['latest_day'] or '-')}</span></div></article>
-      <article class="kpi-card"><span class="kpi-icon">G</span><div><span>グレー候補</span><strong>{stats['gray_count']}</strong><span>表示フィルタ対象</span></div></article>
-      <article class="kpi-card"><span class="kpi-icon">S</span><div><span>平均スコア</span><strong>{stats['avg_score']:.1f}</strong><span>履歴全体</span></div></article>
+      <article class="kpi-card kpi-total"><span class="kpi-icon" aria-hidden="true">▱</span><div><span>総リポジトリ数</span><strong>{stats['unique_repos']:,}</strong><span>アーカイブ済み</span></div></article>
+      <article class="kpi-card kpi-latest"><span class="kpi-icon" aria-hidden="true">➤</span><div><span>最新日の通知</span><strong>{stats['latest_count']}</strong><span>{escape(stats['latest_day'] or '-')}</span></div></article>
+      <article class="kpi-card kpi-gray"><span class="kpi-icon" aria-hidden="true">◆</span><div><span>グレー候補</span><strong>{stats['gray_count']}</strong><span>表示フィルタ対象</span></div></article>
+      <article class="kpi-card kpi-score"><span class="kpi-icon" aria-hidden="true">↗</span><div><span>平均スコア</span><strong>{stats['avg_score']:.1f}</strong><span>履歴全体</span></div></article>
     </section>
     """
     low_star_section = f"""
