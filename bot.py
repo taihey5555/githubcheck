@@ -660,6 +660,20 @@ def summarize_languages(items: list[dict[str, Any]], limit: int = 5) -> str:
     return ", ".join(f"{language} {count}" for language, count in ranking)
 
 
+def render_language_pills(items: list[dict[str, Any]], limit: int = 4) -> str:
+    counts: dict[str, int] = {}
+    for item in items:
+        language = str(item.get("language") or "N/A")
+        counts[language] = counts.get(language, 0) + 1
+    ranking = sorted(counts.items(), key=lambda pair: (-pair[1], pair[0]))[:limit]
+    if not ranking:
+        return '<span class="language-pill">なし</span>'
+    return "".join(
+        f'<span class="language-pill">{escape(language)} <b>{count}</b></span>'
+        for language, count in ranking
+    )
+
+
 def safe_float(value: Any) -> float | None:
     try:
         if value in (None, ""):
@@ -1262,6 +1276,9 @@ def site_shell(
       --shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
     }}
     * {{ box-sizing: border-box; }}
+    html {{
+      overflow-x: hidden;
+    }}
     body {{
       margin: 0;
       font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
@@ -1269,6 +1286,7 @@ def site_shell(
       background: var(--bg);
       font-size: 15px;
       line-height: 1.55;
+      overflow-x: hidden;
     }}
     a {{
       color: var(--accent);
@@ -1940,6 +1958,7 @@ def site_shell(
       gap: 24px;
       align-items: center;
       margin: 0 0 18px;
+      min-width: 0;
     }}
     .dashboard-hero h2 {{
       margin: 0 0 8px;
@@ -1956,6 +1975,7 @@ def site_shell(
       margin: 0;
       color: var(--muted);
       max-width: 620px;
+      overflow-wrap: anywhere;
     }}
     .hero-pills {{
       display: flex;
@@ -2055,6 +2075,7 @@ def site_shell(
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 12px;
       margin: 0 0 14px;
     }}
@@ -2087,6 +2108,22 @@ def site_shell(
       color: #fff;
       box-shadow: 0 6px 14px rgba(31, 111, 235, 0.22);
     }}
+    .filter-toggle {{
+      display: none;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-muted);
+      color: var(--ink);
+      padding: 10px 12px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: left;
+    }}
+    .archive-filter-body {{
+      min-width: 0;
+    }}
     .archive-controls {{
       box-shadow: none;
       border-radius: 12px;
@@ -2097,7 +2134,7 @@ def site_shell(
     }}
     .archive-list {{
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 12px;
     }}
     .archive-list .card {{
@@ -2137,6 +2174,29 @@ def site_shell(
     .mobile-segment {{
       display: none;
     }}
+    .stat-card.compact strong {{
+      font-size: 18px;
+      line-height: 1.25;
+    }}
+    .language-pills {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }}
+    .language-pill {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+    }}
     body.gray-mode .card[data-archive-card][data-gray-mode="false"] {{
       display: none;
     }}
@@ -2148,7 +2208,7 @@ def site_shell(
         display: none;
       }}
       .menu-toggle {{
-        display: inline-flex;
+        display: none;
       }}
       .brand-mark {{
         display: grid;
@@ -2156,17 +2216,41 @@ def site_shell(
       .top-actions {{
         display: none;
       }}
+      .site-header {{
+        left: auto;
+        right: auto;
+        width: 100%;
+        max-width: 100vw;
+        overflow: hidden;
+      }}
+      .header-inner {{
+        padding: 14px;
+        max-width: 100%;
+      }}
+      .brand-row > span:not(.brand-mark) {{
+        overflow: hidden;
+      }}
+      .brand strong,
+      .brand span {{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }}
       .mobile-segment {{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 2px;
         padding: 4px;
         border: 1px solid var(--line);
         border-radius: 12px;
         background: var(--surface);
         margin: 10px 14px 0;
+        width: auto;
+        max-width: none;
+        overflow: hidden;
       }}
       .mobile-segment a {{
+        min-width: 0;
         text-align: center;
         padding: 8px;
         border-radius: 9px;
@@ -2179,18 +2263,7 @@ def site_shell(
         color: #fff;
       }}
       .site-nav {{
-        position: absolute;
-        top: calc(100% + 8px);
-        right: 20px;
-        left: 20px;
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 12px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface);
-        box-shadow: var(--shadow);
+        display: none !important;
       }}
       .site-nav.open {{
         display: flex;
@@ -2201,6 +2274,7 @@ def site_shell(
       }}
       main {{
         padding: 22px 14px 48px;
+        max-width: 100%;
       }}
       .hero {{
         display: none;
@@ -2209,6 +2283,7 @@ def site_shell(
         grid-template-columns: 1fr;
         padding: 18px;
         border-radius: 16px;
+        overflow: hidden;
       }}
       .mini-chart {{
         display: none;
@@ -2230,14 +2305,69 @@ def site_shell(
       .archive-list {{
         grid-template-columns: 1fr;
       }}
+      .archive-list .card {{
+        min-width: 0;
+      }}
       .spotlight-strip {{
         grid-auto-columns: minmax(170px, 74vw);
       }}
       .card {{
         padding: 14px;
+        min-width: 0;
+      }}
+      .card-header {{
+        align-items: flex-start;
+      }}
+      .card h2 {{
+        font-size: 16px;
+        overflow-wrap: anywhere;
+      }}
+      pre {{
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }}
+      .panel-title {{
+        align-items: stretch;
+      }}
+      .panel-title h2 {{
+        flex: 1 1 auto;
+      }}
+      .mode-toggle {{
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        order: 3;
+      }}
+      .filter-toggle {{
+        display: block;
+        order: 2;
+      }}
+      .archive-filter-body {{
+        display: none;
+      }}
+      .archive-filter-body.open {{
+        display: block;
       }}
       .archive-controls {{
         grid-template-columns: 1fr;
+        padding: 12px;
+        max-width: 100%;
+      }}
+      .control-group input,
+      .control-group select,
+      .archive-select-row select {{
+        min-width: 0;
+        max-width: 100%;
+      }}
+      .date-selector {{
+        padding: 6px;
+        margin-bottom: 14px;
+      }}
+      .date-button {{
+        min-width: 52px;
+        padding: 7px 10px;
+      }}
+      .stat-card.compact strong {{
+        font-size: 14px;
       }}
     }}
   </style>
@@ -2369,6 +2499,8 @@ def site_shell(
       const openLink = archiveRoot.querySelector('[data-open-filter-link]');
       const linkOutput = archiveRoot.querySelector('[data-filter-link-output]');
       const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
+      const filterToggle = archiveRoot.querySelector('[data-filter-toggle]');
+      const filterBody = archiveRoot.querySelector('[data-filter-body]');
       const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
 
       const activePanelId = () => activeDayTarget || '';
@@ -2389,6 +2521,19 @@ def site_shell(
       const initialMode = normalizeText(searchParams.get('mode')) === 'gray' ? 'gray' : 'normal';
       const modeButtons = Array.from(document.querySelectorAll('[data-archive-mode]'));
       let archiveMode = initialMode;
+      const hasInitialFilters = Array.from(searchParams.keys()).some((key) => key !== 'mode');
+      const setFilterBodyOpen = (open) => {{
+        if (!filterToggle || !filterBody) return;
+        filterBody.classList.toggle('open', open);
+        filterToggle.setAttribute('aria-expanded', String(open));
+        filterToggle.textContent = open ? 'フィルターを閉じる' : 'フィルターを開く';
+      }};
+      if (filterToggle && filterBody) {{
+        setFilterBodyOpen(window.matchMedia('(min-width: 721px)').matches || hasInitialFilters);
+        filterToggle.addEventListener('click', () => {{
+          setFilterBodyOpen(!filterBody.classList.contains('open'));
+        }});
+      }}
       const parseNumber = (value) => {{
         if (value === '' || value == null) return null;
         const parsed = Number(value);
@@ -3301,11 +3446,13 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
     <section class="dashboard-panel" data-archive-root>
       <div class="panel-title">
         <h2>検索・フィルター</h2>
+        <button class="filter-toggle" type="button" data-filter-toggle aria-expanded="false">フィルターを開く</button>
         <div class="mode-toggle" aria-label="表示モード">
           <button type="button" class="active" data-archive-mode="normal" aria-pressed="true">通常</button>
           <button type="button" data-archive-mode="gray" aria-pressed="false">グレー</button>
         </div>
       </div>
+      <div class="archive-filter-body" data-filter-body>
       <div class="archive-controls">
       <div class="control-group">
         <label for="search-name">Repo 名検索</label>
@@ -3362,6 +3509,7 @@ def build_archive_controls(history: list[dict[str, Any]]) -> str:
         <a class="badge" href="./index.html" data-open-filter-link>この絞り込みを開く</a>
         <input type="text" readonly value="./index.html" data-filter-link-output aria-label="共有用の絞り込みURL">
         <span class="archive-share-status" data-filter-link-status></span>
+      </div>
       </div>
       <p class="archive-summary" data-filter-count>{len(history)} 件表示</p>
     </section>
@@ -3888,7 +4036,7 @@ def render_weekly_page(
       <article class="stat-card"><strong>{unique_repos}</strong><span>今週のリポジトリ数</span></article>
       <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>
       <article class="stat-card"><strong>{avg_score:.1f}</strong><span>平均 score</span></article>
-      <article class="stat-card"><strong>{escape(summarize_languages(this_week_items, 4))}</strong><span>言語分布</span></article>
+      <article class="stat-card compact"><div class="language-pills">{render_language_pills(this_week_items, 4)}</div><span>言語分布</span></article>
       <article class="stat-card"><strong class="inline-links">{review_state_summary}</strong><span>状態の分布</span></article>
     </section>
     """
