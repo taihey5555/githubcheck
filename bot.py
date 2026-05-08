@@ -1581,11 +1581,28 @@ def site_shell(
     .meta span {{
       display: inline-flex;
       align-items: center;
+      gap: 4px;
       padding: 4px 8px;
       border-radius: 6px;
       background: var(--surface-muted);
       border: 1px solid rgba(15, 23, 42, 0.06);
     }}
+    .meta span::before {{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1em;
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 900;
+      line-height: 1;
+    }}
+    .date-label::before {{ content: "◷"; }}
+    .meta-bucket::before {{ content: "●"; }}
+    .meta-score::before {{ content: "◆"; }}
+    .meta-count::before {{ content: "↻"; }}
+    .meta-stars::before {{ content: "★"; }}
+    .meta-language::before {{ content: "{{}}"; font-size: 0.78em; }}
     .card-header {{
       display: flex;
       align-items: center;
@@ -1635,6 +1652,7 @@ def site_shell(
       color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
       font-size: 13px;
+      font-weight: 560;
       overflow-wrap: anywhere;
     }}
     .pick-reason {{
@@ -1642,6 +1660,7 @@ def site_shell(
       color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
+      font-weight: 650;
       opacity: 0.92;
       padding-left: 10px;
       border-left: 3px solid #b8cdf8;
@@ -1806,6 +1825,24 @@ def site_shell(
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {{
       background: var(--surface-muted);
+    }}
+    .action-detail::before {{
+      content: "i";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(31, 111, 235, 0.12);
+      color: #164ca4;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }}
+    .action-github::before {{
+      content: "↗";
+      font-weight: 900;
+      line-height: 1;
     }}
     .inline-links {{
       display: inline-flex;
@@ -2265,11 +2302,11 @@ def site_shell(
       .mobile-segment a {{
         min-width: 0;
         text-align: center;
-        padding: 8px;
+        padding: 9px 8px;
         border-radius: 9px;
         color: var(--ink);
-        font-weight: 800;
-        font-size: 13px;
+        font-weight: 900;
+        font-size: 13.5px;
       }}
       .mobile-segment a[aria-current="page"] {{
         background: #1f6feb;
@@ -2325,15 +2362,51 @@ def site_shell(
         grid-auto-columns: minmax(170px, 74vw);
       }}
       .card {{
-        padding: 14px;
+        padding: 16px;
         min-width: 0;
       }}
       .card-header {{
         align-items: flex-start;
       }}
       .card h2 {{
-        font-size: 16px;
+        font-size: 17px;
+        line-height: 1.28;
+        font-weight: 900;
         overflow-wrap: anywhere;
+      }}
+      .owner-line {{
+        font-size: 12.5px;
+        font-weight: 750;
+      }}
+      .meta {{
+        gap: 7px;
+        row-gap: 7px;
+        font-size: 12.5px;
+        font-weight: 750;
+      }}
+      .meta span {{
+        padding: 5px 8px;
+      }}
+      .description {{
+        font-size: 14px;
+        line-height: 1.65;
+        font-weight: 620;
+      }}
+      .pick-reason {{
+        font-size: 13px;
+        line-height: 1.6;
+        font-weight: 750;
+      }}
+      .badge {{
+        font-size: 11.5px;
+        font-weight: 700;
+      }}
+      .detail-links .badge,
+      .detail-links a {{
+        min-height: 38px;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 850;
       }}
       pre {{
         font-size: 12px;
@@ -3685,7 +3758,7 @@ def render_repo_card(
     rank_badge = f'<span class="rank-number">{rank}</span>' if rank is not None else ""
     score_value = item.get("best_score", item.get("score", 0))
     count_label = (
-        f"<span>登場 {int(item.get('count') or 0)}回</span>"
+        f'<span class="meta-count">登場 {int(item.get("count") or 0)}回</span>'
         if item.get("count") is not None
         else ""
     )
@@ -3704,17 +3777,17 @@ def render_repo_card(
       </div>
       <div class="meta">
         {f'<span class="date-label">通知 {sent_at}</span>' if sent_at else ''}
-        <span>{bucket_label}</span>
-        <span>score {score_value}</span>
+        <span class="meta-bucket">{bucket_label}</span>
+        <span class="meta-score">score {score_value}</span>
         {count_label}
-        <span>stars {int(item.get("stars") or 0)}</span>
-        <span>{language}</span>
+        <span class="meta-stars">stars {int(item.get("stars") or 0)}</span>
+        <span class="meta-language">{language}</span>
       </div>
       {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
       {f'<p class="description">{description}</p>' if description else ''}
       <div class="detail-links primary-links">
-        <a class="badge" href="{details_href}">詳細</a>
-        <a class="badge" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="{details_href}">詳細</a>
+        <a class="badge action-github" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
     </article>

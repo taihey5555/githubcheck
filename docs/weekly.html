@@ -326,11 +326,28 @@
     .meta span {
       display: inline-flex;
       align-items: center;
+      gap: 4px;
       padding: 4px 8px;
       border-radius: 6px;
       background: var(--surface-muted);
       border: 1px solid rgba(15, 23, 42, 0.06);
     }
+    .meta span::before {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1em;
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .date-label::before { content: "◷"; }
+    .meta-bucket::before { content: "●"; }
+    .meta-score::before { content: "◆"; }
+    .meta-count::before { content: "↻"; }
+    .meta-stars::before { content: "★"; }
+    .meta-language::before { content: "{}"; font-size: 0.78em; }
     .card-header {
       display: flex;
       align-items: center;
@@ -380,6 +397,7 @@
       color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
       font-size: 13px;
+      font-weight: 560;
       overflow-wrap: anywhere;
     }
     .pick-reason {
@@ -387,6 +405,7 @@
       color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
+      font-weight: 650;
       opacity: 0.92;
       padding-left: 10px;
       border-left: 3px solid #b8cdf8;
@@ -551,6 +570,24 @@
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {
       background: var(--surface-muted);
+    }
+    .action-detail::before {
+      content: "i";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(31, 111, 235, 0.12);
+      color: #164ca4;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .action-github::before {
+      content: "↗";
+      font-weight: 900;
+      line-height: 1;
     }
     .inline-links {
       display: inline-flex;
@@ -1010,11 +1047,11 @@
       .mobile-segment a {
         min-width: 0;
         text-align: center;
-        padding: 8px;
+        padding: 9px 8px;
         border-radius: 9px;
         color: var(--ink);
-        font-weight: 800;
-        font-size: 13px;
+        font-weight: 900;
+        font-size: 13.5px;
       }
       .mobile-segment a[aria-current="page"] {
         background: #1f6feb;
@@ -1070,15 +1107,51 @@
         grid-auto-columns: minmax(170px, 74vw);
       }
       .card {
-        padding: 14px;
+        padding: 16px;
         min-width: 0;
       }
       .card-header {
         align-items: flex-start;
       }
       .card h2 {
-        font-size: 16px;
+        font-size: 17px;
+        line-height: 1.28;
+        font-weight: 900;
         overflow-wrap: anywhere;
+      }
+      .owner-line {
+        font-size: 12.5px;
+        font-weight: 750;
+      }
+      .meta {
+        gap: 7px;
+        row-gap: 7px;
+        font-size: 12.5px;
+        font-weight: 750;
+      }
+      .meta span {
+        padding: 5px 8px;
+      }
+      .description {
+        font-size: 14px;
+        line-height: 1.65;
+        font-weight: 620;
+      }
+      .pick-reason {
+        font-size: 13px;
+        line-height: 1.6;
+        font-weight: 750;
+      }
+      .badge {
+        font-size: 11.5px;
+        font-weight: 700;
+      }
+      .detail-links .badge,
+      .detail-links a {
+        min-height: 38px;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 850;
       }
       pre {
         font-size: 12px;
@@ -1297,17 +1370,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 826.39</span>
-        <span>登場 1回</span>
-        <span>stars 14135</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 826.39</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 14135</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: AIエージェントでサイト丸ごとクローン可能なテンプレート</p>
       <p class="description">Clone any website with one command using AI coding agents</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">詳細</a>
-        <a class="badge" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
     </article>
@@ -1325,17 +1398,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 213.69</span>
-        <span>登場 1回</span>
-        <span>stars 44541</span>
-        <span>Python</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 213.69</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 44541</span>
+        <span class="meta-language">Python</span>
       </div>
       <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
       <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
-        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
     </article>
@@ -1353,17 +1426,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 104.47</span>
-        <span>登場 1回</span>
-        <span>stars 1736</span>
-        <span>Shell</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 104.47</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 1736</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
       <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
-        <a class="badge" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
     </article>
@@ -1381,17 +1454,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 98.57</span>
-        <span>登場 1回</span>
-        <span>stars 19033</span>
-        <span>JavaScript</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 98.57</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 19033</span>
+        <span class="meta-language">JavaScript</span>
       </div>
       <p class="pick-reason">選定理由: サイトやツールをCLI化するAIエージェント向けハブ</p>
       <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
-        <a class="badge" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
     </article>
@@ -1409,17 +1482,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 83.72</span>
-        <span>登場 1回</span>
-        <span>stars 17652</span>
-        <span>Shell</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 83.72</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 17652</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
       <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
-        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
     </article>
@@ -1437,17 +1510,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 81.03</span>
-        <span>登場 1回</span>
-        <span>stars 42323</span>
-        <span>JavaScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 81.03</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 42323</span>
+        <span class="meta-language">JavaScript</span>
       </div>
       <p class="pick-reason">選定理由: Claude Codeで求人検索を自動化するAIエージェ</p>
       <p class="description">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
-        <a class="badge" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
@@ -1465,17 +1538,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 826.39</span>
-        <span>登場 1回</span>
-        <span>stars 14135</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 826.39</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 14135</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: AIエージェントでサイト丸ごとクローン可能なテンプレート</p>
       <p class="description">Clone any website with one command using AI coding agents</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">詳細</a>
-        <a class="badge" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
     </article>
@@ -1493,17 +1566,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 213.69</span>
-        <span>登場 1回</span>
-        <span>stars 44541</span>
-        <span>Python</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 213.69</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 44541</span>
+        <span class="meta-language">Python</span>
       </div>
       <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
       <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
-        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
     </article>
@@ -1521,17 +1594,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 104.47</span>
-        <span>登場 1回</span>
-        <span>stars 1736</span>
-        <span>Shell</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 104.47</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 1736</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
       <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
-        <a class="badge" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
     </article>
@@ -1549,17 +1622,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 98.57</span>
-        <span>登場 1回</span>
-        <span>stars 19033</span>
-        <span>JavaScript</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 98.57</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 19033</span>
+        <span class="meta-language">JavaScript</span>
       </div>
       <p class="pick-reason">選定理由: サイトやツールをCLI化するAIエージェント向けハブ</p>
       <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
-        <a class="badge" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
     </article>
@@ -1577,17 +1650,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 83.72</span>
-        <span>登場 1回</span>
-        <span>stars 17652</span>
-        <span>Shell</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 83.72</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 17652</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
       <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
-        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
     </article>
@@ -1605,17 +1678,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 81.03</span>
-        <span>登場 1回</span>
-        <span>stars 42323</span>
-        <span>JavaScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 81.03</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 42323</span>
+        <span class="meta-language">JavaScript</span>
       </div>
       <p class="pick-reason">選定理由: Claude Codeで求人検索を自動化するAIエージェ</p>
       <p class="description">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
-        <a class="badge" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/santifer-career-ops-6c0137a1.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/santifer/career-ops" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
@@ -1633,17 +1706,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 80.61</span>
-        <span>登場 1回</span>
-        <span>stars 13034</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 80.61</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 13034</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: コードベースを即座に知識グラフ化する新感覚ツール</p>
       <p class="description">Graphs that teach &gt; graphs that impress. Turn any code, or knowledge base (Karpathy LLM wiki), into an interactive knowledge graph you ca...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/lum1104-understand-anything-c881db87.html">詳細</a>
-        <a class="badge" href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/lum1104-understand-anything-c881db87.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity-skills</span><span class="badge topic">#business-knowledge</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#codex</span><span class="badge topic">#codex-skills</span></div>
     </article>
@@ -1661,17 +1734,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 72.53</span>
-        <span>登場 1回</span>
-        <span>stars 4667</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 72.53</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 4667</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: 自己ホスト型AIエージェント統制盤が急伸中</p>
       <p class="description">Self-hosted AI agent orchestration platform: dispatch tasks, run multi-agent workflows, monitor spend, and govern operations from one mis...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/builderz-labs-mission-control-19a7c0a0.html">詳細</a>
-        <a class="badge" href="https://github.com/builderz-labs/mission-control" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/builderz-labs-mission-control-19a7c0a0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/builderz-labs/mission-control" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#ai-dashboard</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span></div>
     </article>
@@ -1689,17 +1762,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 70.17</span>
-        <span>登場 1回</span>
-        <span>stars 2888</span>
-        <span>JavaScript</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 70.17</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 2888</span>
+        <span class="meta-language">JavaScript</span>
       </div>
       <p class="pick-reason">選定理由: 大量Star急増、OpenAIアカウント自動量産ツール</p>
       <p class="description">Chrome扩展：支持OpenAI OAuth注册(自动开通plus账号)、验证码获取、CPA/sub/cpdex2api回调验证与自动恢复</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/qlhazycoder-codex-oauth-automation-extension-66b97b4a.html">詳細</a>
-        <a class="badge" href="https://github.com/QLHazyCoder/codex-oauth-automation-extension" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/qlhazycoder-codex-oauth-automation-extension-66b97b4a.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/QLHazyCoder/codex-oauth-automation-extension" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span></div>
     </article>
@@ -1717,17 +1790,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 68.11</span>
-        <span>登場 1回</span>
-        <span>stars 686</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 68.11</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 686</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: DeepSeek専用設計でキャッシュ安定性を極めたターミ</p>
       <p class="description">DeepSeek-native AI coding agent for your terminal. Engineered around prefix-cache stability — leave it running.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/esengine-deepseek-reasonix-3f9a0f82.html">詳細</a>
-        <a class="badge" href="https://github.com/esengine/DeepSeek-Reasonix" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/esengine-deepseek-reasonix-3f9a0f82.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/esengine/DeepSeek-Reasonix" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agent-framework</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-coding</span><span class="badge topic">#cli</span><span class="badge topic">#coding-agent</span></div>
     </article>
@@ -1745,17 +1818,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 68.11</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 68.11</span>
         
-        <span>stars 686</span>
-        <span>TypeScript</span>
+        <span class="meta-stars">stars 686</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: DeepSeek専用設計でキャッシュ安定性を極めたターミ</p>
       <p class="description">DeepSeek-native AI coding agent for your terminal. Engineered around prefix-cache stability — leave it running.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/esengine-deepseek-reasonix-3f9a0f82.html">詳細</a>
-        <a class="badge" href="https://github.com/esengine/DeepSeek-Reasonix" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/esengine-deepseek-reasonix-3f9a0f82.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/esengine/DeepSeek-Reasonix" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agent-framework</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-coding</span><span class="badge topic">#cli</span><span class="badge topic">#coding-agent</span></div>
     </article>
@@ -1773,17 +1846,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 60.44</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 60.44</span>
         
-        <span>stars 572</span>
-        <span>Rust</span>
+        <span class="meta-stars">stars 572</span>
+        <span class="meta-language">Rust</span>
       </div>
       <p class="pick-reason">選定理由: ターミナル内でAIエージェントを一元管理する新感覚ツール</p>
       <p class="description">agent multiplexer that lives in your terminal.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/ogulcancelik-herdr-a22d76eb.html">詳細</a>
-        <a class="badge" href="https://github.com/ogulcancelik/herdr" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/ogulcancelik-herdr-a22d76eb.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/ogulcancelik/herdr" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span></div>
     </article>
@@ -1801,17 +1874,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 58.11</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 58.11</span>
         
-        <span>stars 517</span>
-        <span>Rust</span>
+        <span class="meta-stars">stars 517</span>
+        <span class="meta-language">Rust</span>
       </div>
       <p class="pick-reason">選定理由: SSHだけで遊べる開発者向けソーシャル空間が新鮮</p>
       <p class="description">A cozy terminal clubhouse for developers. Lofi beats, casual games, chat, and tech news, all via SSH.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/mpiorowski-late-sh-63aa52c5.html">詳細</a>
-        <a class="badge" href="https://github.com/mpiorowski/late-sh" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/mpiorowski-late-sh-63aa52c5.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/mpiorowski/late-sh" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#irc</span><span class="badge topic">#ssh</span><span class="badge topic">#terminal</span><span class="badge topic">#tui</span></div>
     </article>
@@ -1829,17 +1902,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 213.69</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 213.69</span>
         
-        <span>stars 44541</span>
-        <span>Python</span>
+        <span class="meta-stars">stars 44541</span>
+        <span class="meta-language">Python</span>
       </div>
       <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
       <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
-        <a class="badge" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
     </article>
@@ -1857,17 +1930,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 104.47</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 104.47</span>
         
-        <span>stars 1736</span>
-        <span>Shell</span>
+        <span class="meta-stars">stars 1736</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
       <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
-        <a class="badge" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
     </article>
@@ -1885,17 +1958,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 83.72</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 83.72</span>
         
-        <span>stars 17652</span>
-        <span>Shell</span>
+        <span class="meta-stars">stars 17652</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
       <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
-        <a class="badge" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
     </article>

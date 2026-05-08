@@ -326,11 +326,28 @@
     .meta span {
       display: inline-flex;
       align-items: center;
+      gap: 4px;
       padding: 4px 8px;
       border-radius: 6px;
       background: var(--surface-muted);
       border: 1px solid rgba(15, 23, 42, 0.06);
     }
+    .meta span::before {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1em;
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .date-label::before { content: "◷"; }
+    .meta-bucket::before { content: "●"; }
+    .meta-score::before { content: "◆"; }
+    .meta-count::before { content: "↻"; }
+    .meta-stars::before { content: "★"; }
+    .meta-language::before { content: "{}"; font-size: 0.78em; }
     .card-header {
       display: flex;
       align-items: center;
@@ -380,6 +397,7 @@
       color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
       font-size: 13px;
+      font-weight: 560;
       overflow-wrap: anywhere;
     }
     .pick-reason {
@@ -387,6 +405,7 @@
       color: rgba(15, 23, 42, 0.72);
       line-height: 1.5;
       font-size: 12px;
+      font-weight: 650;
       opacity: 0.92;
       padding-left: 10px;
       border-left: 3px solid #b8cdf8;
@@ -551,6 +570,24 @@
     .detail-links.secondary-links .badge,
     .detail-links.secondary-links a {
       background: var(--surface-muted);
+    }
+    .action-detail::before {
+      content: "i";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(31, 111, 235, 0.12);
+      color: #164ca4;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .action-github::before {
+      content: "↗";
+      font-weight: 900;
+      line-height: 1;
     }
     .inline-links {
       display: inline-flex;
@@ -1010,11 +1047,11 @@
       .mobile-segment a {
         min-width: 0;
         text-align: center;
-        padding: 8px;
+        padding: 9px 8px;
         border-radius: 9px;
         color: var(--ink);
-        font-weight: 800;
-        font-size: 13px;
+        font-weight: 900;
+        font-size: 13.5px;
       }
       .mobile-segment a[aria-current="page"] {
         background: #1f6feb;
@@ -1070,15 +1107,51 @@
         grid-auto-columns: minmax(170px, 74vw);
       }
       .card {
-        padding: 14px;
+        padding: 16px;
         min-width: 0;
       }
       .card-header {
         align-items: flex-start;
       }
       .card h2 {
-        font-size: 16px;
+        font-size: 17px;
+        line-height: 1.28;
+        font-weight: 900;
         overflow-wrap: anywhere;
+      }
+      .owner-line {
+        font-size: 12.5px;
+        font-weight: 750;
+      }
+      .meta {
+        gap: 7px;
+        row-gap: 7px;
+        font-size: 12.5px;
+        font-weight: 750;
+      }
+      .meta span {
+        padding: 5px 8px;
+      }
+      .description {
+        font-size: 14px;
+        line-height: 1.65;
+        font-weight: 620;
+      }
+      .pick-reason {
+        font-size: 13px;
+        line-height: 1.6;
+        font-weight: 750;
+      }
+      .badge {
+        font-size: 11.5px;
+        font-weight: 700;
+      }
+      .detail-links .badge,
+      .detail-links a {
+        min-height: 38px;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 850;
       }
       pre {
         font-size: 12px;
@@ -1297,17 +1370,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 118.86</span>
-        <span>登場 1回</span>
-        <span>stars 25030</span>
-        <span>Shell</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 118.86</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 25030</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: AIエージェントに本番品質のエンジニアリングスキルを注入</p>
       <p class="description">Production-grade engineering skills for AI coding agents.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/addyosmani-agent-skills-35dedba6.html">詳細</a>
-        <a class="badge" href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/addyosmani-agent-skills-35dedba6.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#antigravity</span><span class="badge topic">#antigravity-ide</span><span class="badge topic">#claude-code</span><span class="badge topic">#cursor</span><span class="badge topic">#skills</span></div>
     </article>
@@ -1325,17 +1398,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 79.67</span>
-        <span>登場 1回</span>
-        <span>stars 3327</span>
-        <span>Rust</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 79.67</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 3327</span>
+        <span class="meta-language">Rust</span>
       </div>
       <p class="pick-reason">選定理由: 複数AI CLIを統合し並列実行できる尖ったオーケストレ</p>
       <p class="description">Multi-agent AI orchestration platform for automation, workflows, and developer tools. Golutra transforms Codex, Claude Code, and OpenClaw...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/golutra-golutra-27d77ff6.html">詳細</a>
-        <a class="badge" href="https://github.com/golutra/golutra" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/golutra-golutra-27d77ff6.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/golutra/golutra" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#automation</span><span class="badge topic">#chatgpt</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
@@ -1353,17 +1426,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 75.64</span>
-        <span>登場 1回</span>
-        <span>stars 5064</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 75.64</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 5064</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: AIコーディングツールのコスト可視化が爆速で伸びている</p>
       <p class="description">See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/getagentseal-codeburn-cf446455.html">詳細</a>
-        <a class="badge" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/getagentseal-codeburn-cf446455.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#cost-tracking</span><span class="badge topic">#cursor-ide</span></div>
     </article>
@@ -1381,17 +1454,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 73.47</span>
-        <span>登場 1回</span>
-        <span>stars 7049</span>
-        <span>Go</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 73.47</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 7049</span>
+        <span class="meta-language">Go</span>
       </div>
       <p class="pick-reason">選定理由: リモートからAIコーディングエージェントとチャットできる</p>
       <p class="description">Bridge local AI coding agents (Claude Code, Cursor, Gemini CLI, Codex) to messaging platforms (Feishu/Lark, DingTalk, Slack, Telegram, Di...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
-        <a class="badge" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span></div>
     </article>
@@ -1409,17 +1482,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 68.02</span>
-        <span>登場 1回</span>
-        <span>stars 13661</span>
-        <span>Shell</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 68.02</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 13661</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: AIが生成するUIを一気に洗練させるスキル集</p>
       <p class="description">Taste-Skill (High-Agency Frontend) - gives your AI good taste. stops the AI from generating boring, generic, &quot;slop&quot;</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/leonxlnx-taste-skill-8896a31c.html">詳細</a>
-        <a class="badge" href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/leonxlnx-taste-skill-8896a31c.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#coding</span><span class="badge topic">#lowcode</span><span class="badge topic">#nocode</span><span class="badge topic">#skill</span></div>
     </article>
@@ -1437,17 +1510,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 66.09</span>
-        <span>登場 1回</span>
-        <span>stars 5080</span>
-        <span>Swift</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 66.09</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 5080</span>
+        <span class="meta-language">Swift</span>
       </div>
       <p class="pick-reason">選定理由: Apple Siliconの内蔵LLMをCLIで即利用可</p>
       <p class="description">The free AI already on your Mac. CLI tool, OpenAI-compatible server, and interactive chat — all on-device via Apple Intelligence. No API...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
-        <a class="badge" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#apple-intelligence</span><span class="badge topic">#apple-silicon</span><span class="badge topic">#cli</span><span class="badge topic">#foundationmodels</span><span class="badge topic">#homebrew</span><span class="badge topic">#llm</span></div>
     </article>
@@ -1465,17 +1538,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 118.86</span>
-        <span>登場 1回</span>
-        <span>stars 25030</span>
-        <span>Shell</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 118.86</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 25030</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: AIエージェントに本番品質のエンジニアリングスキルを注入</p>
       <p class="description">Production-grade engineering skills for AI coding agents.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/addyosmani-agent-skills-35dedba6.html">詳細</a>
-        <a class="badge" href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/addyosmani-agent-skills-35dedba6.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#antigravity</span><span class="badge topic">#antigravity-ide</span><span class="badge topic">#claude-code</span><span class="badge topic">#cursor</span><span class="badge topic">#skills</span></div>
     </article>
@@ -1493,17 +1566,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 101.66</span>
-        <span>登場 1回</span>
-        <span>stars 25382</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 101.66</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 25382</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: CLIで全モデルを統一的に使える新世代コーディングエージ</p>
       <p class="description">runs anywhere. uses anything</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/gitlawb-openclaude-b7fa03f7.html">詳細</a>
-        <a class="badge" href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/gitlawb-openclaude-b7fa03f7.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 気になる</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span><span class="badge topic">#coding</span></div>
     </article>
@@ -1521,17 +1594,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 79.67</span>
-        <span>登場 1回</span>
-        <span>stars 3327</span>
-        <span>Rust</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 79.67</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 3327</span>
+        <span class="meta-language">Rust</span>
       </div>
       <p class="pick-reason">選定理由: 複数AI CLIを統合し並列実行できる尖ったオーケストレ</p>
       <p class="description">Multi-agent AI orchestration platform for automation, workflows, and developer tools. Golutra transforms Codex, Claude Code, and OpenClaw...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/golutra-golutra-27d77ff6.html">詳細</a>
-        <a class="badge" href="https://github.com/golutra/golutra" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/golutra-golutra-27d77ff6.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/golutra/golutra" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#automation</span><span class="badge topic">#chatgpt</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
@@ -1549,17 +1622,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 75.64</span>
-        <span>登場 1回</span>
-        <span>stars 33042</span>
-        <span>Python</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 75.64</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 33042</span>
+        <span class="meta-language">Python</span>
       </div>
       <p class="pick-reason">選定理由: 全ソフトをAIエージェントが操作可能に</p>
       <p class="description">&quot;CLI-Anything: Making ALL Software Agent-Native&quot; -- CLI-Hub: https://clianything.cc/</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/hkuds-cli-anything-c427889b.html">詳細</a>
-        <a class="badge" href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/hkuds-cli-anything-c427889b.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 気になる</span></div>
     </article>
@@ -1577,17 +1650,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 75.64</span>
-        <span>登場 1回</span>
-        <span>stars 5064</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 75.64</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 5064</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: AIコーディングツールのコスト可視化が爆速で伸びている</p>
       <p class="description">See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/getagentseal-codeburn-cf446455.html">詳細</a>
-        <a class="badge" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/getagentseal-codeburn-cf446455.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#cost-tracking</span><span class="badge topic">#cursor-ide</span></div>
     </article>
@@ -1605,17 +1678,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 73.47</span>
-        <span>登場 1回</span>
-        <span>stars 7049</span>
-        <span>Go</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 73.47</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 7049</span>
+        <span class="meta-language">Go</span>
       </div>
       <p class="pick-reason">選定理由: リモートからAIコーディングエージェントとチャットできる</p>
       <p class="description">Bridge local AI coding agents (Claude Code, Cursor, Gemini CLI, Codex) to messaging platforms (Feishu/Lark, DingTalk, Slack, Telegram, Di...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
-        <a class="badge" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span></div>
     </article>
@@ -1633,17 +1706,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 68.02</span>
-        <span>登場 1回</span>
-        <span>stars 13661</span>
-        <span>Shell</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 68.02</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 13661</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: AIが生成するUIを一気に洗練させるスキル集</p>
       <p class="description">Taste-Skill (High-Agency Frontend) - gives your AI good taste. stops the AI from generating boring, generic, &quot;slop&quot;</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/leonxlnx-taste-skill-8896a31c.html">詳細</a>
-        <a class="badge" href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/leonxlnx-taste-skill-8896a31c.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#coding</span><span class="badge topic">#lowcode</span><span class="badge topic">#nocode</span><span class="badge topic">#skill</span></div>
     </article>
@@ -1661,17 +1734,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 66.09</span>
-        <span>登場 1回</span>
-        <span>stars 5080</span>
-        <span>Swift</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 66.09</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 5080</span>
+        <span class="meta-language">Swift</span>
       </div>
       <p class="pick-reason">選定理由: Apple Siliconの内蔵LLMをCLIで即利用可</p>
       <p class="description">The free AI already on your Mac. CLI tool, OpenAI-compatible server, and interactive chat — all on-device via Apple Intelligence. No API...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
-        <a class="badge" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#apple-intelligence</span><span class="badge topic">#apple-silicon</span><span class="badge topic">#cli</span><span class="badge topic">#foundationmodels</span><span class="badge topic">#homebrew</span><span class="badge topic">#llm</span></div>
     </article>
@@ -1689,17 +1762,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 65.78</span>
-        <span>登場 1回</span>
-        <span>stars 6094</span>
-        <span>TypeScript</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 65.78</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 6094</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: ローカル完結でClaude Designの代替になる急成</p>
       <p class="description">🎨 Local-first, open-source alternative to Anthropic&#x27;s Claude Design. ⚡ 19 Skills · ✨ 71 brand-grade Design Systems · 🖼️ sandboxed preview...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/nexu-io-open-design-2ef5ea05.html">詳細</a>
-        <a class="badge" href="https://github.com/nexu-io/open-design" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/nexu-io-open-design-2ef5ea05.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/nexu-io/open-design" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-design</span><span class="badge topic">#anthropic</span><span class="badge topic">#byok</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
     </article>
@@ -1717,17 +1790,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 64.89</span>
-        <span>登場 1回</span>
-        <span>stars 672</span>
-        <span>Shell</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 64.89</span>
+        <span class="meta-count">登場 1回</span>
+        <span class="meta-stars">stars 672</span>
+        <span class="meta-language">Shell</span>
       </div>
       <p class="pick-reason">選定理由: ペネトレーションテストをAIエージェントで自動化する新し</p>
       <p class="description">Turn Claude Code into your offensive security research assistant. Specialized AI subagents for authorized penetration testing plan engage...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/0xsteph-pentest-ai-agents-f781f5f2.html">詳細</a>
-        <a class="badge" href="https://github.com/0xSteph/pentest-ai-agents" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/0xsteph-pentest-ai-agents-f781f5f2.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/0xSteph/pentest-ai-agents" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-security</span><span class="badge topic">#bug-bounty</span><span class="badge topic">#claude-code</span><span class="badge topic">#ctf</span><span class="badge topic">#cybersecurity</span></div>
     </article>
@@ -1745,17 +1818,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 75.64</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 75.64</span>
         
-        <span>stars 5064</span>
-        <span>TypeScript</span>
+        <span class="meta-stars">stars 5064</span>
+        <span class="meta-language">TypeScript</span>
       </div>
       <p class="pick-reason">選定理由: AIコーディングツールのコスト可視化が爆速で伸びている</p>
       <p class="description">See where your AI coding tokens go. Interactive TUI dashboard for Claude Code, Codex, and Cursor cost observability.</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/getagentseal-codeburn-cf446455.html">詳細</a>
-        <a class="badge" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/getagentseal-codeburn-cf446455.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#cost-tracking</span><span class="badge topic">#cursor-ide</span></div>
     </article>
@@ -1773,17 +1846,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 60.22</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 60.22</span>
         
-        <span>stars 1372</span>
-        <span>Python</span>
+        <span class="meta-stars">stars 1372</span>
+        <span class="meta-language">Python</span>
       </div>
       <p class="pick-reason">選定理由: Microsoft製AIエージェントの実行時ガバナンスツ</p>
       <p class="description">AI Agent Governance Toolkit — Policy enforcement, zero-trust identity, execution sandboxing, and reliability engineering for autonomous A...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/microsoft-agent-governance-toolkit-e9ae250c.html">詳細</a>
-        <a class="badge" href="https://github.com/microsoft/agent-governance-toolkit" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/microsoft-agent-governance-toolkit-e9ae250c.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/microsoft/agent-governance-toolkit" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-framework</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-safety</span><span class="badge topic">#compliance</span><span class="badge topic">#governance</span><span class="badge topic">#microsoft</span></div>
     </article>
@@ -1801,17 +1874,17 @@
       </div>
       <div class="meta">
         
-        <span>夜の尖り枠</span>
-        <span>score 48.45</span>
+        <span class="meta-bucket">夜の尖り枠</span>
+        <span class="meta-score">score 48.45</span>
         
-        <span>stars 5948</span>
-        <span>Python</span>
+        <span class="meta-stars">stars 5948</span>
+        <span class="meta-language">Python</span>
       </div>
       <p class="pick-reason">選定理由: セキュリティAIエージェント向け最大級のスキルライブラリ</p>
       <p class="description">754 structured cybersecurity skills for AI agents · Mapped to 5 frameworks: MITRE ATT&amp;CK, NIST CSF 2.0, MITRE ATLAS, D3FEND &amp; NIST AI RMF...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/mukul975-anthropic-cybersecurity-skills-25236f32.html">詳細</a>
-        <a class="badge" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/mukul975-anthropic-cybersecurity-skills-25236f32.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#cloud-security</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span><span class="badge topic">#ethical-hacking</span></div>
     </article>
@@ -1829,17 +1902,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 73.47</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 73.47</span>
         
-        <span>stars 7049</span>
-        <span>Go</span>
+        <span class="meta-stars">stars 7049</span>
+        <span class="meta-language">Go</span>
       </div>
       <p class="pick-reason">選定理由: リモートからAIコーディングエージェントとチャットできる</p>
       <p class="description">Bridge local AI coding agents (Claude Code, Cursor, Gemini CLI, Codex) to messaging platforms (Feishu/Lark, DingTalk, Slack, Telegram, Di...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
-        <a class="badge" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#開発ツール</span></div>
     </article>
@@ -1857,17 +1930,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 61.11</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 61.11</span>
         
-        <span>stars 1023</span>
-        <span>Rust</span>
+        <span class="meta-stars">stars 1023</span>
+        <span class="meta-language">Rust</span>
       </div>
       <p class="pick-reason">選定理由: AIコーディングエージェントのトークン消費を最大95%削</p>
       <p class="description">The context layer for AI coding agents Reduce token waste in Cursor, Claude Code, Copilot, Windsurf, Codex, Gemini &amp; more by 60–95% (up t...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/yvgude-lean-ctx-fcf2e785.html">詳細</a>
-        <a class="badge" href="https://github.com/yvgude/lean-ctx" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/yvgude-lean-ctx-fcf2e785.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/yvgude/lean-ctx" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude-code</span><span class="badge topic">#context-engineering</span><span class="badge topic">#copilot</span></div>
     </article>
@@ -1885,17 +1958,17 @@
       </div>
       <div class="meta">
         
-        <span>朝の新顔枠</span>
-        <span>score 60.96</span>
+        <span class="meta-bucket">朝の新顔枠</span>
+        <span class="meta-score">score 60.96</span>
         
-        <span>stars 25675</span>
-        <span>Rust</span>
+        <span class="meta-stars">stars 25675</span>
+        <span class="meta-language">Rust</span>
       </div>
       <p class="pick-reason">選定理由: Google Workspace全APIを一つのCLIで</p>
       <p class="description">Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Goog...</p>
       <div class="detail-links primary-links">
-        <a class="badge" href="./repos/googleworkspace-cli-41ebe280.html">詳細</a>
-        <a class="badge" href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="badge action-detail" href="./repos/googleworkspace-cli-41ebe280.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">GitHub</a>
       </div>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai-agent</span><span class="badge topic">#automation</span><span class="badge topic">#cli</span><span class="badge topic">#discovery-api</span><span class="badge topic">#gemini-cli-extension</span></div>
     </article>
