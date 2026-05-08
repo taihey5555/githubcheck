@@ -1400,38 +1400,35 @@ def site_shell(
       max-width: 760px;
     }}
     .date-selector {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
       margin: 0 0 18px;
-      padding: 8px;
+      padding: 10px 12px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       background: var(--surface);
       box-shadow: var(--shadow);
-      overflow-x: auto;
-      scrollbar-width: thin;
+      width: fit-content;
+      max-width: 100%;
     }}
-    .date-strip {{
-      display: flex;
-      gap: 6px;
-      min-width: max-content;
+    .date-select-label {{
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
     }}
-    .date-button {{
-      min-width: 58px;
+    .date-select {{
+      min-width: 160px;
+      max-width: 100%;
       border: 1px solid var(--line);
       background: var(--surface-muted);
       color: var(--ink);
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 9px 34px 9px 12px;
+      border-radius: 10px;
       font: inherit;
       font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-    }}
-    .date-button.active {{
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-      box-shadow: 0 8px 18px rgba(31, 111, 235, 0.18);
+      font-weight: 800;
     }}
     .filter-bar {{
       display: flex;
@@ -2434,12 +2431,13 @@ def site_shell(
         max-width: 100%;
       }}
       .date-selector {{
-        padding: 6px;
+        width: 100%;
+        padding: 10px;
         margin-bottom: 14px;
       }}
-      .date-button {{
-        min-width: 52px;
-        padding: 7px 10px;
+      .date-select {{
+        flex: 1 1 auto;
+        min-width: 0;
       }}
       .stat-card.compact strong {{
         font-size: 14px;
@@ -2537,29 +2535,18 @@ def site_shell(
       }});
     }}
     const daySelect = document.querySelector('[data-day-select]');
-    const dayButtons = Array.from(document.querySelectorAll('[data-day-target]'));
     const panels = document.querySelectorAll('.tab-panel');
-    let activeDayTarget = daySelect?.value || dayButtons.find((button) => button.classList.contains('active'))?.dataset.dayTarget || '';
+    let activeDayTarget = daySelect?.value || '';
     const setActiveDay = (target) => {{
       if (!target) return;
       activeDayTarget = target;
       if (daySelect) daySelect.value = target;
-      for (const button of dayButtons) {{
-        const active = button.dataset.dayTarget === target;
-        button.classList.toggle('active', active);
-        button.setAttribute('aria-pressed', String(active));
-      }}
       for (const panel of panels) panel.classList.remove('active');
       document.getElementById(target)?.classList.add('active');
     }};
     if (daySelect) {{
       daySelect.addEventListener('change', () => {{
         setActiveDay(daySelect.value);
-      }});
-    }}
-    for (const button of dayButtons) {{
-      button.addEventListener('click', () => {{
-        setActiveDay(button.dataset.dayTarget || '');
       }});
     }}
     const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
@@ -2799,9 +2786,6 @@ def site_shell(
       }}
       if (daySelect) {{
         daySelect.addEventListener('change', applyArchiveFilters);
-      }}
-      for (const button of dayButtons) {{
-        button.addEventListener('click', applyArchiveFilters);
       }}
       if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {{
         reviewStateInput.value = initialReviewState;
@@ -3843,18 +3827,14 @@ def render_history_site() -> None:
         item["_display_time"] = sent_at_dt.strftime("%Y-%m-%d %H:%M")
         grouped.setdefault(day_key, []).append(item)
 
-    day_buttons = []
+    day_options = []
     tab_panels = []
     for index, (day_key, items) in enumerate(grouped.items()):
         panel_class = "tab-panel active" if index == 0 else "tab-panel"
         tab_id = f"tab-{index}"
-        active_class = " active" if index == 0 else ""
-        pressed = "true" if index == 0 else "false"
-        day_buttons.append(
-            f'<button type="button" class="date-button{active_class}" '
-            f'data-day-target="{tab_id}" aria-pressed="{pressed}">'
-            f'{escape(day_key)}'
-            "</button>"
+        selected = " selected" if index == 0 else ""
+        day_options.append(
+            f'<option value="{tab_id}"{selected}>{escape(day_key)}</option>'
         )
 
         cards = []
@@ -3930,10 +3910,11 @@ def render_history_site() -> None:
         )
         + (
             "<div class='date-selector' aria-label='通知日を選択'>"
-            "<div class='date-strip'>"
-            + "".join(day_buttons)
-            + "</div></div>"
-            if day_buttons
+            "<label class='date-select-label' for='history-date-select'>通知日</label>"
+            "<select id='history-date-select' class='date-select' data-day-select>"
+            + "".join(day_options)
+            + "</select></div>"
+            if day_options
             else ""
         )
         + (
