@@ -138,16 +138,38 @@
       max-width: 760px;
     }
     .date-selector {
-      margin: 0 0 22px;
-    }
-    .date-select {
-      width: min(280px, 100%);
+      margin: 0 0 18px;
+      padding: 8px;
       border: 1px solid var(--line);
-      background: rgba(238, 243, 248, 0.96);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .date-strip {
+      display: flex;
+      gap: 6px;
+      min-width: max-content;
+    }
+    .date-button {
+      min-width: 58px;
+      border: 1px solid var(--line);
+      background: var(--surface-muted);
       color: var(--ink);
-      padding: 12px 14px;
+      padding: 8px 12px;
       border-radius: 8px;
       font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .date-button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 8px 18px rgba(31, 111, 235, 0.18);
     }
     .filter-bar {
       display: flex;
@@ -1117,7 +1139,7 @@
       </div>
       <p class="archive-summary" data-filter-count>211 件表示</p>
     </section>
-    <div class='filter-bar dashboard-panel'><button class='filter-button active' data-bucket-filter='all'>全部</button><button class='filter-button' data-bucket-filter='morning'>朝の新顔枠</button><button class='filter-button' data-bucket-filter='evening'>夜の尖り枠</button></div><div class='date-selector'><select class='date-select' data-day-select><option value="tab-0" selected>5/8</option><option value="tab-1">5/7</option><option value="tab-2">5/6</option><option value="tab-3">5/5</option><option value="tab-4">5/4</option><option value="tab-5">5/3</option><option value="tab-6">5/2</option><option value="tab-7">5/1</option><option value="tab-8">4/30</option><option value="tab-9">4/29</option><option value="tab-10">4/28</option><option value="tab-11">4/27</option><option value="tab-12">4/26</option><option value="tab-13">4/25</option><option value="tab-14">4/24</option><option value="tab-15">4/23</option><option value="tab-16">4/22</option><option value="tab-17">4/21</option><option value="tab-18">4/20</option><option value="tab-19">4/19</option><option value="tab-20">4/18</option><option value="tab-21">4/17</option><option value="tab-22">4/16</option><option value="tab-23">4/15</option><option value="tab-24">4/14</option><option value="tab-25">4/13</option><option value="tab-26">4/12</option><option value="tab-27">4/11</option><option value="tab-28">4/10</option><option value="tab-29">4/9</option><option value="tab-30">4/8</option><option value="tab-31">4/7</option><option value="tab-32">4/6</option><option value="tab-33">4/5</option><option value="tab-34">4/4</option><option value="tab-35">4/3</option><option value="tab-36">4/2</option><option value="tab-37">4/1</option></select></div>
+    <div class='filter-bar dashboard-panel'><button class='filter-button active' data-bucket-filter='all'>全部</button><button class='filter-button' data-bucket-filter='morning'>朝の新顔枠</button><button class='filter-button' data-bucket-filter='evening'>夜の尖り枠</button></div><div class='date-selector' aria-label='通知日を選択'><div class='date-strip'><button type="button" class="date-button active" data-day-target="tab-0" aria-pressed="true">5/8</button><button type="button" class="date-button" data-day-target="tab-1" aria-pressed="false">5/7</button><button type="button" class="date-button" data-day-target="tab-2" aria-pressed="false">5/6</button><button type="button" class="date-button" data-day-target="tab-3" aria-pressed="false">5/5</button><button type="button" class="date-button" data-day-target="tab-4" aria-pressed="false">5/4</button><button type="button" class="date-button" data-day-target="tab-5" aria-pressed="false">5/3</button><button type="button" class="date-button" data-day-target="tab-6" aria-pressed="false">5/2</button><button type="button" class="date-button" data-day-target="tab-7" aria-pressed="false">5/1</button><button type="button" class="date-button" data-day-target="tab-8" aria-pressed="false">4/30</button><button type="button" class="date-button" data-day-target="tab-9" aria-pressed="false">4/29</button><button type="button" class="date-button" data-day-target="tab-10" aria-pressed="false">4/28</button><button type="button" class="date-button" data-day-target="tab-11" aria-pressed="false">4/27</button><button type="button" class="date-button" data-day-target="tab-12" aria-pressed="false">4/26</button><button type="button" class="date-button" data-day-target="tab-13" aria-pressed="false">4/25</button><button type="button" class="date-button" data-day-target="tab-14" aria-pressed="false">4/24</button><button type="button" class="date-button" data-day-target="tab-15" aria-pressed="false">4/23</button><button type="button" class="date-button" data-day-target="tab-16" aria-pressed="false">4/22</button><button type="button" class="date-button" data-day-target="tab-17" aria-pressed="false">4/21</button><button type="button" class="date-button" data-day-target="tab-18" aria-pressed="false">4/20</button><button type="button" class="date-button" data-day-target="tab-19" aria-pressed="false">4/19</button><button type="button" class="date-button" data-day-target="tab-20" aria-pressed="false">4/18</button><button type="button" class="date-button" data-day-target="tab-21" aria-pressed="false">4/17</button><button type="button" class="date-button" data-day-target="tab-22" aria-pressed="false">4/16</button><button type="button" class="date-button" data-day-target="tab-23" aria-pressed="false">4/15</button><button type="button" class="date-button" data-day-target="tab-24" aria-pressed="false">4/14</button><button type="button" class="date-button" data-day-target="tab-25" aria-pressed="false">4/13</button><button type="button" class="date-button" data-day-target="tab-26" aria-pressed="false">4/12</button><button type="button" class="date-button" data-day-target="tab-27" aria-pressed="false">4/11</button><button type="button" class="date-button" data-day-target="tab-28" aria-pressed="false">4/10</button><button type="button" class="date-button" data-day-target="tab-29" aria-pressed="false">4/9</button><button type="button" class="date-button" data-day-target="tab-30" aria-pressed="false">4/8</button><button type="button" class="date-button" data-day-target="tab-31" aria-pressed="false">4/7</button><button type="button" class="date-button" data-day-target="tab-32" aria-pressed="false">4/6</button><button type="button" class="date-button" data-day-target="tab-33" aria-pressed="false">4/5</button><button type="button" class="date-button" data-day-target="tab-34" aria-pressed="false">4/4</button><button type="button" class="date-button" data-day-target="tab-35" aria-pressed="false">4/3</button><button type="button" class="date-button" data-day-target="tab-36" aria-pressed="false">4/2</button><button type="button" class="date-button" data-day-target="tab-37" aria-pressed="false">4/1</button></div></div>
             <section id="tab-0" class="tab-panel active archive-list">
               
     <article class="card" data-bucket="evening" data-name="mpiorowski/late-sh" data-language="rust" data-tags="cli irc ssh terminal tui" data-stars="517" data-score="58.11" data-sent-at="2026-05-08T12:13:35.789799+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal" data-archive-card>
@@ -8913,12 +8935,29 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
       });
     }
     const daySelect = document.querySelector('[data-day-select]');
+    const dayButtons = Array.from(document.querySelectorAll('[data-day-target]'));
     const panels = document.querySelectorAll('.tab-panel');
+    let activeDayTarget = daySelect?.value || dayButtons.find((button) => button.classList.contains('active'))?.dataset.dayTarget || '';
+    const setActiveDay = (target) => {
+      if (!target) return;
+      activeDayTarget = target;
+      if (daySelect) daySelect.value = target;
+      for (const button of dayButtons) {
+        const active = button.dataset.dayTarget === target;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      }
+      for (const panel of panels) panel.classList.remove('active');
+      document.getElementById(target)?.classList.add('active');
+    };
     if (daySelect) {
       daySelect.addEventListener('change', () => {
-        const target = daySelect.value;
-        for (const panel of panels) panel.classList.remove('active');
-        document.getElementById(target)?.classList.add('active');
+        setActiveDay(daySelect.value);
+      });
+    }
+    for (const button of dayButtons) {
+      button.addEventListener('click', () => {
+        setActiveDay(button.dataset.dayTarget || '');
       });
     }
     const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
@@ -8960,7 +8999,7 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
       const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
       const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
 
-      const activePanelId = () => daySelect ? daySelect.value : '';
+      const activePanelId = () => activeDayTarget || '';
       const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
       const normalizeText = (value) => String(value || '').toLowerCase();
       const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
@@ -9118,6 +9157,9 @@ AIエンジニアやプロンプト設計を学びたい方に、実際のシス
       }
       if (daySelect) {
         daySelect.addEventListener('change', applyArchiveFilters);
+      }
+      for (const button of dayButtons) {
+        button.addEventListener('click', applyArchiveFilters);
       }
       if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {
         reviewStateInput.value = initialReviewState;

@@ -138,16 +138,38 @@
       max-width: 760px;
     }
     .date-selector {
-      margin: 0 0 22px;
-    }
-    .date-select {
-      width: min(280px, 100%);
+      margin: 0 0 18px;
+      padding: 8px;
       border: 1px solid var(--line);
-      background: rgba(238, 243, 248, 0.96);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .date-strip {
+      display: flex;
+      gap: 6px;
+      min-width: max-content;
+    }
+    .date-button {
+      min-width: 58px;
+      border: 1px solid var(--line);
+      background: var(--surface-muted);
       color: var(--ink);
-      padding: 12px 14px;
+      padding: 8px 12px;
       border-radius: 8px;
       font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .date-button.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 8px 18px rgba(31, 111, 235, 0.18);
     }
     .filter-bar {
       display: flex;
@@ -1204,12 +1226,29 @@ AI脚本、絵コンテ、キャラ・映像生成を統合。無限キャンバ
       });
     }
     const daySelect = document.querySelector('[data-day-select]');
+    const dayButtons = Array.from(document.querySelectorAll('[data-day-target]'));
     const panels = document.querySelectorAll('.tab-panel');
+    let activeDayTarget = daySelect?.value || dayButtons.find((button) => button.classList.contains('active'))?.dataset.dayTarget || '';
+    const setActiveDay = (target) => {
+      if (!target) return;
+      activeDayTarget = target;
+      if (daySelect) daySelect.value = target;
+      for (const button of dayButtons) {
+        const active = button.dataset.dayTarget === target;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      }
+      for (const panel of panels) panel.classList.remove('active');
+      document.getElementById(target)?.classList.add('active');
+    };
     if (daySelect) {
       daySelect.addEventListener('change', () => {
-        const target = daySelect.value;
-        for (const panel of panels) panel.classList.remove('active');
-        document.getElementById(target)?.classList.add('active');
+        setActiveDay(daySelect.value);
+      });
+    }
+    for (const button of dayButtons) {
+      button.addEventListener('click', () => {
+        setActiveDay(button.dataset.dayTarget || '');
       });
     }
     const weeklyArchiveSelect = document.querySelector('[data-weekly-archive-select]');
@@ -1251,7 +1290,7 @@ AI脚本、絵コンテ、キャラ・映像生成を統合。無限キャンバ
       const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
       const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
 
-      const activePanelId = () => daySelect ? daySelect.value : '';
+      const activePanelId = () => activeDayTarget || '';
       const activeBucket = () => document.querySelector('[data-bucket-filter].active')?.dataset.bucketFilter || 'all';
       const normalizeText = (value) => String(value || '').toLowerCase();
       const allowedReviewStates = new Set(['unseen', 'interested', 'tested', 'good', 'meh', 'production_candidate']);
@@ -1409,6 +1448,9 @@ AI脚本、絵コンテ、キャラ・映像生成を統合。無限キャンバ
       }
       if (daySelect) {
         daySelect.addEventListener('change', applyArchiveFilters);
+      }
+      for (const button of dayButtons) {
+        button.addEventListener('click', applyArchiveFilters);
       }
       if (reviewStateInput && allowedReviewStates.has(initialReviewState)) {
         reviewStateInput.value = initialReviewState;
