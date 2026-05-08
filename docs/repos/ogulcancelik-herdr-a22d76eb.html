@@ -33,6 +33,9 @@
       line-height: 1.55;
       overflow-x: hidden;
     }
+    body.filter-sheet-open {
+      overflow: hidden;
+    }
     a {
       color: var(--accent);
       text-decoration: none;
@@ -869,6 +872,10 @@
     .archive-filter-body {
       min-width: 0;
     }
+    .filter-sheet-header,
+    .filter-sheet-actions {
+      display: none;
+    }
     .archive-controls {
       box-shadow: none;
       border-radius: 12px;
@@ -1087,15 +1094,83 @@
         order: 2;
       }
       .archive-filter-body {
-        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 0;
+        background: rgba(7, 24, 47, 0);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease, background 180ms ease;
       }
       .archive-filter-body.open {
-        display: block;
+        opacity: 1;
+        pointer-events: auto;
+        background: rgba(7, 24, 47, 0.42);
+      }
+      .archive-filter-sheet {
+        width: 100%;
+        max-height: min(82vh, 760px);
+        overflow-y: auto;
+        padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
+        border-radius: 22px 22px 0 0;
+        background: var(--surface);
+        box-shadow: 0 -18px 46px rgba(15, 23, 42, 0.22);
+        transform: translateY(100%);
+        transition: transform 220ms ease;
+      }
+      .archive-filter-body.open .archive-filter-sheet {
+        transform: translateY(0);
+      }
+      .filter-sheet-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 0 0 14px;
+      }
+      .filter-sheet-header::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 8px;
+        width: 42px;
+        height: 4px;
+        border-radius: 999px;
+        background: #d7dee8;
+        transform: translateX(-50%);
+      }
+      .filter-sheet-header h3 {
+        margin: 10px 0 0;
+        font-size: 18px;
+      }
+      .filter-sheet-close {
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--surface-muted);
+        color: var(--ink);
+        font: inherit;
+        font-size: 22px;
+        line-height: 1;
+        cursor: pointer;
       }
       .archive-controls {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         padding: 12px;
         max-width: 100%;
+        border: 0;
+        padding: 0;
+        background: transparent;
+      }
+      .archive-controls .control-group:first-child,
+      .archive-controls .control-group:nth-child(4),
+      .archive-controls .control-group:nth-child(9) {
+        grid-column: 1 / -1;
       }
       .control-group input,
       .control-group select,
@@ -1113,6 +1188,31 @@
       }
       .stat-card.compact strong {
         font-size: 14px;
+      }
+      .filter-sheet-actions {
+        position: sticky;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+        gap: 10px;
+        margin-top: 18px;
+        padding-top: 12px;
+        background: linear-gradient(180deg, rgba(255,255,255,0), var(--surface) 18%);
+      }
+      .filter-action {
+        min-height: 48px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--surface-muted);
+        color: var(--ink);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .filter-action.primary {
+        background: #07182f;
+        color: #fff;
+        border-color: #07182f;
       }
     }
   </style>
@@ -1408,6 +1508,9 @@ AIエージェントを日常的に使う開発者に。GUI不要でターミナ
       const shareStatus = archiveRoot.querySelector('[data-filter-link-status]');
       const filterToggle = archiveRoot.querySelector('[data-filter-toggle]');
       const filterBody = archiveRoot.querySelector('[data-filter-body]');
+      const filterClose = archiveRoot.querySelector('[data-filter-close]');
+      const filterApply = archiveRoot.querySelector('[data-filter-apply]');
+      const filterReset = archiveRoot.querySelector('[data-filter-reset]');
       const panelsById = new Map(Array.from(document.querySelectorAll('.tab-panel')).map((panel) => [panel.id, panel]));
 
       const activePanelId = () => activeDayTarget || '';
@@ -1432,6 +1535,7 @@ AIエージェントを日常的に使う開発者に。GUI不要でターミナ
       const setFilterBodyOpen = (open) => {
         if (!filterToggle || !filterBody) return;
         filterBody.classList.toggle('open', open);
+        document.body.classList.toggle('filter-sheet-open', open);
         filterToggle.setAttribute('aria-expanded', String(open));
         filterToggle.textContent = open ? 'フィルターを閉じる' : 'フィルターを開く';
       };
@@ -1439,6 +1543,14 @@ AIエージェントを日常的に使う開発者に。GUI不要でターミナ
         setFilterBodyOpen(window.matchMedia('(min-width: 721px)').matches || hasInitialFilters);
         filterToggle.addEventListener('click', () => {
           setFilterBodyOpen(!filterBody.classList.contains('open'));
+        });
+        filterClose?.addEventListener('click', () => setFilterBodyOpen(false));
+        filterApply?.addEventListener('click', () => {
+          applyArchiveFilters();
+          setFilterBodyOpen(false);
+        });
+        filterBody.addEventListener('click', (event) => {
+          if (event.target === filterBody) setFilterBodyOpen(false);
         });
       }
       const parseNumber = (value) => {
@@ -1558,6 +1670,19 @@ AIエージェントを日常的に使う開発者に。GUI不要でターミナ
         }
         updateArchiveShareUi();
       };
+      const resetArchiveFilters = () => {
+        if (searchInput) searchInput.value = '';
+        if (languageInput) languageInput.value = '';
+        if (tagInput) tagInput.value = '';
+        if (reviewStateInput) reviewStateInput.value = '';
+        if (minStarsInput) minStarsInput.value = '';
+        if (maxStarsInput) maxStarsInput.value = '';
+        if (minScoreInput) minScoreInput.value = '';
+        if (maxScoreInput) maxScoreInput.value = '';
+        if (sortInput) sortInput.value = 'newest';
+        archiveMode = 'normal';
+        applyArchiveFilters();
+      };
 
       [
         searchInput,
@@ -1626,6 +1751,7 @@ AIエージェントを日常的に使う開発者に。GUI不要でターミナ
           }
         });
       }
+      filterReset?.addEventListener('click', resetArchiveFilters);
       applyArchiveFilters();
     }
     const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
