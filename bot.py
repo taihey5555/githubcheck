@@ -41,6 +41,106 @@ TOPIC_KEYWORDS = {
     "developer-tools": ["developer", "devtools", "tooling", "debug", "build"],
 }
 
+GRAY_SEARCH_KEYWORDS = [
+    "mosaic restore",
+    "deepmosaic",
+    "uncensor",
+    "scraper",
+    "downloader",
+    "bypass",
+    "reverse engineering",
+    "mod",
+    "patcher",
+    "nsfw ai",
+    "watermark remover",
+    "video restoration",
+]
+
+GRAY_CATEGORY_KEYWORDS = {
+    "adult_ai_media": [
+        "adult",
+        "nsfw",
+        "jav",
+        "mosaic",
+        "pixelated",
+        "uncensor",
+        "decensor",
+        "deepmosaic",
+        "video restoration",
+        "watermark remover",
+        "image restoration",
+    ],
+    "scraper_downloader": [
+        "scraper",
+        "scraping",
+        "crawler",
+        "downloader",
+        "download",
+        "extractor",
+        "ripper",
+        "archiver",
+    ],
+    "reverse_modding": [
+        "reverse engineering",
+        "reverse-engineering",
+        "decompiler",
+        "disassembler",
+        "patcher",
+        "mod",
+        "modding",
+        "hook",
+        "injector",
+        "unofficial client",
+    ],
+    "policy_bypass": [
+        "bypass",
+        "unlock",
+        "region lock",
+        "geo restriction",
+        "adblock",
+        "paywall",
+        "drm",
+        "captcha",
+        "anti detection",
+    ],
+    "security_research": [
+        "security research",
+        "ctf",
+        "sandbox",
+        "vulnerability",
+        "forensics",
+        "osint",
+        "malware analysis",
+    ],
+}
+
+GRAY_EXCLUDE_KEYWORDS = [
+    "credential stealer",
+    "token stealer",
+    "password stealer",
+    "malware builder",
+    "ransomware",
+    "botnet",
+    "keylogger",
+    "phishing kit",
+    "csam",
+    "child sexual",
+]
+
+GRAY_NEEDS_REVIEW_KEYWORDS = [
+    "exploit",
+    "poc exploit",
+    "crack",
+    "piracy",
+    "account checker",
+    "credential",
+    "session hijack",
+    "shellcode",
+]
+
+GRAY_SEED_KEYWORD_LIMIT = 24
+GRAY_SEARCH_TERM_LIMIT = 16
+
 REVIEW_STATES = [
     "unseen",
     "interested",
@@ -94,6 +194,8 @@ class Config:
     topics: list[str]
     min_stars: int
     cooldown_days: int
+    collection_profile: str = "general"
+    github_search_sorts: list[str] | None = None
 
 
 def get_run_bucket(config: Config, now: datetime | None = None) -> str:
@@ -124,6 +226,8 @@ def load_config() -> Config:
         topics=parse_csv(os.getenv("TOPICS", "ai,cli,automation")),
         min_stars=int(os.getenv("MIN_STARS", "30")),
         cooldown_days=int(os.getenv("COOLDOWN_DAYS", "14")),
+        collection_profile=os.getenv("COLLECTION_PROFILE", "general").strip().lower(),
+        github_search_sorts=parse_csv(os.getenv("GITHUB_SEARCH_SORTS", "stars,updated")),
     )
 
 
@@ -454,6 +558,10 @@ def extract_tags(item: dict[str, Any]) -> list[str]:
         if normalized and normalized not in seen:
             seen.add(normalized)
             tags.append(normalized)
+    gray_category = str((item.get("gray_profile") or {}).get("category") or "").strip().lower()
+    if gray_category and gray_category not in seen:
+        seen.add(gray_category)
+        tags.append(gray_category)
     return tags
 
 
@@ -1991,11 +2099,50 @@ def github_headers(config: Config) -> dict[str, str]:
     }
 
 
-def build_search_queries(config: Config, now_utc: datetime) -> list[str]:
+def is_gray_profile(config: Config) -> bool:
+    return config.collection_profile == "gray"
+
+
+def normalize_keyword(value: str) -> str:
+    return re.sub(r"\s+", " ", value.strip().lower())
+
+
+def gray_seed_keywords_from_state(state: dict[str, Any] | None) -> list[str]:
+    if not state:
+        return []
+    keywords = (state.get("gray_collection") or {}).get("keywords") or []
+    normalized = []
+    for keyword in keywords:
+        if not isinstance(keyword, str):
+            continue
+        keyword = normalize_keyword(keyword)
+        if 2 <= len(keyword) <= 48 and keyword not in normalized:
+            normalized.append(keyword)
+    return normalized[:GRAY_SEED_KEYWORD_LIMIT]
+
+
+def build_gray_search_terms(config: Config, state: dict[str, Any] | None = None) -> list[str]:
+    terms = list(GRAY_SEARCH_KEYWORDS)
+    terms.extend(config.topics)
+    terms.extend(gray_seed_keywords_from_state(state))
+    unique_terms = list(dict.fromkeys(normalize_keyword(item) for item in terms if item.strip()))
+    try:
+        limit = int(os.getenv("GRAY_SEARCH_TERM_LIMIT", str(GRAY_SEARCH_TERM_LIMIT)))
+    except ValueError:
+        limit = GRAY_SEARCH_TERM_LIMIT
+    return unique_terms[: max(1, limit)]
+
+
+def build_search_queries(
+    config: Config,
+    now_utc: datetime,
+    state: dict[str, Any] | None = None,
+) -> list[str]:
     created_after = (now_utc - timedelta(days=90)).date().isoformat()
     pushed_after = (now_utc - timedelta(days=14)).date().isoformat()
     queries = []
-    for topic in config.topics:
+    search_terms = build_gray_search_terms(config, state) if is_gray_profile(config) else config.topics
+    for topic in search_terms:
         queries.append(
             " ".join(
                 [
@@ -2011,24 +2158,29 @@ def build_search_queries(config: Config, now_utc: datetime) -> list[str]:
     return queries
 
 
-def search_repositories(config: Config) -> list[dict[str, Any]]:
+def search_repositories(
+    config: Config,
+    state: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     now_utc = datetime.now(UTC)
     repos_by_name: dict[str, dict[str, Any]] = {}
-    for query in build_search_queries(config, now_utc):
-        response = requests.get(
-            f"{GITHUB_API}/search/repositories",
-            headers=github_headers(config),
-            params={
-                "q": query,
-                "sort": "stars",
-                "order": "desc",
-                "per_page": 15,
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
-        for item in response.json().get("items", []):
-            repos_by_name[item["full_name"]] = item
+    sorts = config.github_search_sorts or ["stars", "updated"]
+    for query in build_search_queries(config, now_utc, state):
+        for sort in sorts:
+            response = requests.get(
+                f"{GITHUB_API}/search/repositories",
+                headers=github_headers(config),
+                params={
+                    "q": query,
+                    "sort": sort,
+                    "order": "desc",
+                    "per_page": 15,
+                },
+                timeout=30,
+            )
+            response.raise_for_status()
+            for item in response.json().get("items", []):
+                repos_by_name[item["full_name"]] = item
     return list(repos_by_name.values())
 
 
@@ -2051,12 +2203,103 @@ def days_since(iso_value: str) -> int:
     return max(0, (datetime.now(UTC) - dt).days)
 
 
+def repo_text_blob(repo: dict[str, Any]) -> str:
+    parts = [
+        repo.get("full_name") or "",
+        repo.get("name") or "",
+        repo.get("description") or "",
+        " ".join(repo.get("topics") or []),
+        repo.get("_readme_text") or "",
+    ]
+    return normalize_keyword(" ".join(parts))
+
+
+def keyword_hits(text: str, keywords: list[str]) -> list[str]:
+    hits = []
+    for keyword in keywords:
+        normalized = normalize_keyword(keyword)
+        if normalized and normalized in text:
+            hits.append(keyword)
+    return hits
+
+
+def analyze_gray_repo(repo: dict[str, Any], state: dict[str, Any]) -> dict[str, Any]:
+    text = repo_text_blob(repo)
+    category_hits: dict[str, list[str]] = {}
+    for category, keywords in GRAY_CATEGORY_KEYWORDS.items():
+        hits = keyword_hits(text, keywords)
+        if hits:
+            category_hits[category] = hits
+
+    if category_hits:
+        category = max(category_hits.items(), key=lambda item: len(item[1]))[0]
+    else:
+        category = "needs_review"
+
+    exclude_hits = keyword_hits(text, GRAY_EXCLUDE_KEYWORDS)
+    review_hits = keyword_hits(text, GRAY_NEEDS_REVIEW_KEYWORDS)
+    if exclude_hits:
+        risk_status = "exclude"
+    elif review_hits or not category_hits:
+        risk_status = "needs_review"
+    else:
+        risk_status = "allow"
+
+    grey_score = min(
+        100.0,
+        sum(len(hits) for hits in category_hits.values()) * 12.0 + (8.0 if category_hits else 0.0),
+    )
+    repo_state = state["repos"].get(repo["full_name"], {})
+    current_stars = int(repo.get("stargazers_count") or 0)
+    previous_stars = int(repo_state.get("last_stars", current_stars) or current_stars)
+    star_growth = max(0, current_stars - previous_stars)
+    pushed_days = days_since(repo["pushed_at"])
+    created_days = days_since(repo["created_at"])
+    attention_score = min(
+        100.0,
+        star_growth * 8.0
+        + min(current_stars, 2000) / 20.0
+        + min(int(repo.get("forks_count") or 0), 500) / 10.0
+        + max(0, 14 - pushed_days) * 2.0,
+    )
+    freshness_score = min(
+        100.0,
+        max(0, 90 - created_days) / 90 * 70.0
+        + max(0, 14 - pushed_days) / 14 * 30.0,
+    )
+    final_score = grey_score * 0.45 + attention_score * 0.35 + freshness_score * 0.20
+    reasons = []
+    if category_hits:
+        reasons.append(f"{category}: " + ", ".join(category_hits[category][:3]))
+    if review_hits:
+        reasons.append("needs review: " + ", ".join(review_hits[:2]))
+    if exclude_hits:
+        reasons.append("excluded risk: " + ", ".join(exclude_hits[:2]))
+
+    return {
+        "category": category,
+        "risk_status": risk_status,
+        "grey_score": round(grey_score, 2),
+        "attention_score": round(attention_score, 2),
+        "freshness_score": round(freshness_score, 2),
+        "final_score": round(final_score, 2),
+        "reason": "; ".join(reasons) if reasons else "判定語が弱いため要確認",
+        "matched_keywords": sorted({hit for hits in category_hits.values() for hit in hits})[:12],
+        "risk_keywords": exclude_hits + review_hits,
+    }
+
+
 def score_repo(
     repo: dict[str, Any],
     state: dict[str, Any],
     config: Config,
     bucket: str = "morning",
 ) -> float:
+    if is_gray_profile(config):
+        gray = repo.get("_gray_profile") or analyze_gray_repo(repo, state)
+        repo["_gray_profile"] = gray
+        return float(gray["final_score"])
+
     repo_state = state["repos"].get(repo["full_name"], {})
     current_stars = repo["stargazers_count"]
     previous_stars = repo_state.get("last_stars", current_stars)
@@ -2183,6 +2426,7 @@ def build_deepseek_summary(config: Config, repo: dict[str, Any]) -> str:
                     f"Language: {repo.get('language') or 'N/A'}\n"
                     f"Stars: {repo['stargazers_count']}\n"
                     f"Topics: {', '.join(repo.get('topics') or [])}\n"
+                    f"Gray classification: {json.dumps(repo.get('_gray_profile') or {}, ensure_ascii=False)}\n"
                     f"URL: {repo['html_url']}\n"
                     f"README:\n{repo.get('_readme_text') or 'READMEなし'}"
                 ),
@@ -2272,10 +2516,27 @@ def build_telegram_message(repos: list[dict[str, Any]]) -> str:
 
 
 def build_telegram_messages(repos: list[dict[str, Any]], bucket: str) -> list[str]:
-    messages = ["朝の新顔枠" if bucket == "morning" else "夜の尖り枠"]
-    for repo in repos:
+    has_gray = any(repo.get("_gray_profile") for repo in repos)
+    if has_gray:
+        messages = ["グレー系GitHubランキング"]
+    else:
+        messages = ["朝の新顔枠" if bucket == "morning" else "夜の尖り枠"]
+    for index, repo in enumerate(repos, start=1):
         x_post = repo["_x_post"]
         pick_reason = (repo.get("_pick_reason") or "").strip()
+        gray = repo.get("_gray_profile") or {}
+        if gray:
+            status_label = "要確認" if gray.get("risk_status") == "needs_review" else "収集対象"
+            gray_header = (
+                f"{index}. {repo['full_name']} | {gray.get('category')} | {status_label}\n"
+                f"score={repo['_score']} "
+                f"(grey={gray.get('grey_score')}, attention={gray.get('attention_score')}, "
+                f"fresh={gray.get('freshness_score')})\n"
+                f"reason: {gray.get('reason')}\n"
+                f"stars={repo['stargazers_count']} / updated={repo['pushed_at'][:10]}"
+            )
+            messages.append(f"{gray_header}\n{x_post[:500]}")
+            continue
         if pick_reason:
             messages.append(f"選定理由: {pick_reason}\n{x_post[:600]}")
         else:
@@ -2402,10 +2663,44 @@ def enrich_repositories(
             continue
         owner, name = repo["full_name"].split("/", 1)
         repo["_readme_text"] = fetch_readme(config, owner, name)
+        if is_gray_profile(config):
+            repo["_gray_profile"] = analyze_gray_repo(repo, state)
+            if repo["_gray_profile"]["risk_status"] == "exclude":
+                continue
         repo["_score"] = score_repo(repo, state, config, bucket)
         enriched.append(repo)
     enriched.sort(key=lambda item: item["_score"], reverse=True)
     return enriched[: config.top_n]
+
+
+def extract_gray_seed_terms(repo: dict[str, Any]) -> list[str]:
+    terms = []
+    for topic in repo.get("topics") or []:
+        topic = normalize_keyword(str(topic).replace("-", " "))
+        if 3 <= len(topic) <= 32:
+            terms.append(topic)
+    gray = repo.get("_gray_profile") or {}
+    for keyword in gray.get("matched_keywords") or []:
+        keyword = normalize_keyword(str(keyword))
+        if 3 <= len(keyword) <= 32:
+            terms.append(keyword)
+    return terms
+
+
+def update_gray_seed_keywords(state: dict[str, Any], repos: list[dict[str, Any]]) -> None:
+    if not repos:
+        return
+    gray_collection = state.setdefault("gray_collection", {})
+    existing = gray_seed_keywords_from_state(state)
+    candidates = []
+    for repo in repos:
+        gray = repo.get("_gray_profile") or {}
+        if not gray or gray.get("risk_status") == "exclude":
+            continue
+        candidates.extend(extract_gray_seed_terms(repo))
+    merged = list(dict.fromkeys(existing + candidates))
+    gray_collection["keywords"] = merged[:GRAY_SEED_KEYWORD_LIMIT]
+    gray_collection["updated_at"] = datetime.now(UTC).isoformat()
 
 
 def update_state(state: dict[str, Any], repos: list[dict[str, Any]]) -> None:
@@ -2418,6 +2713,7 @@ def update_state(state: dict[str, Any], repos: list[dict[str, Any]]) -> None:
         state["notifications"][repo["full_name"]] = {
             "last_sent": now_iso,
         }
+    update_gray_seed_keywords(state, repos)
 
 
 def append_history(repos: list[dict[str, Any]], bucket: str) -> None:
@@ -2442,6 +2738,7 @@ def append_history(repos: list[dict[str, Any]], bucket: str) -> None:
                 "owner_html_url": (repo.get("owner") or {}).get("html_url", ""),
                 "bucket": bucket,
                 "pick_reason": repo.get("_pick_reason") or "",
+                "gray_profile": repo.get("_gray_profile") or {},
             }
         )
     save_history(history[-300:])
@@ -3130,7 +3427,7 @@ def run_once(config: Config, trigger: str = "manual") -> None:
     )
     try:
         print("Searching repositories...")
-        repos = search_repositories(config)
+        repos = search_repositories(config, state)
         print(f"Found {len(repos)} repositories.")
         candidates = enrich_repositories(config, repos, state, bucket)
         print(f"Selected {len(candidates)} candidates for {bucket}.")

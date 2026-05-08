@@ -75,6 +75,9 @@ pip install -r requirements.txt
 - `NOTIFY_TIMES`
 - `TIMEZONE`
 - `TOPICS`
+- `COLLECTION_PROFILE`
+- `GITHUB_SEARCH_SORTS`
+- `GRAY_SEARCH_TERM_LIMIT`
 - `MIN_STARS`
 - `COOLDOWN_DAYS`
 - `LOW_STAR_HIGH_SCORE_MAX_STARS`
@@ -304,6 +307,37 @@ index.html?search=cli
 - 夜 `20:00`: 尖り寄り
 
 週間ランキングは、週内の `pick 回数 / 最高 score / stars` を使って見返しやすい順に並べています。
+
+## グレー系ランキング
+
+`COLLECTION_PROFILE=gray` にすると、通常の技術トレンド収集ではなく、合法寄りだが際どい OSS を拾うランキングに切り替わります。
+
+対象例:
+
+- 成人向けAI / モザイク・画像・動画復元
+- スクレイパー / ダウンローダー / 抽出ツール
+- 逆解析 / modding / patcher / 非公式client
+- 制限回避やポリシー回避に近いツール
+- 防御・検証寄りのセキュリティ研究
+
+明確な認証情報窃取、マルウェア、CSAM、侵入・悪用手順中心の repo は除外または `needs_review` 扱いにします。
+
+使う設定例:
+
+```env
+COLLECTION_PROFILE=gray
+TOP_N=10
+GITHUB_SEARCH_SORTS=stars,updated
+GRAY_SEARCH_TERM_LIMIT=16
+```
+
+gray mode の score は以下を合成します。
+
+- `grey_score`: グレー度
+- `attention_score`: stars、forks、star増加、直近push
+- `freshness_score`: 作成日と更新日の新しさ
+
+通知には分類ラベル、要確認フラグ、score内訳、選定理由を含めます。
 
 ## Skill
 

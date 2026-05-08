@@ -250,6 +250,75 @@ class SmokeTests(unittest.TestCase):
         boosted_score = bot.score_repo(repo, {"repos": {}}, boosted_config, bucket="morning")
         self.assertGreater(boosted_score, base_score)
 
+    def test_gray_repo_analysis_classifies_lada_style_repo(self) -> None:
+        repo = {
+            "full_name": "ladaapp/lada",
+            "name": "lada",
+            "stargazers_count": 2900,
+            "forks_count": 370,
+            "created_at": "2026-04-01T00:00:00+00:00",
+            "pushed_at": "2026-04-05T00:00:00+00:00",
+            "description": "Restore videos with pixelated/mosaic regions",
+            "topics": ["video-restoration", "nsfw-ai"],
+            "_readme_text": "Recover pixelated adult videos with mosaic restore models.",
+        }
+        profile = bot.analyze_gray_repo(repo, {"repos": {}})
+        self.assertEqual(profile["category"], "adult_ai_media")
+        self.assertEqual(profile["risk_status"], "allow")
+        self.assertGreater(profile["grey_score"], 40)
+
+    def test_gray_repo_analysis_excludes_clear_malware_repo(self) -> None:
+        repo = {
+            "full_name": "bad/repo",
+            "name": "repo",
+            "stargazers_count": 1,
+            "forks_count": 0,
+            "created_at": "2026-04-01T00:00:00+00:00",
+            "pushed_at": "2026-04-05T00:00:00+00:00",
+            "description": "Credential stealer and malware builder",
+            "topics": [],
+            "_readme_text": "",
+        }
+        profile = bot.analyze_gray_repo(repo, {"repos": {}})
+        self.assertEqual(profile["risk_status"], "exclude")
+
+    def test_gray_search_queries_include_seed_keywords(self) -> None:
+        config = bot.Config(
+            github_token="",
+            deepseek_api_key="",
+            telegram_bot_token="",
+            telegram_chat_id="",
+            public_history_url="",
+            public_weekly_url="",
+            top_n=3,
+            notify_times=["09:00", "20:00"],
+            timezone="Asia/Tokyo",
+            topics=[],
+            min_stars=30,
+            cooldown_days=14,
+            collection_profile="gray",
+            github_search_sorts=["stars"],
+        )
+        state = {"gray_collection": {"keywords": ["video restoration"]}}
+        queries = bot.build_search_queries(
+            config,
+            datetime(2026, 4, 10, tzinfo=UTC),
+            state,
+        )
+        joined = "\n".join(queries)
+        self.assertIn("mosaic restore", joined)
+        self.assertIn("video restoration", joined)
+
+    def test_extract_tags_includes_gray_category(self) -> None:
+        tags = bot.extract_tags(
+            {
+                "topics": ["video"],
+                "x_post": "",
+                "gray_profile": {"category": "adult_ai_media"},
+            }
+        )
+        self.assertIn("adult_ai_media", tags)
+
     def test_classify_deepseek_error_handles_billing_and_rate_limit(self) -> None:
         billing_response = requests.Response()
         billing_response.status_code = 402
