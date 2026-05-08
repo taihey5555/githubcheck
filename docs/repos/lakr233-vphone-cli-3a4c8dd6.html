@@ -450,6 +450,159 @@
       font-weight: 900;
       line-height: 1;
     }
+    .detail-hero-card {
+      position: relative;
+      padding: 22px;
+      border-radius: 14px;
+    }
+    .detail-hero-card .card-header {
+      padding-right: 64px;
+      margin-bottom: 10px;
+    }
+    .detail-hero-card .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+    }
+    .detail-hero-card h2 {
+      color: var(--accent);
+      font-size: 28px;
+      line-height: 1.1;
+    }
+    .detail-hero-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .detail-hero-actions .badge {
+      min-height: 44px;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .detail-hero-actions .action-github {
+      background: #061b3a;
+      color: #fff;
+      border-color: #061b3a;
+    }
+    .detail-hero-actions .action-history {
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+      font-size: 18px;
+    }
+    .detail-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 12px 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .detail-tabs a {
+      min-width: 0;
+      padding: 11px 4px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+      border-bottom: 2px solid transparent;
+    }
+    .detail-tabs a:first-child {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .detail-info-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .detail-info-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+    .detail-info-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .detail-check-list {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(15, 23, 42, 0.82);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+    .detail-check-list li {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+    }
+    .detail-check-list li::before {
+      content: "✓";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #12a163;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .related-strip {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(128px, 1fr);
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .related-mini {
+      position: relative;
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+    }
+    .related-mini h3 {
+      margin: 0 0 4px;
+      padding-right: 34px;
+      font-size: 13px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+    .related-mini p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .related-score {
+      position: absolute;
+      right: 10px;
+      bottom: 12px;
+      min-width: 30px;
+      padding: 5px 6px;
+      border-radius: 8px;
+      background: #e7f8ef;
+      color: #078243;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+    }
     .archive-select-row {
       display: flex;
       align-items: center;
@@ -1197,6 +1350,25 @@
         top: 13px;
         right: 13px;
       }
+      .detail-hero-card {
+        padding: 18px;
+      }
+      .detail-hero-card .avatar {
+        width: 38px;
+        height: 38px;
+      }
+      .detail-hero-card h2 {
+        font-size: 24px;
+      }
+      .detail-tabs a {
+        font-size: 11.5px;
+      }
+      .detail-info-card {
+        padding: 16px;
+      }
+      .related-strip {
+        grid-auto-columns: minmax(122px, 42vw);
+      }
       pre {
         font-size: 12px;
         overflow-wrap: anywhere;
@@ -1386,8 +1558,9 @@
       </header>
       <main>
         
-        <section class="section-block">
-          <article class="card">
+        <section class="section-block detail-page">
+          <article class="card detail-hero-card">
+            <div class="card-score">41<small>スコア</small></div>
             <div class="card-header">
               <img class="avatar" src="https://avatars.githubusercontent.com/u/25259084?v=4" alt="Lakr233">
               <div class="card-title-wrap">
@@ -1398,18 +1571,53 @@
               </div>
             </div>
             <div class="meta">
-              <span>stars 5774</span>
-              <span>score 40.58</span>
-              <span>Swift</span>
-              <span>状態 未確認</span>
-              <span>登場 2回</span>
+              <span class="meta-stars">stars 5774</span>
+              <span class="meta-language">Swift</span>
+              <span class="date-label">2026-04-27 21:22</span>
             </div>
-            <div class="meta">
-              <span>最終通知 2026-04-27 21:22</span>
-              <span>クールダウン中（残り3日）</span>
-              <span>最終観測 2026-05-08 21:13</span>
-              <span>最終stars 5939</span>
+            
+            <div class="badge-row"><a class="badge" href="../index.html?language=swift">Swift</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ios</span><span class="badge topic">#仮想化</span></div>
+            <div class="detail-hero-actions">
+              <a class="badge action-github" href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">GitHubで見る</a>
+              <a class="badge action-history" href="../index.html" aria-label="履歴へ戻る">⌑</a>
             </div>
+          </article>
+          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
+            <a href="#overview">概要</a>
+            <a href="#reason">選定理由</a>
+            <a href="#stack">技術スタック</a>
+            <a href="#stats">統計</a>
+          </nav>
+          <div class="detail-info-grid">
+            <article id="overview" class="detail-info-card">
+              <h3>概要</h3>
+              <p class="description">説明文はまだ取得されていません。</p>
+              <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
+            </article>
+            <article id="reason" class="detail-info-card">
+              <h3>選定理由</h3>
+              <p class="description">macOS上でiOS 26を仮想起動できるツール</p>
+              <div class="badge-row"><span class="badge topic">#ios</span><span class="badge topic">#仮想化</span></div>
+            </article>
+            <article id="stack" class="detail-info-card">
+              <h3>技術スタック</h3>
+              <div class="badge-row"><a class="badge" href="../index.html?language=swift">Swift</a><span class="badge review-state">状態 未確認</span></div>
+              <div class="detail-links secondary-links">
+                <a class="badge" href="../index.html?language=swift">Swift のリポジトリ一覧を見る</a>
+                <a class="badge" href="../index.html?score_min=40.58&sort=score">高スコアの一覧を見る</a>
+                <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
+                <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
+              </div>
+            </article>
+            <article class="detail-info-card">
+              <h3>通知本文</h3>
+              <pre>macOSでiOS 26の仮想iPhoneを起動できる「vphone-cli」が登場。
+AppleのVirtualization.frameworkを活用し、PCC研究用VM基盤を流用。
+パッチレスから完全脱獄まで4段階のセキュリティバイパスを選択可能。
+iOSセキュリティ研究やファームウェア解析に携わる方に。
+<a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">https://github.com/Lakr233/vphone-cli</a>
+#iOS #仮想化</pre>
+            </article>
             
         <div class="review-state-panel" data-review-state-panel data-repo-full-name="Lakr233/vphone-cli">
           <h3>状態を更新</h3>
@@ -1423,106 +1631,53 @@
           <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
         </div>
         
-            <p class="pick-reason">選定理由: macOS上でiOS 26を仮想起動できるツール</p>
-            
-            <pre>macOSでiOS 26の仮想iPhoneを起動できる「vphone-cli」が登場。
-AppleのVirtualization.frameworkを活用し、PCC研究用VM基盤を流用。
-パッチレスから完全脱獄まで4段階のセキュリティバイパスを選択可能。
-iOSセキュリティ研究やファームウェア解析に携わる方に。
-<a href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">https://github.com/Lakr233/vphone-cli</a>
-#iOS #仮想化</pre>
-            <div class="badge-row"><a class="badge" href="../index.html?language=swift">Swift</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ios</span><span class="badge topic">#仮想化</span></div>
-            <div class="detail-links primary-links">
-              <a class="badge" href="https://github.com/Lakr233/vphone-cli" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="badge" href="../index.html">履歴</a>
-              <a class="badge" href="../weekly.html">週間</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?language=swift">Swift のリポジトリ一覧を見る</a>
-              <a class="badge" href="../index.html?score_min=40.58&sort=score">高スコアの一覧を見る</a>
-              <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?review_state=good">良いを見る</a><a class="badge" href="../index.html?review_state=production_candidate">本番候補を見る</a><a class="badge review-state" href="../index.html?review_state=unseen">未確認を見る</a><a class="badge" href="../index.html?review_state=interested">気になるを見る</a><a class="badge" href="../index.html?review_state=tested">試したを見る</a>
-            </div>
-          </article>
+          </div>
         </section>
-        <section class="stats-grid">
+        <section id="stats" class="stats-grid">
           <article class="stat-card"><strong>2026-04-09 20:58</strong><span>初回出現日時</span></article>
           <article class="stat-card"><strong>2026-04-27 21:22</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>2</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
         </section>
-        <section class='section-block'><div class='section-header'><h2>似ているリポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='history-list'>
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Swift</span>
-                    <span>score 53.33</span>
-                    <span>stars 5114</span>
-                    <span>状態 未確認</span>
-                  </div>
+        <section class='section-block'><div class='section-header'><h2>関連リポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='related-strip'>
+                <article class="related-mini">
                   <h3><a href="../repos/farzaa-clicky-eee75b1a.html" target="_self">farzaa/clicky</a></h3>
-                  <p class="pick-reason">同じ言語: Swift</p>
-                  
-                  
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/farzaa-clicky-eee75b1a.html">詳細</a>
-                    <a class="badge" href="https://github.com/farzaa/clicky" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by farzaa</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 5114</span>
+                    <span class="meta-language">Swift</span>
                   </div>
+                  <span class="related-score">53</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Swift</span>
-                    <span>score 59.78</span>
-                    <span>stars 1039</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/dodo-reach-hermes-desktop-2e07a7a8.html" target="_self">dodo-reach/hermes-desktop</a></h3>
-                  <p class="pick-reason">同じ言語: Swift</p>
-                  <p class="description">The safest, simplest way to manage Hermes from your Mac. Pure SSH. No gateways, no exposed ports, no browser layer.</p>
-                  
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/dodo-reach-hermes-desktop-2e07a7a8.html">詳細</a>
-                    <a class="badge" href="https://github.com/dodo-reach/hermes-desktop" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by dodo-reach</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 1039</span>
+                    <span class="meta-language">Swift</span>
                   </div>
+                  <span class="related-score">60</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Swift</span>
-                    <span>score 66.09</span>
-                    <span>stars 5080</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/arthur-ficial-apfel-28371ea3.html" target="_self">Arthur-Ficial/apfel</a></h3>
-                  <p class="pick-reason">同じ言語: Swift</p>
-                  <p class="description">The free AI already on your Mac. CLI tool, OpenAI-compatible server, and interactive chat — all on-device via Apple Intelligence. No API keys, no cloud, no downloads.</p>
-                  
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
-                    <a class="badge" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by Arthur-Ficial</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 5080</span>
+                    <span class="meta-language">Swift</span>
                   </div>
+                  <span class="related-score">66</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Swift</span>
-                    <span>score 1021.36</span>
-                    <span>stars 14166</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/manaflow-ai-cmux-addf41a2.html" target="_self">manaflow-ai/cmux</a></h3>
-                  <p class="pick-reason">同じ言語: Swift</p>
-                  <p class="description">Ghostty-based macOS terminal with vertical tabs and notifications for AI coding agents</p>
-                  
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/manaflow-ai-cmux-addf41a2.html">詳細</a>
-                    <a class="badge" href="https://github.com/manaflow-ai/cmux" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by manaflow-ai</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 14166</span>
+                    <span class="meta-language">Swift</span>
                   </div>
+                  <span class="related-score">1021</span>
                 </article>
                 </div></section>
         <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>

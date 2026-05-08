@@ -1022,6 +1022,10 @@ def render_repo_detail_sites() -> None:
             score_min=low_star_settings["min_score"],
             sort="score",
         )
+        try:
+            detail_score_label = str(int(round(float(repo_data.get("latest_score") or 0))))
+        except (TypeError, ValueError):
+            detail_score_label = "0"
         shortcut_links = render_review_state_shortcuts("..", current_review_state)
         review_state_request_link = review_state_request_issue_url(
             repo_data["full_name"], current_review_state
@@ -1058,27 +1062,20 @@ def render_repo_detail_sites() -> None:
         # Similar repos are a lightweight "what else should I open next" aid,
         # so reuse existing archive metadata instead of fetching anything new.
         for similar_repo in similar_repos:
-            shared_topics = "".join(
-                f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
-                for topic in similar_repo.get("shared_topics") or []
-            )
+            try:
+                similar_score_label = str(int(round(float(similar_repo.get("latest_score") or 0))))
+            except (TypeError, ValueError):
+                similar_score_label = "0"
             similar_repo_cards.append(
                 f"""
-                <article class="history-item">
-                  <div class="meta">
-                    <span>{escape(str(similar_repo.get("language") or "N/A"))}</span>
-                    <span>score {float(similar_repo.get("latest_score") or 0):.2f}</span>
-                    <span>stars {int(similar_repo.get("latest_stars") or 0)}</span>
-                    <span>状態 {escape(review_state_label(similar_repo.get("review_state")))}</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}" target="_self">{escape(str(similar_repo.get("full_name") or ""))}</a></h3>
-                  {f'<p class="pick-reason">{escape(str(similar_repo.get("similarity_reason") or ""))}</p>' if similar_repo.get("similarity_reason") else ''}
-                  {f'<p class="description">{escape(str(similar_repo.get("description") or ""))}</p>' if similar_repo.get("description") else ''}
-                  {f'<div class="badge-row">{shared_topics}</div>' if shared_topics else ''}
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="{repo_detail_href(str(similar_repo.get("full_name") or ""), path_prefix="..")}">詳細</a>
-                    <a class="badge" href="{escape(str(similar_repo.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by {escape(str((similar_repo.get("owner_login") or str(similar_repo.get("full_name") or "").split("/")[0]) or ""))}</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars {int(similar_repo.get("latest_stars") or 0)}</span>
+                    <span class="meta-language">{escape(str(similar_repo.get("language") or "N/A"))}</span>
                   </div>
+                  <span class="related-score">{similar_score_label}</span>
                 </article>
                 """
             )
@@ -1125,9 +1122,18 @@ def render_repo_detail_sites() -> None:
                 </article>
                 """
             )
+        overview_points = [
+            "リポジトリの用途と注目理由を確認",
+            "通知時点の stars / language / score を確認",
+            "関連リポジトリと過去通知へすぐ移動",
+        ]
+        overview_points_html = "".join(
+            f"<li>{escape(point)}</li>" for point in overview_points
+        )
         body_html = f"""
-        <section class="section-block">
-          <article class="card">
+        <section class="section-block detail-page">
+          <article class="card detail-hero-card">
+            <div class="card-score">{detail_score_label}<small>スコア</small></div>
             <div class="card-header">
               <img class="avatar" src="{escape(repo_data['owner_avatar_url'])}" alt="{escape(repo_data['owner_login'])}">
               <div class="card-title-wrap">
@@ -1138,53 +1144,63 @@ def render_repo_detail_sites() -> None:
               </div>
             </div>
             <div class="meta">
-              <span>stars {int(repo_data['latest_stars'])}</span>
-              <span>score {repo_data['latest_score']}</span>
-              <span>{escape(str(repo_data['language'] or 'N/A'))}</span>
-              <span>状態 {escape(review_state_label(current_review_state))}</span>
-              <span>登場 {int(repo_data['appearances'])}回</span>
+              <span class="meta-stars">stars {int(repo_data['latest_stars'])}</span>
+              <span class="meta-language">{escape(str(repo_data['language'] or 'N/A'))}</span>
+              <span class="date-label">{escape(last_sent_label)}</span>
             </div>
-            <div class="meta">
-              <span>最終通知 {escape(last_sent_label)}</span>
-              <span>{escape(cooldown_label)}</span>
-              <span>最終観測 {escape(last_seen_label)}</span>
-              <span>最終stars {escape(last_stars_label)}</span>
-            </div>
-            {review_state_controls_html}
-            {f'<p class="pick-reason">選定理由: {escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else ''}
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
-            <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
             {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">状態 {escape(review_state_label(current_review_state))}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
-            <div class="detail-links primary-links">
-              <a class="badge" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="badge" href="../index.html">履歴</a>
-              <a class="badge" href="../weekly.html">週間</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge review-state" href="{current_state_href}">{escape(review_state_label(current_review_state))}の一覧を見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              {language_link_html}
-              <a class="badge" href="{score_focus_href}">高スコアの一覧を見る</a>
-              <a class="badge" href="{low_star_focus_href}">低スター高スコアを見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              {shortcut_links}
+            <div class="detail-hero-actions">
+              <a class="badge action-github" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHubで見る</a>
+              <a class="badge action-history" href="../index.html" aria-label="履歴へ戻る">⌑</a>
             </div>
           </article>
+          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
+            <a href="#overview">概要</a>
+            <a href="#reason">選定理由</a>
+            <a href="#stack">技術スタック</a>
+            <a href="#stats">統計</a>
+          </nav>
+          <div class="detail-info-grid">
+            <article id="overview" class="detail-info-card">
+              <h3>概要</h3>
+              {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else '<p class="description">説明文はまだ取得されていません。</p>'}
+              <ul class="detail-check-list">{overview_points_html}</ul>
+            </article>
+            <article id="reason" class="detail-info-card">
+              <h3>選定理由</h3>
+              {f'<p class="description">{escape(repo_data["pick_reason"])}</p>' if repo_data.get("pick_reason") else '<p class="description">選定理由はまだありません。</p>'}
+              {f'<div class="badge-row">{topics_html}</div>' if topics_html else ''}
+            </article>
+            <article id="stack" class="detail-info-card">
+              <h3>技術スタック</h3>
+              <div class="badge-row">{language_badge_html}<span class="badge review-state">状態 {escape(review_state_label(current_review_state))}</span></div>
+              <div class="detail-links secondary-links">
+                {language_link_html}
+                <a class="badge" href="{score_focus_href}">高スコアの一覧を見る</a>
+                <a class="badge" href="{low_star_focus_href}">低スター高スコアを見る</a>
+                <a class="badge review-state" href="{current_state_href}">{escape(review_state_label(current_review_state))}の一覧を見る</a>
+              </div>
+            </article>
+            <article class="detail-info-card">
+              <h3>通知本文</h3>
+              <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
+            </article>
+            {review_state_controls_html}
+          </div>
         </section>
-        <section class="stats-grid">
+        <section id="stats" class="stats-grid">
           <article class="stat-card"><strong>{escape(repo_data["first_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>初回出現日時</span></article>
           <article class="stat-card"><strong>{escape(repo_data["latest_seen"].strftime("%Y-%m-%d %H:%M"))}</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>{int(repo_data["appearances"])}</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>{escape(review_state_label(current_review_state))}</strong><span>状態</span></article>
         </section>
         {render_section_block(
-            "似ているリポジトリ",
+            "関連リポジトリ",
             "同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。",
             "".join(similar_repo_cards),
             "このリポジトリに近い候補は、まだ十分に集まっていません。",
-            layout_class="history-list",
+            layout_class="related-strip",
         )}
         {render_section_block(
             "関連する履歴",
@@ -1704,6 +1720,159 @@ def site_shell(
       font-size: 9px;
       font-weight: 900;
       line-height: 1;
+    }}
+    .detail-hero-card {{
+      position: relative;
+      padding: 22px;
+      border-radius: 14px;
+    }}
+    .detail-hero-card .card-header {{
+      padding-right: 64px;
+      margin-bottom: 10px;
+    }}
+    .detail-hero-card .avatar {{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+    }}
+    .detail-hero-card h2 {{
+      color: var(--accent);
+      font-size: 28px;
+      line-height: 1.1;
+    }}
+    .detail-hero-actions {{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px;
+      gap: 10px;
+      margin-top: 16px;
+    }}
+    .detail-hero-actions .badge {{
+      min-height: 44px;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 900;
+    }}
+    .detail-hero-actions .action-github {{
+      background: #061b3a;
+      color: #fff;
+      border-color: #061b3a;
+    }}
+    .detail-hero-actions .action-history {{
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+      font-size: 18px;
+    }}
+    .detail-tabs {{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 12px 0 14px;
+      border-bottom: 1px solid var(--line);
+    }}
+    .detail-tabs a {{
+      min-width: 0;
+      padding: 11px 4px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+      border-bottom: 2px solid transparent;
+    }}
+    .detail-tabs a:first-child {{
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }}
+    .detail-info-grid {{
+      display: grid;
+      gap: 14px;
+    }}
+    .detail-info-card {{
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }}
+    .detail-info-card h3 {{
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }}
+    .detail-check-list {{
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(15, 23, 42, 0.82);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.55;
+    }}
+    .detail-check-list li {{
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+    }}
+    .detail-check-list li::before {{
+      content: "✓";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #12a163;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 2px;
+    }}
+    .related-strip {{
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(128px, 1fr);
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }}
+    .related-mini {{
+      position: relative;
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+    }}
+    .related-mini h3 {{
+      margin: 0 0 4px;
+      padding-right: 34px;
+      font-size: 13px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }}
+    .related-mini p {{
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }}
+    .related-score {{
+      position: absolute;
+      right: 10px;
+      bottom: 12px;
+      min-width: 30px;
+      padding: 5px 6px;
+      border-radius: 8px;
+      background: #e7f8ef;
+      color: #078243;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
     }}
     .archive-select-row {{
       display: flex;
@@ -2451,6 +2620,25 @@ def site_shell(
       .card-score {{
         top: 13px;
         right: 13px;
+      }}
+      .detail-hero-card {{
+        padding: 18px;
+      }}
+      .detail-hero-card .avatar {{
+        width: 38px;
+        height: 38px;
+      }}
+      .detail-hero-card h2 {{
+        font-size: 24px;
+      }}
+      .detail-tabs a {{
+        font-size: 11.5px;
+      }}
+      .detail-info-card {{
+        padding: 16px;
+      }}
+      .related-strip {{
+        grid-auto-columns: minmax(122px, 42vw);
       }}
       pre {{
         font-size: 12px;

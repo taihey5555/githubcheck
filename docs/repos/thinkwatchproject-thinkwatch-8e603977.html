@@ -450,6 +450,159 @@
       font-weight: 900;
       line-height: 1;
     }
+    .detail-hero-card {
+      position: relative;
+      padding: 22px;
+      border-radius: 14px;
+    }
+    .detail-hero-card .card-header {
+      padding-right: 64px;
+      margin-bottom: 10px;
+    }
+    .detail-hero-card .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+    }
+    .detail-hero-card h2 {
+      color: var(--accent);
+      font-size: 28px;
+      line-height: 1.1;
+    }
+    .detail-hero-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .detail-hero-actions .badge {
+      min-height: 44px;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .detail-hero-actions .action-github {
+      background: #061b3a;
+      color: #fff;
+      border-color: #061b3a;
+    }
+    .detail-hero-actions .action-history {
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+      font-size: 18px;
+    }
+    .detail-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 12px 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .detail-tabs a {
+      min-width: 0;
+      padding: 11px 4px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+      border-bottom: 2px solid transparent;
+    }
+    .detail-tabs a:first-child {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .detail-info-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .detail-info-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+    .detail-info-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .detail-check-list {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(15, 23, 42, 0.82);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+    .detail-check-list li {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+    }
+    .detail-check-list li::before {
+      content: "✓";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #12a163;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .related-strip {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(128px, 1fr);
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .related-mini {
+      position: relative;
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+    }
+    .related-mini h3 {
+      margin: 0 0 4px;
+      padding-right: 34px;
+      font-size: 13px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+    .related-mini p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .related-score {
+      position: absolute;
+      right: 10px;
+      bottom: 12px;
+      min-width: 30px;
+      padding: 5px 6px;
+      border-radius: 8px;
+      background: #e7f8ef;
+      color: #078243;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+    }
     .archive-select-row {
       display: flex;
       align-items: center;
@@ -1197,6 +1350,25 @@
         top: 13px;
         right: 13px;
       }
+      .detail-hero-card {
+        padding: 18px;
+      }
+      .detail-hero-card .avatar {
+        width: 38px;
+        height: 38px;
+      }
+      .detail-hero-card h2 {
+        font-size: 24px;
+      }
+      .detail-tabs a {
+        font-size: 11.5px;
+      }
+      .detail-info-card {
+        padding: 16px;
+      }
+      .related-strip {
+        grid-auto-columns: minmax(122px, 42vw);
+      }
       pre {
         font-size: 12px;
         overflow-wrap: anywhere;
@@ -1386,8 +1558,9 @@
       </header>
       <main>
         
-        <section class="section-block">
-          <article class="card">
+        <section class="section-block detail-page">
+          <article class="card detail-hero-card">
+            <div class="card-score">57<small>スコア</small></div>
             <div class="card-header">
               <img class="avatar" src="https://avatars.githubusercontent.com/u/273144823?v=4" alt="ThinkWatchProject">
               <div class="card-title-wrap">
@@ -1398,18 +1571,55 @@
               </div>
             </div>
             <div class="meta">
-              <span>stars 634</span>
-              <span>score 57.11</span>
-              <span>Rust</span>
-              <span>状態 未確認</span>
-              <span>登場 1回</span>
+              <span class="meta-stars">stars 634</span>
+              <span class="meta-language">Rust</span>
+              <span class="date-label">2026-05-04 12:58</span>
             </div>
-            <div class="meta">
-              <span>最終通知 2026-05-04 12:58</span>
-              <span>クールダウン中（残り10日）</span>
-              <span>最終観測 2026-05-08 21:13</span>
-              <span>最終stars 718</span>
+            <p class="description">Enterprise AI bastion host for secure AI API and MCP access, with unified proxying, RBAC, audit logs, rate limiting, and cost tracking across OpenAI, Anthropic, Gemini, and self-hosted LLMs.</p>
+            <div class="badge-row"><a class="badge" href="../index.html?language=rust">Rust</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-gateway</span><span class="badge topic">#ai-security</span><span class="badge topic">#ai-tools</span><span class="badge topic">#mcp</span><span class="badge topic">#mcp-gateway</span><span class="badge topic">#mcp-security</span><span class="badge topic">#mcp-server</span><span class="badge topic">#security</span></div>
+            <div class="detail-hero-actions">
+              <a class="badge action-github" href="https://github.com/ThinkWatchProject/ThinkWatch" target="_blank" rel="noreferrer">GitHubで見る</a>
+              <a class="badge action-history" href="../index.html" aria-label="履歴へ戻る">⌑</a>
             </div>
+          </article>
+          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
+            <a href="#overview">概要</a>
+            <a href="#reason">選定理由</a>
+            <a href="#stack">技術スタック</a>
+            <a href="#stats">統計</a>
+          </nav>
+          <div class="detail-info-grid">
+            <article id="overview" class="detail-info-card">
+              <h3>概要</h3>
+              <p class="description">Enterprise AI bastion host for secure AI API and MCP access, with unified proxying, RBAC, audit logs, rate limiting, and cost tracking across OpenAI, Anthropic, Gemini, and self-hosted LLMs.</p>
+              <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
+            </article>
+            <article id="reason" class="detail-info-card">
+              <h3>選定理由</h3>
+              <p class="description">AI APIとMCPを一元管理するエンタープライズゲート</p>
+              <div class="badge-row"><span class="badge topic">#ai</span><span class="badge topic">#ai-gateway</span><span class="badge topic">#ai-security</span><span class="badge topic">#ai-tools</span><span class="badge topic">#mcp</span><span class="badge topic">#mcp-gateway</span><span class="badge topic">#mcp-security</span><span class="badge topic">#mcp-server</span><span class="badge topic">#security</span></div>
+            </article>
+            <article id="stack" class="detail-info-card">
+              <h3>技術スタック</h3>
+              <div class="badge-row"><a class="badge" href="../index.html?language=rust">Rust</a><span class="badge review-state">状態 未確認</span></div>
+              <div class="detail-links secondary-links">
+                <a class="badge" href="../index.html?language=rust">Rust のリポジトリ一覧を見る</a>
+                <a class="badge" href="../index.html?score_min=57.11&sort=score">高スコアの一覧を見る</a>
+                <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
+                <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
+              </div>
+            </article>
+            <article class="detail-info-card">
+              <h3>通知本文</h3>
+              <pre>ThinkWatchは、AI APIとMCPツールの呼び出しを一元管理するセキュアゲートウェイです。
+
+OpenAI/Anthropic/Geminiなど複数プロバイダへのプロキシ、RBAC、監査ログ、レート制限、コスト追跡を一つのコントロールプレーンで実現。仮想APIキーでキー管理も楽に。
+
+AIエージェントを導入するチームで、セキュリティ・コンプライアンス・コスト管理に課題を感じているエンジニアやSREに。
+
+<a href="https://github.com/ThinkWatchProject/ThinkWatch" target="_blank" rel="noreferrer">https://github.com/ThinkWatchProject/ThinkWatch</a>
+#AI #Security</pre>
+            </article>
             
         <div class="review-state-panel" data-review-state-panel data-repo-full-name="ThinkWatchProject/ThinkWatch">
           <h3>状態を更新</h3>
@@ -1423,108 +1633,53 @@
           <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
         </div>
         
-            <p class="pick-reason">選定理由: AI APIとMCPを一元管理するエンタープライズゲート</p>
-            <p class="description">Enterprise AI bastion host for secure AI API and MCP access, with unified proxying, RBAC, audit logs, rate limiting, and cost tracking across OpenAI, Anthropic, Gemini, and self-hosted LLMs.</p>
-            <pre>ThinkWatchは、AI APIとMCPツールの呼び出しを一元管理するセキュアゲートウェイです。
-
-OpenAI/Anthropic/Geminiなど複数プロバイダへのプロキシ、RBAC、監査ログ、レート制限、コスト追跡を一つのコントロールプレーンで実現。仮想APIキーでキー管理も楽に。
-
-AIエージェントを導入するチームで、セキュリティ・コンプライアンス・コスト管理に課題を感じているエンジニアやSREに。
-
-<a href="https://github.com/ThinkWatchProject/ThinkWatch" target="_blank" rel="noreferrer">https://github.com/ThinkWatchProject/ThinkWatch</a>
-#AI #Security</pre>
-            <div class="badge-row"><a class="badge" href="../index.html?language=rust">Rust</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-gateway</span><span class="badge topic">#ai-security</span><span class="badge topic">#ai-tools</span><span class="badge topic">#mcp</span><span class="badge topic">#mcp-gateway</span><span class="badge topic">#mcp-security</span><span class="badge topic">#mcp-server</span><span class="badge topic">#security</span></div>
-            <div class="detail-links primary-links">
-              <a class="badge" href="https://github.com/ThinkWatchProject/ThinkWatch" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="badge" href="../index.html">履歴</a>
-              <a class="badge" href="../weekly.html">週間</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?language=rust">Rust のリポジトリ一覧を見る</a>
-              <a class="badge" href="../index.html?score_min=57.11&sort=score">高スコアの一覧を見る</a>
-              <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?review_state=good">良いを見る</a><a class="badge" href="../index.html?review_state=production_candidate">本番候補を見る</a><a class="badge review-state" href="../index.html?review_state=unseen">未確認を見る</a><a class="badge" href="../index.html?review_state=interested">気になるを見る</a><a class="badge" href="../index.html?review_state=tested">試したを見る</a>
-            </div>
-          </article>
+          </div>
         </section>
-        <section class="stats-grid">
+        <section id="stats" class="stats-grid">
           <article class="stat-card"><strong>2026-05-04 12:58</strong><span>初回出現日時</span></article>
           <article class="stat-card"><strong>2026-05-04 12:58</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>1</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
         </section>
-        <section class='section-block'><div class='section-header'><h2>似ているリポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='history-list'>
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Rust</span>
-                    <span>score 60.58</span>
-                    <span>stars 2018</span>
-                    <span>状態 未確認</span>
-                  </div>
+        <section class='section-block'><div class='section-header'><h2>関連リポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='related-strip'>
+                <article class="related-mini">
                   <h3><a href="../repos/always-further-nono-ace82489.html" target="_self">always-further/nono</a></h3>
-                  <p class="pick-reason">同じ言語: Rust / 共通タグ: #ai-security, #mcp, #mcp-security</p>
-                  <p class="description">nono - a capability-based, multiplexing sandbox tool, built for developers - lift&#x27;n&#x27;shift seamless path to prod. Run agents securely without needing any additional infra, zero setup, zero latency. </p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-security">#ai-security</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a><a class="badge topic" href="../index.html?tag=mcp-security">#mcp-security</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/always-further-nono-ace82489.html">詳細</a>
-                    <a class="badge" href="https://github.com/always-further/nono" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by always-further</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 2018</span>
+                    <span class="meta-language">Rust</span>
                   </div>
+                  <span class="related-score">61</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Rust</span>
-                    <span>score 61.11</span>
-                    <span>stars 1023</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/yvgude-lean-ctx-fcf2e785.html" target="_self">yvgude/lean-ctx</a></h3>
-                  <p class="pick-reason">同じ言語: Rust / 共通タグ: #ai, #mcp, #mcp-server</p>
-                  <p class="description">The context layer for AI coding agents  Reduce token waste in Cursor, Claude Code, Copilot, Windsurf, Codex, Gemini &amp; more by 60–95% (up to 99% on cached reads) Shell Hook + MCP Server · 49 tools · 10 read modes · 90+ patterns · Single Rust binary </p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai">#ai</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a><a class="badge topic" href="../index.html?tag=mcp-server">#mcp-server</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/yvgude-lean-ctx-fcf2e785.html">詳細</a>
-                    <a class="badge" href="https://github.com/yvgude/lean-ctx" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by yvgude</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 1023</span>
+                    <span class="meta-language">Rust</span>
                   </div>
+                  <span class="related-score">61</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Go</span>
-                    <span>score 57.36</span>
-                    <span>stars 3011</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/nextlevelbuilder-goclaw-f5707998.html" target="_self">nextlevelbuilder/goclaw</a></h3>
-                  <p class="pick-reason">共通タグ: #ai-gateway, #mcp</p>
-                  <p class="description">GoClaw - GoClaw is OpenClaw rebuilt in Go — with multi-tenant isolation, 5-layer security, and native concurrency. Deploy AI agent teams at scale without compromising on safety.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-gateway">#ai-gateway</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/nextlevelbuilder-goclaw-f5707998.html">詳細</a>
-                    <a class="badge" href="https://github.com/nextlevelbuilder/goclaw" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by nextlevelbuilder</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 3011</span>
+                    <span class="meta-language">Go</span>
                   </div>
+                  <span class="related-score">57</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>TypeScript</span>
-                    <span>score 58.03</span>
-                    <span>stars 992</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/houseofmvps-codesight-bf6d70c6.html" target="_self">Houseofmvps/codesight</a></h3>
-                  <p class="pick-reason">共通タグ: #ai, #mcp</p>
-                  <p class="description">Universal AI context generator. Saves thousands of tokens per conversation in Claude Code, Cursor, Copilot, Codex, and more.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai">#ai</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/houseofmvps-codesight-bf6d70c6.html">詳細</a>
-                    <a class="badge" href="https://github.com/Houseofmvps/codesight" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by Houseofmvps</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 992</span>
+                    <span class="meta-language">TypeScript</span>
                   </div>
+                  <span class="related-score">58</span>
                 </article>
                 </div></section>
         <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>

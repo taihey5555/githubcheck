@@ -450,6 +450,159 @@
       font-weight: 900;
       line-height: 1;
     }
+    .detail-hero-card {
+      position: relative;
+      padding: 22px;
+      border-radius: 14px;
+    }
+    .detail-hero-card .card-header {
+      padding-right: 64px;
+      margin-bottom: 10px;
+    }
+    .detail-hero-card .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+    }
+    .detail-hero-card h2 {
+      color: var(--accent);
+      font-size: 28px;
+      line-height: 1.1;
+    }
+    .detail-hero-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .detail-hero-actions .badge {
+      min-height: 44px;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .detail-hero-actions .action-github {
+      background: #061b3a;
+      color: #fff;
+      border-color: #061b3a;
+    }
+    .detail-hero-actions .action-history {
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+      font-size: 18px;
+    }
+    .detail-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 12px 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .detail-tabs a {
+      min-width: 0;
+      padding: 11px 4px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+      border-bottom: 2px solid transparent;
+    }
+    .detail-tabs a:first-child {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .detail-info-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .detail-info-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+    .detail-info-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+    .detail-check-list {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(15, 23, 42, 0.82);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+    .detail-check-list li {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+    }
+    .detail-check-list li::before {
+      content: "✓";
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #12a163;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .related-strip {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(128px, 1fr);
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .related-mini {
+      position: relative;
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+    }
+    .related-mini h3 {
+      margin: 0 0 4px;
+      padding-right: 34px;
+      font-size: 13px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+    .related-mini p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .related-score {
+      position: absolute;
+      right: 10px;
+      bottom: 12px;
+      min-width: 30px;
+      padding: 5px 6px;
+      border-radius: 8px;
+      background: #e7f8ef;
+      color: #078243;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 900;
+    }
     .archive-select-row {
       display: flex;
       align-items: center;
@@ -1197,6 +1350,25 @@
         top: 13px;
         right: 13px;
       }
+      .detail-hero-card {
+        padding: 18px;
+      }
+      .detail-hero-card .avatar {
+        width: 38px;
+        height: 38px;
+      }
+      .detail-hero-card h2 {
+        font-size: 24px;
+      }
+      .detail-tabs a {
+        font-size: 11.5px;
+      }
+      .detail-info-card {
+        padding: 16px;
+      }
+      .related-strip {
+        grid-auto-columns: minmax(122px, 42vw);
+      }
       pre {
         font-size: 12px;
         overflow-wrap: anywhere;
@@ -1386,8 +1558,9 @@
       </header>
       <main>
         
-        <section class="section-block">
-          <article class="card">
+        <section class="section-block detail-page">
+          <article class="card detail-hero-card">
+            <div class="card-score">48<small>スコア</small></div>
             <div class="card-header">
               <img class="avatar" src="https://avatars.githubusercontent.com/u/42860185?v=4" alt="mukul975">
               <div class="card-title-wrap">
@@ -1398,18 +1571,55 @@
               </div>
             </div>
             <div class="meta">
-              <span>stars 5948</span>
-              <span>score 48.45</span>
-              <span>Python</span>
-              <span>状態 未確認</span>
-              <span>登場 3回</span>
+              <span class="meta-stars">stars 5948</span>
+              <span class="meta-language">Python</span>
+              <span class="date-label">2026-05-03 20:51</span>
             </div>
-            <div class="meta">
-              <span>最終通知 2026-05-03 20:51</span>
-              <span>クールダウン中（残り9日）</span>
-              <span>最終観測 2026-05-08 21:13</span>
-              <span>最終stars 6108</span>
+            <p class="description">754 structured cybersecurity skills for AI agents · Mapped to 5 frameworks: MITRE ATT&amp;CK, NIST CSF 2.0, MITRE ATLAS, D3FEND &amp; NIST AI RMF · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI &amp; 20+ platforms · 26 security domains · Apache 2.0</p>
+            <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#cloud-security</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span><span class="badge topic">#ethical-hacking</span><span class="badge topic">#incident-response</span><span class="badge topic">#infosec</span><span class="badge topic">#llm</span><span class="badge topic">#malware-analysis</span><span class="badge topic">#mcp</span><span class="badge topic">#mitre-attack</span><span class="badge topic">#osint</span><span class="badge topic">#penetration-testing</span><span class="badge topic">#red-team</span><span class="badge topic">#security</span><span class="badge topic">#security-automation</span><span class="badge topic">#security-tools</span><span class="badge topic">#threat-intelligence</span><span class="badge topic">#ai</span><span class="badge topic">#セキュリティ</span></div>
+            <div class="detail-hero-actions">
+              <a class="badge action-github" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHubで見る</a>
+              <a class="badge action-history" href="../index.html" aria-label="履歴へ戻る">⌑</a>
             </div>
+          </article>
+          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
+            <a href="#overview">概要</a>
+            <a href="#reason">選定理由</a>
+            <a href="#stack">技術スタック</a>
+            <a href="#stats">統計</a>
+          </nav>
+          <div class="detail-info-grid">
+            <article id="overview" class="detail-info-card">
+              <h3>概要</h3>
+              <p class="description">754 structured cybersecurity skills for AI agents · Mapped to 5 frameworks: MITRE ATT&amp;CK, NIST CSF 2.0, MITRE ATLAS, D3FEND &amp; NIST AI RMF · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI &amp; 20+ platforms · 26 security domains · Apache 2.0</p>
+              <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
+            </article>
+            <article id="reason" class="detail-info-card">
+              <h3>選定理由</h3>
+              <p class="description">セキュリティAIエージェント向け最大級のスキルライブラリ</p>
+              <div class="badge-row"><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#cloud-security</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span><span class="badge topic">#ethical-hacking</span><span class="badge topic">#incident-response</span><span class="badge topic">#infosec</span><span class="badge topic">#llm</span><span class="badge topic">#malware-analysis</span><span class="badge topic">#mcp</span><span class="badge topic">#mitre-attack</span><span class="badge topic">#osint</span><span class="badge topic">#penetration-testing</span><span class="badge topic">#red-team</span><span class="badge topic">#security</span><span class="badge topic">#security-automation</span><span class="badge topic">#security-tools</span><span class="badge topic">#threat-intelligence</span><span class="badge topic">#ai</span><span class="badge topic">#セキュリティ</span></div>
+            </article>
+            <article id="stack" class="detail-info-card">
+              <h3>技術スタック</h3>
+              <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span></div>
+              <div class="detail-links secondary-links">
+                <a class="badge" href="../index.html?language=python">Python のリポジトリ一覧を見る</a>
+                <a class="badge" href="../index.html?score_min=48.45&sort=score">高スコアの一覧を見る</a>
+                <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
+                <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
+              </div>
+            </article>
+            <article class="detail-info-card">
+              <h3>通知本文</h3>
+              <pre>セキュリティの知識がないAIエージェントに、上級アナリスト級のスキルを与えられるライブラリが登場。
+
+Anthropic-Cybersecurity-Skillsは754の構造化スキルを収録。メモリフォレンジック、クラウド侵害調査、Kerberoasting検知など、実践的な手順をAIが参照できる。
+
+MITRE ATT&amp;CK、NIST CSFなど5フレームワーク対応。Claude Code、Cursor、Gemini CLIなど20以上のプラットフォームで動作。セキュリティ自動化や脅威ハンティングに携わる人に。
+
+<a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">https://github.com/mukul975/Anthropic-Cybersecurity-Skills</a>
+#cybersecurity #AIagents</pre>
+            </article>
             
         <div class="review-state-panel" data-review-state-panel data-repo-full-name="mukul975/Anthropic-Cybersecurity-Skills">
           <h3>状態を更新</h3>
@@ -1423,108 +1633,53 @@
           <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
         </div>
         
-            <p class="pick-reason">選定理由: セキュリティAIエージェント向け最大級のスキルライブラリ</p>
-            <p class="description">754 structured cybersecurity skills for AI agents · Mapped to 5 frameworks: MITRE ATT&amp;CK, NIST CSF 2.0, MITRE ATLAS, D3FEND &amp; NIST AI RMF · agentskills.io standard · Works with Claude Code, GitHub Copilot, Codex CLI, Cursor, Gemini CLI &amp; 20+ platforms · 26 security domains · Apache 2.0</p>
-            <pre>セキュリティの知識がないAIエージェントに、上級アナリスト級のスキルを与えられるライブラリが登場。
-
-Anthropic-Cybersecurity-Skillsは754の構造化スキルを収録。メモリフォレンジック、クラウド侵害調査、Kerberoasting検知など、実践的な手順をAIが参照できる。
-
-MITRE ATT&amp;CK、NIST CSFなど5フレームワーク対応。Claude Code、Cursor、Gemini CLIなど20以上のプラットフォームで動作。セキュリティ自動化や脅威ハンティングに携わる人に。
-
-<a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">https://github.com/mukul975/Anthropic-Cybersecurity-Skills</a>
-#cybersecurity #AIagents</pre>
-            <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#cloud-security</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span><span class="badge topic">#ethical-hacking</span><span class="badge topic">#incident-response</span><span class="badge topic">#infosec</span><span class="badge topic">#llm</span><span class="badge topic">#malware-analysis</span><span class="badge topic">#mcp</span><span class="badge topic">#mitre-attack</span><span class="badge topic">#osint</span><span class="badge topic">#penetration-testing</span><span class="badge topic">#red-team</span><span class="badge topic">#security</span><span class="badge topic">#security-automation</span><span class="badge topic">#security-tools</span><span class="badge topic">#threat-intelligence</span><span class="badge topic">#ai</span><span class="badge topic">#セキュリティ</span></div>
-            <div class="detail-links primary-links">
-              <a class="badge" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="badge" href="../index.html">履歴</a>
-              <a class="badge" href="../weekly.html">週間</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?language=python">Python のリポジトリ一覧を見る</a>
-              <a class="badge" href="../index.html?score_min=48.45&sort=score">高スコアの一覧を見る</a>
-              <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
-            </div>
-            <div class="detail-links secondary-links">
-              <a class="badge" href="../index.html?review_state=good">良いを見る</a><a class="badge" href="../index.html?review_state=production_candidate">本番候補を見る</a><a class="badge review-state" href="../index.html?review_state=unseen">未確認を見る</a><a class="badge" href="../index.html?review_state=interested">気になるを見る</a><a class="badge" href="../index.html?review_state=tested">試したを見る</a>
-            </div>
-          </article>
+          </div>
         </section>
-        <section class="stats-grid">
+        <section id="stats" class="stats-grid">
           <article class="stat-card"><strong>2026-04-05 10:10</strong><span>初回出現日時</span></article>
           <article class="stat-card"><strong>2026-05-03 20:51</strong><span>最新出現日時</span></article>
           <article class="stat-card"><strong>3</strong><span>出現回数</span></article>
           <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
         </section>
-        <section class='section-block'><div class='section-header'><h2>似ているリポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='history-list'>
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Shell</span>
-                    <span>score 64.89</span>
-                    <span>stars 672</span>
-                    <span>状態 未確認</span>
-                  </div>
+        <section class='section-block'><div class='section-header'><h2>関連リポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='related-strip'>
+                <article class="related-mini">
                   <h3><a href="../repos/0xsteph-pentest-ai-agents-f781f5f2.html" target="_self">0xSteph/pentest-ai-agents</a></h3>
-                  <p class="pick-reason">共通タグ: #ai-agents, #claude-code, #cybersecurity</p>
-                  <p class="description">Turn Claude Code into your offensive security research assistant. Specialized AI subagents for authorized penetration testing plan engagements, analyze recon, research exploits, build detections, audit STIGs, and write reports.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agents">#ai-agents</a><a class="badge topic" href="../index.html?tag=claude-code">#claude-code</a><a class="badge topic" href="../index.html?tag=cybersecurity">#cybersecurity</a><a class="badge topic" href="../index.html?tag=ethical-hacking">#ethical-hacking</a><a class="badge topic" href="../index.html?tag=infosec">#infosec</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/0xsteph-pentest-ai-agents-f781f5f2.html">詳細</a>
-                    <a class="badge" href="https://github.com/0xSteph/pentest-ai-agents" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by 0xSteph</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 672</span>
+                    <span class="meta-language">Shell</span>
                   </div>
+                  <span class="related-score">65</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>JavaScript</span>
-                    <span>score 183.33</span>
-                    <span>stars 156829</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/affaan-m-everything-claude-code-52231fc0.html" target="_self">affaan-m/everything-claude-code</a></h3>
-                  <p class="pick-reason">共通タグ: #ai-agents, #claude, #claude-code</p>
-                  <p class="description">The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agents">#ai-agents</a><a class="badge topic" href="../index.html?tag=claude">#claude</a><a class="badge topic" href="../index.html?tag=claude-code">#claude-code</a><a class="badge topic" href="../index.html?tag=llm">#llm</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/affaan-m-everything-claude-code-52231fc0.html">詳細</a>
-                    <a class="badge" href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by affaan-m</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 156829</span>
+                    <span class="meta-language">JavaScript</span>
                   </div>
+                  <span class="related-score">183</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Python</span>
-                    <span>score 47.22</span>
-                    <span>stars 3441</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/galaxy-dawn-claude-scholar-e82c2f87.html" target="_self">Galaxy-Dawn/claude-scholar</a></h3>
-                  <p class="pick-reason">同じ言語: Python / 共通タグ: #ai-agents, #claude, #claude-code</p>
-                  <p class="description">Semi-automated research assistant for academic research and software development. Supports Claude Code, OpenCode, and Codex CLI across ideation, coding, experiments, writing, and publication.</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agents">#ai-agents</a><a class="badge topic" href="../index.html?tag=claude">#claude</a><a class="badge topic" href="../index.html?tag=claude-code">#claude-code</a><a class="badge topic" href="../index.html?tag=mcp">#mcp</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/galaxy-dawn-claude-scholar-e82c2f87.html">詳細</a>
-                    <a class="badge" href="https://github.com/Galaxy-Dawn/claude-scholar" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by Galaxy-Dawn</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 3441</span>
+                    <span class="meta-language">Python</span>
                   </div>
+                  <span class="related-score">47</span>
                 </article>
                 
-                <article class="history-item">
-                  <div class="meta">
-                    <span>Python</span>
-                    <span>score 76.34</span>
-                    <span>stars 40120</span>
-                    <span>状態 未確認</span>
-                  </div>
+                <article class="related-mini">
                   <h3><a href="../repos/hkuds-nanobot-7efc7b75.html" target="_self">HKUDS/nanobot</a></h3>
-                  <p class="pick-reason">同じ言語: Python / 共通タグ: #ai-agents, #claude, #claude-code</p>
-                  <p class="description">&quot;🐈 nanobot: The Ultra-Lightweight Personal AI Agent&quot;</p>
-                  <div class="badge-row"><a class="badge topic" href="../index.html?tag=ai-agents">#ai-agents</a><a class="badge topic" href="../index.html?tag=claude">#claude</a><a class="badge topic" href="../index.html?tag=claude-code">#claude-code</a><a class="badge topic" href="../index.html?tag=llm">#llm</a></div>
-                  <div class="detail-links primary-links">
-                    <a class="badge" href="../repos/hkuds-nanobot-7efc7b75.html">詳細</a>
-                    <a class="badge" href="https://github.com/HKUDS/nanobot" target="_blank" rel="noreferrer">GitHub</a>
+                  <p>by HKUDS</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 40120</span>
+                    <span class="meta-language">Python</span>
                   </div>
+                  <span class="related-score">76</span>
                 </article>
                 </div></section>
         <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>
