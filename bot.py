@@ -2141,6 +2141,12 @@ def site_shell(
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 12px;
     }}
+    .tab-panel.archive-list {{
+      display: none;
+    }}
+    .tab-panel.archive-list.active {{
+      display: grid;
+    }}
     .archive-list .card {{
       margin: 0;
       display: flex;
