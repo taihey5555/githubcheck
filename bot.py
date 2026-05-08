@@ -1613,6 +1613,7 @@ def site_shell(
     }}
     .card h2 a {{
       color: var(--ink);
+      overflow-wrap: anywhere;
     }}
     .card:hover {{
       border-color: #b8cdf8;
@@ -1634,6 +1635,7 @@ def site_shell(
       color: rgba(15, 23, 42, 0.78);
       line-height: 1.6;
       font-size: 13px;
+      overflow-wrap: anywhere;
     }}
     .pick-reason {{
       margin: 0 0 10px;
@@ -1643,6 +1645,7 @@ def site_shell(
       opacity: 0.92;
       padding-left: 10px;
       border-left: 3px solid #b8cdf8;
+      overflow-wrap: anywhere;
     }}
     .badge-row {{
       display: flex;
@@ -3652,7 +3655,6 @@ def render_repo_card(
     sent_at = escape(str(item.get("_display_time") or ""))
     full_name = escape(str(item.get("full_name") or ""))
     html_url = escape(str(item.get("html_url") or ""))
-    x_post = linkify_text(str(item.get("x_post") or item.get("latest_x_post") or ""))
     language_label = str(item.get("language") or "N/A")
     language = escape(language_label)
     description = escape(normalize_card_description(item))
@@ -3710,7 +3712,6 @@ def render_repo_card(
       </div>
       {f'<p class="pick-reason">選定理由: {pick_reason}</p>' if pick_reason else ''}
       {f'<p class="description">{description}</p>' if description else ''}
-      <pre>{x_post}</pre>
       <div class="detail-links primary-links">
         <a class="badge" href="{details_href}">詳細</a>
         <a class="badge" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
