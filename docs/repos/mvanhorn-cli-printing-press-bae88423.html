@@ -768,6 +768,330 @@
       color: var(--muted);
       font-size: 13px;
     }
+    .weekly-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .weekly-kpi-card {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      min-height: 96px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }
+    .weekly-kpi-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: #eef4ff;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 900;
+    }
+    .weekly-kpi-icon.success {
+      background: #e8f8ef;
+      color: var(--ok);
+    }
+    .weekly-kpi-icon.warn {
+      background: #fff3dc;
+      color: var(--warn);
+    }
+    .weekly-kpi-icon.purple {
+      background: #f1eaff;
+      color: #7c3aed;
+    }
+    .weekly-kpi-body {
+      min-width: 0;
+    }
+    .weekly-kpi-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .weekly-kpi-value {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .weekly-kpi-sub {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+    .weekly-kpi-card .language-pills,
+    .weekly-kpi-card .inline-links {
+      margin-top: 5px;
+    }
+    .weekly-kpi-card .inline-links {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .weekly-kpi-card .inline-links::-webkit-scrollbar {
+      display: none;
+    }
+    .weekly-shell {
+      display: grid;
+      gap: 14px;
+    }
+    .weekly-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 2px 2px 0;
+    }
+    .weekly-heading h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+    .weekly-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .weekly-calendar-button {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .weekly-tabs,
+    .weekly-ranking-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+    .weekly-ranking-tabs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 6px 0 12px;
+    }
+    .weekly-tab,
+    .weekly-ranking-tab {
+      min-height: 34px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .weekly-tab.active,
+    .weekly-ranking-tab.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.22);
+    }
+    .weekly-panel,
+    .weekly-ranking-panel {
+      display: none;
+    }
+    .weekly-panel.active,
+    .weekly-ranking-panel.active {
+      display: grid;
+      gap: 14px;
+    }
+    .weekly-card-panel {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    }
+    .weekly-card-panel h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+    .weekly-mini-chart {
+      display: grid;
+      gap: 10px;
+    }
+    .weekly-chart-bars {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+      min-height: 118px;
+      padding: 10px 0 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .weekly-chart-column {
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+      align-items: end;
+      min-width: 0;
+    }
+    .weekly-chart-bar {
+      width: 14px;
+      min-height: 8px;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, #2f7bff, #0b5cff);
+    }
+    .weekly-chart-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .weekly-topic-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .weekly-highlight-row {
+      display: grid;
+      gap: 10px;
+    }
+    .weekly-highlight {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr) 28px;
+      gap: 10px;
+      align-items: center;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .weekly-highlight-track {
+      height: 7px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      overflow: hidden;
+    }
+    .weekly-highlight-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+    }
+    .weekly-highlight:nth-child(2) .weekly-highlight-fill {
+      background: #8b5cf6;
+    }
+    .weekly-highlight:nth-child(3) .weekly-highlight-fill {
+      background: #1fbf75;
+    }
+    .weekly-highlight:nth-child(4) .weekly-highlight-fill {
+      background: var(--warn);
+    }
+    .weekly-rank-list {
+      display: grid;
+      gap: 10px;
+    }
+    .weekly-rank-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 52px;
+      gap: 10px;
+      align-items: center;
+      min-height: 86px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    }
+    .weekly-rank-number {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: #eef4ff;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .weekly-rank-item.top1 .weekly-rank-number {
+      background: #fff0d6;
+      color: var(--warn);
+    }
+    .weekly-rank-main {
+      min-width: 0;
+    }
+    .weekly-rank-title {
+      display: block;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .weekly-rank-owner,
+    .weekly-rank-desc {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .weekly-rank-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .weekly-rank-score {
+      justify-self: end;
+      display: inline-grid;
+      place-items: center;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 10px;
+      background: #dff8ea;
+      color: var(--ok);
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .weekly-rank-score small {
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+    }
     .detail-links {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
@@ -1439,6 +1763,72 @@
       .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .weekly-kpi-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(106px, 31vw);
+        gap: 8px;
+        overflow-x: auto;
+        padding: 1px 2px 8px;
+        margin-bottom: 14px;
+        scrollbar-width: none;
+      }
+      .weekly-kpi-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .weekly-kpi-card {
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 7px;
+        min-height: 94px;
+        padding: 10px 9px;
+        border-radius: 9px;
+      }
+      .weekly-kpi-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        font-size: 12px;
+      }
+      .weekly-kpi-label {
+        font-size: 10px;
+      }
+      .weekly-kpi-value {
+        font-size: 20px;
+      }
+      .weekly-kpi-sub {
+        font-size: 10px;
+      }
+      .weekly-heading h2 {
+        font-size: 22px;
+      }
+      .weekly-tabs,
+      .weekly-ranking-tabs {
+        border-radius: 12px;
+      }
+      .weekly-tab,
+      .weekly-ranking-tab {
+        min-height: 32px;
+        font-size: 12px;
+      }
+      .weekly-card-panel {
+        padding: 14px;
+        border-radius: 12px;
+      }
+      .weekly-chart-bars {
+        min-height: 112px;
+        gap: 6px;
+      }
+      .weekly-highlight {
+        grid-template-columns: 74px minmax(0, 1fr) 24px;
+      }
+      .weekly-rank-item {
+        grid-template-columns: 30px minmax(0, 1fr) 48px;
+        min-height: 82px;
+        padding: 11px;
+      }
+      .weekly-rank-title {
+        font-size: 14px;
+      }
       .stat-card strong {
         font-size: 22px;
         line-height: 1.12;
@@ -1929,6 +2319,26 @@ AIエージェント開発者や、APIのCLIを効率良く作りたい人向け
         if (target) window.location.href = target;
       });
     }
+    const bindTabs = (buttonSelector, panelSelector, targetAttr) => {
+      const buttons = Array.from(document.querySelectorAll(buttonSelector));
+      const panels = Array.from(document.querySelectorAll(panelSelector));
+      if (!buttons.length || !panels.length) return;
+      const activate = (target) => {
+        for (const button of buttons) {
+          const isActive = button.getAttribute(targetAttr) === target;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        }
+        for (const panel of panels) {
+          panel.classList.toggle('active', panel.id === target);
+        }
+      };
+      for (const button of buttons) {
+        button.addEventListener('click', () => activate(button.getAttribute(targetAttr)));
+      }
+    };
+    bindTabs('[data-weekly-tab-target]', '[data-weekly-panel]', 'data-weekly-tab-target');
+    bindTabs('[data-weekly-ranking-target]', '[data-weekly-ranking-panel]', 'data-weekly-ranking-target');
     const filterButtons = document.querySelectorAll('[data-bucket-filter]');
     const cards = document.querySelectorAll('[data-bucket]');
     for (const button of filterButtons) {

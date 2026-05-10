@@ -2031,6 +2031,330 @@ def site_shell(
       color: var(--muted);
       font-size: 13px;
     }}
+    .weekly-kpi-grid {{
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }}
+    .weekly-kpi-card {{
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      min-height: 96px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }}
+    .weekly-kpi-icon {{
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: #eef4ff;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 900;
+    }}
+    .weekly-kpi-icon.success {{
+      background: #e8f8ef;
+      color: var(--ok);
+    }}
+    .weekly-kpi-icon.warn {{
+      background: #fff3dc;
+      color: var(--warn);
+    }}
+    .weekly-kpi-icon.purple {{
+      background: #f1eaff;
+      color: #7c3aed;
+    }}
+    .weekly-kpi-body {{
+      min-width: 0;
+    }}
+    .weekly-kpi-label {{
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .weekly-kpi-value {{
+      display: block;
+      margin-top: 5px;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 900;
+    }}
+    .weekly-kpi-sub {{
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }}
+    .weekly-kpi-card .language-pills,
+    .weekly-kpi-card .inline-links {{
+      margin-top: 5px;
+    }}
+    .weekly-kpi-card .inline-links {{
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }}
+    .weekly-kpi-card .inline-links::-webkit-scrollbar {{
+      display: none;
+    }}
+    .weekly-shell {{
+      display: grid;
+      gap: 14px;
+    }}
+    .weekly-heading {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 2px 2px 0;
+    }}
+    .weekly-heading h2 {{
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+    }}
+    .weekly-heading p {{
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }}
+    .weekly-calendar-button {{
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 900;
+    }}
+    .weekly-tabs,
+    .weekly-ranking-tabs {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }}
+    .weekly-ranking-tabs {{
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 6px 0 12px;
+    }}
+    .weekly-tab,
+    .weekly-ranking-tab {{
+      min-height: 34px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }}
+    .weekly-tab.active,
+    .weekly-ranking-tab.active {{
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.22);
+    }}
+    .weekly-panel,
+    .weekly-ranking-panel {{
+      display: none;
+    }}
+    .weekly-panel.active,
+    .weekly-ranking-panel.active {{
+      display: grid;
+      gap: 14px;
+    }}
+    .weekly-card-panel {{
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    }}
+    .weekly-card-panel h3 {{
+      margin: 0 0 12px;
+      font-size: 17px;
+      line-height: 1.2;
+    }}
+    .weekly-mini-chart {{
+      display: grid;
+      gap: 10px;
+    }}
+    .weekly-chart-bars {{
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+      min-height: 118px;
+      padding: 10px 0 0;
+      border-bottom: 1px solid var(--line);
+    }}
+    .weekly-chart-column {{
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+      align-items: end;
+      min-width: 0;
+    }}
+    .weekly-chart-bar {{
+      width: 14px;
+      min-height: 8px;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, #2f7bff, #0b5cff);
+    }}
+    .weekly-chart-label {{
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }}
+    .weekly-topic-row {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }}
+    .weekly-highlight-row {{
+      display: grid;
+      gap: 10px;
+    }}
+    .weekly-highlight {{
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr) 28px;
+      gap: 10px;
+      align-items: center;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+    }}
+    .weekly-highlight-track {{
+      height: 7px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      overflow: hidden;
+    }}
+    .weekly-highlight-fill {{
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+    }}
+    .weekly-highlight:nth-child(2) .weekly-highlight-fill {{
+      background: #8b5cf6;
+    }}
+    .weekly-highlight:nth-child(3) .weekly-highlight-fill {{
+      background: #1fbf75;
+    }}
+    .weekly-highlight:nth-child(4) .weekly-highlight-fill {{
+      background: var(--warn);
+    }}
+    .weekly-rank-list {{
+      display: grid;
+      gap: 10px;
+    }}
+    .weekly-rank-item {{
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 52px;
+      gap: 10px;
+      align-items: center;
+      min-height: 86px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    }}
+    .weekly-rank-number {{
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: #eef4ff;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 900;
+    }}
+    .weekly-rank-item.top1 .weekly-rank-number {{
+      background: #fff0d6;
+      color: var(--warn);
+    }}
+    .weekly-rank-main {{
+      min-width: 0;
+    }}
+    .weekly-rank-title {{
+      display: block;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .weekly-rank-owner,
+    .weekly-rank-desc {{
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .weekly-rank-meta {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }}
+    .weekly-rank-score {{
+      justify-self: end;
+      display: inline-grid;
+      place-items: center;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 10px;
+      background: #dff8ea;
+      color: var(--ok);
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 900;
+    }}
+    .weekly-rank-score small {{
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+    }}
     .detail-links {{
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
@@ -2702,6 +3026,72 @@ def site_shell(
       .stats-grid {{
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }}
+      .weekly-kpi-grid {{
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(106px, 31vw);
+        gap: 8px;
+        overflow-x: auto;
+        padding: 1px 2px 8px;
+        margin-bottom: 14px;
+        scrollbar-width: none;
+      }}
+      .weekly-kpi-grid::-webkit-scrollbar {{
+        display: none;
+      }}
+      .weekly-kpi-card {{
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 7px;
+        min-height: 94px;
+        padding: 10px 9px;
+        border-radius: 9px;
+      }}
+      .weekly-kpi-icon {{
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        font-size: 12px;
+      }}
+      .weekly-kpi-label {{
+        font-size: 10px;
+      }}
+      .weekly-kpi-value {{
+        font-size: 20px;
+      }}
+      .weekly-kpi-sub {{
+        font-size: 10px;
+      }}
+      .weekly-heading h2 {{
+        font-size: 22px;
+      }}
+      .weekly-tabs,
+      .weekly-ranking-tabs {{
+        border-radius: 12px;
+      }}
+      .weekly-tab,
+      .weekly-ranking-tab {{
+        min-height: 32px;
+        font-size: 12px;
+      }}
+      .weekly-card-panel {{
+        padding: 14px;
+        border-radius: 12px;
+      }}
+      .weekly-chart-bars {{
+        min-height: 112px;
+        gap: 6px;
+      }}
+      .weekly-highlight {{
+        grid-template-columns: 74px minmax(0, 1fr) 24px;
+      }}
+      .weekly-rank-item {{
+        grid-template-columns: 30px minmax(0, 1fr) 48px;
+        min-height: 82px;
+        padding: 11px;
+      }}
+      .weekly-rank-title {{
+        font-size: 14px;
+      }}
       .stat-card strong {{
         font-size: 22px;
         line-height: 1.12;
@@ -3055,6 +3445,26 @@ def site_shell(
         if (target) window.location.href = target;
       }});
     }}
+    const bindTabs = (buttonSelector, panelSelector, targetAttr) => {{
+      const buttons = Array.from(document.querySelectorAll(buttonSelector));
+      const panels = Array.from(document.querySelectorAll(panelSelector));
+      if (!buttons.length || !panels.length) return;
+      const activate = (target) => {{
+        for (const button of buttons) {{
+          const isActive = button.getAttribute(targetAttr) === target;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        }}
+        for (const panel of panels) {{
+          panel.classList.toggle('active', panel.id === target);
+        }}
+      }};
+      for (const button of buttons) {{
+        button.addEventListener('click', () => activate(button.getAttribute(targetAttr)));
+      }}
+    }};
+    bindTabs('[data-weekly-tab-target]', '[data-weekly-panel]', 'data-weekly-tab-target');
+    bindTabs('[data-weekly-ranking-target]', '[data-weekly-ranking-panel]', 'data-weekly-ranking-target');
     const filterButtons = document.querySelectorAll('[data-bucket-filter]');
     const cards = document.querySelectorAll('[data-bucket]');
     for (const button of filterButtons) {{
@@ -4654,115 +5064,189 @@ def render_weekly_page(
             continue
         fresh_repo_map[full_name] = item
     fresh_picks = list(fresh_repo_map.values())[: int(settings["limit"])]
-    weekly_repo_items = ranking[:]
-    review_state_counts: dict[str, int] = {}
-    for item in weekly_repo_items:
-        review_state = normalize_review_state(review_states.get(item.get("full_name")))
-        item["_review_state"] = review_state
-        review_state_counts[review_state] = review_state_counts.get(review_state, 0) + 1
-    review_state_summary = " ".join(
-        f'<a class="badge" href="{history_archive_href(review_state=state_name)}">{escape(review_state_label(state_name))} {review_state_counts[state_name]}</a>'
-        for state_name in REVIEW_STATES
-        if review_state_counts.get(state_name)
-    ) or "なし"
-    low_star_history_href = history_archive_href(
-        stars_max=settings["max_stars"],
-        score_min=settings["min_score"],
-        sort="score",
-    )
-    review_priority_items = [
-        item
-        for item in weekly_repo_items
-        if item.get("_review_state") in {"good", "production_candidate"}
-    ][: int(settings["limit"])]
-    unseen_items = [
-        item for item in weekly_repo_items if item.get("_review_state") == "unseen"
-    ][: int(settings["limit"])]
     avg_score = (
         sum(float(item.get("score") or 0) for item in this_week_items) / len(this_week_items)
         if this_week_items
         else 0.0
     )
     unique_repos = len({item.get("full_name") for item in this_week_items})
-    stats_html = f"""
-    <section class="dashboard-hero">
-      <div>
-        <p class="hero-kicker">Weekly summary</p>
-        <h2>週間まとめ</h2>
-        <p class="hero-copy">{escape(label)} の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
+    previous_topics = {
+        topic
+        for item in history
+        if item.get("sent_at") and parse_sent_at(item["sent_at"]) < range_start
+        for topic in extract_tags(item)
+    }
+    weekly_topics: dict[str, int] = {}
+    weekly_languages: dict[str, int] = {}
+    tokyo = ZoneInfo("Asia/Tokyo")
+    daily_counts: dict[str, int] = {}
+    for offset in range(7):
+        day = (range_start + timedelta(days=offset)).astimezone(tokyo)
+        day_label = day.strftime("%-m/%-d") if os.name != "nt" else day.strftime("%#m/%#d")
+        daily_counts[day_label] = 0
+    for item in this_week_items:
+        sent_at_dt = item.get("_parsed_sent_at") or parse_sent_at(item.get("sent_at"))
+        day_label = sent_at_dt.astimezone(tokyo).strftime("%-m/%-d") if os.name != "nt" else sent_at_dt.astimezone(tokyo).strftime("%#m/%#d")
+        daily_counts[day_label] = daily_counts.get(day_label, 0) + 1
+        language = str(item.get("language") or "N/A")
+        weekly_languages[language] = weekly_languages.get(language, 0) + 1
+        for topic in extract_tags(item):
+            weekly_topics[topic] = weekly_topics.get(topic, 0) + 1
+    new_tags_count = len(set(weekly_topics) - previous_topics)
+    max_daily_count = max(daily_counts.values()) if daily_counts else 1
+    weekly_chart_html = "".join(
+        f"""
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="{escape(day)} {count}件" style="height:{max(8, int((count / (max_daily_count or 1)) * 86))}px"></span>
+          <span class="weekly-chart-label">{escape(day)}</span>
+        </div>
+        """
+        for day, count in daily_counts.items()
+    )
+    topic_pills_html = "".join(
+        f'<span class="badge topic">#{escape(topic)}</span>'
+        for topic, _ in sorted(weekly_topics.items(), key=lambda pair: pair[1], reverse=True)[:6]
+    ) or '<span class="badge">なし</span>'
+    max_language_count = max(weekly_languages.values()) if weekly_languages else 1
+    language_highlight_html = "".join(
+        f"""
+        <div class="weekly-highlight">
+          <span>{escape(language)}</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:{max(8, int((count / (max_language_count or 1)) * 100))}%"></span></span>
+          <strong>{count}</strong>
+        </div>
+        """
+        for language, count in sorted(weekly_languages.items(), key=lambda pair: pair[1], reverse=True)[:5]
+    ) or '<span class="badge">なし</span>'
+    rising_candidates = sorted(
+        fresh_picks,
+        key=lambda item: (
+            int(item.get("stars_delta") or 0),
+            float(item.get("score") or 0),
+            int(item.get("stars") or 0),
+        ),
+        reverse=True,
+    )
+
+    def render_weekly_rank_card(item: dict[str, Any], rank: int) -> str:
+        full_name_raw = str(item.get("full_name") or "")
+        score_value = item.get("best_score", item.get("score", 0))
+        try:
+            score_label = str(int(round(float(score_value or 0))))
+        except (TypeError, ValueError):
+            score_label = "0"
+        owner_login, _, _ = fallback_owner_fields(item)
+        language = escape(str(item.get("language") or "N/A"))
+        stars = int(item.get("stars", item.get("latest_stars") or 0) or 0)
+        description = escape(normalize_card_description(item))
+        return f"""
+        <a class="weekly-rank-item{' top1' if rank == 1 else ''}" href="{repo_detail_href(full_name_raw, path_prefix=path_prefix)}">
+          <span class="weekly-rank-number">{rank}</span>
+          <span class="weekly-rank-main">
+            <strong class="weekly-rank-title">{escape(full_name_raw)}</strong>
+            <span class="weekly-rank-owner">by {escape(owner_login)}</span>
+            <span class="weekly-rank-meta"><span>● {language}</span><span>★ {stars}</span></span>
+            {f'<span class="weekly-rank-desc">{description}</span>' if description else ''}
+          </span>
+          <span class="weekly-rank-score">{score_label}<small>スコア</small></span>
+        </a>
+        """
+
+    def render_weekly_ranking_panel(panel_id: str, items: list[dict[str, Any]]) -> str:
+        cards = "".join(
+            render_weekly_rank_card(item, index)
+            for index, item in enumerate(items[:10], start=1)
+        )
+        return f"""
+        <div id="{panel_id}" class="weekly-ranking-panel{' active' if panel_id == 'weekly-rank-total' else ''}" data-weekly-ranking-panel>
+          <div class="weekly-rank-list">{cards or '<article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article>'}</div>
+        </div>
+        """
+
+    weekly_content_html = f"""
+    <section class="weekly-shell">
+      <div class="weekly-heading">
+        <div>
+          <h2>今週のまとめ</h2>
+          <p>{escape(label)}</p>
+        </div>
+        <span class="weekly-calendar-button" aria-hidden="true">▣</span>
+      </div>
+      <div class="weekly-tabs" role="tablist" aria-label="週次ビュー">
+        <button class="weekly-tab active" type="button" role="tab" aria-selected="true" data-weekly-tab-target="weekly-summary">まとめ</button>
+        <button class="weekly-tab" type="button" role="tab" aria-selected="false" data-weekly-tab-target="weekly-ranking">ランキング</button>
+      </div>
+      <div id="weekly-summary" class="weekly-panel active" data-weekly-panel>
+        <section class="weekly-kpi-grid" aria-label="週次サマリー">
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon">▱</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">総リポジトリ数</span>
+          <strong class="weekly-kpi-value">{unique_repos}</strong>
+          <span class="weekly-kpi-sub">今週のリポジトリ数</span>
+        </div>
+      </article>
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon success">▶</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">通知総数</span>
+          <strong class="weekly-kpi-value">{len(this_week_items)}</strong>
+          <span class="weekly-kpi-sub">{escape(label)}</span>
+        </div>
+      </article>
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon purple">◆</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">新規タグ</span>
+          <strong class="weekly-kpi-value">{new_tags_count}</strong>
+          <span class="weekly-kpi-sub">今週初出</span>
+        </div>
+      </article>
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon warn">↗</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">平均 score</span>
+          <strong class="weekly-kpi-value">{avg_score:.1f}</strong>
+          <span class="weekly-kpi-sub">週内平均</span>
+        </div>
+      </article>
+    </section>
+        <section class="weekly-card-panel">
+          <h3>今週の通知推移</h3>
+          <div class="weekly-mini-chart"><div class="weekly-chart-bars">{weekly_chart_html}</div></div>
+        </section>
+        <section class="weekly-card-panel">
+          <h3>今週の注目トピック</h3>
+          <div class="weekly-topic-row">{topic_pills_html}</div>
+        </section>
+        <section class="weekly-card-panel">
+          <h3>カテゴリ別ハイライト</h3>
+          <div class="weekly-highlight-row">{language_highlight_html}</div>
+        </section>
+      </div>
+      <div id="weekly-ranking" class="weekly-panel" data-weekly-panel>
+        <div class="weekly-heading">
+          <div>
+            <h2>週間ランキング</h2>
+            <p>{escape(label)}</p>
+          </div>
+        </div>
+        <div class="weekly-ranking-tabs" role="tablist" aria-label="週間ランキング">
+          <button class="weekly-ranking-tab active" type="button" role="tab" aria-selected="true" data-weekly-ranking-target="weekly-rank-total">総合</button>
+          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-low-star">低スター発掘</button>
+          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-rising">急上昇</button>
+        </div>
+        {render_weekly_ranking_panel("weekly-rank-total", ranking)}
+        {render_weekly_ranking_panel("weekly-rank-low-star", low_star_ranking)}
+        {render_weekly_ranking_panel("weekly-rank-rising", rising_candidates)}
       </div>
     </section>
-    <section class="stats-grid">
-      <article class="stat-card"><strong>{unique_repos}</strong><span>今週のリポジトリ数</span></article>
-      <article class="stat-card"><strong>{len(this_week_items)}</strong><span>通知総数</span></article>
-      <article class="stat-card"><strong>{avg_score:.1f}</strong><span>平均 score</span></article>
-      <article class="stat-card compact"><div class="language-pills">{render_language_pills(this_week_items, 4)}</div><span>言語分布</span></article>
-      <article class="stat-card"><strong class="inline-links">{review_state_summary}</strong><span>状態の分布</span></article>
-    </section>
     """
-
-    def render_week_section(
-        title: str,
-        description: str,
-        items: list[dict[str, Any]],
-        links_html: str = "",
-    ) -> str:
-        cards = "".join(
-            render_repo_card(
-                item,
-                normalize_review_state(review_states.get(item.get("full_name"))),
-                rank=index,
-            )
-            for index, item in enumerate(items, start=1)
-        )
-        return render_section_block(
-            title,
-            description,
-            cards,
-            "この条件に合うリポジトリは、今週まだありません。",
-            links_html=links_html,
-        )
 
     html = site_shell(
         "週間まとめ",
         f"{label} の通知履歴を、見返しやすい週次ビューとしてまとめています。",
-        archive_links_html
-        + stats_html
-        + render_week_section(
-            "今週の良い / 本番候補",
-            "すでに手応えがあるリポジトリを、状態ベースで先に見返せます。",
-            review_priority_items,
-            links_html=(
-                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="good", sort="score")}">良いをすべて見る</a>'
-                f'<a class="badge" href="{history_archive_href(review_state="production_candidate", sort="score")}">本番候補をすべて見る</a></span>'
-            ),
-        )
-        + render_week_section(
-            "今週の未確認リポジトリ",
-            "まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。",
-            unseen_items,
-            links_html=(
-                f' <span class="inline-links"><a class="badge" href="{history_archive_href(review_state="unseen", sort="newest")}">未確認をすべて見る</a></span>'
-            ),
-        )
-        + render_week_section(
-            "今週の総合トップ",
-            "pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。",
-            ranking,
-        )
-        + render_week_section(
-            "今週の低スター枠トップ",
-            "stars が少なくても評価が高いリポジトリを先に見たいときの入口です。",
-            low_star_ranking,
-            links_html=(
-                f' <span class="inline-links"><a class="badge" href="{low_star_history_href}">低スター高スコアをすべて見る</a></span>'
-            ),
-        )
-        + render_week_section(
-            "今週の新着で面白かったもの",
-            "今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。",
-            fresh_picks,
-        ),
+        archive_links_html + weekly_content_html,
         "weekly",
         path_prefix=path_prefix,
     )
