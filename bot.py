@@ -2435,27 +2435,131 @@ def site_shell(
     .spotlight-strip {{
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(240px, 1fr);
-      gap: 12px;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding: 2px 0 6px;
+      scrollbar-width: thin;
     }}
-    .spotlight-strip .card {{
-      margin: 0;
+    .spotlight-card {{
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 48px;
+      grid-template-rows: auto auto auto;
+      gap: 7px 9px;
+      align-items: start;
+      min-height: 118px;
+      max-height: 118px;
+      padding: 12px;
+      border: 1px solid #173b68;
+      border-radius: 12px;
       background: #071d38;
-      border-color: #12345f;
       color: #fff;
+      box-shadow: 0 10px 22px rgba(7, 29, 56, 0.18);
     }}
-    .spotlight-strip .card a,
-    .spotlight-strip .card h2 a {{
-      color: #fff;
-    }}
-    .spotlight-strip .meta span,
-    .spotlight-strip pre,
-    .spotlight-strip .badge {{
+    .spotlight-avatar {{
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
       background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.12);
+      object-fit: cover;
+    }}
+    .spotlight-main {{
+      min-width: 0;
+    }}
+    .spotlight-owner {{
+      display: block;
+      margin-bottom: 2px;
+      color: rgba(255,255,255,0.68);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .spotlight-title {{
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.24;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }}
+    .spotlight-title:hover {{
+      color: #fff;
+    }}
+    .spotlight-score {{
+      justify-self: end;
+      display: inline-grid;
+      place-items: center;
+      min-width: 42px;
+      min-height: 42px;
+      padding: 5px 7px;
+      border-radius: 10px;
+      background: #dff8ea;
+      color: #078243;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+    }}
+    .spotlight-score small {{
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      font-weight: 900;
+    }}
+    .spotlight-meta {{
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+    }}
+    .spotlight-meta span {{
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }}
+    .spotlight-tags {{
+      grid-column: 1 / span 2;
+      display: flex;
+      gap: 5px;
+      min-width: 0;
+      overflow: hidden;
+    }}
+    .spotlight-tag {{
+      display: inline-flex;
+      align-items: center;
+      max-width: 92px;
+      padding: 4px 7px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 7px;
+      background: rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.86);
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .spotlight-link {{
+      grid-column: 3;
+      justify-self: end;
+      align-self: end;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
     }}
     .mobile-segment {{
       display: none;
@@ -2632,7 +2736,15 @@ def site_shell(
         min-width: 0;
       }}
       .spotlight-strip {{
-        grid-auto-columns: minmax(170px, 74vw);
+        grid-auto-columns: minmax(220px, 72vw);
+      }}
+      .spotlight-card {{
+        min-height: 112px;
+        max-height: 112px;
+        padding: 11px;
+      }}
+      .spotlight-title {{
+        font-size: 14px;
       }}
       .card {{
         padding: 16px 14px;
@@ -4094,6 +4206,54 @@ def render_repo_card(
     """
 
 
+def render_spotlight_card(
+    item: dict[str, Any],
+    review_state: str,
+    path_prefix: str = ".",
+) -> str:
+    sent_at = escape(str(item.get("_display_time") or ""))
+    full_name_raw = str(item.get("full_name") or "")
+    full_name = escape(full_name_raw)
+    html_url = escape(str(item.get("html_url") or ""))
+    language = escape(str(item.get("language") or "N/A"))
+    owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
+    owner_login = escape(owner_login_raw)
+    owner_html_url = escape(owner_html_url_raw)
+    owner_avatar_url = escape(owner_avatar_url_raw)
+    score_value = item.get("best_score", item.get("score", 0))
+    try:
+        score_label = str(int(round(float(score_value))))
+    except (TypeError, ValueError):
+        score_label = escape(str(score_value or 0))
+    tags = [str(topic) for topic in extract_tags(item)[:2]]
+    tag_html = "".join(
+        f'<span class="spotlight-tag">#{escape(tag)}</span>'
+        for tag in tags
+    )
+    if review_state:
+        tag_html += f'<span class="spotlight-tag">状態 {escape(review_state_label(review_state))}</span>'
+    details_href = repo_detail_href(full_name_raw, path_prefix)
+    return f"""
+    <article class="spotlight-card">
+      <a href="{owner_html_url}" target="_blank" rel="noreferrer" aria-label="{owner_login}">
+        <img class="spotlight-avatar" src="{owner_avatar_url}" alt="{owner_login}">
+      </a>
+      <div class="spotlight-main">
+        <a class="spotlight-owner" href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
+        <a class="spotlight-title" href="{details_href}">{full_name}</a>
+      </div>
+      <div class="spotlight-score">{score_label}<small>スコア</small></div>
+      <div class="spotlight-meta">
+        <span>★ stars {int(item.get("stars") or 0)}</span>
+        <span>● {language}</span>
+        {f'<span>◷ {sent_at}</span>' if sent_at else ''}
+      </div>
+      <div class="spotlight-tags">{tag_html}</div>
+      <a class="spotlight-link" href="{details_href}">詳細</a>
+    </article>
+    """
+
+
 def build_operations_summary_html(path_prefix: str = ".") -> str:
     state = load_state()
     run_status = str(state.get("last_run_status") or "unknown").strip() or "unknown"
@@ -4234,7 +4394,7 @@ def render_history_site() -> None:
         item for item in history if is_low_star_high_score(item)
     ][: int(settings["limit"])]
     low_star_cards = "".join(
-        render_repo_card(
+        render_spotlight_card(
             item,
             normalize_review_state(review_states.get(item.get("full_name"))),
         )

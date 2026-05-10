@@ -1159,27 +1159,131 @@
     .spotlight-strip {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(240px, 1fr);
-      gap: 12px;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding: 2px 0 6px;
+      scrollbar-width: thin;
     }
-    .spotlight-strip .card {
-      margin: 0;
+    .spotlight-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 48px;
+      grid-template-rows: auto auto auto;
+      gap: 7px 9px;
+      align-items: start;
+      min-height: 118px;
+      max-height: 118px;
+      padding: 12px;
+      border: 1px solid #173b68;
+      border-radius: 12px;
       background: #071d38;
-      border-color: #12345f;
       color: #fff;
+      box-shadow: 0 10px 22px rgba(7, 29, 56, 0.18);
     }
-    .spotlight-strip .card a,
-    .spotlight-strip .card h2 a {
-      color: #fff;
-    }
-    .spotlight-strip .meta span,
-    .spotlight-strip pre,
-    .spotlight-strip .badge {
+    .spotlight-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
       background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.12);
+      object-fit: cover;
+    }
+    .spotlight-main {
+      min-width: 0;
+    }
+    .spotlight-owner {
+      display: block;
+      margin-bottom: 2px;
+      color: rgba(255,255,255,0.68);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .spotlight-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.24;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+    .spotlight-title:hover {
+      color: #fff;
+    }
+    .spotlight-score {
+      justify-self: end;
+      display: inline-grid;
+      place-items: center;
+      min-width: 42px;
+      min-height: 42px;
+      padding: 5px 7px;
+      border-radius: 10px;
+      background: #dff8ea;
+      color: #078243;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+    }
+    .spotlight-score small {
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      font-weight: 900;
+    }
+    .spotlight-meta {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .spotlight-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }
+    .spotlight-tags {
+      grid-column: 1 / span 2;
+      display: flex;
+      gap: 5px;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .spotlight-tag {
+      display: inline-flex;
+      align-items: center;
+      max-width: 92px;
+      padding: 4px 7px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 7px;
+      background: rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.86);
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .spotlight-link {
+      grid-column: 3;
+      justify-self: end;
+      align-self: end;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
     }
     .mobile-segment {
       display: none;
@@ -1356,7 +1460,15 @@
         min-width: 0;
       }
       .spotlight-strip {
-        grid-auto-columns: minmax(170px, 74vw);
+        grid-auto-columns: minmax(220px, 72vw);
+      }
+      .spotlight-card {
+        min-height: 112px;
+        max-height: 112px;
+        padding: 11px;
+      }
+      .spotlight-title {
+        font-size: 14px;
       }
       .card {
         padding: 16px 14px;
@@ -1654,139 +1766,94 @@
       </div>
       <div class="spotlight-strip">
         
-    <article class="card" data-bucket="evening" data-name="smaramwbc/statewave" data-language="python" data-tags="agents ai-agents ai-memory context-engineering developer-tools embedding fastapi llm mcp memory-runtime open-source pgvector postgres python rag semantic-search ai memory" data-stars="211" data-score="86.55" data-sent-at="2026-05-10T11:57:52.991460+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">87<small>スコア</small></div>
-      <div class="card-header">
-        
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/145447586?v=4" alt="smaramwbc">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/smaramwbc" target="_blank" rel="noreferrer">@smaramwbc</a>
-          </div>
-          <h2><a href="https://github.com/smaramwbc/statewave" target="_blank" rel="noreferrer">smaramwbc/statewave</a></h2>
-        </div>
+    <article class="spotlight-card">
+      <a href="https://github.com/smaramwbc" target="_blank" rel="noreferrer" aria-label="smaramwbc">
+        <img class="spotlight-avatar" src="https://avatars.githubusercontent.com/u/145447586?v=4" alt="smaramwbc">
+      </a>
+      <div class="spotlight-main">
+        <a class="spotlight-owner" href="https://github.com/smaramwbc" target="_blank" rel="noreferrer">@smaramwbc</a>
+        <a class="spotlight-title" href="./repos/smaramwbc-statewave-f03e818d.html">smaramwbc/statewave</a>
       </div>
-      <div class="meta">
-        <span class="meta-stars">stars 211</span>
-        <span class="meta-language">Python</span>
-        <span class="date-label">2026-05-10 20:57</span>
-        
+      <div class="spotlight-score">87<small>スコア</small></div>
+      <div class="spotlight-meta">
+        <span>★ stars 211</span>
+        <span>● Python</span>
+        <span>◷ 2026-05-10 20:57</span>
       </div>
-      <p class="description">Open-source memory runtime for AI agents. Durable, structured context with provenance — so your AI stops forgetting across sessions. Self...</p>
-      <p class="pick-reason">選定理由: AIエージェント用の永続メモリランタイムが新鮮</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agents</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-memory</span><span class="badge topic">#context-engineering</span><span class="badge topic">#developer-tools</span><span class="badge topic">#embedding</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/smaramwbc-statewave-f03e818d.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/smaramwbc/statewave" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      <div class="spotlight-tags"><span class="spotlight-tag">#agents</span><span class="spotlight-tag">#ai-agents</span><span class="spotlight-tag">状態 未確認</span></div>
+      <a class="spotlight-link" href="./repos/smaramwbc-statewave-f03e818d.html">詳細</a>
     </article>
     
-    <article class="card" data-bucket="morning" data-name="chojs23/concord" data-language="rust" data-tags="cli discord ratatui rust terminal tui" data-stars="129" data-score="83.25" data-sent-at="2026-05-10T04:04:05.390545+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">83<small>スコア</small></div>
-      <div class="card-header">
-        
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/55792153?v=4" alt="chojs23">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/chojs23" target="_blank" rel="noreferrer">@chojs23</a>
-          </div>
-          <h2><a href="https://github.com/chojs23/concord" target="_blank" rel="noreferrer">chojs23/concord</a></h2>
-        </div>
+    <article class="spotlight-card">
+      <a href="https://github.com/chojs23" target="_blank" rel="noreferrer" aria-label="chojs23">
+        <img class="spotlight-avatar" src="https://avatars.githubusercontent.com/u/55792153?v=4" alt="chojs23">
+      </a>
+      <div class="spotlight-main">
+        <a class="spotlight-owner" href="https://github.com/chojs23" target="_blank" rel="noreferrer">@chojs23</a>
+        <a class="spotlight-title" href="./repos/chojs23-concord-dd487b52.html">chojs23/concord</a>
       </div>
-      <div class="meta">
-        <span class="meta-stars">stars 129</span>
-        <span class="meta-language">Rust</span>
-        <span class="date-label">2026-05-10 13:04</span>
-        
+      <div class="spotlight-score">83<small>スコア</small></div>
+      <div class="spotlight-meta">
+        <span>★ stars 129</span>
+        <span>● Rust</span>
+        <span>◷ 2026-05-10 13:04</span>
       </div>
-      <p class="description">A feature rich terminal client for Discord</p>
-      <p class="pick-reason">選定理由: ターミナルで本格的なDiscord体験を実現するRust</p>
-      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#discord</span><span class="badge topic">#ratatui</span><span class="badge topic">#rust</span><span class="badge topic">#terminal</span><span class="badge topic">#tui</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/chojs23-concord-dd487b52.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/chojs23/concord" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      <div class="spotlight-tags"><span class="spotlight-tag">#cli</span><span class="spotlight-tag">#discord</span><span class="spotlight-tag">状態 未確認</span></div>
+      <a class="spotlight-link" href="./repos/chojs23-concord-dd487b52.html">詳細</a>
     </article>
     
-    <article class="card" data-bucket="evening" data-name="beenuar/aisoc" data-language="python" data-tags="ai-security alert-triage cybersecurity detection-engineering docker fastapi incident-response mit-license mitre-attack nextjs open-source purple-team python security-operations self-hosted siem soar soc threat-detection threat-intelligence oss" data-stars="221" data-score="78.35" data-sent-at="2026-05-09T11:56:24.805651+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">78<small>スコア</small></div>
-      <div class="card-header">
-        
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/19245630?v=4" alt="beenuar">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/beenuar" target="_blank" rel="noreferrer">@beenuar</a>
-          </div>
-          <h2><a href="https://github.com/beenuar/AiSOC" target="_blank" rel="noreferrer">beenuar/AiSOC</a></h2>
-        </div>
+    <article class="spotlight-card">
+      <a href="https://github.com/beenuar" target="_blank" rel="noreferrer" aria-label="beenuar">
+        <img class="spotlight-avatar" src="https://avatars.githubusercontent.com/u/19245630?v=4" alt="beenuar">
+      </a>
+      <div class="spotlight-main">
+        <a class="spotlight-owner" href="https://github.com/beenuar" target="_blank" rel="noreferrer">@beenuar</a>
+        <a class="spotlight-title" href="./repos/beenuar-aisoc-a52b1f2b.html">beenuar/AiSOC</a>
       </div>
-      <div class="meta">
-        <span class="meta-stars">stars 221</span>
-        <span class="meta-language">Python</span>
-        <span class="date-label">2026-05-09 20:56</span>
-        
+      <div class="spotlight-score">78<small>スコア</small></div>
+      <div class="spotlight-meta">
+        <span>★ stars 221</span>
+        <span>● Python</span>
+        <span>◷ 2026-05-09 20:56</span>
       </div>
-      <p class="description">Open-source AI-powered Security Operations Center — alert fusion, purple-team drills, agent-assisted triage, MITRE ATT&amp;CK investigation....</p>
-      <p class="pick-reason">選定理由: セキュリティ運用のAIエージェントを完全自前運用できる</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-security</span><span class="badge topic">#alert-triage</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#detection-engineering</span><span class="badge topic">#docker</span><span class="badge topic">#fastapi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/beenuar-aisoc-a52b1f2b.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/beenuar/AiSOC" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      <div class="spotlight-tags"><span class="spotlight-tag">#ai-security</span><span class="spotlight-tag">#alert-triage</span><span class="spotlight-tag">状態 未確認</span></div>
+      <a class="spotlight-link" href="./repos/beenuar-aisoc-a52b1f2b.html">詳細</a>
     </article>
     
-    <article class="card" data-bucket="evening" data-name="mvanhorn/cli-printing-press" data-language="go" data-tags="ai-agents cli cli-generator developer-tools golang openapi" data-stars="866" data-score="110.89" data-sent-at="2026-05-09T11:56:24.805651+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">111<small>スコア</small></div>
-      <div class="card-header">
-        
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
-          </div>
-          <h2><a href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">mvanhorn/cli-printing-press</a></h2>
-        </div>
+    <article class="spotlight-card">
+      <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer" aria-label="mvanhorn">
+        <img class="spotlight-avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
+      </a>
+      <div class="spotlight-main">
+        <a class="spotlight-owner" href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
+        <a class="spotlight-title" href="./repos/mvanhorn-cli-printing-press-bae88423.html">mvanhorn/cli-printing-press</a>
       </div>
-      <div class="meta">
-        <span class="meta-stars">stars 866</span>
-        <span class="meta-language">Go</span>
-        <span class="date-label">2026-05-09 20:56</span>
-        
+      <div class="spotlight-score">111<small>スコア</small></div>
+      <div class="spotlight-meta">
+        <span>★ stars 866</span>
+        <span>● Go</span>
+        <span>◷ 2026-05-09 20:56</span>
       </div>
-      <p class="description">Every API has a secret identity. This finds it, absorbs every feature from every competing tool, then builds the GOAT CLI — designed for...</p>
-      <p class="pick-reason">選定理由: APIから最強CLIを自動生成する尖ったツール</p>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#cli</span><span class="badge topic">#cli-generator</span><span class="badge topic">#developer-tools</span><span class="badge topic">#golang</span><span class="badge topic">#openapi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/mvanhorn-cli-printing-press-bae88423.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      <div class="spotlight-tags"><span class="spotlight-tag">#ai-agents</span><span class="spotlight-tag">#cli</span><span class="spotlight-tag">状態 未確認</span></div>
+      <a class="spotlight-link" href="./repos/mvanhorn-cli-printing-press-bae88423.html">詳細</a>
     </article>
     
-    <article class="card" data-bucket="morning" data-name="lessweb/deepcode-cli" data-language="typescript" data-tags="deepseek cli" data-stars="419" data-score="72.70" data-sent-at="2026-05-09T03:48:04.134874+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">73<small>スコア</small></div>
-      <div class="card-header">
-        
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/118287711?v=4" alt="lessweb">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/lessweb" target="_blank" rel="noreferrer">@lessweb</a>
-          </div>
-          <h2><a href="https://github.com/lessweb/deepcode-cli" target="_blank" rel="noreferrer">lessweb/deepcode-cli</a></h2>
-        </div>
+    <article class="spotlight-card">
+      <a href="https://github.com/lessweb" target="_blank" rel="noreferrer" aria-label="lessweb">
+        <img class="spotlight-avatar" src="https://avatars.githubusercontent.com/u/118287711?v=4" alt="lessweb">
+      </a>
+      <div class="spotlight-main">
+        <a class="spotlight-owner" href="https://github.com/lessweb" target="_blank" rel="noreferrer">@lessweb</a>
+        <a class="spotlight-title" href="./repos/lessweb-deepcode-cli-839aa5a6.html">lessweb/deepcode-cli</a>
       </div>
-      <div class="meta">
-        <span class="meta-stars">stars 419</span>
-        <span class="meta-language">TypeScript</span>
-        <span class="date-label">2026-05-09 12:48</span>
-        
+      <div class="spotlight-score">73<small>スコア</small></div>
+      <div class="spotlight-meta">
+        <span>★ stars 419</span>
+        <span>● TypeScript</span>
+        <span>◷ 2026-05-09 12:48</span>
       </div>
-      
-      <p class="pick-reason">選定理由: DeepSeek V4向けCLIコーディングアシスタント</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#deepseek</span><span class="badge topic">#cli</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/lessweb-deepcode-cli-839aa5a6.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/lessweb/deepcode-cli" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      <div class="spotlight-tags"><span class="spotlight-tag">#deepseek</span><span class="spotlight-tag">#cli</span><span class="spotlight-tag">状態 未確認</span></div>
+      <a class="spotlight-link" href="./repos/lessweb-deepcode-cli-839aa5a6.html">詳細</a>
     </article>
     
       </div>
@@ -1893,7 +1960,7 @@
         <span class="date-label">2026-05-10 20:57</span>
         
       </div>
-      <p class="description">ScienceClaw is a personal research assistant built with LangChain DeepAgents and AIO Sandbox infrastructure, adopting a completely new ar...</p>
+      <p class="description">プライベート研究アシスタント 科学文献検索からデータ分析、レポート生成までを自律実行。 LangChain DeepAgentsとAIO Sandboxで全工程を可視化・隔離。 研究者やデータサイエンティスト、学生に最適。</p>
       <p class="pick-reason">選定理由: 研究の自動化をDocker完全分離で実現</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#bioinformatics</span><span class="badge topic">#data-analysis</span><span class="badge topic">#docker</span><span class="badge topic">#drug-discovery</span><span class="badge topic">#fastapi</span></div>
       <div class="detail-links primary-links">
@@ -1920,7 +1987,7 @@
         <span class="date-label">2026-05-10 20:57</span>
         
       </div>
-      <p class="description">Aggregate and browse AI coding agent sessions (Claude Code, Codex, Gemini CLI, etc.) in one place. Desktop app, self-hosted server, or Do...</p>
+      <p class="description">1行目: AIコーディングエージェントを統合管理 2行目: Claude CodeやCodex CLIなど複数のAIエージェントのセッションを一箇所で集約・閲覧できる 3行目: Tauri + Next.js製のデスクトップアプリで、Dockerやセルフホストサーバーとしても動作 4行目: 複数のAIコーディングツールを使い分けている開発者やチーム</p>
       <p class="pick-reason">選定理由: 複数AIコーディングエージェントのセッションを一元管理</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#acp</span><span class="badge topic">#agent</span><span class="badge topic">#claude-code</span><span class="badge topic">#code-generation</span><span class="badge topic">#codex</span><span class="badge topic">#gemini-cli</span></div>
       <div class="detail-links primary-links">
@@ -1947,7 +2014,7 @@
         <span class="date-label">2026-05-10 20:57</span>
         
       </div>
-      <p class="description">Open-source memory runtime for AI agents. Durable, structured context with provenance — so your AI stops forgetting across sessions. Self...</p>
+      <p class="description">セッションを超えてAIが記憶する AIエージェントのコンテキストを構造化して永続化するランタイム Postgres上でセルフホスト可能で、GPU不要な点が実用的 サポートエージェントや長期記憶が必要なAI開発者向け</p>
       <p class="pick-reason">選定理由: AIエージェント用の永続メモリランタイムが新鮮</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agents</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-memory</span><span class="badge topic">#context-engineering</span><span class="badge topic">#developer-tools</span><span class="badge topic">#embedding</span></div>
       <div class="detail-links primary-links">
@@ -1974,7 +2041,7 @@
         <span class="date-label">2026-05-10 13:04</span>
         
       </div>
-      <p class="description">A feature rich terminal client for Discord</p>
+      <p class="description">ターミナルでDiscordがフル機能動作 画像プレビューや通知など主要機能を備えたDiscord TUIクライアント Rust + ratatuiで構築、Kitty/Sixel/iTerm2などの画像プロトコルに対応 CLI好きやターミナル環境を統一したいDiscordユーザー向け</p>
       <p class="pick-reason">選定理由: ターミナルで本格的なDiscord体験を実現するRust</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#discord</span><span class="badge topic">#ratatui</span><span class="badge topic">#rust</span><span class="badge topic">#terminal</span><span class="badge topic">#tui</span></div>
       <div class="detail-links primary-links">
@@ -2001,7 +2068,7 @@
         <span class="date-label">2026-05-10 13:04</span>
         
       </div>
-      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <p class="description">会話履歴をそのまま保存するAIメモリ LLMのセッション間で会話やプロジェクト知識を保持・検索できる ChromaDBをデフォルトとし、バックエンドを差し替え可能な設計 Claude CodeやGemini CLIユーザー、ローカルLLM派に刺さる</p>
       <p class="pick-reason">選定理由: 5万超スターのローカルAIメモリシステムが急伸中</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
       <div class="detail-links primary-links">
@@ -2028,7 +2095,7 @@
         <span class="date-label">2026-05-10 13:04</span>
         
       </div>
-      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
+      <p class="description">何が面白いか: トークン消費を65%削減 用途: Claude Codeの出力を原始人語に変換し、トークン使用量を減らす 技術的見どころ: プロンプトエンジニアリングで出力トークンを削減、技術的正確性は維持 刺さる人: APIコスト削減したいLLMユーザー、Claude Codeヘビーユーザー</p>
       <p class="pick-reason">選定理由: 話題沸騰中、トークン消費を劇的に削減</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
       <div class="detail-links primary-links">
@@ -2059,7 +2126,7 @@
         <span class="date-label">2026-05-09 20:56</span>
         
       </div>
-      <p class="description">Open-source AI-powered Security Operations Center — alert fusion, purple-team drills, agent-assisted triage, MITRE ATT&amp;CK investigation....</p>
+      <p class="description">AI駆動のSOCを自前運用 セキュリティアラートの相関分析、AI調査、対応を一貫して行うOSSスタック LangGraphによるエージェントの全判断過程が記録・再生可能 自社インフラで完結したいセキュリティエンジニアやSOC運用者向け</p>
       <p class="pick-reason">選定理由: セキュリティ運用のAIエージェントを完全自前運用できる</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-security</span><span class="badge topic">#alert-triage</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#detection-engineering</span><span class="badge topic">#docker</span><span class="badge topic">#fastapi</span></div>
       <div class="detail-links primary-links">
@@ -2086,7 +2153,7 @@
         <span class="date-label">2026-05-09 20:56</span>
         
       </div>
-      <p class="description">OfficeCLI is the first and best Office suite purpose-built for AI agents to read, edit, and automate Word, Excel, and PowerPoint files. F...</p>
+      <p class="description">AIエージェントがOffice文書を直接操作 Word/Excel/PowerPointの読み取り・編集・作成をCLI1行で実行可能 単一バイナリで動作し、Office本体のインストールが不要 AIエージェント開発者や文書自動化に携わるエンジニア向け</p>
       <p class="pick-reason">選定理由: AIエージェント専用に設計された初のOffice CLI</p>
       <div class="badge-row"><span class="badge">C#</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#cli</span><span class="badge topic">#office</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
       <div class="detail-links primary-links">
@@ -2113,7 +2180,7 @@
         <span class="date-label">2026-05-09 20:56</span>
         
       </div>
-      <p class="description">Every API has a secret identity. This finds it, absorbs every feature from every competing tool, then builds the GOAT CLI — designed for...</p>
+      <p class="description">AIエージェント向けCLIを自動生成 APIの公式ドキュメントや競合ツールを解析し、SQLite同期・オフライン検索・複合コマンドを持つGo製CLIとMCPサーバーを出力する OpenAPI仕様がなくても、WebサイトのスクレイピングからCLIを生成可能 AIエージェント開発者や、APIのCLIを効率的に作りたいGo開発者に刺さる</p>
       <p class="pick-reason">選定理由: APIから最強CLIを自動生成する尖ったツール</p>
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#cli</span><span class="badge topic">#cli-generator</span><span class="badge topic">#developer-tools</span><span class="badge topic">#golang</span><span class="badge topic">#openapi</span></div>
       <div class="detail-links primary-links">
@@ -2140,7 +2207,7 @@
         <span class="date-label">2026-05-09 12:48</span>
         
       </div>
-      <p class="description">DeepSeek API → Codex CLI 兼容代理（Responses API 翻译 + 思考模式 + 工具调用 + MiniMax 视觉路由）</p>
+      <p class="description">Codex CLIでDeepSeekを使う橋渡し Responses APIをChat APIに変換し、思考モードやツール呼び出しを維持したままDeepSeekに接続できるプロキシ Rust製で13エンドポイント、9ツールタイプ、11ストリームイベントをカバーするプロトコル翻訳が技術的な見どころ Codex CLIユーザーでDeepSeekを活用したい開発者や、ローカルでファイル検索・MCP実行を試したい人に刺さる</p>
       <p class="pick-reason">選定理由: DeepSeekをCodex CLIで使えるプロキシ</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#deepseek</span><span class="badge topic">#codexcli</span></div>
       <div class="detail-links primary-links">
@@ -2167,7 +2234,7 @@
         <span class="date-label">2026-05-09 12:48</span>
         
       </div>
-      <p class="description">Like htop, but for AI coding agents. Monitor Claude Code &amp; Codex CLI sessions, tokens, context window, rate limits, and ports in real-time.</p>
+      <p class="description">AIエージェントをhtopで監視 複数のClaude CodeやCodex CLIセッションのトークン使用量、コンテキストウィンドウ、レート制限、ポートをリアルタイム可視化。 Rust製TUIで、tmux連携によるセッションジャンプや12テーマ、カラーユニバーサルデザイン対応。 複数エージェントを並行運用する開発者や、レート制限・子プロセス管理に課題を感じるAIコーディングユーザーに。</p>
       <p class="pick-reason">選定理由: AIエージェントの動作をhtop風に可視化する新ツール</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding-agent</span><span class="badge topic">#btop</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span></div>
       <div class="detail-links primary-links">
@@ -2194,7 +2261,7 @@
         <span class="date-label">2026-05-09 12:48</span>
         
       </div>
-      
+      <p class="description">DeepSeek V4専用のAIコーディングCLI ターミナル上で深い思考と推論強度を制御しながらコード生成 エージェントスキル拡張とVSCodeプラグインと設定共有 CLI好きでDeepSeekユーザーに刺さる</p>
       <p class="pick-reason">選定理由: DeepSeek V4向けCLIコーディングアシスタント</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#deepseek</span><span class="badge topic">#cli</span></div>
       <div class="detail-links primary-links">

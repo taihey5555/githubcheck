@@ -1159,27 +1159,131 @@
     .spotlight-strip {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(240px, 1fr);
-      gap: 12px;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding: 2px 0 6px;
+      scrollbar-width: thin;
     }
-    .spotlight-strip .card {
-      margin: 0;
+    .spotlight-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) 48px;
+      grid-template-rows: auto auto auto;
+      gap: 7px 9px;
+      align-items: start;
+      min-height: 118px;
+      max-height: 118px;
+      padding: 12px;
+      border: 1px solid #173b68;
+      border-radius: 12px;
       background: #071d38;
-      border-color: #12345f;
       color: #fff;
+      box-shadow: 0 10px 22px rgba(7, 29, 56, 0.18);
     }
-    .spotlight-strip .card a,
-    .spotlight-strip .card h2 a {
-      color: #fff;
-    }
-    .spotlight-strip .meta span,
-    .spotlight-strip pre,
-    .spotlight-strip .badge {
+    .spotlight-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
       background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.12);
+      object-fit: cover;
+    }
+    .spotlight-main {
+      min-width: 0;
+    }
+    .spotlight-owner {
+      display: block;
+      margin-bottom: 2px;
+      color: rgba(255,255,255,0.68);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .spotlight-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.24;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+    .spotlight-title:hover {
+      color: #fff;
+    }
+    .spotlight-score {
+      justify-self: end;
+      display: inline-grid;
+      place-items: center;
+      min-width: 42px;
+      min-height: 42px;
+      padding: 5px 7px;
+      border-radius: 10px;
+      background: #dff8ea;
+      color: #078243;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+    }
+    .spotlight-score small {
+      display: block;
+      margin-top: 3px;
+      font-size: 9px;
+      font-weight: 900;
+    }
+    .spotlight-meta {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .spotlight-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }
+    .spotlight-tags {
+      grid-column: 1 / span 2;
+      display: flex;
+      gap: 5px;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .spotlight-tag {
+      display: inline-flex;
+      align-items: center;
+      max-width: 92px;
+      padding: 4px 7px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 7px;
+      background: rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.86);
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .spotlight-link {
+      grid-column: 3;
+      justify-self: end;
+      align-self: end;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
     }
     .mobile-segment {
       display: none;
@@ -1356,7 +1460,15 @@
         min-width: 0;
       }
       .spotlight-strip {
-        grid-auto-columns: minmax(170px, 74vw);
+        grid-auto-columns: minmax(220px, 72vw);
+      }
+      .spotlight-card {
+        min-height: 112px;
+        max-height: 112px;
+        padding: 11px;
+      }
+      .spotlight-title {
+        font-size: 14px;
       }
       .card {
         padding: 16px 14px;
@@ -1622,613 +1734,6 @@
       <div>
         <p class="hero-kicker">Weekly summary</p>
         <h2>週間まとめ</h2>
-<<<<<<< HEAD
-        <p class="hero-copy">5/4 - 5/9 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
-      </div>
-    </section>
-    <section class="stats-grid">
-      <article class="stat-card"><strong>39</strong><span>今週のリポジトリ数</span></article>
-      <article class="stat-card"><strong>39</strong><span>通知総数</span></article>
-      <article class="stat-card"><strong>92.7</strong><span>平均 score</span></article>
-      <article class="stat-card compact"><div class="language-pills"><span class="language-pill">Python <b>11</b></span><span class="language-pill">TypeScript <b>10</b></span><span class="language-pill">Rust <b>7</b></span><span class="language-pill">Go <b>3</b></span></div><span>言語分布</span></article>
-      <article class="stat-card"><strong class="inline-links"><a class="badge" href="./index.html?review_state=unseen">未確認 10</a></strong><span>状態の分布</span></article>
-    </section>
-    <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="evening" data-name="jcodesmore/ai-website-cloner-template" data-language="typescript" data-tags="ai ai-agents ai-tools automation boilerplate claude claude-code clone developer-tools nextjs react reverse-engineering shadcn-ui skills tailwindcss template typescript web-scraping website-clone" data-stars="14135" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="scraper_downloader" data-gray-risk="allow">
-      <div class="card-score">826<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">1</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/182581310?v=4" alt="JCodesMore">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/JCodesMore" target="_blank" rel="noreferrer">@JCodesMore</a>
-          </div>
-          <h2><a href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">JCodesMore/ai-website-cloner-template</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 14135</span>
-        <span class="meta-language">TypeScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Clone any website with one command using AI coding agents</p>
-      <p class="pick-reason">選定理由: AIエージェントでサイト丸ごとクローン可能なテンプレート</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top2" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph leiden openclaw rag skills tree-sitter" data-stars="44541" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">214<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">2</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
-          </div>
-          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 44541</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
-      <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top3" data-bucket="morning" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens" data-stars="57130" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">148<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">3</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/JuliusBrussee" target="_blank" rel="noreferrer">@JuliusBrussee</a>
-          </div>
-          <h2><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">JuliusBrussee/caveman</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 57130</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
-      <p class="pick-reason">選定理由: 話題沸騰中、トークン消費を劇的に削減</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="mvanhorn/cli-printing-press" data-language="go" data-tags="ai-agents cli cli-generator developer-tools golang openapi" data-stars="866" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">111<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
-          </div>
-          <h2><a href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">mvanhorn/cli-printing-press</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 866</span>
-        <span class="meta-language">Go</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Every API has a secret identity. This finds it, absorbs every feature from every competing tool, then builds the GOAT CLI — designed for...</p>
-      <p class="pick-reason">選定理由: APIから最強CLIを自動生成する尖ったツール</p>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#cli</span><span class="badge topic">#cli-generator</span><span class="badge topic">#developer-tools</span><span class="badge topic">#golang</span><span class="badge topic">#openapi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/mvanhorn-cli-printing-press-bae88423.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="eugene1g/agent-safehouse" data-language="shell" data-tags="ai-agents claude-code llm macos sandbox security" data-stars="1736" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
-      <div class="card-score">104<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/147496?v=4" alt="eugene1g">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/eugene1g" target="_blank" rel="noreferrer">@eugene1g</a>
-          </div>
-          <h2><a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">eugene1g/agent-safehouse</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 1736</span>
-        <span class="meta-language">Shell</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
-      <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
-      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="19033" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">99<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/jackwener" target="_blank" rel="noreferrer">@jackwener</a>
-          </div>
-          <h2><a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">jackwener/OpenCLI</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 19033</span>
-        <span class="meta-language">JavaScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
-      <p class="pick-reason">選定理由: サイトやツールをCLI化するAIエージェント向けハブ</p>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="evening" data-name="jcodesmore/ai-website-cloner-template" data-language="typescript" data-tags="ai ai-agents ai-tools automation boilerplate claude claude-code clone developer-tools nextjs react reverse-engineering shadcn-ui skills tailwindcss template typescript web-scraping website-clone" data-stars="14135" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="scraper_downloader" data-gray-risk="allow">
-      <div class="card-score">826<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">1</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/182581310?v=4" alt="JCodesMore">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/JCodesMore" target="_blank" rel="noreferrer">@JCodesMore</a>
-          </div>
-          <h2><a href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">JCodesMore/ai-website-cloner-template</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 14135</span>
-        <span class="meta-language">TypeScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Clone any website with one command using AI coding agents</p>
-      <p class="pick-reason">選定理由: AIエージェントでサイト丸ごとクローン可能なテンプレート</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#boilerplate</span><span class="badge topic">#claude</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/jcodesmore-ai-website-cloner-template-426ffb2c.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top2" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="antigravity claude-code codex gemini graphrag knowledge-graph leiden openclaw rag skills tree-sitter" data-stars="44541" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">214<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">2</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/safishamsi" target="_blank" rel="noreferrer">@safishamsi</a>
-          </div>
-          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">safishamsi/graphify</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 44541</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts,...</p>
-      <p class="pick-reason">選定理由: コードを知識グラフ化するAIアシスタントスキルが急成長中</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/safishamsi-graphify-07b661d4.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top3" data-bucket="morning" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens" data-stars="57130" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">148<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">3</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/JuliusBrussee" target="_blank" rel="noreferrer">@JuliusBrussee</a>
-          </div>
-          <h2><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">JuliusBrussee/caveman</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 57130</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
-      <p class="pick-reason">選定理由: 話題沸騰中、トークン消費を劇的に削減</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="mvanhorn/cli-printing-press" data-language="go" data-tags="ai-agents cli cli-generator developer-tools golang openapi" data-stars="866" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">111<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
-          </div>
-          <h2><a href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">mvanhorn/cli-printing-press</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 866</span>
-        <span class="meta-language">Go</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Every API has a secret identity. This finds it, absorbs every feature from every competing tool, then builds the GOAT CLI — designed for...</p>
-      <p class="pick-reason">選定理由: APIから最強CLIを自動生成する尖ったツール</p>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#cli</span><span class="badge topic">#cli-generator</span><span class="badge topic">#developer-tools</span><span class="badge topic">#golang</span><span class="badge topic">#openapi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/mvanhorn-cli-printing-press-bae88423.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="eugene1g/agent-safehouse" data-language="shell" data-tags="ai-agents claude-code llm macos sandbox security" data-stars="1736" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
-      <div class="card-score">104<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/147496?v=4" alt="eugene1g">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/eugene1g" target="_blank" rel="noreferrer">@eugene1g</a>
-          </div>
-          <h2><a href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">eugene1g/agent-safehouse</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 1736</span>
-        <span class="meta-language">Shell</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Sandbox your local AI agents so they can read/write only what they need</p>
-      <p class="pick-reason">選定理由: macOSエージェントのファイルアクセスを制限する尖った</p>
-      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#sandbox</span><span class="badge topic">#security</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/eugene1g-agent-safehouse-ca0066b0.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/eugene1g/agent-safehouse" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="javascript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="19033" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">99<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/jackwener" target="_blank" rel="noreferrer">@jackwener</a>
-          </div>
-          <h2><a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">jackwener/OpenCLI</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 19033</span>
-        <span class="meta-language">JavaScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
-      <p class="pick-reason">選定理由: サイトやツールをCLI化するAIエージェント向けハブ</p>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/jackwener-opencli-35cb3df0.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="iofficeai/officecli" data-language="c#" data-tags="agent ai cli office openclaw skills" data-stars="3481" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">93<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">7</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/145246968?v=4" alt="iOfficeAI">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/iOfficeAI" target="_blank" rel="noreferrer">@iOfficeAI</a>
-          </div>
-          <h2><a href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noreferrer">iOfficeAI/OfficeCLI</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 3481</span>
-        <span class="meta-language">C#</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">OfficeCLI is the first and best Office suite purpose-built for AI agents to read, edit, and automate Word, Excel, and PowerPoint files. F...</p>
-      <p class="pick-reason">選定理由: AIエージェント専用に設計された初のOffice CLI</p>
-      <div class="badge-row"><span class="badge">C#</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#cli</span><span class="badge topic">#office</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/iofficeai-officecli-265d1c2f.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python" data-stars="51784" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">84<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">8</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/MemPalace" target="_blank" rel="noreferrer">@MemPalace</a>
-          </div>
-          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">MemPalace/mempalace</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 51784</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
-      <p class="pick-reason">選定理由: 5万超スターのローカルAIメモリシステムが急伸中</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/mempalace-mempalace-1746bed1.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="donchitos/claude-code-game-studios" data-language="shell" data-tags="ai-agents ai-assisted-development anthropic claude claude-code game-design game-development gamedev godot indie-game-dev unity unreal-engine" data-stars="17652" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">84<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">9</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/150119193?v=4" alt="Donchitos">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/Donchitos" target="_blank" rel="noreferrer">@Donchitos</a>
-          </div>
-          <h2><a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">Donchitos/Claude-Code-Game-Studios</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 17652</span>
-        <span class="meta-language">Shell</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
-      <p class="pick-reason">選定理由: Claude Codeを49のAIエージェントでゲーム開</p>
-      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/donchitos-claude-code-game-studios-d94d5818.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="chojs23/concord" data-language="rust" data-tags="cli discord ratatui rust terminal tui" data-stars="129" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">83<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">10</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/55792153?v=4" alt="chojs23">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/chojs23" target="_blank" rel="noreferrer">@chojs23</a>
-          </div>
-          <h2><a href="https://github.com/chojs23/concord" target="_blank" rel="noreferrer">chojs23/concord</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 129</span>
-        <span class="meta-language">Rust</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">A feature rich terminal client for Discord</p>
-      <p class="pick-reason">選定理由: ターミナルで本格的なDiscord体験を実現するRust</p>
-      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#discord</span><span class="badge topic">#ratatui</span><span class="badge topic">#rust</span><span class="badge topic">#terminal</span><span class="badge topic">#tui</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/chojs23-concord-dd487b52.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/chojs23/concord" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    </div></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="morning" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens claudecode" data-stars="57130" data-score="148.02" data-sent-at="2026-05-10T04:04:05.390545+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">148<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">1</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/JuliusBrussee" target="_blank" rel="noreferrer">@JuliusBrussee</a>
-          </div>
-          <h2><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">JuliusBrussee/caveman</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 57130</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
-      <p class="pick-reason">選定理由: 話題沸騰中、トークン消費を劇的に削減</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top2" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python oss" data-stars="51784" data-score="84.37" data-sent-at="2026-05-10T04:04:05.390545+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">84<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">2</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/MemPalace" target="_blank" rel="noreferrer">@MemPalace</a>
-          </div>
-          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">MemPalace/mempalace</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 51784</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
-      <p class="pick-reason">選定理由: 5万超スターのローカルAIメモリシステムが急伸中</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/mempalace-mempalace-1746bed1.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top3" data-bucket="morning" data-name="chojs23/concord" data-language="rust" data-tags="cli discord ratatui rust terminal tui" data-stars="129" data-score="83.25" data-sent-at="2026-05-10T04:04:05.390545+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">83<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">3</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/55792153?v=4" alt="chojs23">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/chojs23" target="_blank" rel="noreferrer">@chojs23</a>
-          </div>
-          <h2><a href="https://github.com/chojs23/concord" target="_blank" rel="noreferrer">chojs23/concord</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 129</span>
-        <span class="meta-language">Rust</span>
-        
-        
-      </div>
-      <p class="description">A feature rich terminal client for Discord</p>
-      <p class="pick-reason">選定理由: ターミナルで本格的なDiscord体験を実現するRust</p>
-      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#discord</span><span class="badge topic">#ratatui</span><span class="badge topic">#rust</span><span class="badge topic">#terminal</span><span class="badge topic">#tui</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/chojs23-concord-dd487b52.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/chojs23/concord" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="mvanhorn/cli-printing-press" data-language="go" data-tags="ai-agents cli cli-generator developer-tools golang openapi" data-stars="866" data-score="110.89" data-sent-at="2026-05-09T11:56:24.805651+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">111<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
-          </div>
-          <h2><a href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">mvanhorn/cli-printing-press</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 866</span>
-        <span class="meta-language">Go</span>
-        
-        
-      </div>
-      <p class="description">Every API has a secret identity. This finds it, absorbs every feature from every competing tool, then builds the GOAT CLI — designed for...</p>
-      <p class="pick-reason">選定理由: APIから最強CLIを自動生成する尖ったツール</p>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#cli</span><span class="badge topic">#cli-generator</span><span class="badge topic">#developer-tools</span><span class="badge topic">#golang</span><span class="badge topic">#openapi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/mvanhorn-cli-printing-press-bae88423.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/mvanhorn/cli-printing-press" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="iofficeai/officecli" data-language="c#" data-tags="agent ai cli office openclaw skills officecli aiエージェント" data-stars="3481" data-score="93.39" data-sent-at="2026-05-09T11:56:24.805651+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">93<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/145246968?v=4" alt="iOfficeAI">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/iOfficeAI" target="_blank" rel="noreferrer">@iOfficeAI</a>
-          </div>
-          <h2><a href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noreferrer">iOfficeAI/OfficeCLI</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 3481</span>
-        <span class="meta-language">C#</span>
-        
-        
-      </div>
-      <p class="description">OfficeCLI is the first and best Office suite purpose-built for AI agents to read, edit, and automate Word, Excel, and PowerPoint files. F...</p>
-      <p class="pick-reason">選定理由: AIエージェント専用に設計された初のOffice CLI</p>
-      <div class="badge-row"><span class="badge">C#</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#cli</span><span class="badge topic">#office</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/iofficeai-officecli-265d1c2f.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="beenuar/aisoc" data-language="python" data-tags="ai-security alert-triage cybersecurity detection-engineering docker fastapi incident-response mit-license mitre-attack nextjs open-source purple-team python security-operations self-hosted siem soar soc threat-detection threat-intelligence oss" data-stars="221" data-score="78.35" data-sent-at="2026-05-09T11:56:24.805651+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">78<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/19245630?v=4" alt="beenuar">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/beenuar" target="_blank" rel="noreferrer">@beenuar</a>
-          </div>
-          <h2><a href="https://github.com/beenuar/AiSOC" target="_blank" rel="noreferrer">beenuar/AiSOC</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 221</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">Open-source AI-powered Security Operations Center — alert fusion, purple-team drills, agent-assisted triage, MITRE ATT&amp;CK investigation....</p>
-      <p class="pick-reason">選定理由: セキュリティ運用のAIエージェントを完全自前運用できる</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-security</span><span class="badge topic">#alert-triage</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#detection-engineering</span><span class="badge topic">#docker</span><span class="badge topic">#fastapi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="./repos/beenuar-aisoc-a52b1f2b.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/beenuar/AiSOC" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </article>
-    </div></section>
-=======
         <p class="hero-copy">5/11 - 5/10 の通知履歴を、見返しやすい週次ビューとしてまとめています。</p>
       </div>
     </section>
@@ -2240,7 +1745,6 @@
       <article class="stat-card"><strong class="inline-links">なし</strong><span>状態の分布</span></article>
     </section>
     <section class='section-block'><div class='section-header'><h2>今週の良い / 本番候補</h2><p>すでに手応えがあるリポジトリを、状態ベースで先に見返せます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=good&sort=score">良いをすべて見る</a><a class="badge" href="./index.html?review_state=production_candidate&sort=score">本番候補をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の未確認リポジトリ</h2><p>まだ見ていないリポジトリをまとめています。あとで確認する入口として使えます。 <span class="inline-links"><a class="badge" href="./index.html?review_state=unseen&sort=newest">未確認をすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の低スター枠トップ</h2><p>stars が少なくても評価が高いリポジトリを先に見たいときの入口です。 <span class="inline-links"><a class="badge" href="./index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアをすべて見る</a></span></p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section><section class='section-block'><div class='section-header'><h2>今週の新着で面白かったもの</h2><p>今週通知したものを新しい順で見返せます。未確認の掘り起こしにも使えます。</p></div><p class='empty-state'>この条件に合うリポジトリは、今週まだありません。</p></section>
->>>>>>> a4dad12 (Use Japanese summaries in cards)
       </main>
     </div>
   </div>
