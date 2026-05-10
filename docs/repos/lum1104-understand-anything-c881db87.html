@@ -494,11 +494,64 @@
       color: #fff;
       border-color: #061b3a;
     }
-    .detail-hero-actions .action-history {
+    .review-state-menu-wrap {
+      position: relative;
+      min-width: 0;
+    }
+    .detail-hero-actions .review-state-trigger {
+      width: 100%;
       background: #fff;
       color: var(--ink);
       border-color: var(--line);
       font-size: 18px;
+      cursor: pointer;
+    }
+    .detail-hero-actions .review-state-trigger:hover,
+    .detail-hero-actions .review-state-trigger[aria-expanded="true"] {
+      background: #f3f7ff;
+      border-color: #b9cef5;
+      color: var(--accent);
+    }
+    .review-state-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 30;
+      display: none;
+      width: min(220px, calc(100vw - 48px));
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .review-state-menu.open {
+      display: grid;
+      gap: 4px;
+    }
+    .review-state-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 38px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .review-state-option:hover {
+      background: var(--surface-muted);
+      color: var(--accent);
+    }
+    .review-state-option.current {
+      background: #fff5e6;
+      color: var(--warn);
+    }
+    .review-state-option.current::after {
+      content: "現在";
+      color: var(--warn);
+      font-size: 11px;
     }
     .detail-tabs {
       display: grid;
@@ -652,38 +705,6 @@
       background: #fff5e6;
       color: var(--warn);
       border-color: #f0d2a5;
-    }
-    .review-state-panel {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      border-radius: 8px;
-      background: var(--surface-muted);
-    }
-    .review-state-panel h3 {
-      margin: 0 0 8px;
-      font-size: 0.98rem;
-    }
-    .review-state-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-top: 10px;
-    }
-    .review-state-actions select {
-      min-width: 180px;
-      font: inherit;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      padding: 10px 12px;
-      color: var(--text);
-    }
-    .review-state-note {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
     }
     .date-label {
       font-variant-numeric: tabular-nums;
@@ -1751,7 +1772,12 @@
             <div class="badge-row"><a class="badge" href="../index.html?language=typescript">TypeScript</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity-skills</span><span class="badge topic">#business-knowledge</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#codex</span><span class="badge topic">#codex-skills</span><span class="badge topic">#gemini-cli-skills</span><span class="badge topic">#knowledge-base</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#memory</span><span class="badge topic">#opencode-skills</span><span class="badge topic">#pi-agent</span><span class="badge topic">#understandcode</span><span class="badge topic">#コード解析</span><span class="badge topic">#知識グラフ</span></div>
             <div class="detail-hero-actions">
               <a class="badge action-github" href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">GitHubで見る</a>
-              <a class="badge action-history" href="../index.html" aria-label="履歴へ戻る">⌑</a>
+              <div class="review-state-menu-wrap" data-review-state-menu>
+                <button class="badge review-state-trigger" type="button" aria-label="状態を更新" aria-haspopup="menu" aria-expanded="false" data-review-state-trigger>↻</button>
+                <div class="review-state-menu" role="menu" aria-label="状態を更新">
+                  <a class="review-state-option current" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+unseen&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>未確認</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+interested&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+interested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>気になる</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+tested&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+tested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>試した</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+good&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+good%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>良い</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+meh&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+meh%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>微妙</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+production_candidate&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+production_candidate%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>本番候補</a>
+                </div>
+              </div>
             </div>
           </article>
           <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
@@ -1794,19 +1820,6 @@ Claude CodeやCursorなど主要なAIコーディングツールで動作する�
 <a href="https://github.com/Lum1104/Understand-Anything" target="_blank" rel="noreferrer">https://github.com/Lum1104/Understand-Anything</a>
 #KnowledgeGraph #CodeUnderstanding</pre>
             </article>
-            
-        <div class="review-state-panel" data-review-state-panel data-repo-full-name="Lum1104/Understand-Anything">
-          <h3>状態を更新</h3>
-          <p class="pick-reason">GitHub の issue 作成画面を開いて更新要求を送ります。送信後、workflow が state.json を更新して Pages を再生成します。</p>
-          <div class="review-state-actions">
-            <select data-review-state-select aria-label="更新する状態">
-              <option value="unseen" selected>未確認</option><option value="interested">気になる</option><option value="tested">試した</option><option value="good">良い</option><option value="meh">微妙</option><option value="production_candidate">本番候補</option>
-            </select>
-            <a class="badge review-state" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+Lum1104%2FUnderstand-Anything+-%3E+unseen&amp;body=repo%3A+Lum1104%2FUnderstand-Anything%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" data-review-state-link>GitHubで「未確認」に更新</a>
-          </div>
-          <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
-        </div>
-        
           </div>
         </section>
         <section id="stats" class="stats-grid">
@@ -2225,42 +2238,37 @@ Claude CodeやCursorなど主要なAIコーディングツールで動作する�
       filterReset?.addEventListener('click', resetArchiveFilters);
       applyArchiveFilters();
     }
-    const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
-    if (reviewStatePanels.length) {
-      const reviewStateLabels = {
-        unseen: '未確認',
-        interested: '気になる',
-        tested: '試した',
-        good: '良い',
-        meh: '微妙',
-        production_candidate: '本番候補',
+    const reviewStateMenus = document.querySelectorAll('[data-review-state-menu]');
+    if (reviewStateMenus.length) {
+      const closeReviewStateMenus = (exceptMenu) => {
+        for (const wrapper of reviewStateMenus) {
+          if (exceptMenu && wrapper === exceptMenu) continue;
+          const trigger = wrapper.querySelector('[data-review-state-trigger]');
+          const menu = wrapper.querySelector('.review-state-menu');
+          trigger?.setAttribute('aria-expanded', 'false');
+          menu?.classList.remove('open');
+        }
       };
-      const buildReviewStateIssueUrl = (fullName, state) => {
-        const params = new URLSearchParams({
-          title: `[review-state] ${fullName} -> ${state}`,
-          body:
-            `repo: ${fullName}\nstate: ${state}\nsource: pages\n\n送信すると workflow が state.json を更新して Pages を再生成します。`,
+      for (const wrapper of reviewStateMenus) {
+        const trigger = wrapper.querySelector('[data-review-state-trigger]');
+        const menu = wrapper.querySelector('.review-state-menu');
+        if (!trigger || !menu) continue;
+        trigger.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const willOpen = !menu.classList.contains('open');
+          closeReviewStateMenus(wrapper);
+          menu.classList.toggle('open', willOpen);
+          trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
         });
-        return `https://github.com/taihey5555/githubcheck/issues/new?${params.toString()}`;
-      };
-      for (const panel of reviewStatePanels) {
-        const fullName = String(panel.dataset.repoFullName || '').trim();
-        const select = panel.querySelector('[data-review-state-select]');
-        const link = panel.querySelector('[data-review-state-link]');
-        const note = panel.querySelector('[data-review-state-note]');
-        if (!fullName || !select || !link) continue;
-        const updateReviewStateLink = () => {
-          const selectedState = String(select.value || 'unseen').trim();
-          const label = reviewStateLabels[selectedState] || selectedState;
-          link.href = buildReviewStateIssueUrl(fullName, selectedState);
-          link.textContent = `GitHubで「${label}」に更新`;
-          if (note) {
-            note.textContent = `GitHub の issue 作成画面が開きます。${label} で送信すると、workflow が state.json を更新して Pages を再生成します。`;
-          }
-        };
-        select.addEventListener('change', updateReviewStateLink);
-        updateReviewStateLink();
+        menu.addEventListener('click', (event) => event.stopPropagation());
+        for (const option of menu.querySelectorAll('[data-review-state-option]')) {
+          option.addEventListener('click', () => closeReviewStateMenus());
+        }
       }
+      document.addEventListener('click', () => closeReviewStateMenus());
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeReviewStateMenus();
+      });
     }
   </script>
 </body>

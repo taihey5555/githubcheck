@@ -330,14 +330,6 @@ def review_state_label(value: Any) -> str:
     return REVIEW_STATE_LABELS.get(normalized, normalized)
 
 
-def review_state_options_html(selected_state: str) -> str:
-    return "".join(
-        f'<option value="{escape(state)}"{" selected" if state == selected_state else ""}>'
-        f"{escape(review_state_label(state))}</option>"
-        for state in REVIEW_STATES
-    )
-
-
 def review_state_request_issue_url(full_name: str, state: str) -> str:
     repo_name = str(full_name or "").strip()
     normalized_state = normalize_review_state(state)
@@ -1027,22 +1019,13 @@ def render_repo_detail_sites() -> None:
         except (TypeError, ValueError):
             detail_score_label = "0"
         shortcut_links = render_review_state_shortcuts("..", current_review_state)
-        review_state_request_link = review_state_request_issue_url(
-            repo_data["full_name"], current_review_state
+        review_state_menu_items = "".join(
+            f'<a class="review-state-option{" current" if state_name == current_review_state else ""}" '
+            f'href="{escape(review_state_request_issue_url(repo_data["full_name"], state_name), quote=True)}" '
+            f'target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>'
+            f'{escape(review_state_label(state_name))}</a>'
+            for state_name in REVIEW_STATES
         )
-        review_state_controls_html = f"""
-        <div class="review-state-panel" data-review-state-panel data-repo-full-name="{escape(repo_data["full_name"], quote=True)}">
-          <h3>状態を更新</h3>
-          <p class="pick-reason">GitHub の issue 作成画面を開いて更新要求を送ります。送信後、workflow が state.json を更新して Pages を再生成します。</p>
-          <div class="review-state-actions">
-            <select data-review-state-select aria-label="更新する状態">
-              {review_state_options_html(current_review_state)}
-            </select>
-            <a class="badge review-state" href="{escape(review_state_request_link, quote=True)}" target="_blank" rel="noreferrer" data-review-state-link>GitHubで「{escape(review_state_label(current_review_state))}」に更新</a>
-          </div>
-          <p class="review-state-note" data-review-state-note>送信後の成功・失敗は作成された issue にコメントされます。</p>
-        </div>
-        """
         topics_html = "".join(
             f'<a class="badge topic" href="{history_archive_href(path_prefix="..", tag=topic)}">#{escape(topic)}</a>'
             for topic in repo_data.get("topics") or []
@@ -1152,7 +1135,12 @@ def render_repo_detail_sites() -> None:
             {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">状態 {escape(review_state_label(current_review_state))}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
             <div class="detail-hero-actions">
               <a class="badge action-github" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHubで見る</a>
-              <a class="badge action-history" href="../index.html" aria-label="履歴へ戻る">⌑</a>
+              <div class="review-state-menu-wrap" data-review-state-menu>
+                <button class="badge review-state-trigger" type="button" aria-label="状態を更新" aria-haspopup="menu" aria-expanded="false" data-review-state-trigger>↻</button>
+                <div class="review-state-menu" role="menu" aria-label="状態を更新">
+                  {review_state_menu_items}
+                </div>
+              </div>
             </div>
           </article>
           <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
@@ -1186,7 +1174,6 @@ def render_repo_detail_sites() -> None:
               <h3>通知本文</h3>
               <pre>{linkify_text(str(repo_data.get("latest_x_post") or ""))}</pre>
             </article>
-            {review_state_controls_html}
           </div>
         </section>
         <section id="stats" class="stats-grid">
@@ -1770,11 +1757,64 @@ def site_shell(
       color: #fff;
       border-color: #061b3a;
     }}
-    .detail-hero-actions .action-history {{
+    .review-state-menu-wrap {{
+      position: relative;
+      min-width: 0;
+    }}
+    .detail-hero-actions .review-state-trigger {{
+      width: 100%;
       background: #fff;
       color: var(--ink);
       border-color: var(--line);
       font-size: 18px;
+      cursor: pointer;
+    }}
+    .detail-hero-actions .review-state-trigger:hover,
+    .detail-hero-actions .review-state-trigger[aria-expanded="true"] {{
+      background: #f3f7ff;
+      border-color: #b9cef5;
+      color: var(--accent);
+    }}
+    .review-state-menu {{
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 30;
+      display: none;
+      width: min(220px, calc(100vw - 48px));
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }}
+    .review-state-menu.open {{
+      display: grid;
+      gap: 4px;
+    }}
+    .review-state-option {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 38px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 900;
+    }}
+    .review-state-option:hover {{
+      background: var(--surface-muted);
+      color: var(--accent);
+    }}
+    .review-state-option.current {{
+      background: #fff5e6;
+      color: var(--warn);
+    }}
+    .review-state-option.current::after {{
+      content: "現在";
+      color: var(--warn);
+      font-size: 11px;
     }}
     .detail-tabs {{
       display: grid;
@@ -1928,38 +1968,6 @@ def site_shell(
       background: #fff5e6;
       color: var(--warn);
       border-color: #f0d2a5;
-    }}
-    .review-state-panel {{
-      margin-top: 14px;
-      padding: 14px 16px;
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      border-radius: 8px;
-      background: var(--surface-muted);
-    }}
-    .review-state-panel h3 {{
-      margin: 0 0 8px;
-      font-size: 0.98rem;
-    }}
-    .review-state-actions {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-top: 10px;
-    }}
-    .review-state-actions select {{
-      min-width: 180px;
-      font: inherit;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      padding: 10px 12px;
-      color: var(--text);
-    }}
-    .review-state-note {{
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
     }}
     .date-label {{
       font-variant-numeric: tabular-nums;
@@ -3322,42 +3330,37 @@ def site_shell(
       filterReset?.addEventListener('click', resetArchiveFilters);
       applyArchiveFilters();
     }}
-    const reviewStatePanels = document.querySelectorAll('[data-review-state-panel]');
-    if (reviewStatePanels.length) {{
-      const reviewStateLabels = {{
-        unseen: '未確認',
-        interested: '気になる',
-        tested: '試した',
-        good: '良い',
-        meh: '微妙',
-        production_candidate: '本番候補',
+    const reviewStateMenus = document.querySelectorAll('[data-review-state-menu]');
+    if (reviewStateMenus.length) {{
+      const closeReviewStateMenus = (exceptMenu) => {{
+        for (const wrapper of reviewStateMenus) {{
+          if (exceptMenu && wrapper === exceptMenu) continue;
+          const trigger = wrapper.querySelector('[data-review-state-trigger]');
+          const menu = wrapper.querySelector('.review-state-menu');
+          trigger?.setAttribute('aria-expanded', 'false');
+          menu?.classList.remove('open');
+        }}
       }};
-      const buildReviewStateIssueUrl = (fullName, state) => {{
-        const params = new URLSearchParams({{
-          title: `[review-state] ${{fullName}} -> ${{state}}`,
-          body:
-            `repo: ${{fullName}}\\nstate: ${{state}}\\nsource: pages\\n\\n送信すると workflow が state.json を更新して Pages を再生成します。`,
+      for (const wrapper of reviewStateMenus) {{
+        const trigger = wrapper.querySelector('[data-review-state-trigger]');
+        const menu = wrapper.querySelector('.review-state-menu');
+        if (!trigger || !menu) continue;
+        trigger.addEventListener('click', (event) => {{
+          event.stopPropagation();
+          const willOpen = !menu.classList.contains('open');
+          closeReviewStateMenus(wrapper);
+          menu.classList.toggle('open', willOpen);
+          trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
         }});
-        return `https://github.com/{CONTROL_REPO_FULL_NAME}/issues/new?${{params.toString()}}`;
-      }};
-      for (const panel of reviewStatePanels) {{
-        const fullName = String(panel.dataset.repoFullName || '').trim();
-        const select = panel.querySelector('[data-review-state-select]');
-        const link = panel.querySelector('[data-review-state-link]');
-        const note = panel.querySelector('[data-review-state-note]');
-        if (!fullName || !select || !link) continue;
-        const updateReviewStateLink = () => {{
-          const selectedState = String(select.value || 'unseen').trim();
-          const label = reviewStateLabels[selectedState] || selectedState;
-          link.href = buildReviewStateIssueUrl(fullName, selectedState);
-          link.textContent = `GitHubで「${{label}}」に更新`;
-          if (note) {{
-            note.textContent = `GitHub の issue 作成画面が開きます。${{label}} で送信すると、workflow が state.json を更新して Pages を再生成します。`;
-          }}
-        }};
-        select.addEventListener('change', updateReviewStateLink);
-        updateReviewStateLink();
+        menu.addEventListener('click', (event) => event.stopPropagation());
+        for (const option of menu.querySelectorAll('[data-review-state-option]')) {{
+          option.addEventListener('click', () => closeReviewStateMenus());
+        }}
       }}
+      document.addEventListener('click', () => closeReviewStateMenus());
+      document.addEventListener('keydown', (event) => {{
+        if (event.key === 'Escape') closeReviewStateMenus();
+      }});
     }}
   </script>
 </body>
