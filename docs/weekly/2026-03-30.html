@@ -410,6 +410,13 @@
       font-weight: 650;
       overflow-wrap: anywhere;
     }
+    .card > .description {
+      max-height: 4.9em;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
+    }
     .pick-reason {
       margin: 0 0 10px;
       color: rgba(15, 23, 42, 0.72);
@@ -1610,7 +1617,7 @@
         </nav>
       </header>
       <main>
-        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html">4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html">4/6 - 4/12</option><option value="../weekly/2026-03-30.html" selected>3/30 - 4/5</option></select></div></div></section>
+        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/11 - 5/17</option><option value="../weekly/2026-05-04.html">5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html">4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html">4/6 - 4/12</option><option value="../weekly/2026-03-30.html" selected>3/30 - 4/5</option></select></div></div></section>
     <section class="dashboard-hero">
       <div>
         <p class="hero-kicker">Weekly summary</p>
@@ -1644,7 +1651,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Browser automation CLI for AI agents</p>
+      <p class="description">Rust製の高速なブラウザ自動化CLI AIエージェントがブラウザ操作するためのツール アクセシビリティツリーを参照できる設計 AIエージェント開発者や自動化ツール作成者向け AIエージェントがブラウザを操作するためのCLIツール agent-browserは、Rust製の高速なブラウザ自動化ツールです。アクセシビリティツリーを参照して要素を操作できるので、AIエージェントとの相性が良いです。 Webスクレイピングや自動テスト、AIエージェントのブラウザ操作機能を実装したい開発者に。 #ブラウザ自動化 #AIエージェント</p>
       <p class="pick-reason">選定理由: AIエージェント向けの高速ブラウザ自動化CLI</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
@@ -1671,7 +1678,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies</p>
+      <p class="description">コマンド出力を圧縮しLLMトークンを削減 AI開発支援ツールの使用コストを最大90%削減 Rust製シングルバイナリで100+コマンド対応 Claude CodeやCursorを頻繁に使う開発者向け</p>
       <p class="pick-reason">選定理由: LLM開発コストを大幅削減する尖った用途</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai-coding</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#command-line-tool</span></div>
       <div class="detail-links primary-links">
@@ -1698,7 +1705,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Research into how agentic AI coding assistants work — reconstructed prompt patterns, agent coordination, and security classification</p>
+      <p class="description">Claude Codeのプロンプト設計を解明 AIコーディングアシスタントの内部構造を学習 動的プロンプト組立やセキュリティ分類を分析 AIエンジニアやプロンプト設計者に刺さる</p>
       <p class="pick-reason">選定理由: エージェントAIの実用的なプロンプト設計を深掘り</p>
       <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-research</span><span class="badge topic">#claude</span><span class="badge topic">#prompt-engineering</span><span class="badge topic">#system-prompts</span></div>
       <div class="detail-links primary-links">
@@ -1725,7 +1732,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Give your AI agent eyes to see the entire internet. Read &amp; search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero...</p>
+      <p class="description">主要サイトをAPI不要でスクレイピング AIエージェントが各種プラットフォームの情報を取得する 既存CLIツールを統合したシンプルな設計 AIエージェントを使う開発者や研究者向け AIエージェントに「目」を追加するツール。 Twitter、YouTube、GitHubなど主要サイトをAPI不要でスクレイピングできます。 既存のCLIツールを統合し、シンプルな設計で拡張可能です。 AIエージェントを使う開発者や、自動情報収集をしたい人におすすめです。 #AIエージェント #自動化</p>
       <p class="pick-reason">選定理由: AIエージェントに無料でインターネット閲覧能力を付与</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-infrastructure</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-search</span><span class="badge topic">#automation</span><span class="badge topic">#bilibili</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
@@ -1752,7 +1759,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Installable GitHub library of 1,340+ agentic skills for Claude Code, Cursor, Codex CLI, Gemini CLI, Antigravity, and more. Includes insta...</p>
+      <p class="description">1340以上の再利用可能なスキル集 AIコーディングアシスタントの能力を拡張 インストーラーとバンドルで即実用 Claude CodeやCursorを使う開発者向け</p>
       <p class="pick-reason">選定理由: AIエージェント向けの大規模スキルライブラリ</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#agentic-skills</span><span class="badge topic">#ai-agent-skills</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflows</span></div>
       <div class="detail-links primary-links">
@@ -1779,7 +1786,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      
+      <p class="description">Claude Codeの性能を最大化するシステム AIエージェントの効率とセキュリティを向上させる スキル、メモリ最適化、継続学習を統合 AI駆動開発の生産性を高めたい開発者向け</p>
       
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
@@ -1788,7 +1795,7 @@
       </div>
     </article>
     </div></section><section class='section-block'><div class='section-header'><h2>今週の総合トップ</h2><p>pick 回数、最高 score、stars をまとめて見た総合ランキングです。まず全体感をつかむのに向いています。</p></div><div class='section-grid'>
-    <article class="card rank-card top1" data-bucket="morning" data-name="gitlawb/openclaude" data-language="typescript" data-tags="" data-stars="11985" data-score="0.00" data-sent-at="" data-review-state="interested" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+    <article class="card rank-card top1" data-bucket="morning" data-name="gitlawb/openclaude" data-language="typescript" data-tags="" data-stars="11985" data-score="0.00" data-sent-at="" data-review-state="interested" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-score">1358<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">1</span>
@@ -1806,7 +1813,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Open Claude Is Open-source coding-agent CLI for OpenAI, Gemini, DeepSeek, Ollama, Codex, GitHub Models, and 200+ models via OpenAI-compat...</p>
+      <p class="description">200以上のAIモデルを単一CLIで操作 ターミナルでのコーディング支援ワークフロー プロバイダー間でエージェントを動的にルーティング ローカルとクラウドモデルを使い分ける開発者</p>
       <p class="pick-reason">選定理由: 多様なAIモデルを統一的に扱うCLIの実用性</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 気になる</span></div>
       <div class="detail-links primary-links">
@@ -1833,7 +1840,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">CLI-Anything: Making ALL Software Agent-Native</p>
+      <p class="description">あらゆるソフトをAIエージェントが使えるCLIに変換 AIエージェントがGIMPやBlenderなどを直接操作可能に ソフトの機能を自動解析し完全なCLIを生成 AIエージェント開発者や自動化ツール作成者向け</p>
       <p class="pick-reason">選定理由: AIエージェントがソフトを操作するためのCLIを自動生成</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 気になる</span></div>
       <div class="detail-links primary-links">
@@ -1860,7 +1867,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Browser automation CLI for AI agents</p>
+      <p class="description">Rust製の高速なブラウザ自動化CLI AIエージェントがブラウザ操作するためのツール アクセシビリティツリーを参照できる設計 AIエージェント開発者や自動化ツール作成者向け AIエージェントがブラウザを操作するためのCLIツール agent-browserは、Rust製の高速なブラウザ自動化ツールです。アクセシビリティツリーを参照して要素を操作できるので、AIエージェントとの相性が良いです。 Webスクレイピングや自動テスト、AIエージェントのブラウザ操作機能を実装したい開発者に。 #ブラウザ自動化 #AIエージェント</p>
       <p class="pick-reason">選定理由: AIエージェント向けの高速ブラウザ自動化CLI</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
@@ -1887,7 +1894,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies</p>
+      <p class="description">コマンド出力を圧縮しLLMトークンを削減 AI開発支援ツールの使用コストを最大90%削減 Rust製シングルバイナリで100+コマンド対応 Claude CodeやCursorを頻繁に使う開発者向け</p>
       <p class="pick-reason">選定理由: LLM開発コストを大幅削減する尖った用途</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai-coding</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#command-line-tool</span></div>
       <div class="detail-links primary-links">
@@ -1914,7 +1921,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Research into how agentic AI coding assistants work — reconstructed prompt patterns, agent coordination, and security classification</p>
+      <p class="description">Claude Codeのプロンプト設計を解明 AIコーディングアシスタントの内部構造を学習 動的プロンプト組立やセキュリティ分類を分析 AIエンジニアやプロンプト設計者に刺さる</p>
       <p class="pick-reason">選定理由: エージェントAIの実用的なプロンプト設計を深掘り</p>
       <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-research</span><span class="badge topic">#claude</span><span class="badge topic">#prompt-engineering</span><span class="badge topic">#system-prompts</span></div>
       <div class="detail-links primary-links">
@@ -1941,7 +1948,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary</p>
+      <p class="description">複数ソースから直近の話題を統合 特定トピックの直近30日間の動向を調査する 多様なソースを統合し重み付けして要約 最新技術や流行を追いたい研究者やクリエイター</p>
       <p class="pick-reason">選定理由: AIエージェントが最新トレンドを多角的に調査</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 気になる</span><span class="badge topic">#ai-prompts</span><span class="badge topic">#ai-skill</span><span class="badge topic">#bluesky</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#clawhub</span></div>
       <div class="detail-links primary-links">
@@ -1968,7 +1975,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Give your AI agent eyes to see the entire internet. Read &amp; search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero...</p>
+      <p class="description">主要サイトをAPI不要でスクレイピング AIエージェントが各種プラットフォームの情報を取得する 既存CLIツールを統合したシンプルな設計 AIエージェントを使う開発者や研究者向け AIエージェントに「目」を追加するツール。 Twitter、YouTube、GitHubなど主要サイトをAPI不要でスクレイピングできます。 既存のCLIツールを統合し、シンプルな設計で拡張可能です。 AIエージェントを使う開発者や、自動情報収集をしたい人におすすめです。 #AIエージェント #自動化</p>
       <p class="pick-reason">選定理由: AIエージェントに無料でインターネット閲覧能力を付与</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-infrastructure</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-search</span><span class="badge topic">#automation</span><span class="badge topic">#bilibili</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
@@ -1995,7 +2002,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Installable GitHub library of 1,340+ agentic skills for Claude Code, Cursor, Codex CLI, Gemini CLI, Antigravity, and more. Includes insta...</p>
+      <p class="description">1340以上の再利用可能なスキル集 AIコーディングアシスタントの能力を拡張 インストーラーとバンドルで即実用 Claude CodeやCursorを使う開発者向け</p>
       <p class="pick-reason">選定理由: AIエージェント向けの大規模スキルライブラリ</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#agentic-skills</span><span class="badge topic">#ai-agent-skills</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflows</span></div>
       <div class="detail-links primary-links">
@@ -2022,7 +2029,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      
+      <p class="description">Claude Codeの性能を最大化するシステム AIエージェントの効率とセキュリティを向上させる スキル、メモリ最適化、継続学習を統合 AI駆動開発の生産性を高めたい開発者向け</p>
       
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
@@ -2049,7 +2056,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.</p>
+      <p class="description">AIエージェントにマーケティング知見を付与 CROやSEOなど実務スキルをAIが活用可能に スキル間の依存関係を構造化して設計 技術者とマーケターの協業に役立つ</p>
       <p class="pick-reason">選定理由: AIエージェント向けマーケティングスキルの体系化</p>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude</span><span class="badge topic">#codex</span><span class="badge topic">#marketing</span></div>
       <div class="detail-links primary-links">
@@ -2076,7 +2083,7 @@
         
         
       </div>
-      <p class="description">Kernel-enforced agent sandbox. Capability-based isolation with secure key management, atomic rollback, cryptographic immutable audit chai...</p>
+      <p class="description">カーネルレベルでAIエージェントをサンドボックス化 任意のAIエージェントをゼロトラスト環境で安全に実行 Rust製でLandlock/Seatbeltを用いた不可逆的な隔離 AIエージェントの本番運用を考える開発者やセキュリティ担当者</p>
       <p class="pick-reason">選定理由: AIエージェントの安全性を構造的に担保する尖ったアプロー</p>
       <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-sandbox</span><span class="badge topic">#agent-security</span><span class="badge topic">#ai-agent-sandbox</span><span class="badge topic">#ai-agent-security</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-security</span></div>
       <div class="detail-links primary-links">
@@ -2103,7 +2110,7 @@
         
         
       </div>
-      <p class="description">Agent skills for solving CTF challenges - web exploitation, binary pwn, crypto, reverse engineering, forensics, OSINT, and more</p>
+      <p class="description">CTF全分野の攻略をAIエージェントに実行させる Web、Pwn、Cryptoなど多様なスキルを一括管理 Claude Codeなどエージェントツールと連携可能 CTFプレイヤーやセキュリティ学習者に便利</p>
       <p class="pick-reason">選定理由: CTFの幅広い分野をAIエージェントで自動化する尖り</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-code-skills</span><span class="badge topic">#codex</span><span class="badge topic">#codex-cli</span><span class="badge topic">#ctf</span></div>
       <div class="detail-links primary-links">
@@ -2130,7 +2137,7 @@
         
         
       </div>
-      <p class="description">LLM驱动的 A/H/美股智能分析器：多数据源行情 + 实时新闻 + LLM决策仪表盘 + 多渠道推送，零成本定时运行，纯白嫖. LLM-powered stock analysis system for A/H/US markets.</p>
+      <p class="description">LLMが株価分析を自動化 A/H/米株の分析結果を毎日通知 無料でサーバーレス運用可能 個人投資家やAI活用に興味ある人向け</p>
       <p class="pick-reason">選定理由: LLMで株分析を自動化する尖った実用ツール</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#aigc</span><span class="badge topic">#gemini</span><span class="badge topic">#llm</span><span class="badge topic">#quant</span></div>
       <div class="detail-links primary-links">
@@ -2157,7 +2164,7 @@
         
         
       </div>
-      <p class="description">Bridge local AI coding agents (Claude Code, Cursor, Gemini CLI, Codex) to messaging platforms (Feishu/Lark, DingTalk, Slack, Telegram, Di...</p>
+      <p class="description">ローカルAIエージェントをチャットで操作 SlackやLINEなど10種のメッセージングアプリから利用可能 Go製でマルチプラットフォーム・マルチエージェント対応 リモート開発やチームでのAI活用に便利</p>
       <p class="pick-reason">選定理由: AIエージェントをチャットアプリで操作する尖った用途</p>
       <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai開発</span><span class="badge topic">#自動化</span></div>
       <div class="detail-links primary-links">
@@ -2184,7 +2191,7 @@
         
         
       </div>
-      <p class="description">Self-hosted AI agent orchestration platform: dispatch tasks, run multi-agent workflows, monitor spend, and govern operations from one mis...</p>
+      <p class="description">AIエージェント群を一元的に管理 タスク配信やコスト監視など運用を一画面で 依存ゼロのSQLiteとリアルタイム更新 AIエージェントを本番運用する開発者向け</p>
       <p class="pick-reason">選定理由: AIエージェント運用の統合ダッシュボード</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-automation</span><span class="badge topic">#ai-dashboard</span><span class="badge topic">#claude</span><span class="badge topic">#dashboard</span></div>
       <div class="detail-links primary-links">
@@ -2211,7 +2218,7 @@
         
         
       </div>
-      <p class="description">🇨🇳 OpenClaw中文用例与案例大全 | 46个真实场景 | 国内特色 + 海外案例的国内适配 | 自动化办公·内容创作·运维·AI助理·知识管理 | 新手友好 | Chinese guide for OpenClaw AI agent use cases</p>
+      <p class="description">OpenClawの実践的ユースケース集 業務自動化やコンテンツ作成など46の事例 中国特有のツールへの適応事例も豊富 AIエージェントで効率化したい人向け</p>
       <p class="pick-reason">選定理由: 国内ツール向けAIエージェント活用事例が充実</p>
       <div class="badge-row"><span class="badge">N/A</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#ai-automation</span><span class="badge topic">#ai-tools</span><span class="badge topic">#automation</span><span class="badge topic">#awesome-list</span></div>
       <div class="detail-links primary-links">

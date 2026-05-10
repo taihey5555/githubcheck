@@ -410,6 +410,13 @@
       font-weight: 650;
       overflow-wrap: anywhere;
     }
+    .card > .description {
+      max-height: 4.9em;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
+    }
     .pick-reason {
       margin: 0 0 10px;
       color: rgba(15, 23, 42, 0.72);
@@ -1610,7 +1617,7 @@
         </nav>
       </header>
       <main>
-        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html" selected>4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html">4/6 - 4/12</option><option value="../weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
+        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/11 - 5/17</option><option value="../weekly/2026-05-04.html">5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html" selected>4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html">4/6 - 4/12</option><option value="../weekly/2026-03-30.html">3/30 - 4/5</option></select></div></div></section>
     <section class="dashboard-hero">
       <div>
         <p class="hero-kicker">Weekly summary</p>
@@ -1644,7 +1651,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot CLI, OpenClaw, Factory Droid, Trae, Google An...</p>
+      <p class="description">コードや文書を瞬時に知識グラフ化 コード、PDF、画像、動画から概念と関係性を抽出し、クエリ可能なグラフに変換する。 3パス処理（AST解析＋文字起こし＋LLM抽出）で、発見した情報と推測を明示的に区別する。 大規模コードベースや研究資料を横断的に理解したい開発者・研究者に刺さる。</p>
       <p class="pick-reason">選定理由: コードやドキュメントを知識グラフ化する急成長ツール</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
       <div class="detail-links primary-links">
@@ -1671,7 +1678,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">The open-source AI voice studio. Clone, dictate, create.</p>
+      <p class="description">音声クローンから効果まで一貫 ローカル環境で音声合成アプリを構築 複数TTSエンジンと効果処理を統合 音声生成をプライベートに扱いたい開発者</p>
       <p class="pick-reason">選定理由: ローカルで動く音声合成スタジオの尖り</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#cuda</span><span class="badge topic">#mlx</span><span class="badge topic">#qwen3-tts</span><span class="badge topic">#qwen3-tts-ui</span><span class="badge topic">#voice-ai</span></div>
       <div class="detail-links primary-links">
@@ -1698,7 +1705,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
+      <p class="description">トークン消費を75%削減する石器会話術 Claude Codeのスキルとして、原始人語で応答を短縮する 出力トークンを削減しつつ技術的正確性を維持するプロンプト設計 トークンコスト削減と応答速度向上を求める開発者に</p>
       <p class="pick-reason">選定理由: トークン削減75%の尖ったプロンプト技術で急成長中</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
       <div class="detail-links primary-links">
@@ -1725,7 +1732,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <p class="description">96.6%の検索精度を誇るAI記憶システム 会話履歴を逐語保存し、セマンティック検索で必要な情報を即座に取得 ChromaDBをデフォルトとし、プラグイン可能なバックエンド設計で拡張性が高い ローカルファーストでAPI不要、プライバシー重視のAI開発者に最適</p>
       <p class="pick-reason">選定理由: ベンチマーク最上位のオープンソースAIメモリシステム</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
       <div class="detail-links primary-links">
@@ -1752,7 +1759,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">OpenClaw Security Vault — Atomic &quot;claw&quot; control: every AI reach, within your sight.</p>
+      <p class="description">AIエージェントの行動を監視・制御 APIキーやファイルへのアクセスを検知・ブロック プロキシによるトラフィック傍受と原子単位の制御 AIツールのセキュリティを強化したい開発者向け</p>
       <p class="pick-reason">選定理由: AIエージェントのセキュリティ監視に尖ったアプローチ</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#clawdbot</span><span class="badge topic">#clawdbot-plugin</span><span class="badge topic">#openclaw</span><span class="badge topic">#security</span></div>
       <div class="detail-links primary-links">
@@ -1779,7 +1786,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
+      <p class="description">WebやElectronアプリをCLI化 AIエージェントがログイン済みブラウザを操作 既存サイトを自動でCLIアダプタ化 ブラウザ自動化とAI連携に興味ある人</p>
       <p class="pick-reason">選定理由: AIエージェントがブラウザを直接操作できる尖り</p>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
       <div class="detail-links primary-links">
@@ -1806,7 +1813,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot CLI, OpenClaw, Factory Droid, Trae, Google An...</p>
+      <p class="description">コードや文書を瞬時に知識グラフ化 コード、PDF、画像、動画から概念と関係性を抽出し、クエリ可能なグラフに変換する。 3パス処理（AST解析＋文字起こし＋LLM抽出）で、発見した情報と推測を明示的に区別する。 大規模コードベースや研究資料を横断的に理解したい開発者・研究者に刺さる。</p>
       <p class="pick-reason">選定理由: コードやドキュメントを知識グラフ化する急成長ツール</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#antigravity</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span></div>
       <div class="detail-links primary-links">
@@ -1833,7 +1840,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">The open-source AI voice studio. Clone, dictate, create.</p>
+      <p class="description">音声クローンから効果まで一貫 ローカル環境で音声合成アプリを構築 複数TTSエンジンと効果処理を統合 音声生成をプライベートに扱いたい開発者</p>
       <p class="pick-reason">選定理由: ローカルで動く音声合成スタジオの尖り</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#cuda</span><span class="badge topic">#mlx</span><span class="badge topic">#qwen3-tts</span><span class="badge topic">#qwen3-tts-ui</span><span class="badge topic">#voice-ai</span></div>
       <div class="detail-links primary-links">
@@ -1860,7 +1867,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman</p>
+      <p class="description">トークン消費を75%削減する石器会話術 Claude Codeのスキルとして、原始人語で応答を短縮する 出力トークンを削減しつつ技術的正確性を維持するプロンプト設計 トークンコスト削減と応答速度向上を求める開発者に</p>
       <p class="pick-reason">選定理由: トークン削減75%の尖ったプロンプト技術で急成長中</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
       <div class="detail-links primary-links">
@@ -1887,7 +1894,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <p class="description">96.6%の検索精度を誇るAI記憶システム 会話履歴を逐語保存し、セマンティック検索で必要な情報を即座に取得 ChromaDBをデフォルトとし、プラグイン可能なバックエンド設計で拡張性が高い ローカルファーストでAPI不要、プライバシー重視のAI開発者に最適</p>
       <p class="pick-reason">選定理由: ベンチマーク最上位のオープンソースAIメモリシステム</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
       <div class="detail-links primary-links">
@@ -1914,7 +1921,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">OpenClaw Security Vault — Atomic &quot;claw&quot; control: every AI reach, within your sight.</p>
+      <p class="description">AIエージェントの行動を監視・制御 APIキーやファイルへのアクセスを検知・ブロック プロキシによるトラフィック傍受と原子単位の制御 AIツールのセキュリティを強化したい開発者向け</p>
       <p class="pick-reason">選定理由: AIエージェントのセキュリティ監視に尖ったアプローチ</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#clawdbot</span><span class="badge topic">#clawdbot-plugin</span><span class="badge topic">#openclaw</span><span class="badge topic">#security</span></div>
       <div class="detail-links primary-links">
@@ -1941,7 +1948,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Make Any Website &amp; Tool Your CLI. A universal CLI Hub and AI-native runtime. Transform any website, Electron app, or local binary into a...</p>
+      <p class="description">WebやElectronアプリをCLI化 AIエージェントがログイン済みブラウザを操作 既存サイトを自動でCLIアダプタ化 ブラウザ自動化とAI連携に興味ある人</p>
       <p class="pick-reason">選定理由: AIエージェントがブラウザを直接操作できる尖り</p>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
       <div class="detail-links primary-links">
@@ -1950,7 +1957,7 @@
       </div>
     </article>
     
-    <article class="card rank-card" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="36725" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+    <article class="card rank-card" data-bucket="evening" data-name="santifer/career-ops" data-language="javascript" data-tags="ai-agent anthropic automation career claude claude-code cli golang interview-prep job-search open-source resume" data-stars="36725" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
       <div class="card-score">93<small>スコア</small></div>
       <div class="card-header">
         <span class="rank-number">7</span>
@@ -1968,7 +1975,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.</p>
+      <p class="description">AIが求人を評価し最適な応募先を選ぶ 転職活動の効率化と意思決定支援 Claude CodeとPlaywrightで自動化 求職中のエンジニアやキャリアチェンジ層</p>
       <p class="pick-reason">選定理由: AIで求職活動を自動化する尖った実用ツール</p>
       <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#career</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
       <div class="detail-links primary-links">
@@ -1995,7 +2002,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio...</p>
+      <p class="description">1行目: Claude Codeをゲーム開発スタジオ化 2行目: 1つのAIセッションを49の専門エージェントが連携する開発チームに変える 3行目: ディレクター・リード・スペシャリストの3階層構造と72のスラッシュコマンドで本格的な開発フローを実現 4行目: AIでゲームを作りたい個人開発者や小規模チームに刺さる</p>
       <p class="pick-reason">選定理由: 49のAIエージェントでゲーム開発スタジオを再現</p>
       <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-assisted-development</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#game-design</span></div>
       <div class="detail-links primary-links">
@@ -2022,7 +2029,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">&quot;🐈 nanobot: The Ultra-Lightweight Personal AI Agent&quot;</p>
+      <p class="description">最小限のコードで動く個人AIエージェント チャットやタスクを自動化する個人用アシスタント コアループが小さく読みやすく設計されている ローカルで動くAIエージェントを試したい開発者</p>
       <p class="pick-reason">選定理由: 軽量AIエージェントの実用性が尖る</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#anthropic</span><span class="badge topic">#chatgpt</span><span class="badge topic">#claude</span></div>
       <div class="detail-links primary-links">
@@ -2049,7 +2056,7 @@
         
         <span class="meta-count">登場 1回</span>
       </div>
-      <p class="description">Open-source AI marketing skills — growth experiments, sales pipeline, content ops, outbound, SEO, and finance automation</p>
+      <p class="description">Claude Codeで動く本格マーケ自動化 成長実験からセールス、コンテンツまで14分野 統計検定や専門家パネルなど実戦仕様 AIでマーケ業務を効率化したい実務者向け AIマーケティングの実践スキルがオープンソースで公開されています。 「ai-marketing-skills」は、Claude Codeで動く14分野の自動化ワークフロー。成長実験、セールスパイプライン、コンテンツ制作などを本格的なスクリプトで実装できます。 マーケティングやセールスの業務効率化をAIで進めたい実務者に役立ちます。統計検定や専門家パネルなど、実戦で培われた仕組みが特徴。 #AIマーケティング #オートメーション</p>
       <p class="pick-reason">選定理由: 実戦で磨かれたAIマーケティング自動化の尖り</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span></div>
       <div class="detail-links primary-links">
@@ -2076,7 +2083,7 @@
         
         
       </div>
-      <p class="description">Natively - Free open-source AI interview copilot &amp; meeting assistant. The best Cluely alternative, Final Round AI alternative, and Interv...</p>
+      <p class="description">面接対策に特化したAIコパイロット リアルタイム文字起こしとステルスモードで面接をサポートする無料OSS Rust製ネイティブ音声キャプチャで500ms未満の低遅延を実現 面接対策や会議アシストを求めるエンジニアや就活生に</p>
       <p class="pick-reason">選定理由: 無料で使えるCluely代替、ローカル完結型AIアシスタ</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#cheating</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#cluely</span></div>
       <div class="detail-links primary-links">
@@ -2103,7 +2110,7 @@
         
         
       </div>
-      <p class="description">Your Personal AI Assistant; easy to install, deploy on your own machine or on the cloud; supports multiple chat apps with easily extensib...</p>
+      <p class="description">何が面白いか: 完全に自分で管理できるAIアシスタント 用途: ローカルやクラウドにデプロイして、複数のチャットアプリから利用可能 技術的見どころ: マルチエージェント連携、スキル拡張、メモリ進化機能を搭載 刺さる人: データを外部に預けたくない、自分好みにカスタマイズしたい技術者</p>
       <p class="pick-reason">選定理由: 自己ホスト可能な個人AIアシスタントが急成長中</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agentscope</span><span class="badge topic">#agentscope-runtime</span><span class="badge topic">#llm-tools</span><span class="badge topic">#llms</span><span class="badge topic">#skills</span></div>
       <div class="detail-links primary-links">
@@ -2130,7 +2137,7 @@
         
         
       </div>
-      <p class="description">The world&#x27;s first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode,...</p>
+      <p class="description">AIが製品を自律改善するエンジン 市場調査→アイデア生成→実装→PR作成まで自動化 Tinder風スワイプUIで承認、並列実行とクラッシュ復旧対応 プロダクトマネージャーやスタートアップの開発効率化に</p>
       <p class="pick-reason">選定理由: 製品改善を完全自動化するAIエージェントエンジン</p>
       <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#aiagent</span><span class="badge topic">#automation</span><span class="badge topic">#openclaw</span><span class="badge topic">#aiエージェント</span><span class="badge topic">#自動化</span></div>
       <div class="detail-links primary-links">
@@ -2157,7 +2164,7 @@
         
         
       </div>
-      <p class="description">The best-benchmarked open-source AI memory system. And it&#x27;s free.</p>
+      <p class="description">96.6%の検索精度を誇るAI記憶システム 会話履歴を逐語保存し、セマンティック検索で必要な情報を即座に取得 ChromaDBをデフォルトとし、プラグイン可能なバックエンド設計で拡張性が高い ローカルファーストでAPI不要、プライバシー重視のAI開発者に最適</p>
       <p class="pick-reason">選定理由: ベンチマーク最上位のオープンソースAIメモリシステム</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
       <div class="detail-links primary-links">
@@ -2184,7 +2191,7 @@
         
         
       </div>
-      <p class="description">&quot;ClawTeam: Agent Swarm Intelligence&quot; (One Command → Full Automation)</p>
+      <p class="description">エージェントが群れで協調して働く 1コマンドでAIチームが自律的にタスクを遂行 エージェント間の自動コミュニケーションとリソース管理 複雑なマルチタスクを任せたい開発者・研究者</p>
       <p class="pick-reason">選定理由: エージェント群知能で複雑タスクを自動化する新興OSS</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentswarm</span><span class="badge topic">#ai自動化</span></div>
       <div class="detail-links primary-links">
@@ -2211,7 +2218,7 @@
         
         
       </div>
-      <p class="description">A lightweight, open-source, fully local alternative to Logitech Options+ for remapping Logitech HID++ mice.</p>
+      <p class="description">軽量でプライバシー重視のマウスリマッパー Logitech Options+の代わりに、マウスボタンを自由に再割り当て Python製、HID++プロトコルで直接制御、テレメトリなし MX Masterユーザーやプライバシー重視の開発者に</p>
       <p class="pick-reason">選定理由: Logitechマウスを完全ローカルで自由に再マッピング</p>
       <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#automation</span><span class="badge topic">#controler</span><span class="badge topic">#free</span><span class="badge topic">#linux</span><span class="badge topic">#linux-app</span><span class="badge topic">#logi</span></div>
       <div class="detail-links primary-links">

@@ -410,6 +410,13 @@
       font-weight: 650;
       overflow-wrap: anywhere;
     }
+    .card > .description {
+      max-height: 4.9em;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
+    }
     .pick-reason {
       margin: 0 0 10px;
       color: rgba(15, 23, 42, 0.72);
@@ -1628,7 +1635,7 @@
               <span class="meta-language">Rust</span>
               <span class="date-label">2026-05-08 21:13</span>
             </div>
-            <p class="description">agent multiplexer that lives in your terminal.</p>
+            <p class="description">AIエージェントをターミナルで一元管理 複数のAIエージェント（Claude Code、Codex等）の状態をターミナル上で可視化・操作できるマルチプレクサ。tmuxのように永続セッションを持ち、マウス操作も可能。 Rust製の軽量バイナリで動作し、エージェントの状態（blocked/working/done）を自動検出。ソケットAPIでエージェントからの操作も可能。 AIエージェントを日常的に使う開発者、複数のエージェントを同時に管理したい人に最適。</p>
             <div class="badge-row"><a class="badge" href="../index.html?language=rust">Rust</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#coding-agents</span><span class="badge topic">#developer-tools</span><span class="badge topic">#devtools</span><span class="badge topic">#multiplexer</span><span class="badge topic">#rust</span><span class="badge topic">#terminal</span><span class="badge topic">#terminal-multiplexer</span><span class="badge topic">#terminal-ui</span><span class="badge topic">#tmux</span><span class="badge topic">#tui</span><span class="badge topic">#workspace-manager</span></div>
             <div class="detail-hero-actions">
               <a class="badge action-github" href="https://github.com/ogulcancelik/herdr" target="_blank" rel="noreferrer">GitHubで見る</a>
@@ -1644,7 +1651,7 @@
           <div class="detail-info-grid">
             <article id="overview" class="detail-info-card">
               <h3>概要</h3>
-              <p class="description">agent multiplexer that lives in your terminal.</p>
+              <p class="description">AIエージェントをターミナルで一元管理 複数のAIエージェント（Claude Code、Codex等）の状態をターミナル上で可視化・操作できるマルチプレクサ。tmuxのように永続セッションを持ち、マウス操作も可能。 Rust製の軽量バイナリで動作し、エージェントの状態（blocked/working/done）を自動検出。ソケットAPIでエージェントからの操作も可能。 AIエージェントを日常的に使う開発者、複数のエージェントを同時に管理したい人に最適。</p>
               <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
             </article>
             <article id="reason" class="detail-info-card">

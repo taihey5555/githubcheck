@@ -855,7 +855,7 @@ def aggregate_repo_history(
                 "latest_score": float(item.get("score") or 0),
                 "latest_stars": int(item.get("stars") or 0),
                 "language": item.get("language") or "N/A",
-                "description": item.get("description") or "",
+                "description": normalize_card_description(item),
                 "pick_reason": item.get("pick_reason") or "",
                 "latest_x_post": item.get("x_post") or "",
                 "topics": item.get("topics") or [],
@@ -869,7 +869,7 @@ def aggregate_repo_history(
             entry["latest_score"] = float(item.get("score") or 0)
             entry["latest_stars"] = int(item.get("stars") or 0)
             entry["language"] = item.get("language") or entry["language"] or "N/A"
-            entry["description"] = item.get("description") or entry["description"]
+            entry["description"] = normalize_card_description(item) or entry["description"]
             entry["pick_reason"] = item.get("pick_reason") or entry["pick_reason"]
             entry["latest_x_post"] = item.get("x_post") or entry["latest_x_post"]
             entry["html_url"] = item.get("html_url") or entry["html_url"]
@@ -1244,11 +1244,16 @@ def fallback_owner_fields(item: dict[str, Any]) -> tuple[str, str, str]:
     return owner_login, owner_html_url or item["html_url"], owner_avatar_url
 
 
-def normalize_card_description(item: dict[str, Any], limit: int = 140) -> str:
-    description = " ".join(str(item.get("description") or "").split())
+def normalize_card_description(item: dict[str, Any], limit: int | None = None) -> str:
+    raw_summary = str(item.get("summary") or "").strip()
+    raw_description = str(item.get("description") or "").strip()
+    description = raw_summary or raw_description
+    description = re.sub(r"\[(?:pick_reason|telegram|x)\]", " ", description, flags=re.IGNORECASE)
+    description = re.sub(r"https?://\S+", " ", description)
+    description = " ".join(description.split())
     if not description:
         return ""
-    if len(description) <= limit:
+    if limit is None or len(description) <= limit:
         return description
     return description[: limit - 3].rstrip() + "..."
 
@@ -1680,6 +1685,13 @@ def site_shell(
       font-size: 12.5px;
       font-weight: 650;
       overflow-wrap: anywhere;
+    }}
+    .card > .description {{
+      max-height: 4.9em;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
     }}
     .pick-reason {{
       margin: 0 0 10px;
