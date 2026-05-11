@@ -2355,6 +2355,234 @@ def site_shell(
       margin-top: 3px;
       font-size: 9px;
     }}
+    .ops-shell {{
+      display: grid;
+      gap: 14px;
+    }}
+    .ops-heading {{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 2px 2px 0;
+    }}
+    .ops-heading h2 {{
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+    }}
+    .ops-heading p {{
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }}
+    .ops-refresh {{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }}
+    .ops-kpi-grid {{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }}
+    .ops-kpi-card {{
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 9px;
+      min-height: 86px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    }}
+    .ops-icon {{
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: #eef4ff;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 900;
+    }}
+    .ops-icon.ok {{
+      background: #e8f8ef;
+      color: var(--ok);
+    }}
+    .ops-icon.warn {{
+      background: #fff3dc;
+      color: var(--warn);
+    }}
+    .ops-icon.danger {{
+      background: #feecec;
+      color: #dc2626;
+    }}
+    .ops-kpi-card span {{
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }}
+    .ops-kpi-card strong {{
+      display: block;
+      margin: 5px 0 7px;
+      color: var(--ink);
+      font-size: 23px;
+      line-height: 1;
+      font-weight: 900;
+    }}
+    .ops-panel {{
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    }}
+    .ops-panel h3 {{
+      margin: 0 0 12px;
+      font-size: 17px;
+      line-height: 1.2;
+    }}
+    .ops-job-list,
+    .ops-log-list {{
+      display: grid;
+      gap: 0;
+    }}
+    .ops-job-row {{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto 18px;
+      gap: 10px;
+      align-items: center;
+      min-height: 38px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 900;
+    }}
+    .ops-job-row:last-child {{
+      border-bottom: 0;
+    }}
+    .ops-status {{
+      display: inline-flex;
+      justify-content: center;
+      min-width: 54px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #dff8ea;
+      color: var(--ok);
+      font-size: 11px;
+      font-weight: 900;
+    }}
+    .ops-status.warn {{
+      background: #fff3dc;
+      color: var(--warn);
+    }}
+    .ops-status.fail {{
+      background: #feecec;
+      color: #dc2626;
+    }}
+    .ops-log-toolbar {{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin-bottom: 12px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }}
+    .ops-log-tab {{
+      min-height: 32px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }}
+    .ops-log-tab.active {{
+      background: var(--accent);
+      color: #fff;
+    }}
+    .ops-log-card {{
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: start;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+    }}
+    .ops-log-card:last-child {{
+      border-bottom: 0;
+    }}
+    .ops-log-icon {{
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #e8f8ef;
+      color: var(--ok);
+      font-size: 12px;
+      font-weight: 900;
+    }}
+    .ops-log-icon.warn {{
+      background: #fff3dc;
+      color: var(--warn);
+    }}
+    .ops-log-icon.fail {{
+      background: #feecec;
+      color: #dc2626;
+    }}
+    .ops-log-main {{
+      min-width: 0;
+    }}
+    .ops-log-title {{
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+    }}
+    .ops-log-meta {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 8px 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }}
+    .ops-log-tags {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }}
+    .ops-log-time {{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }}
+    .ops-alert-list {{
+      display: grid;
+      gap: 8px;
+    }}
+    .ops-alert-item {{
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }}
     .detail-links {{
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
@@ -3092,6 +3320,45 @@ def site_shell(
       .weekly-rank-title {{
         font-size: 14px;
       }}
+      .ops-heading h2 {{
+        font-size: 22px;
+      }}
+      .ops-kpi-grid {{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }}
+      .ops-kpi-card {{
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 7px;
+        min-height: 82px;
+        padding: 10px;
+      }}
+      .ops-icon {{
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        font-size: 12px;
+      }}
+      .ops-kpi-card strong {{
+        font-size: 20px;
+      }}
+      .ops-panel {{
+        padding: 14px;
+        border-radius: 12px;
+      }}
+      .ops-log-card {{
+        grid-template-columns: 22px minmax(0, 1fr) auto;
+      }}
+      .ops-log-card .ops-status {{
+        grid-column: 2 / -1;
+        justify-self: start;
+      }}
+      .ops-log-toolbar {{
+        border-radius: 12px;
+      }}
+      .ops-log-tab {{
+        font-size: 11px;
+      }}
       .stat-card strong {{
         font-size: 22px;
         line-height: 1.12;
@@ -3465,6 +3732,19 @@ def site_shell(
     }};
     bindTabs('[data-weekly-tab-target]', '[data-weekly-panel]', 'data-weekly-tab-target');
     bindTabs('[data-weekly-ranking-target]', '[data-weekly-ranking-panel]', 'data-weekly-ranking-target');
+    const opsLogTabs = document.querySelectorAll('[data-ops-log-filter]');
+    const opsLogCards = document.querySelectorAll('[data-ops-log-status]');
+    for (const tab of opsLogTabs) {{
+      tab.addEventListener('click', () => {{
+        const target = String(tab.dataset.opsLogFilter || 'all');
+        for (const item of opsLogTabs) item.classList.remove('active');
+        tab.classList.add('active');
+        for (const card of opsLogCards) {{
+          const status = String(card.dataset.opsLogStatus || '');
+          card.style.display = target === 'all' || status === target ? '' : 'none';
+        }}
+      }});
+    }}
     const filterButtons = document.querySelectorAll('[data-bucket-filter]');
     const cards = document.querySelectorAll('[data-bucket]');
     for (const button of filterButtons) {{
@@ -4667,11 +4947,30 @@ def render_spotlight_card(
     """
 
 
+def format_duration_label(started_raw: Any, finished_raw: Any) -> str:
+    if not started_raw or not finished_raw:
+        return "-"
+    try:
+        started = datetime.fromisoformat(str(started_raw))
+        finished = datetime.fromisoformat(str(finished_raw))
+    except ValueError:
+        return "-"
+    seconds = max(0, int((finished - started).total_seconds()))
+    minutes, rest = divmod(seconds, 60)
+    if minutes:
+        return f"{minutes:02d}:{rest:02d}"
+    return f"00:{rest:02d}"
+
+
 def build_operations_summary_html(path_prefix: str = ".") -> str:
     state = load_state()
+    history = load_history()
     run_status = str(state.get("last_run_status") or "unknown").strip() or "unknown"
-    started_at = format_state_timestamp(state.get("last_run_started_at"))
-    finished_at = format_state_timestamp(state.get("last_run_finished_at"))
+    started_at_raw = state.get("last_run_started_at")
+    finished_at_raw = state.get("last_run_finished_at")
+    started_at = format_state_timestamp(started_at_raw)
+    finished_at = format_state_timestamp(finished_at_raw)
+    duration_label = format_duration_label(started_at_raw, finished_at_raw)
     run_error = " ".join(str(state.get("last_run_error") or "").split())
     deepseek_alerts = state.get("alerts", {}).get("deepseek", {})
     latest_warning_kind = ""
@@ -4688,35 +4987,174 @@ def build_operations_summary_html(path_prefix: str = ".") -> str:
     latest_warning_sent = format_state_timestamp(latest_warning_payload.get("last_sent"))
     latest_warning_repo = str(latest_warning_payload.get("last_repo") or "-").strip() or "-"
     latest_warning_detail = " ".join(str(latest_warning_payload.get("detail") or "").split()) or "-"
-    operations_link = f'{path_prefix}/operations.html'
+    latest_history = sorted(
+        [item for item in history if item.get("sent_at")],
+        key=lambda item: parse_sent_at(item["sent_at"]),
+        reverse=True,
+    )
+    latest_day = ""
+    today_items: list[dict[str, Any]] = []
+    if latest_history:
+        latest_dt = parse_sent_at(latest_history[0]["sent_at"]).astimezone(ZoneInfo("Asia/Tokyo"))
+        latest_day = latest_dt.strftime("%Y/%m/%d")
+        today_items = [
+            item
+            for item in latest_history
+            if parse_sent_at(item["sent_at"]).astimezone(ZoneInfo("Asia/Tokyo")).date() == latest_dt.date()
+        ]
+    notifications_sent = len(today_items)
+    scored_count = sum(1 for item in today_items if item.get("score") is not None)
+    success_class = "" if run_status == "success" else ("fail" if run_status == "failed" else "warn")
+    success_rate = "100%" if run_status == "success" else "0%"
+    warning_count = len(deepseek_alerts)
+    alert_rows = []
+    if latest_warning_kind:
+        alert_rows.append(
+            f"""
+            <div class="ops-alert-item">
+              <span class="ops-log-icon warn">!</span>
+              <span>{escape(deepseek_warning_label(latest_warning_kind))}: {escape(latest_warning_detail)}</span>
+              <span>{escape(latest_warning_sent)}</span>
+            </div>
+            """
+        )
+    if run_error:
+        alert_rows.append(
+            f"""
+            <div class="ops-alert-item">
+              <span class="ops-log-icon fail">×</span>
+              <span>最終実行エラー: {escape(run_error)}</span>
+              <span>{escape(finished_at)}</span>
+            </div>
+            """
+        )
+    if not alert_rows:
+        alert_rows.append(
+            """
+            <div class="ops-alert-item">
+              <span class="ops-log-icon">i</span>
+              <span>現在表示できる警告はありません</span>
+              <span>-</span>
+            </div>
+            """
+        )
+
+    def status_badge(status: str, label: str) -> str:
+        status_class = "fail" if status == "fail" else ("warn" if status == "warn" else "")
+        return f'<span class="ops-status {status_class}">{escape(label)}</span>'
+
+    log_items = [
+        {
+            "title": "GitHub取得ジョブ",
+            "status": "success" if run_status == "success" else ("fail" if run_status == "failed" else "warn"),
+            "label": run_status_label(run_status),
+            "time": started_at,
+            "meta": [f"処理件数 {len(today_items):,}件", f"時間 {duration_label}"],
+            "tags": ["収集", "GitHub API"],
+        },
+        {
+            "title": "AIスコアリング",
+            "status": "success" if not run_error else "fail",
+            "label": "成功" if not run_error else "失敗",
+            "time": finished_at,
+            "meta": [f"処理件数 {scored_count:,}件", "OpenAI/DeepSeek"],
+            "tags": ["AI", "スコア"],
+        },
+        {
+            "title": "Telegram通知",
+            "status": "success" if notifications_sent else "warn",
+            "label": "成功" if notifications_sent else "警告",
+            "time": finished_at,
+            "meta": [f"送信件数 {notifications_sent:,}件"],
+            "tags": ["通知", "Telegram Bot"],
+        },
+        {
+            "title": "週次集計",
+            "status": "success" if history else "warn",
+            "label": "成功" if history else "警告",
+            "time": finished_at,
+            "meta": [f"履歴 {len(history):,}件"],
+            "tags": ["集計", "データベース"],
+        },
+    ]
+    if run_error:
+        log_items.append(
+            {
+                "title": "最終実行エラー",
+                "status": "fail",
+                "label": "失敗",
+                "time": finished_at,
+                "meta": [run_error],
+                "tags": ["実行", "エラー"],
+            }
+        )
+    log_cards = "".join(
+        f"""
+        <article class="ops-log-card" data-ops-log-status="{item['status']}">
+          <span class="ops-log-icon {'fail' if item['status'] == 'fail' else ('warn' if item['status'] == 'warn' else '')}">{'×' if item['status'] == 'fail' else ('!' if item['status'] == 'warn' else '✓')}</span>
+          <div class="ops-log-main">
+            <strong class="ops-log-title">{escape(item['title'])}</strong>
+            <div class="ops-log-meta">{''.join(f'<span>{escape(str(meta))}</span>' for meta in item['meta'])}</div>
+            <div class="ops-log-tags">{''.join(f'<span class="badge">{escape(str(tag))}</span>' for tag in item['tags'])}</div>
+          </div>
+          <span class="ops-log-time">{escape(item['time'])}</span>
+          {status_badge(item['status'], item['label'])}
+        </article>
+        """
+        for item in log_items
+    )
     return f"""
-    <section class="section-block">
-      <div class="section-header">
-        <h2>運用サマリー</h2>
-        <p>定時実行の状態と DeepSeek の直近警告を、Pages 上ですぐ確認するための小さい運用サマリーです。</p>
+    <section class="ops-shell">
+      <div class="ops-heading">
+        <div>
+          <h2>運用サマリー</h2>
+          <p>収集・通知・警告の状態を確認</p>
+        </div>
+        <span class="ops-refresh">最終更新: {escape(finished_at)} ↻</span>
       </div>
-      <div class="section-grid">
-        <article class="card">
-          <h3>実行状況</h3>
-          <div class="meta">
-            <span>状態 {escape(run_status_label(run_status))}</span>
-            <span>開始 {escape(started_at)}</span>
-            <span>終了 {escape(finished_at)}</span>
-          </div>
-          {f'<p class="pick-reason">エラー: {escape(run_error)}</p>' if run_error else '<p class="pick-reason">エラー: -</p>'}
+      <section class="ops-kpi-grid" aria-label="運用KPI">
+        <article class="ops-kpi-card">
+          <span class="ops-icon">◷</span>
+          <div><span>定時実行</span><strong>{escape(run_status_label(run_status))}</strong><span>{escape(success_rate)}</span></div>
         </article>
-        <article class="card">
-          <h3>DeepSeek 警告</h3>
-          <div class="meta">
-            <span>最新 {escape(deepseek_warning_label(latest_warning_kind or "none"))}</span>
-            <span>送信 {escape(latest_warning_sent)}</span>
-            <span>対象 {escape(latest_warning_repo)}</span>
-          </div>
-          <p class="pick-reason">詳細: {escape(latest_warning_detail)}</p>
+        <article class="ops-kpi-card">
+          <span class="ops-icon ok">✓</span>
+          <div><span>成功率</span><strong>{escape(success_rate)}</strong><span>最終実行</span></div>
         </article>
-      </div>
+        <article class="ops-kpi-card">
+          <span class="ops-icon">➤</span>
+          <div><span>通知送信</span><strong>{notifications_sent}</strong><span>{escape(latest_day or '-')}</span></div>
+        </article>
+        <article class="ops-kpi-card">
+          <span class="ops-icon {'warn' if warning_count else 'ok'}">!</span>
+          <div><span>警告</span><strong>{warning_count}</strong><span>DeepSeek</span></div>
+        </article>
+      </section>
+      <section class="ops-panel">
+        <h3>実行状況</h3>
+        <div class="ops-job-list">
+          <div class="ops-job-row"><span>収集</span>{status_badge(log_items[0]["status"], log_items[0]["label"])}<span>›</span></div>
+          <div class="ops-job-row"><span>スコアリング</span>{status_badge(log_items[1]["status"], log_items[1]["label"])}<span>›</span></div>
+          <div class="ops-job-row"><span>Telegram通知</span>{status_badge(log_items[2]["status"], log_items[2]["label"])}<span>›</span></div>
+          <div class="ops-job-row"><span>週次集計</span>{status_badge(log_items[3]["status"], log_items[3]["label"])}<span>›</span></div>
+        </div>
+      </section>
+      <section class="ops-panel">
+        <h3>実行ログ</h3>
+        <div class="ops-log-toolbar" aria-label="実行ログフィルター">
+          <button class="ops-log-tab active" type="button" data-ops-log-filter="all">すべて</button>
+          <button class="ops-log-tab" type="button" data-ops-log-filter="success">成功</button>
+          <button class="ops-log-tab" type="button" data-ops-log-filter="warn">警告</button>
+          <button class="ops-log-tab" type="button" data-ops-log-filter="fail">失敗</button>
+        </div>
+        <div class="ops-log-list">{log_cards}</div>
+      </section>
+      <section class="ops-panel">
+        <h3>DeepSeek 警告</h3>
+        <div class="ops-alert-list">{''.join(alert_rows)}</div>
+      </section>
       <div class="detail-links secondary-links">
-        <a class="badge" href="{operations_link}">運用サマリーページを開く</a>
+        <a class="badge" href="{path_prefix}/operations.html">運用サマリーページを開く</a>
       </div>
     </section>
     """
@@ -4887,18 +5325,7 @@ def render_history_site() -> None:
 
 
 def render_operations_site() -> None:
-    body_html = (
-        """
-        <section class="dashboard-hero">
-          <div>
-            <p class="hero-kicker">Operations</p>
-            <h2>運用サマリー</h2>
-            <p class="hero-copy">定時実行の状態や DeepSeek の警告など、運用上の確認項目をまとめたページです。</p>
-          </div>
-        </section>
-        """
-        + build_operations_summary_html(".")
-    )
+    body_html = build_operations_summary_html(".")
     html = site_shell(
         "運用サマリー",
         "定時実行の状態や DeepSeek の警告など、運用上の確認項目をまとめたページです。",
