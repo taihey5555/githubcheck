@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>運用サマリー</title>
+  <title>siddsachar/Thoth</title>
   <style>
     :root {
       --bg: #f7f8fa;
@@ -2366,17 +2366,17 @@
 <body>
   <div class="app-shell">
     <aside class="side-rail" aria-label="主要ナビゲーション">
-      <a class="side-logo" href="./index.html" aria-label="GitHub Check">GH</a>
+      <a class="side-logo" href="../index.html" aria-label="GitHub Check">GH</a>
       <nav class="side-nav">
-        <a href="./index.html" ><span class="nav-icon">H</span><span>履歴</span></a>
-        <a href="./weekly.html" ><span class="nav-icon">W</span><span>週次</span></a>
-        <a href="./operations.html" aria-current="page"><span class="nav-icon">O</span><span>運用</span></a>
+        <a href="../index.html" ><span class="nav-icon">H</span><span>履歴</span></a>
+        <a href="../weekly.html" ><span class="nav-icon">W</span><span>週次</span></a>
+        <a href="../operations.html" ><span class="nav-icon">O</span><span>運用</span></a>
       </nav>
     </aside>
     <div class="app-main">
       <header class="site-header">
         <div class="header-inner">
-          <a class="brand brand-row" href="./index.html">
+          <a class="brand brand-row" href="../index.html">
             <span class="brand-mark">GH</span>
             <span>
               <strong>GitHub Check</strong>
@@ -2384,9 +2384,9 @@
             </span>
           </a>
           <nav id="site-nav" class="site-nav">
-            <a href="./index.html" >履歴</a>
-            <a href="./weekly.html" >週次</a>
-            <a href="./operations.html" aria-current="page">運用サマリー</a>
+            <a href="../index.html" >履歴</a>
+            <a href="../weekly.html" >週次</a>
+            <a href="../operations.html" >運用サマリー</a>
           </nav>
           <div class="top-actions" aria-label="ページ操作">
             <span>静的アーカイブ</span>
@@ -2401,117 +2401,145 @@
           </button>
         </div>
         <nav class="mobile-segment" aria-label="主要ナビゲーション">
-          <a href="./index.html" >履歴</a>
-          <a href="./weekly.html" >週次</a>
-          <a href="./operations.html" aria-current="page">運用</a>
+          <a href="../index.html" >履歴</a>
+          <a href="../weekly.html" >週次</a>
+          <a href="../operations.html" >運用</a>
         </nav>
       </header>
       <main>
         
-    <section class="ops-shell">
-      <div class="ops-heading">
-        <div>
-          <h2>運用サマリー</h2>
-          <p>収集・通知・警告の状態を確認</p>
-        </div>
-        <span class="ops-refresh">最終更新: 2026-05-11 22:50 ↻</span>
-      </div>
-      <section class="ops-kpi-grid" aria-label="運用KPI">
-        <article class="ops-kpi-card">
-          <span class="ops-icon">◷</span>
-          <div><span>定時実行</span><strong>成功</strong><span>100%</span></div>
-        </article>
-        <article class="ops-kpi-card">
-          <span class="ops-icon ok">✓</span>
-          <div><span>成功率</span><strong>100%</strong><span>最終実行</span></div>
-        </article>
-        <article class="ops-kpi-card">
-          <span class="ops-icon">➤</span>
-          <div><span>通知送信</span><strong>6</strong><span>2026/05/11</span></div>
-        </article>
-        <article class="ops-kpi-card">
-          <span class="ops-icon ok">!</span>
-          <div><span>警告</span><strong>0</strong><span>DeepSeek</span></div>
-        </article>
-      </section>
-      <section class="ops-panel">
-        <h3>実行状況</h3>
-        <div class="ops-job-list">
-          <div class="ops-job-row"><span>収集</span><span class="ops-status ">成功</span><span>›</span></div>
-          <div class="ops-job-row"><span>スコアリング</span><span class="ops-status ">成功</span><span>›</span></div>
-          <div class="ops-job-row"><span>Telegram通知</span><span class="ops-status ">成功</span><span>›</span></div>
-          <div class="ops-job-row"><span>週次集計</span><span class="ops-status ">成功</span><span>›</span></div>
-        </div>
-      </section>
-      <section class="ops-panel">
-        <h3>実行ログ</h3>
-        <div class="ops-log-toolbar" aria-label="実行ログフィルター">
-          <button class="ops-log-tab active" type="button" data-ops-log-filter="all">すべて</button>
-          <button class="ops-log-tab" type="button" data-ops-log-filter="success">成功</button>
-          <button class="ops-log-tab" type="button" data-ops-log-filter="warn">警告</button>
-          <button class="ops-log-tab" type="button" data-ops-log-filter="fail">失敗</button>
-        </div>
-        <div class="ops-log-list">
-        <article class="ops-log-card" data-ops-log-status="success">
-          <span class="ops-log-icon ">✓</span>
-          <div class="ops-log-main">
-            <strong class="ops-log-title">GitHub取得ジョブ</strong>
-            <div class="ops-log-meta"><span>処理件数 6件</span><span>時間 00:52</span></div>
-            <div class="ops-log-tags"><span class="badge">収集</span><span class="badge">GitHub API</span></div>
-          </div>
-          <span class="ops-log-time">2026-05-11 22:49</span>
-          <span class="ops-status ">成功</span>
-        </article>
-        
-        <article class="ops-log-card" data-ops-log-status="success">
-          <span class="ops-log-icon ">✓</span>
-          <div class="ops-log-main">
-            <strong class="ops-log-title">AIスコアリング</strong>
-            <div class="ops-log-meta"><span>処理件数 6件</span><span>OpenAI/DeepSeek</span></div>
-            <div class="ops-log-tags"><span class="badge">AI</span><span class="badge">スコア</span></div>
-          </div>
-          <span class="ops-log-time">2026-05-11 22:50</span>
-          <span class="ops-status ">成功</span>
-        </article>
-        
-        <article class="ops-log-card" data-ops-log-status="success">
-          <span class="ops-log-icon ">✓</span>
-          <div class="ops-log-main">
-            <strong class="ops-log-title">Telegram通知</strong>
-            <div class="ops-log-meta"><span>送信件数 6件</span></div>
-            <div class="ops-log-tags"><span class="badge">通知</span><span class="badge">Telegram Bot</span></div>
-          </div>
-          <span class="ops-log-time">2026-05-11 22:50</span>
-          <span class="ops-status ">成功</span>
-        </article>
-        
-        <article class="ops-log-card" data-ops-log-status="success">
-          <span class="ops-log-icon ">✓</span>
-          <div class="ops-log-main">
-            <strong class="ops-log-title">週次集計</strong>
-            <div class="ops-log-meta"><span>履歴 229件</span></div>
-            <div class="ops-log-tags"><span class="badge">集計</span><span class="badge">データベース</span></div>
-          </div>
-          <span class="ops-log-time">2026-05-11 22:50</span>
-          <span class="ops-status ">成功</span>
-        </article>
-        </div>
-      </section>
-      <section class="ops-panel">
-        <h3>DeepSeek 警告</h3>
-        <div class="ops-alert-list">
-            <div class="ops-alert-item">
-              <span class="ops-log-icon">i</span>
-              <span>現在表示できる警告はありません</span>
-              <span>-</span>
+        <section class="section-block detail-page">
+          <article class="card detail-hero-card">
+            <div class="card-score">67<small>スコア</small></div>
+            <div class="card-header">
+              <img class="avatar" src="https://avatars.githubusercontent.com/u/50956096?v=4" alt="siddsachar">
+              <div class="card-title-wrap">
+                <div class="owner-line">
+                  <a href="https://github.com/siddsachar" target="_blank" rel="noreferrer">@siddsachar</a>
+                </div>
+                <h2>siddsachar/Thoth</h2>
+              </div>
             </div>
+            <div class="meta">
+              <span class="meta-stars">stars 1078</span>
+              <span class="meta-language">Python</span>
+              <span class="date-label">2026-05-11 22:50</span>
             </div>
-      </section>
-      <div class="detail-links secondary-links">
-        <a class="badge" href="./operations.html">運用サマリーページを開く</a>
-      </div>
-    </section>
-    
+            <p class="description">ローカル完結型の万能AIアシスタント 知識グラフ、ブラウザ操作、シェル、スケジュール実行まで統合したデスクトップアプリ。 Ollamaで完全ローカル動作しつつ、必要に応じてクラウドモデルも選択可能な柔軟な設計。 プライバシー重視でデータを自分のマシンに閉じたいパワーユーザーに。</p>
+            <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-assistant</span><span class="badge topic">#langchain</span><span class="badge topic">#langchain-python</span><span class="badge topic">#local-llm</span><span class="badge topic">#ollama</span><span class="badge topic">#privacy</span><span class="badge topic">#react-agent</span><span class="badge topic">#sovereign-ai</span><span class="badge topic">#ai</span><span class="badge topic">#ローカルllm</span></div>
+            <div class="detail-hero-actions">
+              <a class="badge action-github" href="https://github.com/siddsachar/Thoth" target="_blank" rel="noreferrer">GitHubで見る</a>
+              <div class="review-state-menu-wrap" data-review-state-menu>
+                <button class="badge review-state-trigger" type="button" aria-label="状態を更新" aria-haspopup="menu" aria-expanded="false" data-review-state-trigger>↻</button>
+                <div class="review-state-menu" role="menu" aria-label="状態を更新">
+                  <a class="review-state-option current" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+siddsachar%2FThoth+-%3E+unseen&amp;body=repo%3A+siddsachar%2FThoth%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>未確認</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+siddsachar%2FThoth+-%3E+interested&amp;body=repo%3A+siddsachar%2FThoth%0Astate%3A+interested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>気になる</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+siddsachar%2FThoth+-%3E+tested&amp;body=repo%3A+siddsachar%2FThoth%0Astate%3A+tested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>試した</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+siddsachar%2FThoth+-%3E+good&amp;body=repo%3A+siddsachar%2FThoth%0Astate%3A+good%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>良い</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+siddsachar%2FThoth+-%3E+meh&amp;body=repo%3A+siddsachar%2FThoth%0Astate%3A+meh%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>微妙</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+siddsachar%2FThoth+-%3E+production_candidate&amp;body=repo%3A+siddsachar%2FThoth%0Astate%3A+production_candidate%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>本番候補</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
+            <a href="#overview">概要</a>
+            <a href="#reason">選定理由</a>
+            <a href="#stack">技術スタック</a>
+            <a href="#stats">統計</a>
+          </nav>
+          <div class="detail-info-grid">
+            <article id="overview" class="detail-info-card">
+              <h3>概要</h3>
+              <p class="description">ローカル完結型の万能AIアシスタント 知識グラフ、ブラウザ操作、シェル、スケジュール実行まで統合したデスクトップアプリ。 Ollamaで完全ローカル動作しつつ、必要に応じてクラウドモデルも選択可能な柔軟な設計。 プライバシー重視でデータを自分のマシンに閉じたいパワーユーザーに。</p>
+              <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
+            </article>
+            <article id="reason" class="detail-info-card">
+              <h3>選定理由</h3>
+              <p class="description">データをローカルに閉じた個人用AIアシスタント</p>
+              <div class="badge-row"><span class="badge topic">#ai-assistant</span><span class="badge topic">#langchain</span><span class="badge topic">#langchain-python</span><span class="badge topic">#local-llm</span><span class="badge topic">#ollama</span><span class="badge topic">#privacy</span><span class="badge topic">#react-agent</span><span class="badge topic">#sovereign-ai</span><span class="badge topic">#ai</span><span class="badge topic">#ローカルllm</span></div>
+            </article>
+            <article id="stack" class="detail-info-card">
+              <h3>技術スタック</h3>
+              <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span></div>
+              <div class="detail-links secondary-links">
+                <a class="badge" href="../index.html?language=python">Python のリポジトリ一覧を見る</a>
+                <a class="badge" href="../index.html?score_min=67.03&sort=score">高スコアの一覧を見る</a>
+                <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
+                <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
+              </div>
+            </article>
+            <article class="detail-info-card">
+              <h3>通知本文</h3>
+              <pre>Thothはローカルファーストな個人AIアシスタント。
+Ollamaで完全オフライン動作し、知識グラフ、ブラウザ操作、シェル実行、スケジュールタスクまでこなす。
+データはすべて自機に保存。プライバシーを重視しつつ、高度な自動化を求める人に。
+<a href="https://github.com/siddsachar/Thoth" target="_blank" rel="noreferrer">https://github.com/siddsachar/Thoth</a>
+#AI #ローカルLLM</pre>
+            </article>
+          </div>
+        </section>
+        <section id="stats" class="stats-grid">
+          <article class="stat-card"><strong>2026-05-11 22:50</strong><span>初回出現日時</span></article>
+          <article class="stat-card"><strong>2026-05-11 22:50</strong><span>最新出現日時</span></article>
+          <article class="stat-card"><strong>1</strong><span>出現回数</span></article>
+          <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
+        </section>
+        <section class='section-block'><div class='section-header'><h2>関連リポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='related-strip'>
+                <article class="related-mini">
+                  <h3><a href="../repos/pikpikcu-airecon-dcd267db.html" target="_self">pikpikcu/airecon</a></h3>
+                  <p>by pikpikcu</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 552</span>
+                    <span class="meta-language">Python</span>
+                  </div>
+                  <span class="related-score">62</span>
+                </article>
+                
+                <article class="related-mini">
+                  <h3><a href="../repos/agentteam-taichuai-scienceclaw-ce6e1da0.html" target="_self">AgentTeam-TaichuAI/ScienceClaw</a></h3>
+                  <p>by AgentTeam-TaichuAI</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 537</span>
+                    <span class="meta-language">Python</span>
+                  </div>
+                  <span class="related-score">61</span>
+                </article>
+                
+                <article class="related-mini">
+                  <h3><a href="../repos/pocketpaw-pocketpaw-8461653e.html" target="_self">pocketpaw/pocketpaw</a></h3>
+                  <p>by pocketpaw</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 781</span>
+                    <span class="meta-language">Python</span>
+                  </div>
+                  <span class="related-score">55</span>
+                </article>
+                
+                <article class="related-mini">
+                  <h3><a href="../repos/florianbruniaux-claude-code-ultimate-guide-294a27fa.html" target="_self">FlorianBruniaux/claude-code-ultimate-guide</a></h3>
+                  <p>by FlorianBruniaux</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 2863</span>
+                    <span class="meta-language">TypeScript</span>
+                  </div>
+                  <span class="related-score">67</span>
+                </article>
+                </div></section>
+        <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>
+                <article class="history-item">
+                  <div class="meta">
+                    <span class="date-label">2026-05-11 22:50</span>
+                    <span>夜の尖り枠</span>
+                    <span>score 67.03</span>
+                    
+                    <span>stars 1078</span>
+                    
+                    <span>Python</span>
+                    <span>状態 未確認</span>
+                  </div>
+                  <p class="pick-reason">選定理由: データをローカルに閉じた個人用AIアシスタント</p>
+                  
+                  
+                  <div class="badge-row"><span class="badge topic">#ai-assistant</span><span class="badge topic">#langchain</span><span class="badge topic">#langchain-python</span><span class="badge topic">#local-llm</span><span class="badge topic">#ollama</span><span class="badge topic">#privacy</span><span class="badge topic">#react-agent</span><span class="badge topic">#sovereign-ai</span><span class="badge topic">#ai</span><span class="badge topic">#ローカルllm</span></div>
+                </article>
+                </div></section>
+        
       </main>
     </div>
   </div>
