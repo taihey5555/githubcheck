@@ -282,6 +282,40 @@ class SmokeTests(unittest.TestCase):
         profile = bot.analyze_gray_repo(repo, {"repos": {}})
         self.assertEqual(profile["risk_status"], "exclude")
 
+    def test_gray_repo_analysis_classifies_facefusion_style_repo(self) -> None:
+        repo = {
+            "full_name": "facefusion/facefusion",
+            "name": "facefusion",
+            "stargazers_count": 26000,
+            "forks_count": 3000,
+            "created_at": "2024-01-01T00:00:00+00:00",
+            "pushed_at": "2026-05-01T00:00:00+00:00",
+            "description": "Industry leading face manipulation platform",
+            "topics": ["ai", "faceswap", "face-swap", "lip-sync", "deepfake"],
+            "_readme_text": "FaceFusion supports face swap, face enhancer and lip sync workflows.",
+        }
+        profile = bot.analyze_gray_repo(repo, {"repos": {}})
+        self.assertEqual(profile["category"], "face_deepfake_live")
+        self.assertEqual(profile["risk_status"], "allow")
+        self.assertIn("faceswap", profile["matched_keywords"])
+
+    def test_gray_repo_analysis_marks_deep_live_cam_needs_review(self) -> None:
+        repo = {
+            "full_name": "hacksider/Deep-Live-Cam",
+            "name": "Deep-Live-Cam",
+            "stargazers_count": 83000,
+            "forks_count": 12000,
+            "created_at": "2024-01-01T00:00:00+00:00",
+            "pushed_at": "2026-05-01T00:00:00+00:00",
+            "description": "Real time face swap and one-click video deepfake with only a single image",
+            "topics": ["faceswap", "realtime-deepfake", "webcam", "fake-webcam", "video-deepfake"],
+            "_readme_text": "Realtime deepfake webcam and fake webcam workflow for face changing.",
+        }
+        profile = bot.analyze_gray_repo(repo, {"repos": {}})
+        self.assertEqual(profile["category"], "face_deepfake_live")
+        self.assertEqual(profile["risk_status"], "needs_review")
+        self.assertIn("fake webcam", profile["risk_keywords"])
+
     def test_gray_search_queries_include_seed_keywords(self) -> None:
         config = bot.Config(
             github_token="",
@@ -308,6 +342,7 @@ class SmokeTests(unittest.TestCase):
         joined = "\n".join(queries)
         self.assertIn("mosaic restore", joined)
         self.assertIn("video restoration", joined)
+        self.assertIn("face swap", joined)
 
     def test_extract_tags_includes_gray_category(self) -> None:
         tags = bot.extract_tags(
