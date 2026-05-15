@@ -352,7 +352,7 @@ class SmokeTests(unittest.TestCase):
                 "gray_profile": {"category": "adult_ai_media"},
             }
         )
-        self.assertIn("adult_ai_media", tags)
+        self.assertIn("成人向けAI・メディア復元系", tags)
 
     def test_gray_display_profile_does_not_require_saved_profile(self) -> None:
         profile = bot.gray_display_profile(
@@ -385,6 +385,13 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual(dataset["gray-mode"], "true")
         self.assertEqual(dataset["gray-category"], "scraper_downloader")
         self.assertEqual(dataset["gray-risk"], "needs_review")
+
+    def test_gray_category_label_localizes_known_categories(self) -> None:
+        self.assertEqual(
+            bot.gray_category_label("face_deepfake_live"),
+            "顔入れ替え・リアルタイムdeepfake系",
+        )
+        self.assertEqual(bot.gray_category_label("unknown"), "unknown")
 
     def test_classify_deepseek_error_handles_billing_and_rate_limit(self) -> None:
         billing_response = requests.Response()

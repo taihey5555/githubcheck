@@ -167,6 +167,16 @@ GRAY_CATEGORY_KEYWORDS = {
     ],
 }
 
+GRAY_CATEGORY_LABELS = {
+    "adult_ai_media": "成人向けAI・メディア復元系",
+    "scraper_downloader": "スクレイパー・ダウンローダー系",
+    "reverse_modding": "逆解析・改造系",
+    "policy_bypass": "規約・制限回避系",
+    "security_research": "セキュリティ研究系",
+    "face_deepfake_live": "顔入れ替え・リアルタイムdeepfake系",
+    "needs_review": "要確認",
+}
+
 GRAY_EXCLUDE_KEYWORDS = [
     "credential stealer",
     "token stealer",
@@ -388,6 +398,11 @@ def parse_state_iso(value: Any) -> datetime | None:
 def normalize_review_state(value: Any) -> str:
     state = str(value or "").strip().lower()
     return state if state in REVIEW_STATES else "unseen"
+
+
+def gray_category_label(value: Any) -> str:
+    category = str(value or "").strip()
+    return GRAY_CATEGORY_LABELS.get(category, category)
 
 
 def review_state_label(value: Any) -> str:
@@ -615,10 +630,11 @@ def extract_tags(item: dict[str, Any]) -> list[str]:
         if normalized and normalized not in seen:
             seen.add(normalized)
             tags.append(normalized)
-    gray_category = str((item.get("gray_profile") or {}).get("category") or "").strip().lower()
-    if gray_category and gray_category not in seen:
-        seen.add(gray_category)
-        tags.append(gray_category)
+    gray_category = str((item.get("gray_profile") or {}).get("category") or "").strip()
+    gray_category_display = gray_category_label(gray_category)
+    if gray_category_display and gray_category_display not in seen:
+        seen.add(gray_category_display)
+        tags.append(gray_category_display)
     return tags
 
 
@@ -4566,8 +4582,9 @@ def build_telegram_messages(repos: list[dict[str, Any]], bucket: str) -> list[st
         gray = repo.get("_gray_profile") or {}
         if gray:
             status_label = "要確認" if gray.get("risk_status") == "needs_review" else "収集対象"
+            category_label = gray_category_label(gray.get("category"))
             gray_header = (
-                f"{index}. {repo['full_name']} | {gray.get('category')} | {status_label}\n"
+                f"{index}. {repo['full_name']} | {category_label} | {status_label}\n"
                 f"score={repo['_score']} "
                 f"(grey={gray.get('grey_score')}, attention={gray.get('attention_score')}, "
                 f"fresh={gray.get('freshness_score')})\n"
