@@ -3243,7 +3243,8 @@
     "HKUDS/CLI-Anything": "interested",
     "nextlevelbuilder/goclaw": "unseen",
     "Gitlawb/openclaude": "interested",
-    "mvanhorn/last30days-skill": "interested"
+    "mvanhorn/last30days-skill": "interested",
+    "h4ckf0r0day/obscura": "interested"
   },
   "alerts": {},
   "last_run_started_at": "2026-05-17T12:01:39.333654+00:00",
