@@ -1010,88 +1010,6 @@
     .weekly-highlight:nth-child(4) .weekly-highlight-fill {
       background: var(--warn);
     }
-    .weekly-rank-list {
-      display: grid;
-      gap: 10px;
-    }
-    .weekly-rank-item {
-      position: relative;
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr) 52px;
-      gap: 10px;
-      align-items: center;
-      min-height: 86px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-      color: var(--ink);
-      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-    }
-    .weekly-rank-number {
-      display: inline-grid;
-      place-items: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 10px;
-      background: #eef4ff;
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 900;
-    }
-    .weekly-rank-item.top1 .weekly-rank-number {
-      background: #fff0d6;
-      color: var(--warn);
-    }
-    .weekly-rank-main {
-      min-width: 0;
-    }
-    .weekly-rank-title {
-      display: block;
-      color: var(--accent);
-      font-size: 15px;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .weekly-rank-owner,
-    .weekly-rank-desc {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .weekly-rank-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .weekly-rank-score {
-      justify-self: end;
-      display: inline-grid;
-      place-items: center;
-      min-width: 44px;
-      min-height: 44px;
-      border-radius: 10px;
-      background: #dff8ea;
-      color: var(--ok);
-      font-size: 17px;
-      line-height: 1;
-      font-weight: 900;
-    }
-    .weekly-rank-score small {
-      display: block;
-      margin-top: 3px;
-      font-size: 9px;
-    }
     .ops-shell {
       display: grid;
       gap: 14px;
@@ -2049,14 +1967,6 @@
       .weekly-highlight {
         grid-template-columns: 74px minmax(0, 1fr) 24px;
       }
-      .weekly-rank-item {
-        grid-template-columns: 30px minmax(0, 1fr) 48px;
-        min-height: 82px;
-        padding: 11px;
-      }
-      .weekly-rank-title {
-        font-size: 14px;
-      }
       .ops-heading h2 {
         font-size: 22px;
       }
@@ -2547,193 +2457,449 @@
         </div>
         
         <div id="weekly-rank-total" class="weekly-ranking-panel active" data-weekly-ranking-panel>
-          <div class="weekly-rank-list">
-        <a class="weekly-rank-item top1" href="../repos/manaflow-ai-cmux-addf41a2.html">
-          <span class="weekly-rank-number">1</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">manaflow-ai/cmux</strong>
-            <span class="weekly-rank-owner">by manaflow-ai</span>
-            <span class="weekly-rank-meta"><span>● Swift</span><span>★ 14166</span></span>
-            <span class="weekly-rank-desc">垂直タブと通知でAIコーディングを管理 Claude CodeなどのAIエージェント作業に特化 GhosttyベースでSwift製の軽量ネイティブアプリ AIを併用するmacOS開発者に刺さる</span>
-          </span>
-          <span class="weekly-rank-score">1021<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/affaan-m-everything-claude-code-52231fc0.html">
-          <span class="weekly-rank-number">2</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">affaan-m/everything-claude-code</strong>
-            <span class="weekly-rank-owner">by affaan-m</span>
-            <span class="weekly-rank-meta"><span>● JavaScript</span><span>★ 156829</span></span>
-            <span class="weekly-rank-desc">Claude CodeなどのAIエージェントを本格運用 開発支援ツールの性能を最適化するシステム スキル、メモリ、セキュリティを統合管理 AI支援開発の効率を追求する開発者向け</span>
-          </span>
-          <span class="weekly-rank-score">183<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/rtk-ai-rtk-9b02bf31.html">
-          <span class="weekly-rank-number">3</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">rtk-ai/rtk</strong>
-            <span class="weekly-rank-owner">by rtk-ai</span>
-            <span class="weekly-rank-meta"><span>● Rust</span><span>★ 28666</span></span>
-            <span class="weekly-rank-desc">CLI出力を圧縮しLLMトークン消費を劇的に削減 AI開発支援ツールの利用コストを60-90%削減できる Rust製シングルバイナリで依存ゼロの軽量設計 Claude CodeやCursorなどAIコーディングツール常用者に刺さる</span>
-          </span>
-          <span class="weekly-rank-score">178<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/gitlawb-openclaude-b7fa03f7.html">
-          <span class="weekly-rank-number">4</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">Gitlawb/openclaude</strong>
-            <span class="weekly-rank-owner">by Gitlawb</span>
-            <span class="weekly-rank-meta"><span>● TypeScript</span><span>★ 22313</span></span>
-            <span class="weekly-rank-desc">200以上のAIモデルを統合したCLI ターミナルで様々なAIモデルを統一的なワークフローで利用 OpenAI互換APIでローカル・クラウドモデルを柔軟に切り替え 開発者やAIツールを日常的に使う技術者向け</span>
-          </span>
-          <span class="weekly-rank-score">142<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/tanweai-pua-82244c37.html">
-          <span class="weekly-rank-number">5</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">tanweai/pua</strong>
-            <span class="weekly-rank-owner">by tanweai</span>
-            <span class="weekly-rank-meta"><span>● TypeScript</span><span>★ 16190</span></span>
-            <span class="weekly-rank-desc">PUA/PIPでAIエージェントを「追い込む」 コード生成AIの生産性を向上させるスキル 企業の人事評価手法をAIに適用する発想 AIコーディングに不満がある開発者向け</span>
-          </span>
-          <span class="weekly-rank-score">115<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/mvanhorn-last30days-skill-ce334b66.html">
-          <span class="weekly-rank-number">6</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">mvanhorn/last30days-skill</strong>
-            <span class="weekly-rank-owner">by mvanhorn</span>
-            <span class="weekly-rank-meta"><span>● Python</span><span>★ 22142</span></span>
-            <span class="weekly-rank-desc">ソーシャルと市場を横断した最新情報を要約 話題の人物や製品の直近30日間の動向を調査 複数APIを統合し、実勢でスコアリング 情報感度の高いビジネスパーソンや研究者向け</span>
-          </span>
-          <span class="weekly-rank-score">107<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/hkuds-cli-anything-c427889b.html">
-          <span class="weekly-rank-number">7</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">HKUDS/CLI-Anything</strong>
-            <span class="weekly-rank-owner">by HKUDS</span>
-            <span class="weekly-rank-meta"><span>● Python</span><span>★ 30890</span></span>
-            <span class="weekly-rank-desc">あらゆるソフトをAIエージェントが使えるCLIに AIエージェントが各種ソフトウェアを直接操作できるようにする ソフトのAPIやUIからCLIを自動生成する仕組み AIエージェント開発者や自動化ツールを作る人に</span>
-          </span>
-          <span class="weekly-rank-score">90<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/agentseal-codeburn-3a1733c2.html">
-          <span class="weekly-rank-number">8</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">AgentSeal/codeburn</strong>
-            <span class="weekly-rank-owner">by AgentSeal</span>
-            <span class="weekly-rank-meta"><span>● TypeScript</span><span>★ 1956</span></span>
-            <span class="weekly-rank-desc">AIコーディングのトークン使用を可視化 Claude CodeやCursorなどのコストをダッシュボードで監視 セッションデータを直接読み取る軽量な仕組み AI支援開発のコスト管理に関心がある開発者</span>
-          </span>
-          <span class="weekly-rank-score">90<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/googleworkspace-cli-41ebe280.html">
-          <span class="weekly-rank-number">9</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">googleworkspace/cli</strong>
-            <span class="weekly-rank-owner">by googleworkspace</span>
-            <span class="weekly-rank-meta"><span>● Rust</span><span>★ 24998</span></span>
-            <span class="weekly-rank-desc">動的にAPIを読み込むCLI Google Workspaceの複数サービスを一つのコマンドで操作 Rust製でAIエージェント連携機能を含む 自動化やAI連携を考える開発者向け</span>
-          </span>
-          <span class="weekly-rank-score">79<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/wanshuiyin-auto-claude-code-research-in-sleep-1f4ebdd8.html">
-          <span class="weekly-rank-number">10</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">wanshuiyin/Auto-claude-code-research-in-sleep</strong>
-            <span class="weekly-rank-owner">by wanshuiyin</span>
-            <span class="weekly-rank-meta"><span>● Python</span><span>★ 6693</span></span>
-            <span class="weekly-rank-desc">Claude Codeが寝ている間に研究を進める 論文の評価や実験を自動化する用途 依存ゼロのMarkdownスキルで柔軟に組み替え可能 AI研究の自動化に興味がある開発者向け</span>
-          </span>
-          <span class="weekly-rank-score">74<small>スコア</small></span>
-        </a>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="manaflow-ai/cmux" data-language="swift" data-tags="amp claude-code codex gemini ghostty opencode terminal tmux" data-stars="14166" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">1021<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/171392238?v=4" alt="manaflow-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/manaflow-ai" target="_blank" rel="noreferrer">@manaflow-ai</a>
+          </div>
+          <h2><a href="https://github.com/manaflow-ai/cmux" target="_blank" rel="noreferrer">manaflow-ai/cmux</a></h2>
         </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 14166</span>
+        <span class="meta-language">Swift</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">垂直タブと通知でAIコーディングを管理 Claude CodeなどのAIエージェント作業に特化 GhosttyベースでSwift製の軽量ネイティブアプリ AIを併用するmacOS開発者に刺さる</p>
+      <p class="pick-reason">選定理由: AIエージェント向けに尖ったmacOSターミナル</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#amp</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#gemini</span><span class="badge topic">#ghostty</span><span class="badge topic">#opencode</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/manaflow-ai-cmux-addf41a2.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/manaflow-ai/cmux" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="evening" data-name="affaan-m/everything-claude-code" data-language="javascript" data-tags="ai-agents anthropic claude claude-code developer-tools llm mcp productivity" data-stars="156829" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">183<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/124439313?v=4" alt="affaan-m">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/affaan-m" target="_blank" rel="noreferrer">@affaan-m</a>
+          </div>
+          <h2><a href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">affaan-m/everything-claude-code</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 156829</span>
+        <span class="meta-language">JavaScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">Claude CodeなどのAIエージェントを本格運用 開発支援ツールの性能を最適化するシステム スキル、メモリ、セキュリティを統合管理 AI支援開発の効率を追求する開発者向け</p>
+      <p class="pick-reason">選定理由: AIエージェントの実用性を高める体系的なアプローチ</p>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#developer-tools</span><span class="badge topic">#llm</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/affaan-m-everything-claude-code-52231fc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/affaan-m/everything-claude-code" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="rtk-ai/rtk" data-language="rust" data-tags="agentic-coding ai-coding anthropic claude-code cli command-line-tool cost-reduction developer-tools llm open-source productivity rust token-optimization" data-stars="28666" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">178<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/258253854?v=4" alt="rtk-ai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/rtk-ai" target="_blank" rel="noreferrer">@rtk-ai</a>
+          </div>
+          <h2><a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">rtk-ai/rtk</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 28666</span>
+        <span class="meta-language">Rust</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">CLI出力を圧縮しLLMトークン消費を劇的に削減 AI開発支援ツールの利用コストを60-90%削減できる Rust製シングルバイナリで依存ゼロの軽量設計 Claude CodeやCursorなどAIコーディングツール常用者に刺さる</p>
+      <p class="pick-reason">選定理由: LLM利用コストを大幅削減する尖った実用性</p>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-coding</span><span class="badge topic">#ai-coding</span><span class="badge topic">#anthropic</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#command-line-tool</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/rtk-ai-rtk-9b02bf31.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/rtk-ai/rtk" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="gitlawb/openclaude" data-language="typescript" data-tags="" data-stars="22313" data-score="0.00" data-sent-at="" data-review-state="interested" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">142<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/268502891?v=4" alt="Gitlawb">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Gitlawb" target="_blank" rel="noreferrer">@Gitlawb</a>
+          </div>
+          <h2><a href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">Gitlawb/openclaude</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 22313</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">200以上のAIモデルを統合したCLI ターミナルで様々なAIモデルを統一的なワークフローで利用 OpenAI互換APIでローカル・クラウドモデルを柔軟に切り替え 開発者やAIツールを日常的に使う技術者向け</p>
+      <p class="pick-reason">選定理由: 多様なモデルを統合するCLIエージェントの尖り</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 気になる</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/gitlawb-openclaude-b7fa03f7.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Gitlawb/openclaude" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="tanweai/pua" data-language="typescript" data-tags="agency agent pip pua" data-stars="16190" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">115<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/256783335?v=4" alt="tanweai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/tanweai" target="_blank" rel="noreferrer">@tanweai</a>
+          </div>
+          <h2><a href="https://github.com/tanweai/pua" target="_blank" rel="noreferrer">tanweai/pua</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 16190</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">PUA/PIPでAIエージェントを「追い込む」 コード生成AIの生産性を向上させるスキル 企業の人事評価手法をAIに適用する発想 AIコーディングに不満がある開発者向け</p>
+      <p class="pick-reason">選定理由: AIエージェントの生産性を倍増させる尖った手法</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agency</span><span class="badge topic">#agent</span><span class="badge topic">#pip</span><span class="badge topic">#pua</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/tanweai-pua-82244c37.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/tanweai/pua" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="mvanhorn/last30days-skill" data-language="python" data-tags="ai-prompts ai-skill bluesky claude claude-code clawhub deep-research hackernews instagram openclaw polymarket recency reddit research social-media tiktok trends twitter web-search youtube" data-stars="22142" data-score="0.00" data-sent-at="" data-review-state="interested" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">107<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/455140?v=4" alt="mvanhorn">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/mvanhorn" target="_blank" rel="noreferrer">@mvanhorn</a>
+          </div>
+          <h2><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">mvanhorn/last30days-skill</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 22142</span>
+        <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">ソーシャルと市場を横断した最新情報を要約 話題の人物や製品の直近30日間の動向を調査 複数APIを統合し、実勢でスコアリング 情報感度の高いビジネスパーソンや研究者向け</p>
+      <p class="pick-reason">選定理由: AIエージェントによるマルチプラットフォーム最新情報収集</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 気になる</span><span class="badge topic">#ai-prompts</span><span class="badge topic">#ai-skill</span><span class="badge topic">#bluesky</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#clawhub</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/mvanhorn-last30days-skill-ce334b66.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="hkuds/cli-anything" data-language="python" data-tags="" data-stars="30890" data-score="0.00" data-sent-at="" data-review-state="interested" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">90<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">7</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HKUDS" target="_blank" rel="noreferrer">@HKUDS</a>
+          </div>
+          <h2><a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">HKUDS/CLI-Anything</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 30890</span>
+        <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">あらゆるソフトをAIエージェントが使えるCLIに AIエージェントが各種ソフトウェアを直接操作できるようにする ソフトのAPIやUIからCLIを自動生成する仕組み AIエージェント開発者や自動化ツールを作る人に</p>
+      <p class="pick-reason">選定理由: AIエージェントがソフトを操作するためのCLIを自動生成</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 気になる</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/hkuds-cli-anything-c427889b.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="agentseal/codeburn" data-language="typescript" data-tags="ai-coding claude-code cli codex cost-tracking cursor-ide developer-tools observability terminal-ui token-usage" data-stars="1956" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">90<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">8</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/265224789?v=4" alt="AgentSeal">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/AgentSeal" target="_blank" rel="noreferrer">@AgentSeal</a>
+          </div>
+          <h2><a href="https://github.com/AgentSeal/codeburn" target="_blank" rel="noreferrer">AgentSeal/codeburn</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 1956</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIコーディングのトークン使用を可視化 Claude CodeやCursorなどのコストをダッシュボードで監視 セッションデータを直接読み取る軽量な仕組み AI支援開発のコスト管理に関心がある開発者</p>
+      <p class="pick-reason">選定理由: AIコーディングのコスト可視化が尖る</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#cost-tracking</span><span class="badge topic">#cursor-ide</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/agentseal-codeburn-3a1733c2.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/AgentSeal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="googleworkspace/cli" data-language="rust" data-tags="agent-skills ai-agent automation cli discovery-api gemini-cli-extension google-admin google-api google-calendar google-chat google-docs google-drive google-sheets google-workspace oauth2 rust" data-stars="24998" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">79<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">9</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/3708359?v=4" alt="googleworkspace">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/googleworkspace" target="_blank" rel="noreferrer">@googleworkspace</a>
+          </div>
+          <h2><a href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">googleworkspace/cli</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 24998</span>
+        <span class="meta-language">Rust</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">動的にAPIを読み込むCLI Google Workspaceの複数サービスを一つのコマンドで操作 Rust製でAIエージェント連携機能を含む 自動化やAI連携を考える開発者向け</p>
+      <p class="pick-reason">選定理由: Google Workspace全APIを統合したCLI</p>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai-agent</span><span class="badge topic">#automation</span><span class="badge topic">#cli</span><span class="badge topic">#discovery-api</span><span class="badge topic">#gemini-cli-extension</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/googleworkspace-cli-41ebe280.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="wanshuiyin/auto-claude-code-research-in-sleep" data-language="python" data-tags="ai-research ai-tools aris autonomous-agent claude claude-code claude-code-skills codex deep-learning gpt idea-generation llm machine-learning mcp mcp-server ml-research openai paper-review paper-writing research-automation" data-stars="6693" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">74<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">10</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/76990859?v=4" alt="wanshuiyin">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/wanshuiyin" target="_blank" rel="noreferrer">@wanshuiyin</a>
+          </div>
+          <h2><a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">wanshuiyin/Auto-claude-code-research-in-sleep</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 6693</span>
+        <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">Claude Codeが寝ている間に研究を進める 論文の評価や実験を自動化する用途 依存ゼロのMarkdownスキルで柔軟に組み替え可能 AI研究の自動化に興味がある開発者向け</p>
+      <p class="pick-reason">選定理由: 軽量なMarkdownのみで自律的なML研究を実現する尖</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-research</span><span class="badge topic">#ai-tools</span><span class="badge topic">#aris</span><span class="badge topic">#autonomous-agent</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/wanshuiyin-auto-claude-code-research-in-sleep-1f4ebdd8.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
         </div>
         
         
         <div id="weekly-rank-low-star" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="weekly-rank-list"><article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article></div>
+          <div class="section-grid"><article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article></div>
         </div>
         
         
         <div id="weekly-rank-rising" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="weekly-rank-list">
-        <a class="weekly-rank-item top1" href="../repos/googleworkspace-cli-41ebe280.html">
-          <span class="weekly-rank-number">1</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">googleworkspace/cli</strong>
-            <span class="weekly-rank-owner">by googleworkspace</span>
-            <span class="weekly-rank-meta"><span>● Rust</span><span>★ 24998</span></span>
-            <span class="weekly-rank-desc">動的にAPIを読み込むCLI Google Workspaceの複数サービスを一つのコマンドで操作 Rust製でAIエージェント連携機能を含む 自動化やAI連携を考える開発者向け</span>
-          </span>
-          <span class="weekly-rank-score">79<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/mukul975-anthropic-cybersecurity-skills-25236f32.html">
-          <span class="weekly-rank-number">2</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">mukul975/Anthropic-Cybersecurity-Skills</strong>
-            <span class="weekly-rank-owner">by mukul975</span>
-            <span class="weekly-rank-meta"><span>● Python</span><span>★ 4552</span></span>
-            <span class="weekly-rank-desc">5つの主要フレームワークに紐づく754のスキル AIエージェントにサイバーセキュリティの専門知識を付与する 標準化されたYAML形式で様々なプラットフォームで利用可能 セキュリティ業務の自動化やAI支援を検討している実務者</span>
-          </span>
-          <span class="weekly-rank-score">74<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/getagentseal-codeburn-cf446455.html">
-          <span class="weekly-rank-number">3</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">getagentseal/codeburn</strong>
-            <span class="weekly-rank-owner">by getagentseal</span>
-            <span class="weekly-rank-meta"><span>● TypeScript</span><span>★ 2767</span></span>
-            <span class="weekly-rank-desc">AIコーディングのコストをTUIで可視化 Claude CodeやCursorなどのトークン使用量を監視 セッションデータを直接読み取りプロキシ不要 AI支援開発のコスト管理に関心のある開発者向け AIコーディングのトークン使用量、どこまで把握できていますか？ CodeburnはClaude CodeやCursorなどのAIコーディングツールのトークン消費を可視化するTUIダッシュボードです。セッションデータを直接読み取るので、APIキー不要で手軽に使えます。 プロジェクト別・モデル別のコスト分析や、一発成功率の計測など、効率的なAI活用に役立ちます。AI支援開発のコスト管理に関心のある開発者におすすめです。 #AI開発 #開発者ツール</span>
-          </span>
-          <span class="weekly-rank-score">69<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/chenhg5-cc-connect-45b20cc0.html">
-          <span class="weekly-rank-number">4</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">chenhg5/cc-connect</strong>
-            <span class="weekly-rank-owner">by chenhg5</span>
-            <span class="weekly-rank-meta"><span>● Go</span><span>★ 5462</span></span>
-            <span class="weekly-rank-desc">ローカルAIエージェントとチャットツールを接続 Claude CodeなどのAIコーディング支援をSlackやLINEから利用可能 Webhookを活用し公開IPなしで連携できる仕組み リモートから開発支援を受けたいエンジニア向け</span>
-          </span>
-          <span class="weekly-rank-score">68<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/microsoft-agent-governance-toolkit-e9ae250c.html">
-          <span class="weekly-rank-number">5</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">microsoft/agent-governance-toolkit</strong>
-            <span class="weekly-rank-owner">by microsoft</span>
-            <span class="weekly-rank-meta"><span>● Python</span><span>★ 1113</span></span>
-            <span class="weekly-rank-desc">エージェントの行動を実行前にポリシーで制御 AIエージェントのツール呼び出しやリソースアクセスをガバナンスする OWASP Agentic Top 10の全項目をカバーする包括的な対策 エンタープライズ向けにAIエージェントを安全に運用したい開発者</span>
-          </span>
-          <span class="weekly-rank-score">62<small>スコア</small></span>
-        </a>
-        
-        <a class="weekly-rank-item" href="../repos/always-further-nono-ace82489.html">
-          <span class="weekly-rank-number">6</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">always-further/nono</strong>
-            <span class="weekly-rank-owner">by always-further</span>
-            <span class="weekly-rank-meta"><span>● Rust</span><span>★ 2018</span></span>
-            <span class="weekly-rank-desc">AIエージェントのための能力ベースサンドボックス 開発から本番まで同じ環境で安全にエージェントを実行 カーネルレベルで不可逆な制限と認証情報の分離 AIエージェントのセキュアな運用を考える開発者</span>
-          </span>
-          <span class="weekly-rank-score">61<small>スコア</small></span>
-        </a>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="googleworkspace/cli" data-language="rust" data-tags="agent-skills ai-agent automation cli discovery-api gemini-cli-extension google-admin google-api google-calendar google-chat google-docs google-drive google-sheets google-workspace oauth2 rust googleworkspace" data-stars="24998" data-score="79.16" data-sent-at="2026-04-19T03:42:22.003432+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">79<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/3708359?v=4" alt="googleworkspace">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/googleworkspace" target="_blank" rel="noreferrer">@googleworkspace</a>
+          </div>
+          <h2><a href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">googleworkspace/cli</a></h2>
         </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 24998</span>
+        <span class="meta-language">Rust</span>
+        
+        
+      </div>
+      <p class="description">動的にAPIを読み込むCLI Google Workspaceの複数サービスを一つのコマンドで操作 Rust製でAIエージェント連携機能を含む 自動化やAI連携を考える開発者向け</p>
+      <p class="pick-reason">選定理由: Google Workspace全APIを統合したCLI</p>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai-agent</span><span class="badge topic">#automation</span><span class="badge topic">#cli</span><span class="badge topic">#discovery-api</span><span class="badge topic">#gemini-cli-extension</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/googleworkspace-cli-41ebe280.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="mukul975/anthropic-cybersecurity-skills" data-language="python" data-tags="ai-agents claude-code cloud-security cybersecurity devsecops ethical-hacking incident-response infosec llm malware-analysis mcp mitre-attack nist-csf osint penetration-testing red-team security security-automation threat-hunting threat-intelligence ai セキュリティ" data-stars="4552" data-score="73.67" data-sent-at="2026-04-19T03:42:22.003432+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
+      <div class="card-score">74<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/42860185?v=4" alt="mukul975">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/mukul975" target="_blank" rel="noreferrer">@mukul975</a>
+          </div>
+          <h2><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">mukul975/Anthropic-Cybersecurity-Skills</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 4552</span>
+        <span class="meta-language">Python</span>
+        
+        
+      </div>
+      <p class="description">5つの主要フレームワークに紐づく754のスキル AIエージェントにサイバーセキュリティの専門知識を付与する 標準化されたYAML形式で様々なプラットフォームで利用可能 セキュリティ業務の自動化やAI支援を検討している実務者</p>
+      <p class="pick-reason">選定理由: AIエージェント向けの大規模セキュリティスキル集</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude-code</span><span class="badge topic">#cloud-security</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#devsecops</span><span class="badge topic">#ethical-hacking</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/mukul975-anthropic-cybersecurity-skills-25236f32.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="evening" data-name="getagentseal/codeburn" data-language="typescript" data-tags="ai-coding claude-code cli codex cost-tracking cursor-ide developer-tools observability terminal-ui token-usage github" data-stars="2767" data-score="68.69" data-sent-at="2026-04-19T11:41:48.915988+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">69<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/277308000?v=4" alt="getagentseal">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/getagentseal" target="_blank" rel="noreferrer">@getagentseal</a>
+          </div>
+          <h2><a href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">getagentseal/codeburn</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 2767</span>
+        <span class="meta-language">TypeScript</span>
+        
+        
+      </div>
+      <p class="description">AIコーディングのコストをTUIで可視化 Claude CodeやCursorなどのトークン使用量を監視 セッションデータを直接読み取りプロキシ不要 AI支援開発のコスト管理に関心のある開発者向け AIコーディングのトークン使用量、どこまで把握できていますか？ CodeburnはClaude CodeやCursorなどのAIコーディングツールのトークン消費を可視化するTUIダッシュボードです。セッションデータを直接読み取るので、APIキー不要で手軽に使えます。 プロジェクト別・モデル別のコスト分析や、一発成功率の計測など、効率的なAI活用に役立ちます。AI支援開発のコスト管理に関心のある開発者におすすめです。 #AI開発 #開発者ツール</p>
+      <p class="pick-reason">選定理由: AIコーディングのトークン使用を可視化する尖った用途</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude-code</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#cost-tracking</span><span class="badge topic">#cursor-ide</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/getagentseal-codeburn-cf446455.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="chenhg5/cc-connect" data-language="go" data-tags="ai開発 効率化" data-stars="5462" data-score="68.19" data-sent-at="2026-04-19T03:42:22.003432+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">68<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/4344486?v=4" alt="chenhg5">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/chenhg5" target="_blank" rel="noreferrer">@chenhg5</a>
+          </div>
+          <h2><a href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">chenhg5/cc-connect</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 5462</span>
+        <span class="meta-language">Go</span>
+        
+        
+      </div>
+      <p class="description">ローカルAIエージェントとチャットツールを接続 Claude CodeなどのAIコーディング支援をSlackやLINEから利用可能 Webhookを活用し公開IPなしで連携できる仕組み リモートから開発支援を受けたいエンジニア向け</p>
+      <p class="pick-reason">選定理由: AIコーディング支援をチャットツールから利用できる尖った</p>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai開発</span><span class="badge topic">#効率化</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/chenhg5-cc-connect-45b20cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/chenhg5/cc-connect" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="microsoft/agent-governance-toolkit" data-language="python" data-tags="agent-framework ai-agents ai-safety compliance governance microsoft owasp policy-engine python security trust zero-trust ai セキュリティ" data-stars="1113" data-score="62.03" data-sent-at="2026-04-19T11:41:48.915988+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
+      <div class="card-score">62<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/6154722?v=4" alt="microsoft">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/microsoft" target="_blank" rel="noreferrer">@microsoft</a>
+          </div>
+          <h2><a href="https://github.com/microsoft/agent-governance-toolkit" target="_blank" rel="noreferrer">microsoft/agent-governance-toolkit</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 1113</span>
+        <span class="meta-language">Python</span>
+        
+        
+      </div>
+      <p class="description">エージェントの行動を実行前にポリシーで制御 AIエージェントのツール呼び出しやリソースアクセスをガバナンスする OWASP Agentic Top 10の全項目をカバーする包括的な対策 エンタープライズ向けにAIエージェントを安全に運用したい開発者</p>
+      <p class="pick-reason">選定理由: AIエージェントの本番運用に必要なセキュリティとガバナン</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-framework</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-safety</span><span class="badge topic">#compliance</span><span class="badge topic">#governance</span><span class="badge topic">#microsoft</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/microsoft-agent-governance-toolkit-e9ae250c.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/microsoft/agent-governance-toolkit" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="always-further/nono" data-language="rust" data-tags="agent-sandbox agent-security ai-agent-sandbox ai-agent-security ai-agents ai-security ai-security-tool code-execution llm-sandbox llm-security mcp mcp-security prompt-injection runtime-security security sigstore supply-chain-security zero-trust aiセキュリティ rust" data-stars="2018" data-score="60.58" data-sent-at="2026-04-19T11:41:48.915988+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
+      <div class="card-score">61<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/236770005?v=4" alt="always-further">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/always-further" target="_blank" rel="noreferrer">@always-further</a>
+          </div>
+          <h2><a href="https://github.com/always-further/nono" target="_blank" rel="noreferrer">always-further/nono</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 2018</span>
+        <span class="meta-language">Rust</span>
+        
+        
+      </div>
+      <p class="description">AIエージェントのための能力ベースサンドボックス 開発から本番まで同じ環境で安全にエージェントを実行 カーネルレベルで不可逆な制限と認証情報の分離 AIエージェントのセキュアな運用を考える開発者</p>
+      <p class="pick-reason">選定理由: AIエージェント向けの本格的なセキュリティ基盤</p>
+      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-sandbox</span><span class="badge topic">#agent-security</span><span class="badge topic">#ai-agent-sandbox</span><span class="badge topic">#ai-agent-security</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-security</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/always-further-nono-ace82489.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/always-further/nono" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
         </div>
         
       </div>

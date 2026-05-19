@@ -2354,88 +2354,6 @@ def site_shell(
     .weekly-highlight:nth-child(4) .weekly-highlight-fill {{
       background: var(--warn);
     }}
-    .weekly-rank-list {{
-      display: grid;
-      gap: 10px;
-    }}
-    .weekly-rank-item {{
-      position: relative;
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr) 52px;
-      gap: 10px;
-      align-items: center;
-      min-height: 86px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-      color: var(--ink);
-      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-    }}
-    .weekly-rank-number {{
-      display: inline-grid;
-      place-items: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 10px;
-      background: #eef4ff;
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 900;
-    }}
-    .weekly-rank-item.top1 .weekly-rank-number {{
-      background: #fff0d6;
-      color: var(--warn);
-    }}
-    .weekly-rank-main {{
-      min-width: 0;
-    }}
-    .weekly-rank-title {{
-      display: block;
-      color: var(--accent);
-      font-size: 15px;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }}
-    .weekly-rank-owner,
-    .weekly-rank-desc {{
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }}
-    .weekly-rank-meta {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-    }}
-    .weekly-rank-score {{
-      justify-self: end;
-      display: inline-grid;
-      place-items: center;
-      min-width: 44px;
-      min-height: 44px;
-      border-radius: 10px;
-      background: #dff8ea;
-      color: var(--ok);
-      font-size: 17px;
-      line-height: 1;
-      font-weight: 900;
-    }}
-    .weekly-rank-score small {{
-      display: block;
-      margin-top: 3px;
-      font-size: 9px;
-    }}
     .ops-shell {{
       display: grid;
       gap: 14px;
@@ -3392,14 +3310,6 @@ def site_shell(
       }}
       .weekly-highlight {{
         grid-template-columns: 74px minmax(0, 1fr) 24px;
-      }}
-      .weekly-rank-item {{
-        grid-template-columns: 30px minmax(0, 1fr) 48px;
-        min-height: 82px;
-        padding: 11px;
-      }}
-      .weekly-rank-title {{
-        font-size: 14px;
       }}
       .ops-heading h2 {{
         font-size: 22px;
@@ -5637,38 +5547,19 @@ def render_weekly_page(
         reverse=True,
     )
 
-    def render_weekly_rank_card(item: dict[str, Any], rank: int) -> str:
-        full_name_raw = str(item.get("full_name") or "")
-        score_value = item.get("best_score", item.get("score", 0))
-        try:
-            score_label = str(int(round(float(score_value or 0))))
-        except (TypeError, ValueError):
-            score_label = "0"
-        owner_login, _, _ = fallback_owner_fields(item)
-        language = escape(str(item.get("language") or "N/A"))
-        stars = int(item.get("stars", item.get("latest_stars") or 0) or 0)
-        description = escape(normalize_card_description(item))
-        return f"""
-        <a class="weekly-rank-item{' top1' if rank == 1 else ''}" href="{repo_detail_href(full_name_raw, path_prefix=path_prefix)}">
-          <span class="weekly-rank-number">{rank}</span>
-          <span class="weekly-rank-main">
-            <strong class="weekly-rank-title">{escape(full_name_raw)}</strong>
-            <span class="weekly-rank-owner">by {escape(owner_login)}</span>
-            <span class="weekly-rank-meta"><span>● {language}</span><span>★ {stars}</span></span>
-            {f'<span class="weekly-rank-desc">{description}</span>' if description else ''}
-          </span>
-          <span class="weekly-rank-score">{score_label}<small>スコア</small></span>
-        </a>
-        """
-
     def render_weekly_ranking_panel(panel_id: str, items: list[dict[str, Any]]) -> str:
         cards = "".join(
-            render_weekly_rank_card(item, index)
+            render_repo_card(
+                item,
+                normalize_review_state(review_states.get(item.get("full_name"))),
+                rank=index,
+                path_prefix=path_prefix,
+            )
             for index, item in enumerate(items[:10], start=1)
         )
         return f"""
         <div id="{panel_id}" class="weekly-ranking-panel{' active' if panel_id == 'weekly-rank-total' else ''}" data-weekly-ranking-panel>
-          <div class="weekly-rank-list">{cards or '<article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article>'}</div>
+          <div class="section-grid">{cards or '<article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article>'}</div>
         </div>
         """
 

@@ -1010,88 +1010,6 @@
     .weekly-highlight:nth-child(4) .weekly-highlight-fill {
       background: var(--warn);
     }
-    .weekly-rank-list {
-      display: grid;
-      gap: 10px;
-    }
-    .weekly-rank-item {
-      position: relative;
-      display: grid;
-      grid-template-columns: 34px minmax(0, 1fr) 52px;
-      gap: 10px;
-      align-items: center;
-      min-height: 86px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-      color: var(--ink);
-      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
-    }
-    .weekly-rank-number {
-      display: inline-grid;
-      place-items: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 10px;
-      background: #eef4ff;
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 900;
-    }
-    .weekly-rank-item.top1 .weekly-rank-number {
-      background: #fff0d6;
-      color: var(--warn);
-    }
-    .weekly-rank-main {
-      min-width: 0;
-    }
-    .weekly-rank-title {
-      display: block;
-      color: var(--accent);
-      font-size: 15px;
-      font-weight: 900;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .weekly-rank-owner,
-    .weekly-rank-desc {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .weekly-rank-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .weekly-rank-score {
-      justify-self: end;
-      display: inline-grid;
-      place-items: center;
-      min-width: 44px;
-      min-height: 44px;
-      border-radius: 10px;
-      background: #dff8ea;
-      color: var(--ok);
-      font-size: 17px;
-      line-height: 1;
-      font-weight: 900;
-    }
-    .weekly-rank-score small {
-      display: block;
-      margin-top: 3px;
-      font-size: 9px;
-    }
     .ops-shell {
       display: grid;
       gap: 14px;
@@ -2048,14 +1966,6 @@
       }
       .weekly-highlight {
         grid-template-columns: 74px minmax(0, 1fr) 24px;
-      }
-      .weekly-rank-item {
-        grid-template-columns: 30px minmax(0, 1fr) 48px;
-        min-height: 82px;
-        padding: 11px;
-      }
-      .weekly-rank-title {
-        font-size: 14px;
       }
       .ops-heading h2 {
         font-size: 22px;
