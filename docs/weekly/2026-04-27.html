@@ -2452,7 +2452,7 @@
         </div>
         <div class="weekly-ranking-tabs" role="tablist" aria-label="週間ランキング">
           <button class="weekly-ranking-tab active" type="button" role="tab" aria-selected="true" data-weekly-ranking-target="weekly-rank-total">総合</button>
-          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-low-star">低スター発掘</button>
+          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-gray">グレー候補</button>
           <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-rising">急上昇</button>
         </div>
         
@@ -2731,8 +2731,62 @@
         </div>
         
         
-        <div id="weekly-rank-low-star" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="section-grid"><article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article></div>
+        <div id="weekly-rank-gray" class="weekly-ranking-panel" data-weekly-ranking-panel>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="arthur-ficial/apfel" data-language="swift" data-tags="apple-intelligence apple-silicon cli foundationmodels homebrew llm macos macos-26 on-device openai-compatible swift tool-calling unix" data-stars="5080" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">66<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/258112064?v=4" alt="Arthur-Ficial">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Arthur-Ficial" target="_blank" rel="noreferrer">@Arthur-Ficial</a>
+          </div>
+          <h2><a href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">Arthur-Ficial/apfel</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 5080</span>
+        <span class="meta-language">Swift</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">mac内蔵AIをCLIで使える Apple SiliconのFoundationModelsをUNIXツールやOpenAI互換サーバーとして利用。APIキー不要、完全オンデバイス。 Swift製でHomebrewインストール対応、パイプやファイル添付、ツール呼び出しに対応。 macOS 26 Tahoe+でApple Intelligenceを有効にしたユーザー向け。</p>
+      <p class="pick-reason">選定理由: Apple Siliconの内蔵LLMをCLIで即利用可</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#apple-intelligence</span><span class="badge topic">#apple-silicon</span><span class="badge topic">#cli</span><span class="badge topic">#foundationmodels</span><span class="badge topic">#homebrew</span><span class="badge topic">#llm</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/arthur-ficial-apfel-28371ea3.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Arthur-Ficial/apfel" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="0xsteph/pentest-ai-agents" data-language="shell" data-tags="ai-agents ai-security bug-bounty claude-code ctf cybersecurity ethical-hacking infosec kali-linux mitre-attack offensive-security oscp penetration-testing pentest pentesting red-team security-automation security-tools" data-stars="672" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
+      <div class="card-score">65<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/245668117?v=4" alt="0xSteph">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/0xSteph" target="_blank" rel="noreferrer">@0xSteph</a>
+          </div>
+          <h2><a href="https://github.com/0xSteph/pentest-ai-agents" target="_blank" rel="noreferrer">0xSteph/pentest-ai-agents</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 672</span>
+        <span class="meta-language">Shell</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">Claude Codeを攻撃的セキュリティ調査のアシスタントに変える 31の専門エージェントがペネトレーションテスト計画、偵察、エクスプロイト研究、レポート作成を支援する インストールはcurl1行で完了し、サーバーやPython依存関係が不要 セキュリティエンジニア、バグバウンティハンター、OSCP受験者に刺さる</p>
+      <p class="pick-reason">選定理由: ペネトレーションテストをAIエージェントで自動化する新し</p>
+      <div class="badge-row"><span class="badge">Shell</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-security</span><span class="badge topic">#bug-bounty</span><span class="badge topic">#claude-code</span><span class="badge topic">#ctf</span><span class="badge topic">#cybersecurity</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/0xsteph-pentest-ai-agents-f781f5f2.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/0xSteph/pentest-ai-agents" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
         </div>
         
         

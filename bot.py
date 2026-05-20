@@ -5381,6 +5381,7 @@ def build_weekly_ranking_for_range(
                 "stars": item.get("stars") or 0,
                 "description": normalize_card_description(item),
                 "topics": item.get("topics") or [],
+                "gray_profile": item.get("gray_profile") or {},
                 "owner_login": owner_login,
                 "owner_avatar_url": owner_avatar_url,
                 "owner_html_url": owner_html_url,
@@ -5394,6 +5395,7 @@ def build_weekly_ranking_for_range(
             entry["best_score"] = item_score
             entry["latest_x_post"] = item.get("x_post") or ""
             entry["stars"] = item.get("stars") or 0
+            entry["gray_profile"] = item.get("gray_profile") or entry.get("gray_profile") or {}
         if sent_at_dt > entry["latest_sent_at"]:
             entry["latest_sent_at"] = sent_at_dt
 
@@ -5466,9 +5468,23 @@ def render_weekly_page(
             enriched_item = dict(item)
             enriched_item["_parsed_sent_at"] = sent_at_dt
             this_week_items.append(enriched_item)
-    low_star_ranking = [item for item in ranking if is_low_star_high_score(item)][
-        : int(settings["limit"])
-    ]
+    def weekly_gray_sort_key(item: dict[str, Any]) -> tuple[float, float, int]:
+        gray = item.get("gray_profile") if isinstance(item.get("gray_profile"), dict) else {}
+        try:
+            gray_score = float(gray.get("final_score") or 0)
+        except (TypeError, ValueError):
+            gray_score = 0.0
+        try:
+            repo_score = float(item.get("best_score", item.get("score") or 0) or 0)
+        except (TypeError, ValueError):
+            repo_score = 0.0
+        return (gray_score, repo_score, int(item.get("stars") or 0))
+
+    gray_ranking = sorted(
+        [item for item in ranking if gray_display_profile(item)["is_gray"]],
+        key=weekly_gray_sort_key,
+        reverse=True,
+    )[: int(settings["limit"])]
     fresh_repo_map: dict[str, dict[str, Any]] = {}
     for item in sorted(
         this_week_items,
@@ -5633,11 +5649,11 @@ def render_weekly_page(
         </div>
         <div class="weekly-ranking-tabs" role="tablist" aria-label="週間ランキング">
           <button class="weekly-ranking-tab active" type="button" role="tab" aria-selected="true" data-weekly-ranking-target="weekly-rank-total">総合</button>
-          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-low-star">低スター発掘</button>
+          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-gray">グレー候補</button>
           <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-rising">急上昇</button>
         </div>
         {render_weekly_ranking_panel("weekly-rank-total", ranking)}
-        {render_weekly_ranking_panel("weekly-rank-low-star", low_star_ranking)}
+        {render_weekly_ranking_panel("weekly-rank-gray", gray_ranking)}
         {render_weekly_ranking_panel("weekly-rank-rising", rising_candidates)}
       </div>
     </section>
