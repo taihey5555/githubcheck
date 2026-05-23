@@ -67,6 +67,18 @@ class SmokeTests(unittest.TestCase):
         self.assertRegex(slug_a, r"^[a-z0-9-]+-[0-9a-f]{8}$")
         self.assertIn("owner-name-my-repo", slug_a)
 
+    def test_generated_repo_pages_match_history_repos(self) -> None:
+        history = bot.load_history()
+        aggregated = bot.aggregate_repo_history(history, bot.load_state().get("review_states", {}))
+        expected_slugs = {bot.repo_slug(full_name) for full_name in aggregated}
+        actual_slugs = {
+            path.stem
+            for path in bot.REPOS_DIR.glob("*.html")
+            if path.name != "index.html"
+        }
+
+        self.assertTrue(actual_slugs.issubset(expected_slugs))
+
     def test_weekly_archive_helpers_group_history_by_tokyo_week(self) -> None:
         history = [
             {"sent_at": "2026-04-13T00:30:00+00:00"},
@@ -411,6 +423,45 @@ class SmokeTests(unittest.TestCase):
             bot.classify_deepseek_error(rate_error),
             ("rate_limit", "status=429"),
         )
+
+    def test_fallback_generated_content_does_not_echo_raw_description(self) -> None:
+        repo = {
+            "full_name": "jnMetaCode/superpowers-zh",
+            "description": "让 Claude Code 变得更强大的中文插件集合",
+            "language": "Python",
+            "stargazers_count": 2533,
+            "topics": ["claude-code", "中文"],
+            "html_url": "https://github.com/jnMetaCode/superpowers-zh",
+        }
+
+        summary, x_post, pick_reason = bot.build_fallback_generated_content(repo)
+
+        self.assertIn("説明文の自動要約に失敗", summary)
+        self.assertIn("要約生成を再確認", pick_reason)
+        self.assertIn("用途はGitHub本文で確認", summary)
+        self.assertNotIn(repo["description"], summary)
+        self.assertNotIn(repo["description"], x_post)
+
+    def test_split_generated_content_uses_fallback_for_malformed_output(self) -> None:
+        repo = {
+            "full_name": "owner/repo",
+            "description": "English raw description should not be echoed",
+            "language": "TypeScript",
+            "stargazers_count": 12,
+            "topics": [],
+            "html_url": "https://github.com/owner/repo",
+        }
+
+        summary, x_post, pick_reason = bot.split_generated_content(
+            "malformed model output without required sections",
+            repo,
+        )
+
+        self.assertIn("説明文の自動要約に失敗", summary)
+        self.assertEqual(pick_reason, "要約生成を再確認")
+        self.assertNotIn(repo["description"], summary)
+        self.assertNotIn("malformed model output", summary)
+        self.assertNotIn(repo["description"], x_post)
 
     def test_should_send_deepseek_warning_throttles_same_kind(self) -> None:
         state = {

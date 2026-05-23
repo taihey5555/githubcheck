@@ -4413,6 +4413,35 @@ def build_deepseek_summary(config: Config, repo: dict[str, Any]) -> str:
     return data["choices"][0]["message"]["content"].strip()
 
 
+def build_fallback_generated_content(repo: dict[str, Any]) -> tuple[str, str, str]:
+    full_name = str(repo.get("full_name") or "unknown/repo")
+    language = str(repo.get("language") or "N/A")
+    try:
+        stars = int(repo.get("stargazers_count") or repo.get("stars") or 0)
+    except (TypeError, ValueError):
+        stars = 0
+    topics = ", ".join(str(topic) for topic in repo.get("topics") or []) or "なし"
+    html_url = str(repo.get("html_url") or "")
+    summary = "\n".join(
+        [
+            f"{full_name} のリポジトリ",
+            "説明文の自動要約に失敗したため、言語・stars・topicsをもとに確認が必要",
+            f"言語: {language} / stars: {stars} / topics: {topics}",
+            "用途はGitHub本文で確認",
+            "気になる場合は詳細ページからGitHubを開く",
+        ]
+    )
+    x_post = "\n\n".join(
+        [
+            f"{full_name} は要約生成を再確認したいリポジトリです。",
+            f"言語は {language}、stars は {stars}。topics は {topics} です。用途や詳細はGitHub本文で確認してください。",
+            html_url,
+            "#GitHub",
+        ]
+    ).strip()
+    return summary, x_post, "要約生成を再確認"
+
+
 def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, str, str]:
     pick_reason = ""
     telegram_text = ""
@@ -4430,7 +4459,7 @@ def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, st
         telegram_text = telegram_part.replace("[telegram]", "", 1).strip()
         x_text = x_part.strip()
     else:
-        telegram_text = content.strip()
+        return build_fallback_generated_content(repo)
 
     if not pick_reason:
         if repo.get("_score", 0) >= 40:
@@ -4441,20 +4470,14 @@ def split_generated_content(content: str, repo: dict[str, Any]) -> tuple[str, st
             pick_reason = "今の注目候補"
 
     if not telegram_text:
-        telegram_text = (
-            f"{repo.get('description') or '説明なし'}\n"
-            f"Language: {repo.get('language') or 'N/A'}\n"
-            f"Stars: {repo['stargazers_count']}\n"
-            f"URL: {repo['html_url']}"
-        )
+        fallback_summary, _, fallback_reason = build_fallback_generated_content(repo)
+        telegram_text = fallback_summary
+        pick_reason = fallback_reason
 
     if not x_text:
-        x_text = (
-            f"{repo['full_name']} は {repo.get('description') or '説明なし'}。\n\n"
-            f"刺さる人: OSSを追う開発者。\n\n"
-            f"{repo['html_url']}\n"
-            "#GitHub"
-        )
+        _, fallback_x_post, fallback_reason = build_fallback_generated_content(repo)
+        x_text = fallback_x_post
+        pick_reason = fallback_reason
 
     return telegram_text, x_text, pick_reason[:28]
 
@@ -5808,17 +5831,7 @@ def run_once(config: Config, trigger: str = "manual") -> None:
                 repo["_summary"], repo["_x_post"], repo["_pick_reason"] = split_generated_content(generated, repo)
             except Exception as exc:
                 maybe_send_deepseek_warning(config, state, repo, exc)
-                repo["_summary"] = (
-                    f"{repo.get('description') or '説明なし'}\n"
-                    f"Language: {repo.get('language') or 'N/A'}\n"
-                    f"Stars: {repo['stargazers_count']}\n"
-                    f"URL: {repo['html_url']}"
-                )
-                repo["_x_post"] = (
-                    f"{repo['full_name']} は {repo.get('description') or '説明なし'}。"
-                    f" {repo['html_url']} #GitHub"
-                )
-                repo["_pick_reason"] = "今の注目候補"
+                repo["_summary"], repo["_x_post"], repo["_pick_reason"] = build_fallback_generated_content(repo)
 
         print("Sending Telegram messages...")
         append_send_log(
