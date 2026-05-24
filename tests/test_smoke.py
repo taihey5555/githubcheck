@@ -142,6 +142,40 @@ class SmokeTests(unittest.TestCase):
         self.assertIn("repo: owner/repo", query["body"][0])
         self.assertIn("state: good", query["body"][0])
 
+    def test_safe_external_url_allows_only_http_and_https_urls(self) -> None:
+        self.assertEqual(bot.safe_external_url("https://github.com/owner/repo"), "https://github.com/owner/repo")
+        self.assertEqual(bot.safe_external_url("http://example.com/path?q=1"), "http://example.com/path?q=1")
+        self.assertEqual(bot.safe_external_url("javascript:alert(1)"), "")
+        self.assertEqual(bot.safe_external_url("data:text/html,hello"), "")
+        self.assertEqual(bot.safe_external_url("//github.com/owner/repo"), "")
+        self.assertEqual(bot.safe_external_url("https://github.com/owner/repo\" onclick=\"alert(1)"), "")
+
+    def test_linkify_text_uses_safe_external_link_attributes(self) -> None:
+        html = bot.linkify_text("See https://github.com/owner/repo and javascript:alert(1)")
+
+        self.assertIn('href="https://github.com/owner/repo"', html)
+        self.assertIn('target="_blank" rel="noopener noreferrer"', html)
+        self.assertNotIn('href="javascript:alert(1)"', html)
+
+    def test_render_repo_card_does_not_link_unsafe_external_urls(self) -> None:
+        html = bot.render_repo_card(
+            {
+                "full_name": "owner/repo",
+                "html_url": "javascript:alert(1)",
+                "owner_html_url": "data:text/html,hello",
+                "owner_login": "owner",
+                "owner_avatar_url": "https://github.githubassets.com/favicons/favicon.png",
+                "language": "Python",
+                "stars": 1,
+                "score": 10,
+            },
+            "unseen",
+        )
+
+        self.assertNotIn('href="javascript:alert(1)"', html)
+        self.assertNotIn('href="data:text/html,hello"', html)
+        self.assertNotIn("action-github", html)
+
     def test_build_operations_summary_html_contains_cards(self) -> None:
         html = bot.build_operations_summary_html(".")
         self.assertIn("運用サマリー", html)

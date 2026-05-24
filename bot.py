@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from zoneinfo import ZoneInfo
 
 import requests
@@ -1102,8 +1102,8 @@ def render_repo_detail_sites() -> None:
         shortcut_links = render_review_state_shortcuts("..", current_review_state)
         review_state_menu_items = "".join(
             f'<a class="review-state-option{" current" if state_name == current_review_state else ""}" '
-            f'href="{escape(review_state_request_issue_url(repo_data["full_name"], state_name), quote=True)}" '
-            f'target="_blank" rel="noreferrer" role="menuitem" data-review-state-option>'
+            f'{external_link_attrs(review_state_request_issue_url(repo_data["full_name"], state_name))} '
+            f'role="menuitem" data-review-state-option>'
             f'{escape(review_state_label(state_name))}</a>'
             for state_name in REVIEW_STATES
         )
@@ -1194,6 +1194,18 @@ def render_repo_detail_sites() -> None:
         overview_points_html = "".join(
             f"<li>{escape(point)}</li>" for point in overview_points
         )
+        owner_link_attrs = external_link_attrs(repo_data["owner_html_url"])
+        repo_link_attrs = external_link_attrs(repo_data.get("html_url"))
+        owner_link_html = (
+            f'<a {owner_link_attrs}>@{escape(repo_data["owner_login"])}</a>'
+            if owner_link_attrs
+            else f'<span>@{escape(repo_data["owner_login"])}</span>'
+        )
+        repo_action_html = (
+            f'<a class="badge action-github" {repo_link_attrs}>GitHubで見る</a>'
+            if repo_link_attrs
+            else ""
+        )
         body_html = f"""
         <section class="section-block detail-page">
           <article class="card detail-hero-card">
@@ -1202,7 +1214,7 @@ def render_repo_detail_sites() -> None:
               <img class="avatar" src="{escape(repo_data['owner_avatar_url'])}" alt="{escape(repo_data['owner_login'])}">
               <div class="card-title-wrap">
                 <div class="owner-line">
-                  <a href="{escape(repo_data['owner_html_url'])}" target="_blank" rel="noreferrer">@{escape(repo_data['owner_login'])}</a>
+                  {owner_link_html}
                 </div>
                 <h2>{escape(repo_data['full_name'])}</h2>
               </div>
@@ -1215,7 +1227,7 @@ def render_repo_detail_sites() -> None:
             {f'<p class="description">{escape(repo_data["description"])}</p>' if repo_data.get("description") else ''}
             {f'<div class="badge-row">{language_badge_html}<span class="badge review-state">状態 {escape(review_state_label(current_review_state))}</span>{topics_html}</div>' if topics_html or repo_data.get("language") else ''}
             <div class="detail-hero-actions">
-              <a class="badge action-github" href="{escape(str(repo_data.get("html_url") or ""))}" target="_blank" rel="noreferrer">GitHubで見る</a>
+              {repo_action_html}
               <div class="review-state-menu-wrap" data-review-state-menu>
                 <button class="badge review-state-trigger" type="button" aria-label="状態を更新" aria-haspopup="menu" aria-expanded="false" data-review-state-trigger>↻</button>
                 <div class="review-state-menu" role="menu" aria-label="状態を更新">
@@ -1326,10 +1338,38 @@ def normalize_card_description(item: dict[str, Any], limit: int | None = None) -
     return description[: limit - 3].rstrip() + "..."
 
 
+def safe_external_url(value: Any) -> str:
+    url = str(value or "").strip()
+    if not url or any(char.isspace() or char in "\"'<>" for char in url):
+        return ""
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return ""
+    return url
+
+
+def external_link_attrs(value: Any) -> str:
+    url = safe_external_url(value)
+    if not url:
+        return ""
+    return f'href="{escape(url, quote=True)}" target="_blank" rel="noopener noreferrer"'
+
+
 def linkify_text(text: str) -> str:
-    escaped = escape(text)
-    pattern = re.compile(r"(https?://[^\s<]+)")
-    return pattern.sub(r'<a href="\1" target="_blank" rel="noreferrer">\1</a>', escaped)
+    pattern = re.compile(r"https?://[^\s<>\"]+")
+    parts: list[str] = []
+    last_end = 0
+    for match in pattern.finditer(text):
+        url = match.group(0)
+        parts.append(escape(text[last_end:match.start()]))
+        attrs = external_link_attrs(url)
+        if attrs:
+            parts.append(f"<a {attrs}>{escape(url)}</a>")
+        else:
+            parts.append(escape(url))
+        last_end = match.end()
+    parts.append(escape(text[last_end:]))
+    return "".join(parts)
 
 
 def site_shell(
@@ -4049,12 +4089,6 @@ def site_shell(
 """
 
 
-def linkify_text(text: str) -> str:
-    escaped = escape(text)
-    pattern = re.compile(r"(https?://[^\s<]+)")
-    return pattern.sub(r'<a href="\1" target="_blank" rel="noreferrer">\1</a>', escaped)
-
-
 def github_headers(config: Config) -> dict[str, str]:
     return {
         "Accept": "application/vnd.github+json",
@@ -4844,13 +4878,13 @@ def render_repo_card(
 ) -> str:
     sent_at = escape(str(item.get("_display_time") or ""))
     full_name = escape(str(item.get("full_name") or ""))
-    html_url = escape(str(item.get("html_url") or ""))
+    repo_link_attrs = external_link_attrs(item.get("html_url"))
     language_label = str(item.get("language") or "N/A")
     language = escape(language_label)
     description = escape(normalize_card_description(item))
     owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
     owner_login = escape(owner_login_raw)
-    owner_html_url = escape(owner_html_url_raw)
+    owner_link_attrs = external_link_attrs(owner_html_url_raw)
     owner_avatar_url = escape(owner_avatar_url_raw)
     bucket = str(item.get("bucket") or "morning")
     bucket_label = "朝の新顔枠" if bucket == "morning" else "夜の尖り枠"
@@ -4884,6 +4918,17 @@ def render_repo_card(
         else ""
     )
     details_href = repo_detail_href(str(item.get("full_name") or ""), path_prefix)
+    owner_html = (
+        f'<a {owner_link_attrs}>@{owner_login}</a>'
+        if owner_link_attrs
+        else f"<span>@{owner_login}</span>"
+    )
+    title_html = f"<a {repo_link_attrs}>{full_name}</a>" if repo_link_attrs else full_name
+    github_action_html = (
+        f'<a class="badge action-github" {repo_link_attrs}>GitHub</a>'
+        if repo_link_attrs
+        else ""
+    )
     return f"""
     <article class="card{rank_class}" {attrs}{' data-archive-card' if archive_card else ''}>
       <div class="card-score">{score_label}<small>スコア</small></div>
@@ -4892,9 +4937,9 @@ def render_repo_card(
         <img class="avatar" src="{owner_avatar_url}" alt="{owner_login}">
         <div class="card-title-wrap">
           <div class="owner-line">
-            <a href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
+            {owner_html}
           </div>
-          <h2><a href="{html_url}" target="_blank" rel="noreferrer">{full_name}</a></h2>
+          <h2>{title_html}</h2>
         </div>
       </div>
       <div class="meta">
@@ -4908,7 +4953,7 @@ def render_repo_card(
       {f'<div class="badge-row"><span class="badge">{language}</span>{review_badge}{topics}</div>' if topics or language or review_badge else ''}
       <div class="detail-links primary-links">
         <a class="badge action-detail" href="{details_href}">詳細</a>
-        <a class="badge action-github" href="{html_url}" target="_blank" rel="noreferrer">GitHub</a>
+        {github_action_html}
       </div>
     </article>
     """
@@ -4922,11 +4967,10 @@ def render_spotlight_card(
     sent_at = escape(str(item.get("_display_time") or ""))
     full_name_raw = str(item.get("full_name") or "")
     full_name = escape(full_name_raw)
-    html_url = escape(str(item.get("html_url") or ""))
     language = escape(str(item.get("language") or "N/A"))
     owner_login_raw, owner_html_url_raw, owner_avatar_url_raw = fallback_owner_fields(item)
     owner_login = escape(owner_login_raw)
-    owner_html_url = escape(owner_html_url_raw)
+    owner_link_attrs = external_link_attrs(owner_html_url_raw)
     owner_avatar_url = escape(owner_avatar_url_raw)
     score_value = item.get("best_score", item.get("score", 0))
     try:
@@ -4941,13 +4985,20 @@ def render_spotlight_card(
     if review_state:
         tag_html += f'<span class="spotlight-tag">状態 {escape(review_state_label(review_state))}</span>'
     details_href = repo_detail_href(full_name_raw, path_prefix)
+    owner_avatar_link_open = f"<a {owner_link_attrs} aria-label=\"{owner_login}\">" if owner_link_attrs else "<span>"
+    owner_avatar_link_close = "</a>" if owner_link_attrs else "</span>"
+    owner_text_html = (
+        f'<a class="spotlight-owner" {owner_link_attrs}>@{owner_login}</a>'
+        if owner_link_attrs
+        else f'<span class="spotlight-owner">@{owner_login}</span>'
+    )
     return f"""
     <article class="spotlight-card">
-      <a href="{owner_html_url}" target="_blank" rel="noreferrer" aria-label="{owner_login}">
+      {owner_avatar_link_open}
         <img class="spotlight-avatar" src="{owner_avatar_url}" alt="{owner_login}">
-      </a>
+      {owner_avatar_link_close}
       <div class="spotlight-main">
-        <a class="spotlight-owner" href="{owner_html_url}" target="_blank" rel="noreferrer">@{owner_login}</a>
+        {owner_text_html}
         <a class="spotlight-title" href="{details_href}">{full_name}</a>
       </div>
       <div class="spotlight-score">{score_label}<small>スコア</small></div>
