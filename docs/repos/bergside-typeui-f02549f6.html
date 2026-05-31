@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>週間まとめ</title>
+  <title>bergside/typeui</title>
   <style>
     :root {
       --bg: #f7f8fa;
@@ -2279,7 +2279,7 @@
       <a class="side-logo" href="../index.html" aria-label="GitHub Check">GH</a>
       <nav class="side-nav">
         <a href="../index.html" ><span class="nav-icon">H</span><span>履歴</span></a>
-        <a href="../weekly.html" aria-current="page"><span class="nav-icon">W</span><span>週次</span></a>
+        <a href="../weekly.html" ><span class="nav-icon">W</span><span>週次</span></a>
         <a href="../operations.html" ><span class="nav-icon">O</span><span>運用</span></a>
       </nav>
     </aside>
@@ -2295,7 +2295,7 @@
           </a>
           <nav id="site-nav" class="site-nav">
             <a href="../index.html" >履歴</a>
-            <a href="../weekly.html" aria-current="page">週次</a>
+            <a href="../weekly.html" >週次</a>
             <a href="../operations.html" >運用サマリー</a>
           </nav>
           <div class="top-actions" aria-label="ページ操作">
@@ -2312,653 +2312,147 @@
         </div>
         <nav class="mobile-segment" aria-label="主要ナビゲーション">
           <a href="../index.html" >履歴</a>
-          <a href="../weekly.html" aria-current="page">週次</a>
+          <a href="../weekly.html" >週次</a>
           <a href="../operations.html" >運用</a>
         </nav>
       </header>
       <main>
-        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 5/25 - 5/31</option><option value="../weekly/2026-05-18.html">5/18 - 5/24</option><option value="../weekly/2026-05-11.html">5/11 - 5/17</option><option value="../weekly/2026-05-04.html">5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html">4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html" selected>4/6 - 4/12</option></select></div></div></section>
-    <section class="weekly-shell">
-      <div class="weekly-heading">
-        <div>
-          <h2>今週のまとめ</h2>
-          <p>4/6 - 4/12</p>
-        </div>
-        <span class="weekly-calendar-button" aria-hidden="true">▣</span>
-      </div>
-      <div class="weekly-tabs" role="tablist" aria-label="週次ビュー">
-        <button class="weekly-tab active" type="button" role="tab" aria-selected="true" data-weekly-tab-target="weekly-summary">まとめ</button>
-        <button class="weekly-tab" type="button" role="tab" aria-selected="false" data-weekly-tab-target="weekly-ranking">ランキング</button>
-      </div>
-      <div id="weekly-summary" class="weekly-panel active" data-weekly-panel>
-        <section class="weekly-kpi-grid" aria-label="週次サマリー">
-      <article class="weekly-kpi-card">
-        <span class="weekly-kpi-icon">▱</span>
-        <div class="weekly-kpi-body">
-          <span class="weekly-kpi-label">総リポジトリ数</span>
-          <strong class="weekly-kpi-value">26</strong>
-          <span class="weekly-kpi-sub">今週のリポジトリ数</span>
-        </div>
-      </article>
-      <article class="weekly-kpi-card">
-        <span class="weekly-kpi-icon success">▶</span>
-        <div class="weekly-kpi-body">
-          <span class="weekly-kpi-label">通知総数</span>
-          <strong class="weekly-kpi-value">26</strong>
-          <span class="weekly-kpi-sub">4/6 - 4/12</span>
-        </div>
-      </article>
-      <article class="weekly-kpi-card">
-        <span class="weekly-kpi-icon purple">◆</span>
-        <div class="weekly-kpi-body">
-          <span class="weekly-kpi-label">新規タグ</span>
-          <strong class="weekly-kpi-value">157</strong>
-          <span class="weekly-kpi-sub">今週初出</span>
-        </div>
-      </article>
-      <article class="weekly-kpi-card">
-        <span class="weekly-kpi-icon warn">↗</span>
-        <div class="weekly-kpi-body">
-          <span class="weekly-kpi-label">平均 score</span>
-          <strong class="weekly-kpi-value">108.3</strong>
-          <span class="weekly-kpi-sub">週内平均</span>
-        </div>
-      </article>
-    </section>
-        <section class="weekly-card-panel">
-          <h3>今週の通知推移</h3>
-          <div class="weekly-mini-chart"><div class="weekly-chart-bars">
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/6 0件" style="height:8px"></span>
-          <span class="weekly-chart-label">4/6</span>
-        </div>
         
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/7 0件" style="height:8px"></span>
-          <span class="weekly-chart-label">4/7</span>
-        </div>
-        
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/8 5件" style="height:71px"></span>
-          <span class="weekly-chart-label">4/8</span>
-        </div>
-        
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/9 6件" style="height:86px"></span>
-          <span class="weekly-chart-label">4/9</span>
-        </div>
-        
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/10 6件" style="height:86px"></span>
-          <span class="weekly-chart-label">4/10</span>
-        </div>
-        
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/11 5件" style="height:71px"></span>
-          <span class="weekly-chart-label">4/11</span>
-        </div>
-        
-        <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="4/12 4件" style="height:57px"></span>
-          <span class="weekly-chart-label">4/12</span>
-        </div>
-        </div></div>
+        <section class="section-block detail-page">
+          <article class="card detail-hero-card">
+            <div class="card-score">71<small>スコア</small></div>
+            <div class="card-header">
+              <img class="avatar" src="https://avatars.githubusercontent.com/u/109292896?v=4" alt="bergside">
+              <div class="card-title-wrap">
+                <div class="owner-line">
+                  <a href="https://github.com/bergside" target="_blank" rel="noopener noreferrer">@bergside</a>
+                </div>
+                <h2>bergside/typeui</h2>
+              </div>
+            </div>
+            <div class="meta">
+              <span class="meta-stars">stars 997</span>
+              <span class="meta-language">TypeScript</span>
+              <span class="date-label">2026-05-31 21:15</span>
+            </div>
+            <p class="description">AIにUIデザインの指示を与えるツール集 ClaudeやCursorなどのAIツールで使えるデザインスキルとプロンプトを提供 MCP対応で各AIツールに簡単に組み込める設計 AIでUIを生成したい開発者やデザイナーに</p>
+            <div class="badge-row"><a class="badge" href="../index.html?language=typescript">TypeScript</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai</span><span class="badge topic">#ai-tools</span><span class="badge topic">#claude-design</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#design</span><span class="badge topic">#design-md</span><span class="badge topic">#design-system</span><span class="badge topic">#design-tools</span><span class="badge topic">#gemini</span><span class="badge topic">#google-stitch</span><span class="badge topic">#skills</span><span class="badge topic">#terminal</span><span class="badge topic">#ui</span><span class="badge topic">#aidesign</span><span class="badge topic">#uidesign</span></div>
+            <div class="detail-hero-actions">
+              <a class="badge action-github" href="https://github.com/bergside/typeui" target="_blank" rel="noopener noreferrer">GitHubで見る</a>
+              <div class="review-state-menu-wrap" data-review-state-menu>
+                <button class="badge review-state-trigger" type="button" aria-label="状態を更新" aria-haspopup="menu" aria-expanded="false" data-review-state-trigger>↻</button>
+                <div class="review-state-menu" role="menu" aria-label="状態を更新">
+                  <a class="review-state-option current" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+bergside%2Ftypeui+-%3E+unseen&amp;body=repo%3A+bergside%2Ftypeui%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>未確認</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+bergside%2Ftypeui+-%3E+interested&amp;body=repo%3A+bergside%2Ftypeui%0Astate%3A+interested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>気になる</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+bergside%2Ftypeui+-%3E+tested&amp;body=repo%3A+bergside%2Ftypeui%0Astate%3A+tested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>試した</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+bergside%2Ftypeui+-%3E+good&amp;body=repo%3A+bergside%2Ftypeui%0Astate%3A+good%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>良い</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+bergside%2Ftypeui+-%3E+meh&amp;body=repo%3A+bergside%2Ftypeui%0Astate%3A+meh%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>微妙</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+bergside%2Ftypeui+-%3E+production_candidate&amp;body=repo%3A+bergside%2Ftypeui%0Astate%3A+production_candidate%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>本番候補</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
+            <a href="#overview">概要</a>
+            <a href="#reason">選定理由</a>
+            <a href="#stack">技術スタック</a>
+            <a href="#stats">統計</a>
+          </nav>
+          <div class="detail-info-grid">
+            <article id="overview" class="detail-info-card">
+              <h3>概要</h3>
+              <p class="description">AIにUIデザインの指示を与えるツール集 ClaudeやCursorなどのAIツールで使えるデザインスキルとプロンプトを提供 MCP対応で各AIツールに簡単に組み込める設計 AIでUIを生成したい開発者やデザイナーに</p>
+              <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
+            </article>
+            <article id="reason" class="detail-info-card">
+              <h3>選定理由</h3>
+              <p class="description">AIエージェント向けUIデザインスキル集が急伸</p>
+              <div class="badge-row"><span class="badge topic">#agent-skills</span><span class="badge topic">#ai</span><span class="badge topic">#ai-tools</span><span class="badge topic">#claude-design</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#design</span><span class="badge topic">#design-md</span><span class="badge topic">#design-system</span><span class="badge topic">#design-tools</span><span class="badge topic">#gemini</span><span class="badge topic">#google-stitch</span><span class="badge topic">#skills</span><span class="badge topic">#terminal</span><span class="badge topic">#ui</span><span class="badge topic">#aidesign</span><span class="badge topic">#uidesign</span></div>
+            </article>
+            <article id="stack" class="detail-info-card">
+              <h3>技術スタック</h3>
+              <div class="badge-row"><a class="badge" href="../index.html?language=typescript">TypeScript</a><span class="badge review-state">状態 未確認</span></div>
+              <div class="detail-links secondary-links">
+                <a class="badge" href="../index.html?language=typescript">TypeScript のリポジトリ一覧を見る</a>
+                <a class="badge" href="../index.html?score_min=70.86&sort=score">高スコアの一覧を見る</a>
+                <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
+                <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
+              </div>
+            </article>
+            <article class="detail-info-card">
+              <h3>通知本文</h3>
+              <pre>TypeUIはAIコーディングツールにデザイン力を与えるスキル集です。
+
+ClaudeやCursor、Codexなどで使えるUIプロンプトやデザインシステムを多数収録。MCP経由で各ツールに組み込めば、自然言語でリッチなUIを生成できます。
+
+「エージェント的」「ブルータリズム」「ベント」など30以上のデザインスタイルから選択可能。デザインに詳しくなくても、好みの見た目をAIに指示できます。
+
+<a href="https://github.com/bergside/typeui" target="_blank" rel="noopener noreferrer">https://github.com/bergside/typeui</a>
+#AIDesign #UIDesign</pre>
+            </article>
+          </div>
         </section>
-        <section class="weekly-card-panel">
-          <h3>今週の注目トピック</h3>
-          <div class="weekly-topic-row"><span class="badge topic">#ai</span><span class="badge topic">#claude-code</span><span class="badge topic">#automation</span><span class="badge topic">#developer-tools</span><span class="badge topic">#claude</span><span class="badge topic">#ai-agents</span></div>
+        <section id="stats" class="stats-grid">
+          <article class="stat-card"><strong>2026-05-31 21:15</strong><span>初回出現日時</span></article>
+          <article class="stat-card"><strong>2026-05-31 21:15</strong><span>最新出現日時</span></article>
+          <article class="stat-card"><strong>1</strong><span>出現回数</span></article>
+          <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
         </section>
-        <section class="weekly-card-panel">
-          <h3>カテゴリ別ハイライト</h3>
-          <div class="weekly-highlight-row">
-        <div class="weekly-highlight">
-          <span>Python</span>
-          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:100%"></span></span>
-          <strong>10</strong>
-        </div>
+        <section class='section-block'><div class='section-header'><h2>関連リポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='related-strip'>
+                <article class="related-mini">
+                  <h3><a href="../repos/gitlawb-openclaude-b7fa03f7.html" target="_self">Gitlawb/openclaude</a></h3>
+                  <p>by Gitlawb</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 26825</span>
+                    <span class="meta-language">TypeScript</span>
+                  </div>
+                  <span class="related-score">78</span>
+                </article>
+                
+                <article class="related-mini">
+                  <h3><a href="../repos/houseofmvps-codesight-bf6d70c6.html" target="_self">Houseofmvps/codesight</a></h3>
+                  <p>by Houseofmvps</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 992</span>
+                    <span class="meta-language">TypeScript</span>
+                  </div>
+                  <span class="related-score">58</span>
+                </article>
+                
+                <article class="related-mini">
+                  <h3><a href="../repos/777genius-agent-teams-ai-d1e8649a.html" target="_self">777genius/agent-teams-ai</a></h3>
+                  <p>by 777genius</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 926</span>
+                    <span class="meta-language">TypeScript</span>
+                  </div>
+                  <span class="related-score">53</span>
+                </article>
+                
+                <article class="related-mini">
+                  <h3><a href="../repos/nexu-io-open-design-2ef5ea05.html" target="_self">nexu-io/open-design</a></h3>
+                  <p>by nexu-io</p>
+                  <div class="meta">
+                    <span class="meta-stars">stars 54604</span>
+                    <span class="meta-language">TypeScript</span>
+                  </div>
+                  <span class="related-score">183</span>
+                </article>
+                </div></section>
+        <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>
+                <article class="history-item">
+                  <div class="meta">
+                    <span class="date-label">2026-05-31 21:15</span>
+                    <span>夜の尖り枠</span>
+                    <span>score 70.86</span>
+                    
+                    <span>stars 997</span>
+                    
+                    <span>TypeScript</span>
+                    <span>状態 未確認</span>
+                  </div>
+                  <p class="pick-reason">選定理由: AIエージェント向けUIデザインスキル集が急伸</p>
+                  
+                  
+                  <div class="badge-row"><span class="badge topic">#agent-skills</span><span class="badge topic">#ai</span><span class="badge topic">#ai-tools</span><span class="badge topic">#claude-design</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span><span class="badge topic">#design</span><span class="badge topic">#design-md</span><span class="badge topic">#design-system</span><span class="badge topic">#design-tools</span><span class="badge topic">#gemini</span><span class="badge topic">#google-stitch</span><span class="badge topic">#skills</span><span class="badge topic">#terminal</span><span class="badge topic">#ui</span><span class="badge topic">#aidesign</span><span class="badge topic">#uidesign</span></div>
+                </article>
+                </div></section>
         
-        <div class="weekly-highlight">
-          <span>TypeScript</span>
-          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:70%"></span></span>
-          <strong>7</strong>
-        </div>
-        
-        <div class="weekly-highlight">
-          <span>Rust</span>
-          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:30%"></span></span>
-          <strong>3</strong>
-        </div>
-        
-        <div class="weekly-highlight">
-          <span>Shell</span>
-          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:20%"></span></span>
-          <strong>2</strong>
-        </div>
-        
-        <div class="weekly-highlight">
-          <span>Go</span>
-          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:20%"></span></span>
-          <strong>2</strong>
-        </div>
-        </div>
-        </section>
-      </div>
-      <div id="weekly-ranking" class="weekly-panel" data-weekly-panel>
-        <div class="weekly-heading">
-          <div>
-            <h2>週間ランキング</h2>
-            <p>4/6 - 4/12</p>
-          </div>
-        </div>
-        <div class="weekly-ranking-tabs" role="tablist" aria-label="週間ランキング">
-          <button class="weekly-ranking-tab active" type="button" role="tab" aria-selected="true" data-weekly-ranking-target="weekly-rank-total">総合</button>
-          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-gray">グレー候補</button>
-          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-rising">急上昇</button>
-        </div>
-        
-        <div id="weekly-rank-total" class="weekly-ranking-panel active" data-weekly-ranking-panel>
-          <div class="section-grid">
-    <article class="card rank-card top1" data-bucket="morning" data-name="safishamsi/graphify" data-language="python" data-tags="claude-code codex graphrag knowledge-graph openclaw skills" data-stars="18087" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">1314<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">1</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/216348667?v=4" alt="safishamsi">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/safishamsi" target="_blank" rel="noopener noreferrer">@safishamsi</a>
-          </div>
-          <h2><a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener noreferrer">safishamsi/graphify</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 18087</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">コードや文書を知識グラフ化 プロジェクトの構造や意図を可視化する AST解析とLLMを併用し確実性を明示 大規模コードや複数資料を扱う開発者向け コードやドキュメントのフォルダを知識グラフに変換できるgraphify。 Claude CodeやCursorなどで /graphify と打つだけで、コードの構造や設計意図を可視化。推論部分も明示され、理解が深まります。 大規模プロジェクトの調査や、複数の資料を横断して理解したい場合に便利です。 #AI #開発効率</p>
-      <p class="pick-reason">選定理由: コードと文書から知識グラフを自動構築する尖り</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#graphrag</span><span class="badge topic">#knowledge-graph</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/safishamsi-graphify-07b661d4.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top2" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
-      <div class="card-score">188<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">2</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/48523873?v=4" alt="rohitg00">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/rohitg00" target="_blank" rel="noopener noreferrer">@rohitg00</a>
-          </div>
-          <h2><a href="https://github.com/rohitg00/pro-workflow" target="_blank" rel="noopener noreferrer">rohitg00/pro-workflow</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 1821</span>
-        <span class="meta-language">JavaScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Claudeが修正から学習し成長 AIコーディング支援の反復作業を削減 SQLiteで修正履歴を蓄積・検索 同じ指摘を繰り返す開発者向け</p>
-      <p class="pick-reason">選定理由: AI開発支援の自己修正メモリによる尖り</p>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/rohitg00-pro-workflow-3222c9e2.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/rohitg00/pro-workflow" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top3" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="" data-stars="4356" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">74<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">3</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/259771830?v=4" alt="epiral">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/epiral" target="_blank" rel="noopener noreferrer">@epiral</a>
-          </div>
-          <h2><a href="https://github.com/epiral/bb-browser" target="_blank" rel="noopener noreferrer">epiral/bb-browser</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 4356</span>
-        <span class="meta-language">TypeScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">ブラウザ自体をAPI化する発想 AIエージェントがログイン状態のままWeb操作 既存サイトの内部APIを逆利用する仕組み 自動化ツール開発者やAI研究者向け AIエージェントがあなたのログイン済みブラウザを直接操作できる「bb-browser」。 TwitterやGitHubなど36サイトを、ログイン状態のままCLIやMCP経由で利用できます。サイト側からは通常のユーザーアクセスに見えるため、API制限やボット検知を気にせず使えるのが特徴です。 Webスクレイピングやマルチプラットフォーム調査の自動化、AIエージェントの行動範囲拡大に適しています。 #AIエージェント #自動化</p>
-      <p class="pick-reason">選定理由: AIエージェントがログイン済みブラウザを直接操作</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/epiral-bb-browser-2562aaad.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/epiral/bb-browser" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="golutra/golutra" data-language="rust" data-tags="agent ai automation chatgpt claude claude-code codex codex-cli desktop-app developer developer-tools gemini multi-agent openai openclaw opencode orchestration productivity qwen-coder workflows" data-stars="2969" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">68<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/255504227?v=4" alt="golutra">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/golutra" target="_blank" rel="noopener noreferrer">@golutra</a>
-          </div>
-          <h2><a href="https://github.com/golutra/golutra" target="_blank" rel="noopener noreferrer">golutra/golutra</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 2969</span>
-        <span class="meta-language">Rust</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">既存CLIをAI協働ハブに変える 複数のAIエージェントを並列実行・自動調整できる Vue 3 + Rust (Tauri)製のデスクトップアプリ AIを活用した自動化ワークフローを構築したい開発者</p>
-      <p class="pick-reason">選定理由: AIエージェントの並列実行で開発ワークフローを尖らせる</p>
-      <div class="badge-row"><span class="badge">Rust</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#automation</span><span class="badge topic">#chatgpt</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/golutra-golutra-27d77ff6.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/golutra/golutra" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="jamiepine/voicebox" data-language="typescript" data-tags="ai cuda mlx qwen3-tts qwen3-tts-ui voice-ai voice-clone whisper" data-stars="14644" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">65<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/32987599?v=4" alt="jamiepine">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/jamiepine" target="_blank" rel="noopener noreferrer">@jamiepine</a>
-          </div>
-          <h2><a href="https://github.com/jamiepine/voicebox" target="_blank" rel="noopener noreferrer">jamiepine/voicebox</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 14644</span>
-        <span class="meta-language">TypeScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">音声クローンからエフェクトまで完結 ローカル環境で音声合成アプリを構築 複数TTSエンジンとタイムライン編集 音声生成を自作アプリに組み込みたい人</p>
-      <p class="pick-reason">選定理由: ローカルで動く音声合成スタジオの尖り</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#cuda</span><span class="badge topic">#mlx</span><span class="badge topic">#qwen3-tts</span><span class="badge topic">#qwen3-tts-ui</span><span class="badge topic">#voice-ai</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/jamiepine-voicebox-dcc23e41.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/jamiepine/voicebox" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="milla-jovovich/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python" data-stars="18477" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">61<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/232237854?v=4" alt="milla-jovovich">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/milla-jovovich" target="_blank" rel="noopener noreferrer">@milla-jovovich</a>
-          </div>
-          <h2><a href="https://github.com/milla-jovovich/mempalace" target="_blank" rel="noopener noreferrer">milla-jovovich/mempalace</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 18477</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">会話を全て保存し検索可能に AIとの対話履歴をローカルで管理 生の対話を構造化して格納 AI開発者や長期プロジェクト向け</p>
-      <p class="pick-reason">選定理由: AI記憶システムの新たなアプローチ</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/milla-jovovich-mempalace-eca98a40.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/milla-jovovich/mempalace" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python" data-stars="41918" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">60<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">7</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/MemPalace" target="_blank" rel="noopener noreferrer">@MemPalace</a>
-          </div>
-          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener noreferrer">MemPalace/mempalace</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 41918</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">会話を丸ごと保存し検索可能に AIとの対話履歴を構造化して管理 生データ保存と意味検索で96.6%精度 AI連携で過去の議論を参照したい開発者</p>
-      <p class="pick-reason">選定理由: AIの会話履歴をすべて保存し検索可能にする新アプローチ</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/mempalace-mempalace-1746bed1.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="pinchtab/pinchtab" data-language="go" data-tags="browser-automation cdp golang headless-chrome orchestrator stealth web-scraping" data-stars="8628" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="scraper_downloader" data-gray-risk="allow">
-      <div class="card-score">60<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">8</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/261754368?v=4" alt="pinchtab">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/pinchtab" target="_blank" rel="noopener noreferrer">@pinchtab</a>
-          </div>
-          <h2><a href="https://github.com/pinchtab/pinchtab" target="_blank" rel="noopener noreferrer">pinchtab/pinchtab</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 8628</span>
-        <span class="meta-language">Go</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">HTTP APIでAIがChromeを直接操作 AIエージェントのためのブラウザ自動化基盤 軽量Goバイナリとトークン効率の良い設計 AI連携やWeb自動化を扱う開発者向け</p>
-      <p class="pick-reason">選定理由: AIエージェント向けの高性能ブラウザ自動化基盤</p>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#browser-automation</span><span class="badge topic">#cdp</span><span class="badge topic">#golang</span><span class="badge topic">#headless-chrome</span><span class="badge topic">#orchestrator</span><span class="badge topic">#stealth</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/pinchtab-pinchtab-91dec188.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/pinchtab/pinchtab" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="jackwener/opencli" data-language="typescript" data-tags="ai-agent ai-agents ai-tools cli" data-stars="14459" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">58<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">9</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/30525741?v=4" alt="jackwener">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/jackwener" target="_blank" rel="noopener noreferrer">@jackwener</a>
-          </div>
-          <h2><a href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noopener noreferrer">jackwener/OpenCLI</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 14459</span>
-        <span class="meta-language">TypeScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">WebサイトやアプリをCLI化できる AIエージェントがブラウザ操作や既存ツールを統一的に実行する用途 既存セッションを再利用する安全な自動化が特徴 AIエージェント開発者や自動化ツール作成者に刺さる</p>
-      <p class="pick-reason">選定理由: AIエージェント向けの統合CLI基盤として尖っている</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-tools</span><span class="badge topic">#cli</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/jackwener-opencli-35cb3df0.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/jackwener/OpenCLI" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="aden-hive/hive" data-language="python" data-tags="agent agent-framework agent-skills anthropic automation autonomous-agents claude harness harness-engineering human-in-the-loop openai python self-hosted self-improving" data-stars="10127" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">58<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">10</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/262650699?v=4" alt="aden-hive">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/aden-hive" target="_blank" rel="noopener noreferrer">@aden-hive</a>
-          </div>
-          <h2><a href="https://github.com/aden-hive/hive" target="_blank" rel="noopener noreferrer">aden-hive/hive</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 10127</span>
-        <span class="meta-language">Python</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">自律エージェントの本番運用を実現 複数AIエージェントの状態管理や障害回復を担う 自然言語で目標を指示するとコード生成 AIエージェントを実業務で使いたい開発者向け</p>
-      <p class="pick-reason">選定理由: 本番環境向けマルチエージェント基盤の尖り</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#agent-framework</span><span class="badge topic">#agent-skills</span><span class="badge topic">#anthropic</span><span class="badge topic">#automation</span><span class="badge topic">#autonomous-agents</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/aden-hive-hive-4d8bc369.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/aden-hive/hive" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    </div>
-        </div>
-        
-        
-        <div id="weekly-rank-gray" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="section-grid">
-    <article class="card rank-card top1" data-bucket="morning" data-name="rohitg00/pro-workflow" data-language="javascript" data-tags="agent-orchestration ai-agents ai-coding ai-workflow claude claude-code claude-code-plugin claude-code-skills claude-skills codex context-engineering cursor developer-tools gemini-cli hooks productivity self-correction workflow worktrees" data-stars="1821" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
-      <div class="card-score">188<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">1</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/48523873?v=4" alt="rohitg00">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/rohitg00" target="_blank" rel="noopener noreferrer">@rohitg00</a>
-          </div>
-          <h2><a href="https://github.com/rohitg00/pro-workflow" target="_blank" rel="noopener noreferrer">rohitg00/pro-workflow</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 1821</span>
-        <span class="meta-language">JavaScript</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">Claudeが修正から学習し成長 AIコーディング支援の反復作業を削減 SQLiteで修正履歴を蓄積・検索 同じ指摘を繰り返す開発者向け</p>
-      <p class="pick-reason">選定理由: AI開発支援の自己修正メモリによる尖り</p>
-      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-orchestration</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/rohitg00-pro-workflow-3222c9e2.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/rohitg00/pro-workflow" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top2" data-bucket="morning" data-name="pinchtab/pinchtab" data-language="go" data-tags="browser-automation cdp golang headless-chrome orchestrator stealth web-scraping" data-stars="8628" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="scraper_downloader" data-gray-risk="allow">
-      <div class="card-score">60<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">2</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/261754368?v=4" alt="pinchtab">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/pinchtab" target="_blank" rel="noopener noreferrer">@pinchtab</a>
-          </div>
-          <h2><a href="https://github.com/pinchtab/pinchtab" target="_blank" rel="noopener noreferrer">pinchtab/pinchtab</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 8628</span>
-        <span class="meta-language">Go</span>
-        
-        <span class="meta-count">登場 1回</span>
-      </div>
-      <p class="description">HTTP APIでAIがChromeを直接操作 AIエージェントのためのブラウザ自動化基盤 軽量Goバイナリとトークン効率の良い設計 AI連携やWeb自動化を扱う開発者向け</p>
-      <p class="pick-reason">選定理由: AIエージェント向けの高性能ブラウザ自動化基盤</p>
-      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#browser-automation</span><span class="badge topic">#cdp</span><span class="badge topic">#golang</span><span class="badge topic">#headless-chrome</span><span class="badge topic">#orchestrator</span><span class="badge topic">#stealth</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/pinchtab-pinchtab-91dec188.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/pinchtab/pinchtab" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    </div>
-        </div>
-        
-        
-        <div id="weekly-rank-rising" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="section-grid">
-    <article class="card rank-card top1" data-bucket="morning" data-name="epiral/bb-browser" data-language="typescript" data-tags="github" data-stars="4356" data-score="73.94" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">74<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">1</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/259771830?v=4" alt="epiral">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/epiral" target="_blank" rel="noopener noreferrer">@epiral</a>
-          </div>
-          <h2><a href="https://github.com/epiral/bb-browser" target="_blank" rel="noopener noreferrer">epiral/bb-browser</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 4356</span>
-        <span class="meta-language">TypeScript</span>
-        
-        
-      </div>
-      <p class="description">ブラウザ自体をAPI化する発想 AIエージェントがログイン状態のままWeb操作 既存サイトの内部APIを逆利用する仕組み 自動化ツール開発者やAI研究者向け AIエージェントがあなたのログイン済みブラウザを直接操作できる「bb-browser」。 TwitterやGitHubなど36サイトを、ログイン状態のままCLIやMCP経由で利用できます。サイト側からは通常のユーザーアクセスに見えるため、API制限やボット検知を気にせず使えるのが特徴です。 Webスクレイピングやマルチプラットフォーム調査の自動化、AIエージェントの行動範囲拡大に適しています。 #AIエージェント #自動化</p>
-      <p class="pick-reason">選定理由: AIエージェントがログイン済みブラウザを直接操作</p>
-      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#github</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/epiral-bb-browser-2562aaad.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/epiral/bb-browser" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top2" data-bucket="morning" data-name="mempalace/mempalace" data-language="python" data-tags="ai chromadb llm mcp memory python 開発効率化" data-stars="41918" data-score="60.44" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">60<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">2</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/275135684?v=4" alt="MemPalace">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/MemPalace" target="_blank" rel="noopener noreferrer">@MemPalace</a>
-          </div>
-          <h2><a href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener noreferrer">MemPalace/mempalace</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 41918</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">会話を丸ごと保存し検索可能に AIとの対話履歴を構造化して管理 生データ保存と意味検索で96.6%精度 AI連携で過去の議論を参照したい開発者</p>
-      <p class="pick-reason">選定理由: AIの会話履歴をすべて保存し検索可能にする新アプローチ</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/mempalace-mempalace-1746bed1.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/MemPalace/mempalace" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card top3" data-bucket="evening" data-name="juliusbrussee/caveman" data-language="python" data-tags="ai anthropic caveman claude claude-code llm meme prompt-engineering skill tokens github" data-stars="15719" data-score="54.22" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">54<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">3</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/104168679?v=4" alt="JuliusBrussee">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/JuliusBrussee" target="_blank" rel="noopener noreferrer">@JuliusBrussee</a>
-          </div>
-          <h2><a href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener noreferrer">JuliusBrussee/caveman</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 15719</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">Claudeの応答を原始人語に変換 LLMのトークン使用量を大幅削減 冗長表現を削ぎ落とすプロンプト設計 AI支援開発のコスト削減を考える人に Claudeの応答を原始人語に変換してくれるcaveman 冗長な説明を削ぎ落とし、トークン使用量を最大75%削減 技術的精度は保ちつつ、レスポンス速度が向上する AI支援開発のコストを抑えたい開発者や 簡潔なコードレビューを求めるチームに向いている #AI #開発効率化</p>
-      <p class="pick-reason">選定理由: AIの冗長な応答を原始人語で圧縮する尖った発想</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#anthropic</span><span class="badge topic">#caveman</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#llm</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/juliusbrussee-caveman-e388ab9f.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="galaxy-dawn/claude-scholar" data-language="python" data-tags="academic-research ai-agents claude claude-code codex-cli developer-tools mcp openai-codex opencode paper-writing zotero 研究支援 ai" data-stars="3128" data-score="52.31" data-sent-at="2026-04-11T11:37:37.796095+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">52<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">4</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/121143489?v=4" alt="Galaxy-Dawn">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/Galaxy-Dawn" target="_blank" rel="noopener noreferrer">@Galaxy-Dawn</a>
-          </div>
-          <h2><a href="https://github.com/Galaxy-Dawn/claude-scholar" target="_blank" rel="noopener noreferrer">Galaxy-Dawn/claude-scholar</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 3128</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">研究の補助をAIで半自動化 論文執筆から実験まで一貫支援 ClaudeやCodex CLIと連携可能 研究者や開発者に刺さる</p>
-      <p class="pick-reason">選定理由: 研究支援の半自動化が尖る</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#academic-research</span><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex-cli</span><span class="badge topic">#developer-tools</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/galaxy-dawn-claude-scholar-e82c2f87.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/Galaxy-Dawn/claude-scholar" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="morning" data-name="tombadash/mouser" data-language="python" data-tags="automation controler free linux linux-app logi logitech logitech-options macos macos-app mouse mouse-remapping mx-master mx-master-3s mx-master-4 open-source productivity python ロジクール オープンソース" data-stars="2921" data-score="49.78" data-sent-at="2026-04-12T03:37:52.120562+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">50<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">5</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/162909258?v=4" alt="TomBadash">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/TomBadash" target="_blank" rel="noopener noreferrer">@TomBadash</a>
-          </div>
-          <h2><a href="https://github.com/TomBadash/Mouser" target="_blank" rel="noopener noreferrer">TomBadash/Mouser</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 2921</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">公式ソフト不要でボタンを自由にカスタマイズ Logitech Options+を使わずにマウスボタンをリマップする HID++プロトコルを直接操作して完全ローカルで動作 公式ソフトの制限やクラウド連携を嫌うユーザーに刺さる</p>
-      <p class="pick-reason">選定理由: ロジクールマウスのオープンソース代替ツールとして尖ってい</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#automation</span><span class="badge topic">#controler</span><span class="badge topic">#free</span><span class="badge topic">#linux</span><span class="badge topic">#linux-app</span><span class="badge topic">#logi</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/tombadash-mouser-e979e3dc.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/TomBadash/Mouser" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    
-    <article class="card rank-card" data-bucket="evening" data-name="agentscope-ai/qwenpaw" data-language="python" data-tags="ai オープンソース" data-stars="15079" data-score="41.78" data-sent-at="2026-04-12T11:39:30.978856+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
-      <div class="card-score">42<small>スコア</small></div>
-      <div class="card-header">
-        <span class="rank-number">6</span>
-        <img class="avatar" src="https://avatars.githubusercontent.com/u/211762292?v=4" alt="agentscope-ai">
-        <div class="card-title-wrap">
-          <div class="owner-line">
-            <a href="https://github.com/agentscope-ai" target="_blank" rel="noopener noreferrer">@agentscope-ai</a>
-          </div>
-          <h2><a href="https://github.com/agentscope-ai/QwenPaw" target="_blank" rel="noopener noreferrer">agentscope-ai/QwenPaw</a></h2>
-        </div>
-      </div>
-      <div class="meta">
-        <span class="meta-stars">stars 15079</span>
-        <span class="meta-language">Python</span>
-        
-        
-      </div>
-      <p class="description">ローカルで動く個人AIアシスタント 自分のPCやクラウドに簡単にデプロイできる 拡張可能なスキルとマルチエージェント連携 プライバシー重視でAIを使いたい人に</p>
-      <p class="pick-reason">選定理由: 個人AIアシスタントの実用的な尖り</p>
-      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#オープンソース</span></div>
-      <div class="detail-links primary-links">
-        <a class="badge action-detail" href="../repos/agentscope-ai-qwenpaw-7d3298ec.html">詳細</a>
-        <a class="badge action-github" href="https://github.com/agentscope-ai/QwenPaw" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </article>
-    </div>
-        </div>
-        
-      </div>
-    </section>
-    
       </main>
     </div>
   </div>
