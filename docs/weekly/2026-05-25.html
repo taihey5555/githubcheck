@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>milla-jovovich/mempalace</title>
+  <title>週間まとめ</title>
   <style>
     :root {
       --bg: #f7f8fa;
@@ -2279,7 +2279,7 @@
       <a class="side-logo" href="../index.html" aria-label="GitHub Check">GH</a>
       <nav class="side-nav">
         <a href="../index.html" ><span class="nav-icon">H</span><span>履歴</span></a>
-        <a href="../weekly.html" ><span class="nav-icon">W</span><span>週次</span></a>
+        <a href="../weekly.html" aria-current="page"><span class="nav-icon">W</span><span>週次</span></a>
         <a href="../operations.html" ><span class="nav-icon">O</span><span>運用</span></a>
       </nav>
     </aside>
@@ -2295,7 +2295,7 @@
           </a>
           <nav id="site-nav" class="site-nav">
             <a href="../index.html" >履歴</a>
-            <a href="../weekly.html" >週次</a>
+            <a href="../weekly.html" aria-current="page">週次</a>
             <a href="../operations.html" >運用サマリー</a>
           </nav>
           <div class="top-actions" aria-label="ページ操作">
@@ -2312,147 +2312,680 @@
         </div>
         <nav class="mobile-segment" aria-label="主要ナビゲーション">
           <a href="../index.html" >履歴</a>
-          <a href="../weekly.html" >週次</a>
+          <a href="../weekly.html" aria-current="page">週次</a>
           <a href="../operations.html" >運用</a>
         </nav>
       </header>
       <main>
+        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="../weekly.html">最新週 6/1 - 6/7</option><option value="../weekly/2026-05-25.html" selected>5/25 - 5/31</option><option value="../weekly/2026-05-18.html">5/18 - 5/24</option><option value="../weekly/2026-05-11.html">5/11 - 5/17</option><option value="../weekly/2026-05-04.html">5/4 - 5/10</option><option value="../weekly/2026-04-27.html">4/27 - 5/3</option><option value="../weekly/2026-04-20.html">4/20 - 4/26</option><option value="../weekly/2026-04-13.html">4/13 - 4/19</option><option value="../weekly/2026-04-06.html">4/6 - 4/12</option></select></div></div></section>
+    <section class="weekly-shell">
+      <div class="weekly-heading">
+        <div>
+          <h2>今週のまとめ</h2>
+          <p>5/25 - 5/31</p>
+        </div>
+        <span class="weekly-calendar-button" aria-hidden="true">▣</span>
+      </div>
+      <div class="weekly-tabs" role="tablist" aria-label="週次ビュー">
+        <button class="weekly-tab active" type="button" role="tab" aria-selected="true" data-weekly-tab-target="weekly-summary">まとめ</button>
+        <button class="weekly-tab" type="button" role="tab" aria-selected="false" data-weekly-tab-target="weekly-ranking">ランキング</button>
+      </div>
+      <div id="weekly-summary" class="weekly-panel active" data-weekly-panel>
+        <section class="weekly-kpi-grid" aria-label="週次サマリー">
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon">▱</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">総リポジトリ数</span>
+          <strong class="weekly-kpi-value">42</strong>
+          <span class="weekly-kpi-sub">今週のリポジトリ数</span>
+        </div>
+      </article>
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon success">▶</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">通知総数</span>
+          <strong class="weekly-kpi-value">42</strong>
+          <span class="weekly-kpi-sub">5/25 - 5/31</span>
+        </div>
+      </article>
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon purple">◆</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">新規タグ</span>
+          <strong class="weekly-kpi-value">126</strong>
+          <span class="weekly-kpi-sub">今週初出</span>
+        </div>
+      </article>
+      <article class="weekly-kpi-card">
+        <span class="weekly-kpi-icon warn">↗</span>
+        <div class="weekly-kpi-body">
+          <span class="weekly-kpi-label">平均 score</span>
+          <strong class="weekly-kpi-value">145.5</strong>
+          <span class="weekly-kpi-sub">週内平均</span>
+        </div>
+      </article>
+    </section>
+        <section class="weekly-card-panel">
+          <h3>今週の通知推移</h3>
+          <div class="weekly-mini-chart"><div class="weekly-chart-bars">
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/25 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/25</span>
+        </div>
         
-        <section class="section-block detail-page">
-          <article class="card detail-hero-card">
-            <div class="card-score">61<small>スコア</small></div>
-            <div class="card-header">
-              <img class="avatar" src="https://avatars.githubusercontent.com/u/232237854?v=4" alt="milla-jovovich">
-              <div class="card-title-wrap">
-                <div class="owner-line">
-                  <a href="https://github.com/milla-jovovich" target="_blank" rel="noopener noreferrer">@milla-jovovich</a>
-                </div>
-                <h2>milla-jovovich/mempalace</h2>
-              </div>
-            </div>
-            <div class="meta">
-              <span class="meta-stars">stars 18477</span>
-              <span class="meta-language">Python</span>
-              <span class="date-label">2026-04-08 12:26</span>
-            </div>
-            <p class="description">会話を全て保存し検索可能に AIとの対話履歴をローカルで管理 生の対話を構造化して格納 AI開発者や長期プロジェクト向け</p>
-            <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span><span class="badge topic">#開発効率</span></div>
-            <div class="detail-hero-actions">
-              <a class="badge action-github" href="https://github.com/milla-jovovich/mempalace" target="_blank" rel="noopener noreferrer">GitHubで見る</a>
-              <div class="review-state-menu-wrap" data-review-state-menu>
-                <button class="badge review-state-trigger" type="button" aria-label="状態を更新" aria-haspopup="menu" aria-expanded="false" data-review-state-trigger>↻</button>
-                <div class="review-state-menu" role="menu" aria-label="状態を更新">
-                  <a class="review-state-option current" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+milla-jovovich%2Fmempalace+-%3E+unseen&amp;body=repo%3A+milla-jovovich%2Fmempalace%0Astate%3A+unseen%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>未確認</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+milla-jovovich%2Fmempalace+-%3E+interested&amp;body=repo%3A+milla-jovovich%2Fmempalace%0Astate%3A+interested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>気になる</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+milla-jovovich%2Fmempalace+-%3E+tested&amp;body=repo%3A+milla-jovovich%2Fmempalace%0Astate%3A+tested%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>試した</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+milla-jovovich%2Fmempalace+-%3E+good&amp;body=repo%3A+milla-jovovich%2Fmempalace%0Astate%3A+good%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>良い</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+milla-jovovich%2Fmempalace+-%3E+meh&amp;body=repo%3A+milla-jovovich%2Fmempalace%0Astate%3A+meh%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>微妙</a><a class="review-state-option" href="https://github.com/taihey5555/githubcheck/issues/new?title=%5Breview-state%5D+milla-jovovich%2Fmempalace+-%3E+production_candidate&amp;body=repo%3A+milla-jovovich%2Fmempalace%0Astate%3A+production_candidate%0Asource%3A+pages%0A%0A%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%A8+workflow+%E3%81%8C+state.json+%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%97%E3%81%A6+Pages+%E3%82%92%E5%86%8D%E7%94%9F%E6%88%90%E3%81%97%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer" role="menuitem" data-review-state-option>本番候補</a>
-                </div>
-              </div>
-            </div>
-          </article>
-          <nav class="detail-tabs" aria-label="リポジトリ詳細セクション">
-            <a href="#overview">概要</a>
-            <a href="#reason">選定理由</a>
-            <a href="#stack">技術スタック</a>
-            <a href="#stats">統計</a>
-          </nav>
-          <div class="detail-info-grid">
-            <article id="overview" class="detail-info-card">
-              <h3>概要</h3>
-              <p class="description">会話を全て保存し検索可能に AIとの対話履歴をローカルで管理 生の対話を構造化して格納 AI開発者や長期プロジェクト向け</p>
-              <ul class="detail-check-list"><li>リポジトリの用途と注目理由を確認</li><li>通知時点の stars / language / score を確認</li><li>関連リポジトリと過去通知へすぐ移動</li></ul>
-            </article>
-            <article id="reason" class="detail-info-card">
-              <h3>選定理由</h3>
-              <p class="description">AI記憶システムの新たなアプローチ</p>
-              <div class="badge-row"><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span><span class="badge topic">#開発効率</span></div>
-            </article>
-            <article id="stack" class="detail-info-card">
-              <h3>技術スタック</h3>
-              <div class="badge-row"><a class="badge" href="../index.html?language=python">Python</a><span class="badge review-state">状態 未確認</span></div>
-              <div class="detail-links secondary-links">
-                <a class="badge" href="../index.html?language=python">Python のリポジトリ一覧を見る</a>
-                <a class="badge" href="../index.html?score_min=61.33&sort=score">高スコアの一覧を見る</a>
-                <a class="badge" href="../index.html?stars_max=1000&score_min=70&sort=score">低スター高スコアを見る</a>
-                <a class="badge review-state" href="../index.html?review_state=unseen">未確認の一覧を見る</a>
-              </div>
-            </article>
-            <article class="detail-info-card">
-              <h3>通知本文</h3>
-              <pre>AIとの会話履歴、消えていませんか？
-
-MemPalaceは全ての対話を生のまま保存し、構造化して検索できるAI記憶システムです。要約で情報を捨てず、必要な時にすぐ引き出せます。
-
-ローカルで動作し無料。ClaudeやChatGPTと連携して、過去の決定や議論をAIが参照できます。長期プロジェクトやチーム開発に。
-
-<a href="https://github.com/milla-jovovich/mempalace" target="_blank" rel="noopener noreferrer">https://github.com/milla-jovovich/mempalace</a>
-#AI #開発効率</pre>
-            </article>
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/26 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/26</span>
+        </div>
+        
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/27 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/27</span>
+        </div>
+        
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/28 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/28</span>
+        </div>
+        
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/29 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/29</span>
+        </div>
+        
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/30 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/30</span>
+        </div>
+        
+        <div class="weekly-chart-column">
+          <span class="weekly-chart-bar" title="5/31 6件" style="height:86px"></span>
+          <span class="weekly-chart-label">5/31</span>
+        </div>
+        </div></div>
+        </section>
+        <section class="weekly-card-panel">
+          <h3>今週の注目トピック</h3>
+          <div class="weekly-topic-row"><span class="badge topic">#ai</span><span class="badge topic">#claude-code</span><span class="badge topic">#codex</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#ai-agents</span></div>
+        </section>
+        <section class="weekly-card-panel">
+          <h3>カテゴリ別ハイライト</h3>
+          <div class="weekly-highlight-row">
+        <div class="weekly-highlight">
+          <span>TypeScript</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:100%"></span></span>
+          <strong>16</strong>
+        </div>
+        
+        <div class="weekly-highlight">
+          <span>Python</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:68%"></span></span>
+          <strong>11</strong>
+        </div>
+        
+        <div class="weekly-highlight">
+          <span>Rust</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:25%"></span></span>
+          <strong>4</strong>
+        </div>
+        
+        <div class="weekly-highlight">
+          <span>Go</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:25%"></span></span>
+          <strong>4</strong>
+        </div>
+        
+        <div class="weekly-highlight">
+          <span>JavaScript</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:18%"></span></span>
+          <strong>3</strong>
+        </div>
+        </div>
+        </section>
+      </div>
+      <div id="weekly-ranking" class="weekly-panel" data-weekly-panel>
+        <div class="weekly-heading">
+          <div>
+            <h2>週間ランキング</h2>
+            <p>5/25 - 5/31</p>
           </div>
-        </section>
-        <section id="stats" class="stats-grid">
-          <article class="stat-card"><strong>2026-04-08 12:26</strong><span>初回出現日時</span></article>
-          <article class="stat-card"><strong>2026-04-08 12:26</strong><span>最新出現日時</span></article>
-          <article class="stat-card"><strong>1</strong><span>出現回数</span></article>
-          <article class="stat-card"><strong>未確認</strong><span>状態</span></article>
-        </section>
-        <section class='section-block'><div class='section-header'><h2>関連リポジトリ</h2><p>同じ言語や共通タグを手がかりに、近いリポジトリを見返しやすく並べています。</p></div><div class='related-strip'>
-                <article class="related-mini">
-                  <h3><a href="../repos/mempalace-mempalace-1746bed1.html" target="_self">MemPalace/mempalace</a></h3>
-                  <p>by MemPalace</p>
-                  <div class="meta">
-                    <span class="meta-stars">stars 51784</span>
-                    <span class="meta-language">Python</span>
-                  </div>
-                  <span class="related-score">84</span>
-                </article>
-                
-                <article class="related-mini">
-                  <h3><a href="../repos/repowise-dev-repowise-6193dcf8.html" target="_self">repowise-dev/repowise</a></h3>
-                  <p>by repowise-dev</p>
-                  <div class="meta">
-                    <span class="meta-stars">stars 1730</span>
-                    <span class="meta-language">Python</span>
-                  </div>
-                  <span class="related-score">65</span>
-                </article>
-                
-                <article class="related-mini">
-                  <h3><a href="../repos/openosint-openosint-a2da3bab.html" target="_self">OpenOSINT/OpenOSINT</a></h3>
-                  <p>by OpenOSINT</p>
-                  <div class="meta">
-                    <span class="meta-stars">stars 233</span>
-                    <span class="meta-language">Python</span>
-                  </div>
-                  <span class="related-score">72</span>
-                </article>
-                
-                <article class="related-mini">
-                  <h3><a href="../repos/rohitg00-ai-engineering-from-scratch-760e62df.html" target="_self">rohitg00/ai-engineering-from-scratch</a></h3>
-                  <p>by rohitg00</p>
-                  <div class="meta">
-                    <span class="meta-stars">stars 14576</span>
-                    <span class="meta-language">Python</span>
-                  </div>
-                  <span class="related-score">203</span>
-                </article>
-                </div></section>
-        <section class='section-block'><div class='section-header'><h2>関連する履歴</h2><p>同じリポジトリの通知履歴を新しい順に並べています。score や stars の変化もここで追えます。</p></div><div class='history-list'>
-                <article class="history-item">
-                  <div class="meta">
-                    <span class="date-label">2026-04-08 12:26</span>
-                    <span>朝の新顔枠</span>
-                    <span>score 61.33</span>
-                    
-                    <span>stars 18477</span>
-                    
-                    <span>Python</span>
-                    <span>状態 未確認</span>
-                  </div>
-                  <p class="pick-reason">選定理由: AI記憶システムの新たなアプローチ</p>
-                  
-                  
-                  <div class="badge-row"><span class="badge topic">#ai</span><span class="badge topic">#chromadb</span><span class="badge topic">#llm</span><span class="badge topic">#mcp</span><span class="badge topic">#memory</span><span class="badge topic">#python</span><span class="badge topic">#開発効率</span></div>
-                </article>
-                </div></section>
+        </div>
+        <div class="weekly-ranking-tabs" role="tablist" aria-label="週間ランキング">
+          <button class="weekly-ranking-tab active" type="button" role="tab" aria-selected="true" data-weekly-ranking-target="weekly-rank-total">総合</button>
+          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-gray">グレー候補</button>
+          <button class="weekly-ranking-tab" type="button" role="tab" aria-selected="false" data-weekly-ranking-target="weekly-rank-rising">急上昇</button>
+        </div>
         
+        <div id="weekly-rank-total" class="weekly-ranking-panel active" data-weekly-ranking-panel>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="iofficeai/officecli" data-language="c#" data-tags="agent ai cli office openclaw skills" data-stars="5324" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">640<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/145246968?v=4" alt="iOfficeAI">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/iOfficeAI" target="_blank" rel="noopener noreferrer">@iOfficeAI</a>
+          </div>
+          <h2><a href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noopener noreferrer">iOfficeAI/OfficeCLI</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 5324</span>
+        <span class="meta-language">C#</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIエージェントがOfficeファイルを操作 Word/Excel/PowerPointの読み取り、編集、自動生成をCLI一行で実現。Office未インストールでも動作。 単一バイナリで依存関係不要。エージェントが生成結果をHTML/PNGで確認できるレンダリングエンジン内蔵。 AIエージェント開発者、Office自動化を求めるエンジニア、LLM活用アプリ構築者に最適。</p>
+      <p class="pick-reason">選定理由: AIエージェント専用に設計された初のOffice CLI</p>
+      <div class="badge-row"><span class="badge">C#</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#cli</span><span class="badge topic">#office</span><span class="badge topic">#openclaw</span><span class="badge topic">#skills</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/iofficeai-officecli-265d1c2f.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="evening" data-name="tashfeenahmed/freellmapi" data-language="typescript" data-tags="" data-stars="6633" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">622<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/9307356?v=4" alt="tashfeenahmed">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/tashfeenahmed" target="_blank" rel="noopener noreferrer">@tashfeenahmed</a>
+          </div>
+          <h2><a href="https://github.com/tashfeenahmed/freellmapi" target="_blank" rel="noopener noreferrer">tashfeenahmed/freellmapi</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 6633</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">12の無料LLMを1つのAPIに統合 OpenAI SDKで使えるプロキシで、無料枠を自動フォールオーバー AES-256暗号化とレート制限追跡で安定運用 無料でLLMを試したい開発者や個人実験者向け</p>
+      <p class="pick-reason">選定理由: 12の無料LLMを統合するOpenAI互換プロキシ</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/tashfeenahmed-freellmapi-5d1f2ded.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/tashfeenahmed/freellmapi" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="evening" data-name="ekkolearnai/hermes-web-ui" data-language="typescript" data-tags="agent ai-agent chat-ui dashboard hermes hermes-agent hermes-web-ui llm multi-model multi-platform self-hosted typescript vue3 web-ui" data-stars="6420" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">492<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/152005280?v=4" alt="EKKOLearnAI">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/EKKOLearnAI" target="_blank" rel="noopener noreferrer">@EKKOLearnAI</a>
+          </div>
+          <h2><a href="https://github.com/EKKOLearnAI/hermes-web-ui" target="_blank" rel="noopener noreferrer">EKKOLearnAI/hermes-web-ui</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 6420</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIチャット管理の統合ダッシュボード 8つのプラットフォーム（Telegram/Discord/Slack等）のチャットを一元管理し、セッション管理や使用量分析、cronジョブのスケジュール実行が可能 Vue3 + TypeScript製で自己ホスト可能、npm installで即座に起動できる手軽さが特徴 マルチプラットフォームでAIエージェントを運用する開発者やチームに最適</p>
+      <p class="pick-reason">選定理由: マルチプラットフォームAIチャットを一元管理するWeb </p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai-agent</span><span class="badge topic">#chat-ui</span><span class="badge topic">#dashboard</span><span class="badge topic">#hermes</span><span class="badge topic">#hermes-agent</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/ekkolearnai-hermes-web-ui-1b8435af.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/EKKOLearnAI/hermes-web-ui" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="narcooo/inkos" data-language="typescript" data-tags="agent ai ai-agent ai-novel ai-writing chinese-novel cli cli-tool creative-writing-ai novel-ai novel-generation openclaw" data-stars="6582" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">220<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/33502405?v=4" alt="Narcooo">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Narcooo" target="_blank" rel="noopener noreferrer">@Narcooo</a>
+          </div>
+          <h2><a href="https://github.com/Narcooo/inkos" target="_blank" rel="noopener noreferrer">Narcooo/inkos</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 6582</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">自律型小説執筆AIエージェント AIが執筆から審査・改稿までを自動化し、人間が最終確認できる小説作成ツール。 CLI、TUI、Web Studioの3つのインターフェースを提供し、OpenClaw Skillとしても利用可能。 小説家やライター、AIを使った創作に興味がある人に刺さる。</p>
+      <p class="pick-reason">選定理由: AIエージェントが小説の執筆・審査・改稿を自律実行</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai</span><span class="badge topic">#ai-agent</span><span class="badge topic">#ai-novel</span><span class="badge topic">#ai-writing</span><span class="badge topic">#chinese-novel</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/narcooo-inkos-f5ee237d.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Narcooo/inkos" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="wenyuchiou/awesome-agentic-ai-zh" data-language="python" data-tags="agentic-ai ai-agents awesome-list claude-code claude-skills cli learning-roadmap llm-agents mcp model-context-protocol trilingual tutorial" data-stars="1806" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">213<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/162016108?v=4" alt="WenyuChiou">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/WenyuChiou" target="_blank" rel="noopener noreferrer">@WenyuChiou</a>
+          </div>
+          <h2><a href="https://github.com/WenyuChiou/awesome-agentic-ai-zh" target="_blank" rel="noopener noreferrer">WenyuChiou/awesome-agentic-ai-zh</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 1806</span>
+        <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AI Agent学習の完全ロードマップ LLM基礎からマルチエージェントまで8段階で体系的に学べる 240以上のプロジェクトと実践演習を収録 中国語話者でAIエージェントを学びたい人に最適</p>
+      <p class="pick-reason">選定理由: 三語AI Agent学習ロードマップ、急成長中</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#awesome-list</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#cli</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/wenyuchiou-awesome-agentic-ai-zh-4d9ce216.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/WenyuChiou/awesome-agentic-ai-zh" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="open-less/openless" data-language="html" data-tags="ai-prompt asr dictation llm macos open-source prompt-engineering rust speech-to-text swift tauri typeless typeless-alternative voice-input windows wispr-flow-alternative" data-stars="1911" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">207<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/283287307?v=4" alt="Open-Less">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Open-Less" target="_blank" rel="noopener noreferrer">@Open-Less</a>
+          </div>
+          <h2><a href="https://github.com/Open-Less/openless" target="_blank" rel="noopener noreferrer">Open-Less/openless</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 1911</span>
+        <span class="meta-language">HTML</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">押して話すだけでAI整形テキスト キーを押しながら話し、離すとカーソル位置に整形済みテキストを挿入 Rust + Tauri 2製、ローカル優先でASR/LLMを自分で選べる プロンプト作成やメール下書きを声で済ませたい人に</p>
+      <p class="pick-reason">選定理由: 音声入力をAIで整形、カーソルに即挿入</p>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-prompt</span><span class="badge topic">#asr</span><span class="badge topic">#dictation</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#open-source</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/open-less-openless-9262aed1.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Open-Less/openless" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="withkynam/vibecode-pro-max-kit" data-language="javascript" data-tags="agentic ai-agents ai-coding-assistant ai-development ai-workflow anthropic claude claude-code cli-tools code-quality codex coding-agents cursor developer-tools llm openai prompt-engineering typescript vibe-coding vibecoding" data-stars="340" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">193<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">7</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/85094695?v=4" alt="withkynam">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/withkynam" target="_blank" rel="noopener noreferrer">@withkynam</a>
+          </div>
+          <h2><a href="https://github.com/withkynam/vibecode-pro-max-kit" target="_blank" rel="noopener noreferrer">withkynam/vibecode-pro-max-kit</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 340</span>
+        <span class="meta-language">JavaScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIの記憶切れを仕様で解決 12のエージェントと32のスキルで構成されたAIコーディングハーネス。Claude CodeやCodexと連携し、仕様駆動で文脈を維持しながらコード生成を行う。 自己改善型の知識ベースと自動PRD生成が特徴。30秒でインストール可能で、あらゆるスタックに対応する。 AIコーディングエージェントの文脈切れに悩む開発者や、プロダクトオーナーに刺さる。</p>
+      <p class="pick-reason">選定理由: AIエージェントの文脈切れを仕様駆動で解決する新しいアプ</p>
+      <div class="badge-row"><span class="badge">JavaScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding-assistant</span><span class="badge topic">#ai-development</span><span class="badge topic">#ai-workflow</span><span class="badge topic">#anthropic</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/withkynam-vibecode-pro-max-kit-8421bdde.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/withkynam/vibecode-pro-max-kit" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="nexu-io/open-design" data-language="typescript" data-tags="agent-skills ai-agents ai-design byok claude-code-for-design claude-design codex-design coding-agents cursor-design design-systems design-tools desktop-app figma-alternative generative-ai hermes-agent local-first no-code prototyping ui-generator vibe-coding" data-stars="54604" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">183<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">8</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/263625318?v=4" alt="nexu-io">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/nexu-io" target="_blank" rel="noopener noreferrer">@nexu-io</a>
+          </div>
+          <h2><a href="https://github.com/nexu-io/open-design" target="_blank" rel="noopener noreferrer">nexu-io/open-design</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 54604</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">ローカル完結のデザインAI 16種のCLIエージェントを自動検出し、デザイン生成エンジンとして活用できる。 132のスキルと150のデザインシステムを組み合わせ、Web/デスクトップ/モバイルのプロトタイプやスライドを生成。 AIエージェントとデザインツールの融合に興味がある開発者やデザイナーに。</p>
+      <p class="pick-reason">選定理由: ローカル完結のオープンソースClaude Design代</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-design</span><span class="badge topic">#byok</span><span class="badge topic">#claude-code-for-design</span><span class="badge topic">#claude-design</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/nexu-io-open-design-2ef5ea05.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/nexu-io/open-design" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="xalgord/xalgorix" data-language="go" data-tags="ai ai-tools bug-bounty bugbounty cybersecurity security technology" data-stars="487" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">183<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">9</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/48483027?v=4" alt="xalgord">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/xalgord" target="_blank" rel="noopener noreferrer">@xalgord</a>
+          </div>
+          <h2><a href="https://github.com/xalgord/xalgorix" target="_blank" rel="noopener noreferrer">xalgord/xalgorix</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 487</span>
+        <span class="meta-language">Go</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">セルフホスト型AIセキュリティテスト Web UIからAIエージェントが自動で脆弱性をスキャンし、発見結果を管理・報告 LLM駆動の22フェーズテスト手法、ブラウザ自動化、WebSocketリアルタイム監視 バグバウンティや侵入テストを行うセキュリティエンジニアに最適</p>
+      <p class="pick-reason">選定理由: AI駆動のペネトレーションテストエージェントで、セキュリ</p>
+      <div class="badge-row"><span class="badge">Go</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai</span><span class="badge topic">#ai-tools</span><span class="badge topic">#bug-bounty</span><span class="badge topic">#bugbounty</span><span class="badge topic">#cybersecurity</span><span class="badge topic">#security</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/xalgord-xalgorix-5a98740f.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/xalgord/xalgorix" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="modem-dev/hunk" data-language="typescript" data-tags="cli code-review diff git tui" data-stars="4481" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">175<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">10</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/207912732?v=4" alt="modem-dev">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/modem-dev" target="_blank" rel="noopener noreferrer">@modem-dev</a>
+          </div>
+          <h2><a href="https://github.com/modem-dev/hunk" target="_blank" rel="noopener noreferrer">modem-dev/hunk</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 4481</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIエージェントのコードレビューに特化したTUI エージェントが生成した変更セットをターミナル上でレビューできる サイドバー付きマルチファイル表示とAI注釈のインライン表示が特徴 AIコーディングエージェントを活用する開発者</p>
+      <p class="pick-reason">選定理由: AIエージェント向けdiffビューワーとして急成長中</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#code-review</span><span class="badge topic">#diff</span><span class="badge topic">#git</span><span class="badge topic">#tui</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/modem-dev-hunk-25515760.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/modem-dev/hunk" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
+        </div>
+        
+        
+        <div id="weekly-rank-gray" class="weekly-ranking-panel" data-weekly-ranking-panel>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="evening" data-name="ekkolearnai/hermes-web-ui" data-language="typescript" data-tags="agent ai-agent chat-ui dashboard hermes hermes-agent hermes-web-ui llm multi-model multi-platform self-hosted typescript vue3 web-ui" data-stars="6420" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">492<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/152005280?v=4" alt="EKKOLearnAI">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/EKKOLearnAI" target="_blank" rel="noopener noreferrer">@EKKOLearnAI</a>
+          </div>
+          <h2><a href="https://github.com/EKKOLearnAI/hermes-web-ui" target="_blank" rel="noopener noreferrer">EKKOLearnAI/hermes-web-ui</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 6420</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIチャット管理の統合ダッシュボード 8つのプラットフォーム（Telegram/Discord/Slack等）のチャットを一元管理し、セッション管理や使用量分析、cronジョブのスケジュール実行が可能 Vue3 + TypeScript製で自己ホスト可能、npm installで即座に起動できる手軽さが特徴 マルチプラットフォームでAIエージェントを運用する開発者やチームに最適</p>
+      <p class="pick-reason">選定理由: マルチプラットフォームAIチャットを一元管理するWeb </p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai-agent</span><span class="badge topic">#chat-ui</span><span class="badge topic">#dashboard</span><span class="badge topic">#hermes</span><span class="badge topic">#hermes-agent</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/ekkolearnai-hermes-web-ui-1b8435af.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/EKKOLearnAI/hermes-web-ui" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="wenyuchiou/awesome-agentic-ai-zh" data-language="python" data-tags="agentic-ai ai-agents awesome-list claude-code claude-skills cli learning-roadmap llm-agents mcp model-context-protocol trilingual tutorial" data-stars="1806" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">213<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/162016108?v=4" alt="WenyuChiou">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/WenyuChiou" target="_blank" rel="noopener noreferrer">@WenyuChiou</a>
+          </div>
+          <h2><a href="https://github.com/WenyuChiou/awesome-agentic-ai-zh" target="_blank" rel="noopener noreferrer">WenyuChiou/awesome-agentic-ai-zh</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 1806</span>
+        <span class="meta-language">Python</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AI Agent学習の完全ロードマップ LLM基礎からマルチエージェントまで8段階で体系的に学べる 240以上のプロジェクトと実践演習を収録 中国語話者でAIエージェントを学びたい人に最適</p>
+      <p class="pick-reason">選定理由: 三語AI Agent学習ロードマップ、急成長中</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-agents</span><span class="badge topic">#awesome-list</span><span class="badge topic">#claude-code</span><span class="badge topic">#claude-skills</span><span class="badge topic">#cli</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/wenyuchiou-awesome-agentic-ai-zh-4d9ce216.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/WenyuChiou/awesome-agentic-ai-zh" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="modem-dev/hunk" data-language="typescript" data-tags="cli code-review diff git tui" data-stars="4481" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">175<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/207912732?v=4" alt="modem-dev">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/modem-dev" target="_blank" rel="noopener noreferrer">@modem-dev</a>
+          </div>
+          <h2><a href="https://github.com/modem-dev/hunk" target="_blank" rel="noopener noreferrer">modem-dev/hunk</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 4481</span>
+        <span class="meta-language">TypeScript</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIエージェントのコードレビューに特化したTUI エージェントが生成した変更セットをターミナル上でレビューできる サイドバー付きマルチファイル表示とAI注釈のインライン表示が特徴 AIコーディングエージェントを活用する開発者</p>
+      <p class="pick-reason">選定理由: AIエージェント向けdiffビューワーとして急成長中</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#cli</span><span class="badge topic">#code-review</span><span class="badge topic">#diff</span><span class="badge topic">#git</span><span class="badge topic">#tui</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/modem-dev-hunk-25515760.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/modem-dev/hunk" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
+        </div>
+        
+        
+        <div id="weekly-rank-rising" class="weekly-ranking-panel" data-weekly-ranking-panel>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="evening" data-name="tashfeenahmed/freellmapi" data-language="typescript" data-tags="llm openai" data-stars="6633" data-score="622.42" data-sent-at="2026-05-31T12:15:23.644931+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">622<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/9307356?v=4" alt="tashfeenahmed">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/tashfeenahmed" target="_blank" rel="noopener noreferrer">@tashfeenahmed</a>
+          </div>
+          <h2><a href="https://github.com/tashfeenahmed/freellmapi" target="_blank" rel="noopener noreferrer">tashfeenahmed/freellmapi</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 6633</span>
+        <span class="meta-language">TypeScript</span>
+        
+        
+      </div>
+      <p class="description">12の無料LLMを1つのAPIに統合 OpenAI SDKで使えるプロキシで、無料枠を自動フォールオーバー AES-256暗号化とレート制限追跡で安定運用 無料でLLMを試したい開発者や個人実験者向け</p>
+      <p class="pick-reason">選定理由: 12の無料LLMを統合するOpenAI互換プロキシ</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#llm</span><span class="badge topic">#openai</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/tashfeenahmed-freellmapi-5d1f2ded.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/tashfeenahmed/freellmapi" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="evening" data-name="open-less/openless" data-language="html" data-tags="ai-prompt asr dictation llm macos open-source prompt-engineering rust speech-to-text swift tauri typeless typeless-alternative voice-input windows wispr-flow-alternative oss 音声入力" data-stars="1911" data-score="206.97" data-sent-at="2026-05-31T12:15:23.644931+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">207<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/283287307?v=4" alt="Open-Less">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/Open-Less" target="_blank" rel="noopener noreferrer">@Open-Less</a>
+          </div>
+          <h2><a href="https://github.com/Open-Less/openless" target="_blank" rel="noopener noreferrer">Open-Less/openless</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 1911</span>
+        <span class="meta-language">HTML</span>
+        
+        
+      </div>
+      <p class="description">押して話すだけでAI整形テキスト キーを押しながら話し、離すとカーソル位置に整形済みテキストを挿入 Rust + Tauri 2製、ローカル優先でASR/LLMを自分で選べる プロンプト作成やメール下書きを声で済ませたい人に</p>
+      <p class="pick-reason">選定理由: 音声入力をAIで整形、カーソルに即挿入</p>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-prompt</span><span class="badge topic">#asr</span><span class="badge topic">#dictation</span><span class="badge topic">#llm</span><span class="badge topic">#macos</span><span class="badge topic">#open-source</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/open-less-openless-9262aed1.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/Open-Less/openless" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="tanweai/pua" data-language="typescript" data-tags="agency agent pip pua aiエージェント コーディング効率" data-stars="17833" data-score="83.16" data-sent-at="2026-05-31T04:44:46.375121+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">83<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/256783335?v=4" alt="tanweai">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/tanweai" target="_blank" rel="noopener noreferrer">@tanweai</a>
+          </div>
+          <h2><a href="https://github.com/tanweai/pua" target="_blank" rel="noopener noreferrer">tanweai/pua</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 17833</span>
+        <span class="meta-language">TypeScript</span>
+        
+        
+      </div>
+      <p class="description">AIエージェントの「諦め癖」を矯正する Claude CodeやCodex CLIでAIがタスクを諦めそうになった時にPUA/PIP手法で強制的に継続させる 3段階の圧力 escalationと自動トリガー条件でAIの5つの怠惰パターンを検出・修正する AIエージェントの効率を最大化したい開発者や、AIコーディング支援の品質に不満がある人</p>
+      <p class="pick-reason">選定理由: AIエージェントの諦めを防ぐ尖ったスキルが急伸中</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agency</span><span class="badge topic">#agent</span><span class="badge topic">#pip</span><span class="badge topic">#pua</span><span class="badge topic">#aiエージェント</span><span class="badge topic">#コーディング効率</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/tanweai-pua-82244c37.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/tanweai/pua" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="evening" data-name="bergside/typeui" data-language="typescript" data-tags="agent-skills ai ai-tools claude-design cli codex design design-md design-system design-tools gemini google-stitch skills terminal ui aidesign uidesign" data-stars="997" data-score="70.86" data-sent-at="2026-05-31T12:15:23.644931+00:00" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">71<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">4</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/109292896?v=4" alt="bergside">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/bergside" target="_blank" rel="noopener noreferrer">@bergside</a>
+          </div>
+          <h2><a href="https://github.com/bergside/typeui" target="_blank" rel="noopener noreferrer">bergside/typeui</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 997</span>
+        <span class="meta-language">TypeScript</span>
+        
+        
+      </div>
+      <p class="description">AIにUIデザインの指示を与えるツール集 ClaudeやCursorなどのAIツールで使えるデザインスキルとプロンプトを提供 MCP対応で各AIツールに簡単に組み込める設計 AIでUIを生成したい開発者やデザイナーに</p>
+      <p class="pick-reason">選定理由: AIエージェント向けUIデザインスキル集が急伸</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#ai</span><span class="badge topic">#ai-tools</span><span class="badge topic">#claude-design</span><span class="badge topic">#cli</span><span class="badge topic">#codex</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/bergside-typeui-f02549f6.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/bergside/typeui" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="zhu1090093659/deepseek-pp" data-language="typescript" data-tags="agentic-ai ai-memory automation browser-extension chrome-extension deepseek mcp model-context-protocol native-messaging officecli react tool-calling typescript wxt aiエージェント" data-stars="439" data-score="70.74" data-sent-at="2026-05-31T04:44:46.375121+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">71<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">5</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/46916148?v=4" alt="zhu1090093659">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/zhu1090093659" target="_blank" rel="noopener noreferrer">@zhu1090093659</a>
+          </div>
+          <h2><a href="https://github.com/zhu1090093659/deepseek-pp" target="_blank" rel="noopener noreferrer">zhu1090093659/deepseek-pp</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 439</span>
+        <span class="meta-language">TypeScript</span>
+        
+        
+      </div>
+      <p class="description">DeepSeekにエージェント機能を追加 ブラウザ拡張でDeepSeekに長期記憶やツール呼び出し、MCP対応、自動化タスクを追加できる TypeScript製でChrome/Edge/Firefox対応、MCPやShellツールとの連携が特徴 DeepSeekをより高度に使いこなしたい技術者やパワーユーザー向け</p>
+      <p class="pick-reason">選定理由: DeepSeekに高度なエージェント機能を追加する拡張機</p>
+      <div class="badge-row"><span class="badge">TypeScript</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agentic-ai</span><span class="badge topic">#ai-memory</span><span class="badge topic">#automation</span><span class="badge topic">#browser-extension</span><span class="badge topic">#chrome-extension</span><span class="badge topic">#deepseek</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/zhu1090093659-deepseek-pp-34286f0d.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/zhu1090093659/deepseek-pp" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card" data-bucket="morning" data-name="hkuds/cli-anything" data-language="python" data-tags="aiエージェント 自動化" data-stars="41399" data-score="68.66" data-sent-at="2026-05-31T04:44:46.375121+00:00" data-review-state="interested" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">69<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">6</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/118165258?v=4" alt="HKUDS">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/HKUDS" target="_blank" rel="noopener noreferrer">@HKUDS</a>
+          </div>
+          <h2><a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noopener noreferrer">HKUDS/CLI-Anything</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 41399</span>
+        <span class="meta-language">Python</span>
+        
+        
+      </div>
+      <p class="description">CLIで全ソフトをAIエージェント対応に あらゆるソフトウェアにCLIを生成し、AIエージェントが操作可能に PythonのCLIフレームワークで既存ソフトをラップ、CLI-Hubで一元管理 AIエージェント開発者や自動化を求めるエンジニアに</p>
+      <p class="pick-reason">選定理由: 全ソフトをエージェント対応にする急成長OSS</p>
+      <div class="badge-row"><span class="badge">Python</span><span class="badge review-state">状態 気になる</span><span class="badge topic">#aiエージェント</span><span class="badge topic">#自動化</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="../repos/hkuds-cli-anything-c427889b.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
+        </div>
+        
+      </div>
+    </section>
+    
       </main>
     </div>
   </div>
