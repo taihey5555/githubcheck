@@ -2317,7 +2317,7 @@
         </nav>
       </header>
       <main>
-        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="./weekly.html" selected>最新週 6/29 - 7/5</option><option value="./weekly/2026-06-22.html">6/22 - 6/28</option><option value="./weekly/2026-06-15.html">6/15 - 6/21</option><option value="./weekly/2026-06-08.html">6/8 - 6/14</option><option value="./weekly/2026-06-01.html">6/1 - 6/7</option><option value="./weekly/2026-05-25.html">5/25 - 5/31</option><option value="./weekly/2026-05-18.html">5/18 - 5/24</option><option value="./weekly/2026-05-11.html">5/11 - 5/17</option><option value="./weekly/2026-05-04.html">5/4 - 5/10</option></select></div></div></section>
+        <section class='section-block'><div class='section-header'><h2>週次アーカイブ</h2><p>最新の週次ページに加えて、過去週のランキングもここから選べます。</p></div><div class='section-grid'><div class="archive-select-row"><label for="weekly-archive-select">表示する週</label><select id="weekly-archive-select" data-weekly-archive-select><option value="./weekly.html" selected>最新週 6/29 - 7/5</option><option value="./weekly/2026-06-22.html">6/22 - 6/28</option><option value="./weekly/2026-06-15.html">6/15 - 6/21</option><option value="./weekly/2026-06-08.html">6/8 - 6/14</option><option value="./weekly/2026-06-01.html">6/1 - 6/7</option><option value="./weekly/2026-05-25.html">5/25 - 5/31</option><option value="./weekly/2026-05-18.html">5/18 - 5/24</option><option value="./weekly/2026-05-11.html">5/11 - 5/17</option></select></div></div></section>
     <section class="weekly-shell">
       <div class="weekly-heading">
         <div>
@@ -2336,7 +2336,7 @@
         <span class="weekly-kpi-icon">▱</span>
         <div class="weekly-kpi-body">
           <span class="weekly-kpi-label">総リポジトリ数</span>
-          <strong class="weekly-kpi-value">0</strong>
+          <strong class="weekly-kpi-value">3</strong>
           <span class="weekly-kpi-sub">今週のリポジトリ数</span>
         </div>
       </article>
@@ -2344,7 +2344,7 @@
         <span class="weekly-kpi-icon success">▶</span>
         <div class="weekly-kpi-body">
           <span class="weekly-kpi-label">通知総数</span>
-          <strong class="weekly-kpi-value">0</strong>
+          <strong class="weekly-kpi-value">3</strong>
           <span class="weekly-kpi-sub">6/29 - 6/28</span>
         </div>
       </article>
@@ -2352,7 +2352,7 @@
         <span class="weekly-kpi-icon purple">◆</span>
         <div class="weekly-kpi-body">
           <span class="weekly-kpi-label">新規タグ</span>
-          <strong class="weekly-kpi-value">0</strong>
+          <strong class="weekly-kpi-value">6</strong>
           <span class="weekly-kpi-sub">今週初出</span>
         </div>
       </article>
@@ -2360,7 +2360,7 @@
         <span class="weekly-kpi-icon warn">↗</span>
         <div class="weekly-kpi-body">
           <span class="weekly-kpi-label">平均 score</span>
-          <strong class="weekly-kpi-value">0.0</strong>
+          <strong class="weekly-kpi-value">1028.3</strong>
           <span class="weekly-kpi-sub">週内平均</span>
         </div>
       </article>
@@ -2369,7 +2369,7 @@
           <h3>今週の通知推移</h3>
           <div class="weekly-mini-chart"><div class="weekly-chart-bars">
         <div class="weekly-chart-column">
-          <span class="weekly-chart-bar" title="6/29 0件" style="height:8px"></span>
+          <span class="weekly-chart-bar" title="6/29 3件" style="height:86px"></span>
           <span class="weekly-chart-label">6/29</span>
         </div>
         
@@ -2406,11 +2406,23 @@
         </section>
         <section class="weekly-card-panel">
           <h3>今週の注目トピック</h3>
-          <div class="weekly-topic-row"><span class="badge">なし</span></div>
+          <div class="weekly-topic-row"><span class="badge topic">#ai-agents</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#coding-agents</span><span class="badge topic">#developer-tools</span><span class="badge topic">#macos</span></div>
         </section>
         <section class="weekly-card-panel">
           <h3>カテゴリ別ハイライト</h3>
-          <div class="weekly-highlight-row"><span class="badge">なし</span></div>
+          <div class="weekly-highlight-row">
+        <div class="weekly-highlight">
+          <span>Swift</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:100%"></span></span>
+          <strong>2</strong>
+        </div>
+        
+        <div class="weekly-highlight">
+          <span>HTML</span>
+          <span class="weekly-highlight-track"><span class="weekly-highlight-fill" style="width:50%"></span></span>
+          <strong>1</strong>
+        </div>
+        </div>
         </section>
       </div>
       <div id="weekly-ranking" class="weekly-panel" data-weekly-panel>
@@ -2427,17 +2439,206 @@
         </div>
         
         <div id="weekly-rank-total" class="weekly-ranking-panel active" data-weekly-ranking-panel>
-          <div class="section-grid"><article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article></div>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="nexu-io/html-anything" data-language="html" data-tags="agent-skills agentic ai-agents ai-design ai-editor byok claude claude-code claude-skills coding-agents generative-ai html html-editor hyperframes local-first markdown nextjs vibe-coding wechat xiaohongshu" data-stars="7346" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">2795<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/263625318?v=4" alt="nexu-io">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/nexu-io" target="_blank" rel="noopener noreferrer">@nexu-io</a>
+          </div>
+          <h2><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener noreferrer">nexu-io/html-anything</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 7346</span>
+        <span class="meta-language">HTML</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIエージェントがHTMLを生成 MarkdownからHTMLへの変換をAIが代行し、多彩なテンプレートで出力 8種類のCLIを自動検出し、APIキー不要でローカル動作 AIエージェントを使いこなしたい開発者やデザイナーに</p>
+      <p class="pick-reason">選定理由: ローカルAIエージェントがHTMLを書く新しい編集体験</p>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#agentic</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-design</span><span class="badge topic">#ai-editor</span><span class="badge topic">#byok</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/nexu-io-html-anything-6e81baa5.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="repoprompt/repoprompt-ce" data-language="swift" data-tags="ai-agents coding-agents context-engineering developer-tools macos mcp model-context-protocol prompt-engineering swift" data-stars="546" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">155<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/289327073?v=4" alt="repoprompt">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/repoprompt" target="_blank" rel="noopener noreferrer">@repoprompt</a>
+          </div>
+          <h2><a href="https://github.com/repoprompt/repoprompt-ce" target="_blank" rel="noopener noreferrer">repoprompt/repoprompt-ce</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 546</span>
+        <span class="meta-language">Swift</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">コードベース理解を支援するmacOSアプリ AIコーディングエージェントに渡すコンテキストをファイルツリーやGit差分から構築 MCPサーバー内蔵でCLIエージェントと連携可能 Swift製でmacOS 26+対応、Homebrewインストール可</p>
+      <p class="pick-reason">選定理由: macOS向けAIエージェント用コンテキスト構築ツールの</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#coding-agents</span><span class="badge topic">#context-engineering</span><span class="badge topic">#developer-tools</span><span class="badge topic">#macos</span><span class="badge topic">#mcp</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/repoprompt-repoprompt-ce-bd0d0cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/repoprompt/repoprompt-ce" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="iamcorey/kooky" data-language="swift" data-tags="agent ai-agents ai-coding claude claude-code coding-agent developer-tools libghostty llm macos swift swiftui terminal terminal-emulator" data-stars="526" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="false" data-gray-category="" data-gray-risk="normal">
+      <div class="card-score">135<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/33424334?v=4" alt="iAmCorey">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/iAmCorey" target="_blank" rel="noopener noreferrer">@iAmCorey</a>
+          </div>
+          <h2><a href="https://github.com/iAmCorey/kooky" target="_blank" rel="noopener noreferrer">iAmCorey/kooky</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 526</span>
+        <span class="meta-language">Swift</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">AIコーディングに特化したターミナル Claude Codeなど複数AIエージェントをワンクリック起動し、サイドバーで管理できる SwiftUIネイティブUIとlibghosttyによるGPU高速描画を採用 AIエージェントを多用する開発者やmacOSユーザーに最適</p>
+      <p class="pick-reason">選定理由: AIコーディング専用に設計されたモダンなmacOSターミ</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#coding-agent</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/iamcorey-kooky-8b604c5d.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/iAmCorey/kooky" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
         </div>
         
         
         <div id="weekly-rank-gray" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="section-grid"><article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article></div>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="repoprompt/repoprompt-ce" data-language="swift" data-tags="ai-agents coding-agents context-engineering developer-tools macos mcp model-context-protocol prompt-engineering swift" data-stars="546" data-score="0.00" data-sent-at="" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">155<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/289327073?v=4" alt="repoprompt">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/repoprompt" target="_blank" rel="noopener noreferrer">@repoprompt</a>
+          </div>
+          <h2><a href="https://github.com/repoprompt/repoprompt-ce" target="_blank" rel="noopener noreferrer">repoprompt/repoprompt-ce</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 546</span>
+        <span class="meta-language">Swift</span>
+        
+        <span class="meta-count">登場 1回</span>
+      </div>
+      <p class="description">コードベース理解を支援するmacOSアプリ AIコーディングエージェントに渡すコンテキストをファイルツリーやGit差分から構築 MCPサーバー内蔵でCLIエージェントと連携可能 Swift製でmacOS 26+対応、Homebrewインストール可</p>
+      <p class="pick-reason">選定理由: macOS向けAIエージェント用コンテキスト構築ツールの</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#coding-agents</span><span class="badge topic">#context-engineering</span><span class="badge topic">#developer-tools</span><span class="badge topic">#macos</span><span class="badge topic">#mcp</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/repoprompt-repoprompt-ce-bd0d0cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/repoprompt/repoprompt-ce" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
         </div>
         
         
         <div id="weekly-rank-rising" class="weekly-ranking-panel" data-weekly-ranking-panel>
-          <div class="section-grid"><article class="empty-state">この条件に合うリポジトリは、今週まだありません。</article></div>
+          <div class="section-grid">
+    <article class="card rank-card top1" data-bucket="morning" data-name="nexu-io/html-anything" data-language="html" data-tags="agent-skills agentic ai-agents ai-design ai-editor byok claude claude-code claude-skills coding-agents generative-ai html html-editor hyperframes local-first markdown nextjs vibe-coding wechat xiaohongshu aiエディタ" data-stars="7346" data-score="2795.34" data-sent-at="2026-06-29T04:52:53.707688+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="security_research" data-gray-risk="allow">
+      <div class="card-score">2795<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">1</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/263625318?v=4" alt="nexu-io">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/nexu-io" target="_blank" rel="noopener noreferrer">@nexu-io</a>
+          </div>
+          <h2><a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener noreferrer">nexu-io/html-anything</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 7346</span>
+        <span class="meta-language">HTML</span>
+        
+        
+      </div>
+      <p class="description">AIエージェントがHTMLを生成 MarkdownからHTMLへの変換をAIが代行し、多彩なテンプレートで出力 8種類のCLIを自動検出し、APIキー不要でローカル動作 AIエージェントを使いこなしたい開発者やデザイナーに</p>
+      <p class="pick-reason">選定理由: ローカルAIエージェントがHTMLを書く新しい編集体験</p>
+      <div class="badge-row"><span class="badge">HTML</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent-skills</span><span class="badge topic">#agentic</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-design</span><span class="badge topic">#ai-editor</span><span class="badge topic">#byok</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/nexu-io-html-anything-6e81baa5.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/nexu-io/html-anything" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top2" data-bucket="morning" data-name="repoprompt/repoprompt-ce" data-language="swift" data-tags="ai-agents coding-agents context-engineering developer-tools macos mcp model-context-protocol prompt-engineering swift ai" data-stars="546" data-score="154.76" data-sent-at="2026-06-29T04:52:53.707688+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">155<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">2</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/289327073?v=4" alt="repoprompt">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/repoprompt" target="_blank" rel="noopener noreferrer">@repoprompt</a>
+          </div>
+          <h2><a href="https://github.com/repoprompt/repoprompt-ce" target="_blank" rel="noopener noreferrer">repoprompt/repoprompt-ce</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 546</span>
+        <span class="meta-language">Swift</span>
+        
+        
+      </div>
+      <p class="description">コードベース理解を支援するmacOSアプリ AIコーディングエージェントに渡すコンテキストをファイルツリーやGit差分から構築 MCPサーバー内蔵でCLIエージェントと連携可能 Swift製でmacOS 26+対応、Homebrewインストール可</p>
+      <p class="pick-reason">選定理由: macOS向けAIエージェント用コンテキスト構築ツールの</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#ai-agents</span><span class="badge topic">#coding-agents</span><span class="badge topic">#context-engineering</span><span class="badge topic">#developer-tools</span><span class="badge topic">#macos</span><span class="badge topic">#mcp</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/repoprompt-repoprompt-ce-bd0d0cc0.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/repoprompt/repoprompt-ce" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    
+    <article class="card rank-card top3" data-bucket="morning" data-name="iamcorey/kooky" data-language="swift" data-tags="agent ai-agents ai-coding claude claude-code coding-agent developer-tools libghostty llm macos swift swiftui terminal terminal-emulator ai" data-stars="526" data-score="134.92" data-sent-at="2026-06-29T04:52:53.707688+00:00" data-review-state="unseen" data-gray-mode="true" data-gray-category="reverse_modding" data-gray-risk="allow">
+      <div class="card-score">135<small>スコア</small></div>
+      <div class="card-header">
+        <span class="rank-number">3</span>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/33424334?v=4" alt="iAmCorey">
+        <div class="card-title-wrap">
+          <div class="owner-line">
+            <a href="https://github.com/iAmCorey" target="_blank" rel="noopener noreferrer">@iAmCorey</a>
+          </div>
+          <h2><a href="https://github.com/iAmCorey/kooky" target="_blank" rel="noopener noreferrer">iAmCorey/kooky</a></h2>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="meta-stars">stars 526</span>
+        <span class="meta-language">Swift</span>
+        
+        
+      </div>
+      <p class="description">AIコーディングに特化したターミナル Claude Codeなど複数AIエージェントをワンクリック起動し、サイドバーで管理できる SwiftUIネイティブUIとlibghosttyによるGPU高速描画を採用 AIエージェントを多用する開発者やmacOSユーザーに最適</p>
+      <p class="pick-reason">選定理由: AIコーディング専用に設計されたモダンなmacOSターミ</p>
+      <div class="badge-row"><span class="badge">Swift</span><span class="badge review-state">状態 未確認</span><span class="badge topic">#agent</span><span class="badge topic">#ai-agents</span><span class="badge topic">#ai-coding</span><span class="badge topic">#claude</span><span class="badge topic">#claude-code</span><span class="badge topic">#coding-agent</span></div>
+      <div class="detail-links primary-links">
+        <a class="badge action-detail" href="./repos/iamcorey-kooky-8b604c5d.html">詳細</a>
+        <a class="badge action-github" href="https://github.com/iAmCorey/kooky" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </article>
+    </div>
         </div>
         
       </div>
